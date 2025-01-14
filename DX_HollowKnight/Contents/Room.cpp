@@ -4,7 +4,7 @@
 #include <EnginePlatform/EngineInput.h>
 #include "PlayGameMode.h"
 #include "Monster.h"
-
+#include "Door.h"
 
 ARoom::ARoom()
 {
@@ -60,6 +60,7 @@ bool ARoom::InterLinkRoom(ARoom* _Room, FVector _WorldPos)
 	this->LinkRoom(_Room);
 	_Room->LinkRoom(this);
 	_Room->SetActorLocation(this->GetActorLocation() + _WorldPos);
+	_Room->SetActorLocation(this->GetActorLocation() + _WorldPos);
 
 	return true;
 }
@@ -87,7 +88,7 @@ void ARoom::CreateTexture(std::string_view _FileName, float _ScaleRatio)
 
 	BackgroundRenderer->SetTexture(_FileName, true, _ScaleRatio);
 	BackgroundRenderer->SetRelativeLocation({ Size.X / 2.0f * _ScaleRatio, -Size.Y / 2.0f * _ScaleRatio, ZSort });
-	BackgroundRenderer->SetActive(false);
+	//BackgroundRenderer->SetActive(false);
 }
 
 void ARoom::CreatePixelCollisionTexture(std::string_view _FileName, float _ScaleRatio)
@@ -95,7 +96,24 @@ void ARoom::CreatePixelCollisionTexture(std::string_view _FileName, float _Scale
 	float ZSort = static_cast<float>(EZOrder::PIXELCOLLISION);
 
 	PixelCollisionTexture->SetTexture(_FileName, true, _ScaleRatio);
-	PixelCollisionTexture->SetRelativeLocation({ Size.X / 2.0f * _ScaleRatio, -Size.Y / 2.0f * _ScaleRatio, ZSort });
+	//PixelCollisionTexture->SetRelativeLocation({ Size.X / 2.0f * _ScaleRatio, -Size.Y / 2.0f * _ScaleRatio, ZSort });
+	PixelCollisionTexture->SetRelativeLocation({Pos.X, Pos.Y, ZSort });
+}
+
+// 좌상단을 0, 0 기준으로 변경
+ADoor* ARoom::CreateDoor(FVector _InitPos, ARoom* _TargetRoom, FVector _TargetPos, bool _IsEnter)
+{
+	ADoor* Door = GetWorld()->SpawnActor<ADoor>().get();
+
+	// 이미지 정 가운데를 {0, 0} 기준. 좌상단 기준 {-width / 2, height / 2} 
+	FVector RoomPos = { GetActorLocation().X - (Size.X / 2.0f), GetActorLocation().Y + (Size.Y / 2.0f) };
+	Door->SetActorLocation(RoomPos + _InitPos);
+
+	FVector InitPos = RoomPos + _InitPos;
+
+	Door->SetWarpPosition(InitPos, _TargetRoom, _TargetPos, _IsEnter);
+
+	return Door;
 }
 
 // 중력
@@ -210,7 +228,6 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Rend
 
 void ARoom::Gravity(AActor* _Actor, float _DeltaTime)
 {
-	
 	AKnight* Knight = dynamic_cast<AKnight*>(_Actor);
 	if (nullptr != Knight)
 	{
@@ -225,6 +242,13 @@ void ARoom::Gravity(AActor* _Actor, float _DeltaTime)
 			GravityForce = FVector::ZERO;
 		}
 	}
+
+	if (2000.0f <= GravityForce.Length())
+	{
+		GravityForce.Y = 1000.0f;
+	}
+
+
 	// 몬스터 로직 추가 필요
 }
 

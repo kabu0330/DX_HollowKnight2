@@ -189,6 +189,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Door.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Effect.h">
       <SubType>
       </SubType>
@@ -275,6 +279,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="DebugWindowGUI.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Door.cpp">
       <SubType>
       </SubType>
     </ClCompile>

@@ -30,17 +30,18 @@ AKnight::AKnight()
 	JumpForce = InitJumpForce;
 	bCanRotation = true;
 
-	SetActorLocation({ 1100.0f, -3000.0f });
+	SetActorLocation({ 1100.0f, -3050.0f });
+	//SetActorLocation({ 9311.0f, -5711.0f });
 
 	// Debug
-	//BodyRenderer->BillboardOn();
-	//DebugNonGravity = true;
-	//if (true == DebugNonGravity)
-	//{
-	//	Velocity = 800.0f;	
-	//	InitVelocity = Velocity;
-	//	DashSpeed = Velocity * 3.0f;
-	//}
+	BodyRenderer->BillboardOn();
+	//NoneGravity = true;
+	if (true == NoneGravity)
+	{
+		Velocity = 800.0f;	
+		InitVelocity = Velocity;
+		DashSpeed = Velocity * 3.0f;
+	}
 
 }
 
@@ -64,12 +65,16 @@ void AKnight::Tick(float _DeltaTime)
 
 	TimeElapsed(_DeltaTime);
 
-	//DebugInput(_DeltaTime);
+	DebugInput(_DeltaTime);
 
 }
 
 void AKnight::ActiveGravity()
 {
+	if (true == NoneGravity)
+	{
+		return;
+	}
 	ARoom* Room = ARoom::GetCurRoom();
 	if (nullptr != Room)
 	{
@@ -79,6 +84,10 @@ void AKnight::ActiveGravity()
 
 void AKnight::ActiveWallCollsion()
 {
+	if (true == NoneGravity)
+	{
+		return;
+	}
 	ARoom* Room = ARoom::GetCurRoom();
 	if (nullptr != Room)
 	{
@@ -343,10 +352,10 @@ void AKnight::DebugInput(float _DeltaTime)
 	float ZValue = BodyRenderer->GetTransformRef().RelativeLocation.Z;
 	int a = 0;
 
-	//if (UEngineInput::IsPress('W'))
-	//{
-	//	BodyRenderer->AddRelativeLocation({ 0.0f, 0.0f, 1.0f * _DeltaTime });
-	//}
+	if (UEngineInput::IsDown('Q'))
+	{
+		SwitchActiveGravity();
+	}
 
 	//if (UEngineInput::IsPress('S'))
 	//{
@@ -441,7 +450,7 @@ void AKnight::CreateCollision()
 		{
 			//_Other->GetActor()->Destroy();
 			// _Other->Destroy();
-			UEngineDebug::OutPutString("Enter");
+			//UEngineDebug::OutPutString("Enter");
 		});
 }
 

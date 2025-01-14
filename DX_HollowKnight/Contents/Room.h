@@ -36,9 +36,15 @@ public:
 	ARoom* LinkRoom(ARoom* _Room);
 	//std::shared_ptr<ARoom> LinkRoom(ARoom* _Room);
 
-
+	// 초기 세팅
 	void CreateTexture(std::string_view _FileName, float _ScaleRatio);
 	void CreatePixelCollisionTexture(std::string_view _FileName, float _ScaleRatio);
+
+	class ADoor* CreateDoor(FVector _InitPos, ARoom* _TargetRoom, FVector _TargetPos, bool _IsEnter = false);
+
+	// 중력과 벽
+	void CheckPixelCollisionWithGravity(AActor* _Actor, class UContentsRenderer* _Renderer);
+	void CheckPixelCollisionWithWall(AActor* _Actor, class UContentsRenderer* _Renderer, float _Speed, bool _Left);
 
 	FVector GetSize() const
 	{
@@ -48,10 +54,6 @@ public:
 	{
 		Size = _Size;
 	}
-
-	// 중력과 벽
-	void CheckPixelCollisionWithGravity(AActor* _Actor, class UContentsRenderer* _Renderer);
-	void CheckPixelCollisionWithWall(AActor* _Actor, class UContentsRenderer* _Renderer, float _Speed, bool _Left);
 
 protected:
 	void Gravity(AActor* _Actor, float _DeltaTime);

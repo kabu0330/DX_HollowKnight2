@@ -65,6 +65,11 @@ public:
 	{
 		return PrevPos;
 	}
+	
+	void SwitchActiveGravity()
+	{
+		NoneGravity = !NoneGravity;
+	}
 
 protected:
 	void BeginPlay() override;
@@ -75,6 +80,8 @@ protected:
 
 
 private:
+	// Debug
+	bool NoneGravity = false;
 	static AKnight* MainPawn;
 	FVector CameraPos = { 0.0f, 0.0f, 0.0f };
 	FVector PrevPos = FVector::ZERO;

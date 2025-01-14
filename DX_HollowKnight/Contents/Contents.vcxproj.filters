@@ -82,6 +82,9 @@
     <ClInclude Include="Effect.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="Door.h">
+      <Filter>Play</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -170,6 +173,9 @@
     </ClCompile>
     <ClCompile Include="Effect.cpp">
       <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="Door.cpp">
+      <Filter>Play</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

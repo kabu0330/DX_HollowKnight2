@@ -49,7 +49,7 @@ void AMonster::CreateCollision()
 		{
 			//_Other->GetActor()->Destroy();
 			// _Other->Destroy();
-			UEngineDebug::OutPutString("Enter");
+			//UEngineDebug::OutPutString("Enter");
 		});
 }
 
