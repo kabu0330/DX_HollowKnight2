@@ -11,7 +11,6 @@
 #include "RoomManager.h"
 #include "DebugWindowGUI.h"
 
-std::shared_ptr<ACameraActor> APlayGameMode::Camera = nullptr;
 FVector APlayGameMode::MousePos = { 0.0f, 0.0f, 0.0f };
 FVector APlayGameMode::KnightPos = { 0.0f, 0.0f, 0.0f };
 
@@ -24,7 +23,7 @@ APlayGameMode::APlayGameMode()
 
 void APlayGameMode::SetCamera()
 {
-	Camera = GetWorld()->GetMainCamera();
+	Camera = GetWorld()->GetMainCamera().get();
 	Camera->SetActorLocation({ 0.0f, 0.0f, 1.0f, 1.0f });
 	Camera->GetCameraComponent()->SetZSort(0, true);
 	//Camera->GetCameraComponent()->SetProjectionType(EProjectionType::Perspective);

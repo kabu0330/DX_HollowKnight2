@@ -20,10 +20,9 @@ public:
 
 	void LevelChangeStart() override;
 
-	static std::shared_ptr<class ACameraActor> Camera;
 	static FVector MousePos;
 	static FVector KnightPos;
-	
+	ACameraActor* Camera = nullptr;
 	bool& GetPauseRef()
 	{
 		return Pause;
