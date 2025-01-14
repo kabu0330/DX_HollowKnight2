@@ -24,7 +24,7 @@ public:
 	ENGINEAPI void BeginPlay() override;
 	ENGINEAPI virtual void Render(UEngineCamera* _Camera, float _DeltaTime);
 
-	ENGINEAPI virtual void RenderTransUpdate(UEngineCamera* _Camera);
+
 
 	ENGINEAPI URenderUnit& GetRenderUnit(UINT  _Index = 0);
 	ENGINEAPI URenderUnit& CreateRenderUnit();

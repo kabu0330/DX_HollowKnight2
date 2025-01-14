@@ -67,7 +67,7 @@ private:
 
 	EProjectionType ProjectionType = EProjectionType::Orthographic;
 
-	D3D11_VIEWPORT ViewPortInfo;
+	D3D11_VIEWPORT ViewPortInfo = D3D11_VIEWPORT();
 
 	FVector ProjectionScale = {0.0f, 0.0f};
 
@@ -76,7 +76,7 @@ private:
 	std::map<int, bool> RendererZSort;
 
 	// 렌더 타겟을 카메라가 가진다.
-	std::shared_ptr<class UEngineRenderTarget> CameraTarget;
+	std::shared_ptr<class UEngineRenderTarget> CameraTarget = nullptr;
 	// std::shared_ptr<class UEngineRenderTarget> LightTarget;
 	// std::shared_ptr<class UEngineRenderTarget> ShadowTarget;
 

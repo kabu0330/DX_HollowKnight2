@@ -8,6 +8,7 @@
 #include "CameraActor.h"
 #include "EngineGUI.h"
 #include "EngineRenderTarget.h"
+#include "HUD.h"
 
 std::shared_ptr<class ACameraActor> ULevel::SpawnCamera(int _Order)
 {
@@ -124,13 +125,18 @@ void ULevel::Render(float _DeltaTime)
 
 	for (std::pair<const int, std::shared_ptr<ACameraActor>>& Camera : Cameras)
 	{
-		if (Camera.first == static_cast<int>(EEngineCameraType::UICamera))
+		if (Camera.first == static_cast<int>(EEngineCameraType::UICamera)) 	// UI카메라는 따로 렌더를 돌려준다.
+		{
+			continue;
+		}
+
+		if (false == Camera.second->IsActive())
 		{
 			continue;
 		}
 
 		Camera.second->Tick(_DeltaTime); // View 행렬과 Projection 행렬 계산
-		Camera.second->GetCameraComponent()->Render(_DeltaTime); 
+		Camera.second->GetCameraComponent()->Render(_DeltaTime);
 
 		// 특정 카메라만 포스트 이펙트
 		// Camera.second->PostEffect();
@@ -141,9 +147,33 @@ void ULevel::Render(float _DeltaTime)
 	// 여기서 하면 화면 전체 포스트 이펙트 적용
 	// LastRenderTarget->PostEffect(); 
 
+	if (true == Cameras.contains(static_cast<int>(EEngineCameraType::UICamera))) // UI카메라는 따로 렌더를 돌려준다.
+	{
+		std::shared_ptr<ACameraActor> CameraActor = Cameras[static_cast<int>(EEngineCameraType::UICamera)];
+		if (true == CameraActor->IsActive()) // UI카메라가 액티브 상태일때만 돌린다.
+		{
+			std::shared_ptr<UEngineCamera> CameraComponent = Cameras[static_cast<int>(EEngineCameraType::UICamera)]->GetCameraComponent();
+
+			CameraActor->Tick(_DeltaTime); // 틱도 돌리고
+			CameraComponent->CameraTarget->Clear(); // 화면도 지우고
+			CameraComponent->CameraTarget->Setting(); // 렌더타겟 세팅하고
+
+			HUD->UIRender(CameraComponent.get(), _DeltaTime); // 위젯의 틱, 렌더 돌리고
+
+			CameraComponent->CameraTarget->MergeTo(LastRenderTarget); // 최종 출력병합하고
+		}
+	}
+	else
+	{
+		MSGASSERT("UI카메라가 존재하지 않습니다. 엔진 오류입니다. UI카메라를 제작해주세요.");
+		return;
+	}
+
+	// 백버퍼 렌더 타겟 출력 병합
 	std::shared_ptr<UEngineRenderTarget> BackBuffer = UEngineCore::GetDevice().GetBackBufferTarget();
 	LastRenderTarget->MergeTo(BackBuffer);
 
+	// 디버그 렌더링 : 주로 콜리전
 	{
 		std::shared_ptr<class ACameraActor> Camera = GetMainCamera();
 
@@ -163,17 +193,16 @@ void ULevel::Render(float _DeltaTime)
 		}
 	}
 
+	// IMGUI 랜더링
 	if (true == UEngineWindow::IsApplicationOn())
 	{
 		UEngineGUI::GUIRender(this);
-		// IMGUI 랜더링
 	}
 
+	// Present
 	UEngineCore::GetDevice().RenderEnd(); // 스왑체인이 관리하는 백버퍼와 프론트버퍼를 교환(Swap) 
 	// 프론트버퍼(윈도우 창)에 출력
 }
-
-
 
 void ULevel::ChangeRenderGroup(int _CameraOrder, int _PrevGroupOrder, std::shared_ptr<URenderer> _Renderer)
 {

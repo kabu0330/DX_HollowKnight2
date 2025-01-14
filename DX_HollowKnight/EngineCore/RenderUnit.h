@@ -17,6 +17,9 @@ public:
 	URenderUnit();
 	~URenderUnit();
 
+	// 이제 SceneComponent가 아닌 TransformObject가 크기, 회전, 위치값을 가진다. UI는 액터의 컴포넌트가 될 수 없는 구조로 들어와서 <- 언리얼식
+	UTransformObject* TransformObject = nullptr;
+
 	class URenderer* ParentRenderer = nullptr;
 
 	// 매쉬(육체) 

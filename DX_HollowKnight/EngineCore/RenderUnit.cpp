@@ -29,7 +29,13 @@ void URenderUnit::MaterialResourcesCheck()
 		Resources[EShaderType::PS] = Material->GetPixelShader()->ShaderResources;
 	}
 
+	// 부모 렌더러가 없다면, 그건 UI다.
 	if (nullptr != ParentRenderer)
+	{
+		TransformObject = ParentRenderer; // UI는 트랜스폼 오브젝트는 가지고 있다.
+	}
+
+	if (nullptr != TransformObject) // 모든 셰이더를 돌면서
 	{
 		for (EShaderType i = EShaderType::VS; i < EShaderType::MAX; i = static_cast<EShaderType>(static_cast<int>(i) + 1))
 		{
@@ -43,11 +49,9 @@ void URenderUnit::MaterialResourcesCheck()
 				continue;
 			}
 
-
-			FTransform& Ref = ParentRenderer->GetTransformRef();
+			FTransform& Ref = TransformObject->GetTransformRef();
 			Resources[i].ConstantBufferLinkData("FTransform", Ref);
-		}
-		
+		}	
 	}
 }
 

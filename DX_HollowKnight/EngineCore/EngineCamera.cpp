@@ -9,6 +9,8 @@ UEngineCamera::UEngineCamera()
 
 void UEngineCamera::BeginPlay()
 {
+	USceneComponent::BeginPlay();
+
 	FVector Scale = UEngineCore::GetScreenScale();
 
 	ProjectionScale = Scale;

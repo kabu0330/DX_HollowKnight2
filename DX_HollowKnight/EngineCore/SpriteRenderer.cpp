@@ -97,7 +97,7 @@ void USpriteRenderer::Render(UEngineCamera* _Camera, float _DeltaTime)
 	}
 }
 
-void USpriteRenderer::RenderTransUpdate(UEngineCamera* _Camera)
+void USpriteRenderer::CameraTransUpdate(UEngineCamera* _Camera)
 {
 	FTransform& CameraTrans = _Camera->GetTransformRef();
 	FTransform& RendererTrans = GetTransformRef();
@@ -110,23 +110,20 @@ void USpriteRenderer::RenderTransUpdate(UEngineCamera* _Camera)
 
 	if (true == IsBillboard)
 	{
-		// world에서 이동시킨 위치가 회전을 안해서 위치가 어긋났다.
-				// 회전행렬을 취소해버리니까 
-				//RendererTrans.View.ArrVector[0] = { 1.0f, 0.0f, 0.0f, 0.0f };
-				//RendererTrans.View.ArrVector[1] = { 0.0f, 1.0f, 0.0f, 0.0f };
-				//RendererTrans.View.ArrVector[2] = { 0.0f, 0.0f, 1.0f, 0.0f };
+		//RendererTrans.View.ArrVector[0] = { 1.0f, 0.0f, 0.0f, 0.0f };
+		//RendererTrans.View.ArrVector[1] = { 0.0f, 1.0f, 0.0f, 0.0f };
+		//RendererTrans.View.ArrVector[2] = { 0.0f, 0.0f, 1.0f, 0.0f };
 
-				// 이 이야기는 빌보드 행렬이 만들어지려면 view행렬을 취소시키는
-				// 회전행렬이 자전행렬로 들어가야 한다.
-				// 자전행렬이 뭐죠
-				// 월드(크기 * 자전 * 이동 * 공전 * 부모) => 뷰 => 프로젝션 => 뷰포트
-				// 자전 => 뷰행렬 회전 속성의 역행렬이 되어야 합니다.
-				// 회전행렬의 역행렬은 transpose
+		// 이 이야기는 빌보드 행렬이 만들어지려면 view행렬을 취소시키는
+		// 회전행렬이 자전행렬로 들어가야 한다.
+		// 월드(크기 * 자전 * 이동 * 공전 * 부모) => 뷰 => 프로젝션 => 뷰포트
+		// 자전 => 뷰행렬 회전 속성의 역행렬이 되어야 한다.
+		// 회전행렬의 역행렬은 transpose
 
-				// 빌보드행렬
-				// 월드(크기 * 자전 * 이동 * 공전 * 부모) => 뷰 => 프로젝션 => 뷰포트 
+		// 빌보드행렬
+		// 월드(크기 * 자전 * 이동 * 공전 * 부모) => 뷰 => 프로젝션 => 뷰포트 
 
-				// 카메라행렬이 되었죠.
+		// 카메라행렬이 되었죠.
 		FMatrix Bill = CameraTrans.View;
 		// 뷰행렬의 이동부분을 초기화
 		Bill.ArrVector[3] = FVector(0.0f, 0.0f, 0.0f, 1.0f);

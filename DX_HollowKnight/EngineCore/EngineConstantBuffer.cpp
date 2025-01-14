@@ -18,43 +18,44 @@ UEngineConstantBuffer::~UEngineConstantBuffer()
 
 std::shared_ptr<UEngineConstantBuffer> UEngineConstantBuffer::CreateOrFind(UINT _Byte, const std::string_view& _Name)
 {
-	if (0 == _Byte)
+	if (0 == _Byte) // 어떻게 0바이트에 데이터를 저장할 수 있겠어?
 	{
-		MSGASSERT("0바이트 상수버퍼가 만들어지려고 했습니다.");
+		MSGASSERT("0바이트 상수버퍼는 만들 수 없습니다.");
+		return nullptr;
 	}
 
 	std::string UpperName = UEngineString::ToUpper(_Name);
 
-	if (true == BufferMap.contains(_Byte))
+	if (true == BufferMap.contains(_Byte)) // 내가 알고 있는 바이트야?
 	{
-		if (true == BufferMap[_Byte].contains(UpperName))
+		if (true == BufferMap[_Byte].contains(UpperName)) // 내가 알고 있는 바이트에 이름이야?
 		{
-			return BufferMap[_Byte][UpperName];
+			return BufferMap[_Byte][UpperName]; // 그러면 내가 알고있는 상수버퍼 리턴
 		}
-	}
+	} // 그게 아니면 내가 모르는 상수버퍼야. 새로 만들자.
 
 	std::shared_ptr<UEngineConstantBuffer> NewRes = std::make_shared<UEngineConstantBuffer>();
 	NewRes->SetName(UpperName);
-	NewRes->ResCreate(_Byte);
+	NewRes->ResCreate(_Byte); // 상수 버퍼 생성
 	BufferMap[_Byte][UpperName] = NewRes;
 
 	return NewRes;
 }
 
+// 상수 버퍼 생성, 상수버퍼의 특징은 CPU가 동적으로 계산해준 데이터를 그래픽카드가 읽는 것
 void UEngineConstantBuffer::ResCreate(UINT _Byte)
 {
-	{
-		BufferInfo.ByteWidth = _Byte;
-		BufferInfo.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-		BufferInfo.CPUAccessFlags = D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_WRITE;
-		BufferInfo.Usage = D3D11_USAGE_DYNAMIC;
+	BufferInfo.ByteWidth = _Byte;
+	BufferInfo.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	BufferInfo.CPUAccessFlags = D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_WRITE;
+	BufferInfo.Usage = D3D11_USAGE_DYNAMIC;
 
-		if (S_OK != UEngineCore::GetDevice().GetDevice()->CreateBuffer(&BufferInfo, nullptr, &Buffer))
-		{
-			MSGASSERT("상수버퍼 생성에 실패했습니다..");
-			return;
-		}
+	if (S_OK != UEngineCore::GetDevice().GetDevice()->CreateBuffer(&BufferInfo, nullptr, &Buffer))
+	{
+		MSGASSERT("상수버퍼 생성에 실패했습니다.");
+		return;
 	}
+	
 }
 
 void UEngineConstantBuffer::ChangeData(void* _Data, UINT _Size)

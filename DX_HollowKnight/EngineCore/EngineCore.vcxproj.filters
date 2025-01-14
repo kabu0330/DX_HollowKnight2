@@ -155,6 +155,7 @@
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Widget.h" />
     <ClInclude Include="TransformObject.h" />
+    <ClInclude Include="EngineDataStruct.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">

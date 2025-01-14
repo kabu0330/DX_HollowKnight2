@@ -843,20 +843,20 @@ private:
 public:
 	ENGINEAPI static bool Collision(ECollisionType _LeftType, const FTransform& _Left, ECollisionType _RightType, const FTransform& _Right);
 
-	static bool PointToCirCle(const FTransform& _Left, const FTransform& _Right);
-	static bool PointToRect(const FTransform& _Left, const FTransform& _Right);
+	ENGINEAPI static bool PointToCirCle(const FTransform& _Left, const FTransform& _Right);
+	ENGINEAPI static bool PointToRect(const FTransform& _Left, const FTransform& _Right);
 
-	static bool RectToRect(const FTransform& _Left, const FTransform& _Right);
-	static bool RectToCirCle(const FTransform& _Left, const FTransform& _Right);
+	ENGINEAPI static bool RectToRect(const FTransform& _Left, const FTransform& _Right);
+	ENGINEAPI static bool RectToCirCle(const FTransform& _Left, const FTransform& _Right);
 
-	static bool CirCleToCirCle(const FTransform& _Left, const FTransform& _Right);
-	static bool CirCleToRect(const FTransform& _Left, const FTransform& _Right);
+	ENGINEAPI static bool CirCleToCirCle(const FTransform& _Left, const FTransform& _Right);
+	ENGINEAPI static bool CirCleToRect(const FTransform& _Left, const FTransform& _Right);
 
 	// 연산량이 크다.
-	static bool OBB2DToOBB2D(const FTransform& _Left, const FTransform& _Right);
-	static bool OBB2DToRect(const FTransform& _Left, const FTransform& _Right);
-	static bool OBB2DToSphere(const FTransform& _Left, const FTransform& _Right);
-	static bool OBB2DToPoint(const FTransform& _Left, const FTransform& _Right);
+	ENGINEAPI static bool OBB2DToOBB2D(const FTransform& _Left, const FTransform& _Right);
+	ENGINEAPI static bool OBB2DToRect(const FTransform& _Left, const FTransform& _Right);
+	ENGINEAPI static bool OBB2DToSphere(const FTransform& _Left, const FTransform& _Right);
+	ENGINEAPI static bool OBB2DToPoint(const FTransform& _Left, const FTransform& _Right);
 
 	FCollisionData GetCollisionData() const
 	{
@@ -871,7 +871,7 @@ public:
 
 	FVector ZAxisCenterLeftTop() const
 	{
-		return Location - Scale.Half();
+		return FVector(Location.X - Scale.Half().X, Location.Y + Scale.Half().Y);
 	}
 
 	FVector ZAxisCenterLeftBottom() const
@@ -889,20 +889,20 @@ public:
 
 	float ZAxisCenterTop() const
 	{
-		return Location.Y - Scale.hY();
+		return Location.Y + Scale.hY();
 	}
 
 	FVector ZAxisCenterRightTop() const
 	{
 		FVector Result;
 		Result.X = Location.X + Scale.hX();
-		Result.Y = Location.Y - Scale.hY();
+		Result.Y = Location.Y + Scale.hY();
 		return Result;
 	}
 
 	FVector ZAxisCenterRightBottom() const
 	{
-		return Location + Scale.Half();
+		return FVector(Location.X + Scale.Half().X, Location.Y - Scale.Half().Y);
 	}
 
 	float ZAxisCenterRight() const
@@ -912,7 +912,7 @@ public:
 
 	float ZAxisCenterBottom() const
 	{
-		return Location.Y + Scale.hY();
+		return Location.Y - Scale.hY();
 	}
 };
 

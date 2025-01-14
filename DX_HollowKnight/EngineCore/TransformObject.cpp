@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "TransformObject.h"
+#include "EngineCamera.h"
 
 UTransformObject::UTransformObject()
 {
@@ -44,3 +45,14 @@ void UTransformObject::TransformUpdate()
 	IsAbsolute = false;
 }
 
+void UTransformObject::CameraTransUpdate(UEngineCamera* _Camera)
+{
+	// 쉽게 말하면 트랜스폼 
+	// 트랜스폼은 랜더러가 가지고 있습니다.
+	FTransform& CameraTrans = _Camera->GetTransformRef();
+	FTransform& RendererTrans = GetTransformRef();
+	//	// 랜더러는 월드 뷰 프로젝트를 다 세팅받았고
+	RendererTrans.View = CameraTrans.View;
+	RendererTrans.Projection = CameraTrans.Projection;
+	RendererTrans.WVP = RendererTrans.World * RendererTrans.View * RendererTrans.Projection;
+}

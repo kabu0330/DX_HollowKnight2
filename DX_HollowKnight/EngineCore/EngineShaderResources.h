@@ -4,6 +4,7 @@
 #include "EngineTexture.h"
 #include "EngineSampler.h"
 
+// 설명 : 셰이더 리소스는 이름과 셰이더 타입(VS, PS 등) 그리고 몇번째 인덱스인지를 하나의 데이터로 저장한다.
 class UEngineShaderRes 
 {
 public:
@@ -12,6 +13,7 @@ public:
 	UINT BindIndex = 0;
 };
 
+// 설명 : 상수버퍼 리소스는 셰이더 리소스 + 버퍼 사이즈 + 상수 버퍼
 class UEngineConstantBufferRes : public UEngineShaderRes
 {
 public:

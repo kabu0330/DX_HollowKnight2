@@ -52,22 +52,9 @@ void URenderer::SetMaterial(std::string_view _Name, UINT _Index /*= 0*/)
 	Unit.SetMaterial(_Name);
 }
 
-// 자식클래스에서 행렬 값을 바꿀 수 있도록 가상 함수로 만들고 Render에서 분리
-void URenderer::RenderTransUpdate(UEngineCamera* _Camera)
-{
-	// 트랜스폼은 렌더러가 가진다.
-	FTransform& RendererTrans = GetTransformRef(); // 렌더러의 트랜스폼
-
-	FTransform& CameraTrans = _Camera->GetTransformRef();
-	RendererTrans.View = CameraTrans.View;
-	RendererTrans.Projection = CameraTrans.Projection;
-
-	RendererTrans.WVP = RendererTrans.World * RendererTrans.View * RendererTrans.Projection;
-}
-
 void URenderer::Render(UEngineCamera* _Camera, float _DeltaTime)
 {
-	this->RenderTransUpdate(_Camera);
+	this->CameraTransUpdate(_Camera); // WVP 연산을 렌더러에서 카메라로 옮겼다.
 
 	for (size_t i = 0; i < Units.size(); i++)
 	{

@@ -180,6 +180,7 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="EngineCoreDebug.h" />
+    <ClInclude Include="EngineDataStruct.h" />
     <ClInclude Include="EngineDepthStencilState.h" />
     <ClInclude Include="EngineDeviceBuffer.h" />
     <ClInclude Include="EngineEnums.h" />
