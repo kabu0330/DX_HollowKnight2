@@ -30,7 +30,7 @@ AKnight::AKnight()
 	JumpForce = InitJumpForce;
 	bCanRotation = true;
 
-	SetActorLocation({ 1100.0f, -3050.0f });
+	//SetActorLocation({ 1100.0f, -3050.0f });
 	//SetActorLocation({ 9311.0f, -5711.0f });
 
 	// Debug

@@ -13,9 +13,9 @@ ARoom::ARoom()
 	RootComponent = Default;
 
 	std::shared_ptr<ACameraActor> Camera = GetWorld()->GetCamera(0);
-	PixelCollisionTexture = CreateDefaultSubObject<UContentsRenderer>();
-	PixelCollisionTexture->SetupAttachment(RootComponent);
-	PixelCollisionTexture->SetAutoScaleRatio(1.0f);
+	//PixelCollisionTexture = CreateDefaultSubObject<UContentsRenderer>();
+	//PixelCollisionTexture->SetupAttachment(RootComponent);
+	//PixelCollisionTexture->SetAutoScaleRatio(1.0f);
 
 	BackgroundRenderer = CreateDefaultSubObject<UContentsRenderer>();
 	BackgroundRenderer->SetupAttachment(RootComponent);
@@ -95,9 +95,9 @@ void ARoom::CreatePixelCollisionTexture(std::string_view _FileName, float _Scale
 {
 	float ZSort = static_cast<float>(EZOrder::PIXELCOLLISION);
 
-	PixelCollisionTexture->SetTexture(_FileName, true, _ScaleRatio);
+	//PixelCollisionTexture->SetTexture(_FileName, true, _ScaleRatio);
 	//PixelCollisionTexture->SetRelativeLocation({ Size.X / 2.0f * _ScaleRatio, -Size.Y / 2.0f * _ScaleRatio, ZSort });
-	PixelCollisionTexture->SetRelativeLocation({Pos.X, Pos.Y, ZSort });
+	//PixelCollisionTexture->SetRelativeLocation({Pos.X, Pos.Y, ZSort });
 }
 
 // 좌상단을 0, 0 기준으로 변경

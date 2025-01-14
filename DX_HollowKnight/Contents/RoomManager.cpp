@@ -20,18 +20,18 @@ void URoomManager::CreateAndLinkRoom(AGameMode* _GameMode)
 	std::string ForgottenCrossroadsStr2 = "ForgottenCrossroads2";
 	std::string ForgottenCrossroadsStr3 = "ForgottenCrossroads3";
 	// ¸Ê ¼¼ÆÃ
-	ARoom* Dirtmouth = CreateRoom(DirtmouthStr, DirtmouthStr + PNG, DirtmouthStr + BMP, { 13652, 3666 });
-	//ARoom* ForgottenCrossroads1 = CreateRoom(ForgottenCrossroadsStr1, ForgottenCrossroadsStr1 + PNG, ForgottenCrossroadsStr1 + BMP, { 5878, 2826 });
-	//std::shared_ptr<ARoom> ForgottenCrossroads2 = CreateRoom(ForgottenCrossroadsStr2, ForgottenCrossroadsStr2 + Background, ForgottenCrossroadsStr2 + Background, ForgottenCrossroadsSize);
-	//std::shared_ptr<ARoom> ForgottenCrossroads3 = CreateRoom(ForgottenCrossroadsStr3, ForgottenCrossroadsStr3 + Background, ForgottenCrossroadsStr3 + Background, ForgottenCrossroadsSize);
+	//ARoom* Dirtmouth = CreateRoom(DirtmouthStr, DirtmouthStr + PNG, DirtmouthStr + BMP, { 13652, 3666 });
+	ARoom* ForgottenCrossroads1 = CreateRoom(ForgottenCrossroadsStr1, ForgottenCrossroadsStr1 + PNG, ForgottenCrossroadsStr1 + BMP, { 5878, 2826 });
+	
 	
 	//Dirtmouth->InterLinkRoom(ForgottenCrossroads1, FVector{ 13652.0f * 0.445f ,-3666.0f });
-	//Dirtmouth->InterLinkRoom(Stage1.get(), FVector{ 1300.0f, -(2500.0f / 2.0f) - 1300.0f });
 
-	SetInitCurRoom(Dirtmouth);
-	//SetInitCurRoom(ForgottenCrossroads1);
+	ForgottenCrossroads1->SetActorLocation({ 0.0f, 0.0f });
+	//SetInitCurRoom(Dirtmouth);
+	SetInitCurRoom(ForgottenCrossroads1);
 
-	Dirtmouth->CreateDoor({ 1500, -2600 }, Dirtmouth, {1100, -2600});
+	//Dirtmouth->CreateDoor({ 1500, -2600 }, Dirtmouth, {1100, -2600});
+	ForgottenCrossroads1->CreateDoor({ 0, 0 }, ForgottenCrossroads1, {100, -100});
 }
 
 ARoom* URoomManager::CreateRoom(std::string_view _RoomName, std::string_view _BackgroundName, std::string_view _PixelCollisionName, FVector _Size, float _ScaleRatio/* = 1.0f*/)
