@@ -976,10 +976,12 @@ public:
 	static const TColor BLACK;
 	static const TColor YELLOW;
 	static const TColor RED;
+	static const TColor BLUE;
+	static const TColor GREEN;
 
 	union
 	{
-		int Color;
+		unsigned int Color;
 		struct
 		{
 			unsigned char R;
@@ -1011,13 +1013,19 @@ public:
 using UColor = TColor<unsigned char>;
 
 template<>
-const TColor<unsigned char> TColor<unsigned char>::WHITE = TColor<unsigned char>(255, 255, 255, 0);
+const TColor<unsigned char> TColor<unsigned char>::WHITE = TColor<unsigned char>(255, 255, 255, 255);
 
 template<>
-const TColor<unsigned char> TColor<unsigned char>::BLACK = TColor<unsigned char>(0, 0, 0, 0);
+const TColor<unsigned char> TColor<unsigned char>::BLACK = TColor<unsigned char>(0, 0, 0, 255);
 
 template<>
-const TColor<unsigned char> TColor<unsigned char>::YELLOW = TColor<unsigned char>(255, 255, 0, 0);
+const TColor<unsigned char> TColor<unsigned char>::YELLOW = TColor<unsigned char>(255, 255, 0, 255);
 
 template<>
-const TColor<unsigned char> TColor<unsigned char>::RED = TColor<unsigned char>(255, 0, 0, 0);
+const TColor<unsigned char> TColor<unsigned char>::RED = TColor<unsigned char>(255, 0, 0, 255);
+
+template<>
+const TColor<unsigned char> TColor<unsigned char>::BLUE = TColor<unsigned char>(0, 0, 255, 255);
+
+template<>
+const TColor<unsigned char> TColor<unsigned char>::GREEN = TColor<unsigned char>(0, 255, 0, 255);

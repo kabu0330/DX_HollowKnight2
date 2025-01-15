@@ -226,3 +226,11 @@ void URenderUnit::InputLayOutCreate()
 
 	int a = 0;
 }
+
+void URenderUnit::Reset()
+{
+	for (std::pair<const EShaderType, UEngineShaderResources>& Pair : Resources)
+	{
+		Pair.second.Reset();
+	}
+}

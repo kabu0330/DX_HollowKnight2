@@ -151,11 +151,31 @@
     <ClInclude Include="TimeEventComponent.h">
       <Filter>04_Object\Component</Filter>
     </ClInclude>
-    <ClInclude Include="EngineRenderTarget.h" />
-    <ClInclude Include="HUD.h" />
-    <ClInclude Include="Widget.h" />
     <ClInclude Include="TransformObject.h" />
-    <ClInclude Include="EngineDataStruct.h" />
+    <ClInclude Include="ThirdParty\FW1FontWrapper\Inc\FW1FontWrapper.h">
+      <Filter>06_ThirdParty\FW1FontWrapper\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>11_UI</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineDataStruct.h">
+      <Filter>09_Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Widget.h">
+      <Filter>11_UI</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineFont.h">
+      <Filter>07_Resources\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineRenderTarget.h">
+      <Filter>07_Resources\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="FontWidget.h">
+      <Filter>11_UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageWidget.h">
+      <Filter>11_UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -296,10 +316,25 @@
     <ClCompile Include="TimeEventComponent.cpp">
       <Filter>04_Object\Component</Filter>
     </ClCompile>
-    <ClCompile Include="EngineRenderTarget.cpp" />
-    <ClCompile Include="HUD.cpp" />
-    <ClCompile Include="Widget.cpp" />
     <ClCompile Include="TransformObject.cpp" />
+    <ClCompile Include="Widget.cpp">
+      <Filter>11_UI</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>11_UI</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineFont.cpp">
+      <Filter>07_Resources\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineRenderTarget.cpp">
+      <Filter>07_Resources\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="FontWidget.cpp">
+      <Filter>11_UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageWidget.cpp">
+      <Filter>11_UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="00_PreCompile">
@@ -380,6 +415,24 @@
     <Filter Include="04_Object\Component\Collision">
       <UniqueIdentifier>{e101feb8-a92d-471e-acdb-f621139da07c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="06_ThirdParty\FW1FontWrapper">
+      <UniqueIdentifier>{589da404-be3d-47b0-ab0e-51736335dc0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06_ThirdParty\FW1FontWrapper\Debug">
+      <UniqueIdentifier>{72b0e805-4ff2-412b-a616-075807a79205}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06_ThirdParty\FW1FontWrapper\Release">
+      <UniqueIdentifier>{7a76d380-2036-49ad-880f-78821dd75631}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06_ThirdParty\FW1FontWrapper\Inc">
+      <UniqueIdentifier>{feffa54c-fc8a-4164-b597-a683fd27acff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="11_UI">
+      <UniqueIdentifier>{5c644b65-9af3-4291-93e6-26e0a070c8ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07_Resources\Font">
+      <UniqueIdentifier>{7455c403-b120-4677-b007-381a53235298}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ThirdParty\DirectxTex\Inc\DirectXTex.inl">
@@ -392,6 +445,18 @@
     </CopyFileToFolders>
     <CopyFileToFolders Include="ThirdParty\DirectxTex\Debug\DirectXTex_Debug.lib">
       <Filter>06_ThirdParty\DirectxTex\Debug</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\FW1FontWrapper\Debug\FW1FontWrapper.dll">
+      <Filter>06_ThirdParty\FW1FontWrapper\Debug</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\FW1FontWrapper\Debug\FW1FontWrapper.lib">
+      <Filter>06_ThirdParty\FW1FontWrapper\Debug</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\FW1FontWrapper\Release\FW1FontWrapper.lib">
+      <Filter>06_ThirdParty\FW1FontWrapper\Release</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\FW1FontWrapper\Release\FW1FontWrapper.dll">
+      <Filter>06_ThirdParty\FW1FontWrapper\Release</Filter>
     </CopyFileToFolders>
   </ItemGroup>
 </Project>

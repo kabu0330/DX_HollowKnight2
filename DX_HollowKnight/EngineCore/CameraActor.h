@@ -30,6 +30,11 @@ public:
 	ENGINEAPI FVector ScreenMousePosToWorldPosWithOutPos();
 
 
+	ENGINEAPI FVector ScreenPosToWorldPos(FVector _Pos);
+
+	ENGINEAPI FVector WorldPosToScreenPos(FVector _Pos);
+
+
 	ENGINEAPI inline bool IsFreeCamera()
 	{
 		return IsFreeCameraValue;

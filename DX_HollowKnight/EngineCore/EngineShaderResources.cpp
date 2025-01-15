@@ -136,3 +136,16 @@ void UEngineShaderResources::TextureSetting(std::string_view _Name, std::shared_
 
 	TextureRes[UpperName].Res = _Texture;
 }
+
+void UEngineShaderResources::Reset()
+{
+	for (std::pair<const std::string, UEngineTextureRes>& Res : TextureRes)
+	{
+		Res.second.Reset();
+	}
+
+	for (std::pair<const std::string, UEngineSamplerRes>& Res : SamplerRes)
+	{
+		Res.second.Reset();
+	}
+}

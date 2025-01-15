@@ -18,7 +18,8 @@ APlayGameMode::APlayGameMode()
 {
 	SetCamera();
 	CreateAndLinkCollisionGroup();
-	URoomManager::CreateAndLinkRoom(this);
+
+	Rooms->CreateAndLinkRoom(this);
 }
 
 void APlayGameMode::SetCamera()
@@ -64,6 +65,7 @@ void APlayGameMode::CheckInfo()
 void APlayGameMode::BeginPlay()
 {
 	AActor::BeginPlay();
+	Rooms->SetRooms();
 }
 
 APlayGameMode::~APlayGameMode()

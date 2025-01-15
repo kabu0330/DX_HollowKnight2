@@ -52,6 +52,8 @@ public:
 
 	std::map<EShaderType, UEngineShaderResources> Resources;
 
+	ENGINEAPI void Reset();
+
 private:
 
 	void InputLayOutCreate();

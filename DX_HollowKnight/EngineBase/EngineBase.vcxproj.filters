@@ -26,7 +26,7 @@
       <Filter>05_Object</Filter>
     </ClCompile>
     <ClCompile Include="EngineString.cpp">
-      <Filter>06_Shader</Filter>
+      <Filter>06_String</Filter>
     </ClCompile>
     <ClCompile Include="EngineTimer.cpp">
       <Filter>07_Time</Filter>
@@ -71,7 +71,7 @@
       <Filter>05_Object</Filter>
     </ClInclude>
     <ClInclude Include="EngineString.h">
-      <Filter>06_Shader</Filter>
+      <Filter>06_String</Filter>
     </ClInclude>
     <ClInclude Include="EngineTimer.h">
       <Filter>07_Time</Filter>
@@ -106,14 +106,14 @@
     <Filter Include="05_Object">
       <UniqueIdentifier>{67c6cc72-c397-4b3b-b74b-0d94ae5ebdb2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="06_Shader">
-      <UniqueIdentifier>{8cb8d0a6-7860-4bf7-b7a9-54335ff7e5ad}</UniqueIdentifier>
-    </Filter>
     <Filter Include="07_Time">
       <UniqueIdentifier>{16dd6aed-6008-4925-86d4-ac7d497b77fc}</UniqueIdentifier>
     </Filter>
     <Filter Include="08_Event">
       <UniqueIdentifier>{15cbe489-edc5-413d-8aa7-f86b8d46518f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06_String">
+      <UniqueIdentifier>{8cb8d0a6-7860-4bf7-b7a9-54335ff7e5ad}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

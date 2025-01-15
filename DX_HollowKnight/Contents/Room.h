@@ -32,7 +32,7 @@ public:
 	}
 	
 	bool IsLinking(ARoom* _Room);
-	bool InterLinkRoom(ARoom* _Room, FVector _WorldPos);
+	bool InterLinkRoom(ARoom* _Room);
 	ARoom* LinkRoom(ARoom* _Room);
 	//std::shared_ptr<ARoom> LinkRoom(ARoom* _Room);
 
@@ -55,6 +55,15 @@ public:
 		Size = _Size;
 	}
 
+	void SetInitPos(FVector _InitPos)
+	{
+		InitPos = _InitPos;
+	}
+	FVector GetInitPos()
+	{
+		return InitPos;
+	}
+
 protected:
 	void Gravity(AActor* _Actor, float _DeltaTime);
 	void BlockByWall(AActor* _Actor, float _Speed, float _DeltaTime);
@@ -67,7 +76,7 @@ private:
 	inline static ARoom* CurRoom = nullptr;
 	UEngineWinImage PixelCollisionImage;
 	FVector Size = FVector::ZERO;
-	FVector Pos = FVector::ZERO;
+	FVector InitPos = FVector::ZERO;
 
 	std::shared_ptr<class UContentsRenderer> PixelCollisionTexture;
 	std::shared_ptr<class UContentsRenderer> BackgroundRenderer;

@@ -107,6 +107,28 @@ void UEngineTexture::Setting(EShaderType _Type, UINT _BindIndex)
 	}
 }
 
+void UEngineTexture::Reset(EShaderType _Type, UINT _BindIndex)
+{
+	ID3D11ShaderResourceView* ArrPtr[1] = { nullptr };
+
+	switch (_Type)
+	{
+	case EShaderType::VS:
+		UEngineCore::GetDevice().GetContext()->VSSetShaderResources(_BindIndex, 1, ArrPtr);
+		break;
+	case EShaderType::PS:
+		UEngineCore::GetDevice().GetContext()->PSSetShaderResources(_BindIndex, 1, ArrPtr);
+		break;
+	case EShaderType::HS:
+	case EShaderType::DS:
+	case EShaderType::GS:
+	case EShaderType::CS:
+	default:
+		MSGASSERT("아직 존재하지 않는 쉐이더에 세팅하려고 했습니다.");
+		break;
+	}
+}
+
 // 뎁스 스텐실 뷰 객체 생성
 void UEngineTexture::ResCreate(const D3D11_TEXTURE2D_DESC& _Value)
 {

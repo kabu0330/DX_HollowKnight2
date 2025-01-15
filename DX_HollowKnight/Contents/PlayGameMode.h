@@ -40,5 +40,6 @@ private:
 	
 	void CheckInfo();
 
+	class URoomManager* Rooms;
 };
 

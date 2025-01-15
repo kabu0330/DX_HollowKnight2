@@ -33,14 +33,17 @@ void ARoom::BeginPlay()
 {
 	AActor::BeginPlay();
 
-
-}
+	SetActorLocation(InitPos);
+	FVector Result = GetActorLocation();
+ }
 
 void ARoom::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
 	float ZSort = static_cast<float>(EZOrder::BACKGROUND);
 	BackgroundRenderer->SetZSort(ZSort);
+
+	FVector Result = GetActorLocation();
 }
 
 bool ARoom::IsLinking(ARoom* _Room)
@@ -55,12 +58,11 @@ bool ARoom::IsLinking(ARoom* _Room)
 	return false;
 }
 
-bool ARoom::InterLinkRoom(ARoom* _Room, FVector _WorldPos)
+bool ARoom::InterLinkRoom(ARoom* _Room)
 {
 	this->LinkRoom(_Room);
 	_Room->LinkRoom(this);
-	_Room->SetActorLocation(this->GetActorLocation() + _WorldPos);
-	_Room->SetActorLocation(this->GetActorLocation() + _WorldPos);
+	//_Room->SetActorLocation(this->GetActorLocation() + _WorldPos);
 
 	return true;
 }
@@ -88,7 +90,6 @@ void ARoom::CreateTexture(std::string_view _FileName, float _ScaleRatio)
 
 	BackgroundRenderer->SetTexture(_FileName, true, _ScaleRatio);
 	BackgroundRenderer->SetRelativeLocation({ Size.X / 2.0f * _ScaleRatio, -Size.Y / 2.0f * _ScaleRatio, ZSort });
-	//BackgroundRenderer->SetActive(false);
 }
 
 void ARoom::CreatePixelCollisionTexture(std::string_view _FileName, float _ScaleRatio)
@@ -107,6 +108,7 @@ ADoor* ARoom::CreateDoor(FVector _InitPos, ARoom* _TargetRoom, FVector _TargetPo
 
 	// 이미지 정 가운데를 {0, 0} 기준. 좌상단 기준 {-width / 2, height / 2} 
 	FVector RoomPos = { GetActorLocation().X - (Size.X / 2.0f), GetActorLocation().Y + (Size.Y / 2.0f) };
+	//FVector RoomPos = { GetActorLocation().X, GetActorLocation().Y};
 	Door->SetActorLocation(RoomPos + _InitPos);
 
 	FVector InitPos = RoomPos + _InitPos;
@@ -164,6 +166,31 @@ void ARoom::CheckPixelCollisionWithGravity(AActor* _Actor, class UContentsRender
 			return;
 		}
 	}
+}
+
+void ARoom::Gravity(AActor* _Actor, float _DeltaTime)
+{
+	AKnight* Knight = dynamic_cast<AKnight*>(_Actor);
+	if (nullptr != Knight)
+	{
+		if (false == Knight->IsOnGround())
+		{
+			float GravityValue = 1000.0f;
+			GravityForce += FVector::DOWN * GravityValue * _DeltaTime;
+			Knight->AddRelativeLocation(GravityForce * _DeltaTime);
+		}
+		else
+		{
+			GravityForce = FVector::ZERO;
+		}
+	}
+
+	if (2000.0f <= GravityForce.Length())
+	{
+		GravityForce.Y = 1000.0f;
+	}
+
+	// 몬스터 로직 추가 필요
 }
 
 void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Renderer, float _Speed, bool _Left)
@@ -226,32 +253,6 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Rend
 	}
 }
 
-void ARoom::Gravity(AActor* _Actor, float _DeltaTime)
-{
-	AKnight* Knight = dynamic_cast<AKnight*>(_Actor);
-	if (nullptr != Knight)
-	{
-		if (false == Knight->IsOnGround())
-		{
-			float GravityValue = 1000.0f;
-			GravityForce += FVector::DOWN * GravityValue * _DeltaTime;
-			Knight->AddRelativeLocation(GravityForce * _DeltaTime);
-		}
-		else
-		{
-			GravityForce = FVector::ZERO;
-		}
-	}
-
-	if (2000.0f <= GravityForce.Length())
-	{
-		GravityForce.Y = 1000.0f;
-	}
-
-
-	// 몬스터 로직 추가 필요
-}
-
 void ARoom::BlockByWall(AActor* _Actor, float _Speed, float _DeltaTime)
 {
 	AKnight* Knight = dynamic_cast<AKnight*>(_Actor);
@@ -265,14 +266,15 @@ void ARoom::BlockByWall(AActor* _Actor, float _Speed, float _DeltaTime)
 
 		if (true == Knight->IsLeft()) // 왼쪽에 벽이 있으면
 		{
-			PushValue = FVector::RIGHT * _Speed * 100.0f * _DeltaTime;
-			//Knight->SetActorLocation(Knight->GetPrevPos());
-			Knight->AddRelativeLocation(PushValue * _DeltaTime);
+			Knight->SetActorLocation({ Knight->GetPrevPos().X, Knight->GetActorLocation().Y});
+			//PushValue = FVector::RIGHT * _Speed * 100.0f * _DeltaTime;
+			//Knight->AddRelativeLocation(PushValue * _DeltaTime);
 		}
 		else
 		{
-			PushValue = FVector::LEFT * _Speed * 100.0f * _DeltaTime;
-			Knight->AddRelativeLocation(PushValue * _DeltaTime);
+			Knight->SetActorLocation({ Knight->GetPrevPos().X, Knight->GetActorLocation().Y });
+			//PushValue = FVector::LEFT * _Speed * 100.0f * _DeltaTime;
+			//Knight->AddRelativeLocation(PushValue * _DeltaTime);
 		}
 	}
 }
