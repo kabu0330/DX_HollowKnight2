@@ -32,9 +32,9 @@ public:
 	}
 	
 	bool IsLinking(ARoom* _Room);
-	bool InterLinkRoom(ARoom* _Room);
+	bool InterLinkRoom(ARoom* _Room, FVector _OffsetPos);
 	ARoom* LinkRoom(ARoom* _Room);
-	//std::shared_ptr<ARoom> LinkRoom(ARoom* _Room);
+
 
 	// 초기 세팅
 	void CreateTexture(std::string_view _FileName, float _ScaleRatio);
@@ -54,19 +54,20 @@ public:
 	{
 		Size = _Size;
 	}
-
-	void SetInitPos(FVector _InitPos)
+	void SetLeftTopPos(const FVector& _LeftTopPos)
 	{
-		InitPos = _InitPos;
+		LeftTopPos = _LeftTopPos;
 	}
-	FVector GetInitPos()
+
+	static void SwitchDebugActiveGravity()
 	{
-		return InitPos;
+		bActiveGravity = !bActiveGravity;
 	}
 
 protected:
 	void Gravity(AActor* _Actor, float _DeltaTime);
 	void BlockByWall(AActor* _Actor, float _Speed, float _DeltaTime);
+	void SetPixelCollisionCheckPosition(ARoom* _Room, FVector _OffsetPos);
 
 private:
 	inline static bool bActiveGravity = false;
@@ -76,7 +77,7 @@ private:
 	inline static ARoom* CurRoom = nullptr;
 	UEngineWinImage PixelCollisionImage;
 	FVector Size = FVector::ZERO;
-	FVector InitPos = FVector::ZERO;
+	FVector LeftTopPos = FVector::ZERO;
 
 	std::shared_ptr<class UContentsRenderer> PixelCollisionTexture;
 	std::shared_ptr<class UContentsRenderer> BackgroundRenderer;

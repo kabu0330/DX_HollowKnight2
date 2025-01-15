@@ -1,5 +1,6 @@
 #pragma once
 #include <EngineCore/GameMode.h>
+#include "RoomManager.h"
 
 // Ό³Έν :
 class APlayGameMode : public AGameMode
@@ -34,12 +35,16 @@ private:
 	inline static bool Pause = false;
 
 	void SetCamera();
+	void SetBasePoint();
 
 	// CollisionGroup
 	void CreateAndLinkCollisionGroup();
+	void CheckDebugInput();
 	
 	void CheckInfo();
 
-	class URoomManager* Rooms;
+	URoomManager Rooms = URoomManager();
+	std::shared_ptr<class UCollision> BasePointCollision = nullptr;
+	std::shared_ptr<class UDebugWindowGUI> Window = nullptr;
 };
 

@@ -52,7 +52,17 @@ public:
 		return Enter != nullptr || Stay != nullptr || End != nullptr;
 	}
 
+	void SetDebugColor(const FVector& _Color)
+	{
+		DebugColor = _Color;
+	}
+	FVector GetDebugColor() const
+	{
+		return DebugColor;
+	}
+
 private:
+	FVector DebugColor = { 0.0f, 1.0f, 0.0f, 1.0f };
 	ECollisionType CollisionType = ECollisionType::OBB2D;
 	// 내가 충돌한 상대를 기억하는 용도의 set
 	std::set<UCollision*> CollisionCheckSet;

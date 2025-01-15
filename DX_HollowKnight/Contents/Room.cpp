@@ -31,8 +31,9 @@ void ARoom::BeginPlay()
 {
 	AActor::BeginPlay();
 
-	SetActorLocation(InitPos);
+	//SetActorLocation(InitPos);
 	FVector Result = GetActorLocation();
+	int a = 0;
  }
 
 void ARoom::Tick(float _DeltaTime)
@@ -56,13 +57,19 @@ bool ARoom::IsLinking(ARoom* _Room)
 	return false;
 }
 
-bool ARoom::InterLinkRoom(ARoom* _Room)
+bool ARoom::InterLinkRoom(ARoom* _Room, FVector _OffsetPos)
 {
 	this->LinkRoom(_Room);
 	_Room->LinkRoom(this);
-	//_Room->SetActorLocation(this->GetActorLocation() + _WorldPos);
+	SetPixelCollisionCheckPosition(_Room, _OffsetPos);
 
 	return true;
+}
+
+void ARoom::SetPixelCollisionCheckPosition(ARoom* _Room, FVector _OffsetPos)
+{
+	_Room->SetActorLocation(this->GetActorLocation() + _OffsetPos);
+	_Room->SetLeftTopPos(_Room->GetActorLocation());
 }
 
 ARoom* ARoom::LinkRoom(ARoom* _Room)
@@ -123,7 +130,7 @@ void ARoom::CheckPixelCollisionWithGravity(AActor* _Actor, class UContentsRender
 	Gravity(_Actor, DeltaTime);
 
 	FVector NextPos = GravityForce * DeltaTime;
-	FVector ActorPos = _Actor->GetActorLocation();
+	FVector ActorPos = LeftTopPos - _Actor->GetActorLocation();
 	float HalfRendererHeight = _Renderer->GetScale().Y * 0.5f;
 
 	FVector CollisionPoint = { ActorPos.X + NextPos.X, ActorPos.Y +  NextPos.Y - HalfRendererHeight };
@@ -168,6 +175,10 @@ void ARoom::CheckPixelCollisionWithGravity(AActor* _Actor, class UContentsRender
 
 void ARoom::Gravity(AActor* _Actor, float _DeltaTime)
 {
+	if (true == bActiveGravity)
+	{
+		return;
+	}
 	AKnight* Knight = dynamic_cast<AKnight*>(_Actor);
 	if (nullptr != Knight)
 	{
@@ -193,11 +204,16 @@ void ARoom::Gravity(AActor* _Actor, float _DeltaTime)
 
 void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Renderer, float _Speed, bool _Left)
 {
+	if (true == bActiveGravity)
+	{
+		return;
+	}
+
 	float DeltaTime = UEngineCore::GetDeltaTime();
 	BlockByWall(_Actor, _Speed, DeltaTime);
 
 	float NextPos = _Speed * DeltaTime;
-	FVector ActorPos = _Actor->GetActorLocation();
+	FVector ActorPos = LeftTopPos - _Actor->GetActorLocation();
 	float HalfRendererWidth = _Renderer->GetScale().X * 0.5f;
 	float HalfRendererHeight = _Renderer->GetScale().Y * 0.4f;
 
@@ -276,4 +292,6 @@ void ARoom::BlockByWall(AActor* _Actor, float _Speed, float _DeltaTime)
 		}
 	}
 }
+
+
 

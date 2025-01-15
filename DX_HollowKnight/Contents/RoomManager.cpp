@@ -3,6 +3,7 @@
 #include "Room.h"
 
 URoomManager::URoomManager()
+	: Rooms()
 {
 }
 
@@ -21,16 +22,15 @@ void URoomManager::CreateAndLinkRoom(AGameMode* _GameMode)
 	std::string ForgottenCrossroadsStr3 = "ForgottenCrossroads3";
 
 	// ¸Ê ¼¼ÆÃ
-	ARoom* Dirtmouth = CreateRoom(DirtmouthStr, DirtmouthStr + PNG, DirtmouthStr + BMP, { 13652, 3666 });
-	ARoom* ForgottenCrossroads1 = CreateRoom(ForgottenCrossroadsStr1, ForgottenCrossroadsStr1 + PNG, ForgottenCrossroadsStr1 + BMP, { 5878, 2826 });
+	std::shared_ptr<ARoom> Dirtmouth = CreateRoom(DirtmouthStr, DirtmouthStr + PNG, DirtmouthStr + BMP, { 13652, 3666 });
+	std::shared_ptr<ARoom> ForgottenCrossroads1 = CreateRoom(ForgottenCrossroadsStr1, ForgottenCrossroadsStr1 + PNG, ForgottenCrossroadsStr1 + BMP, { 5878, 2826 });
 
+	Rooms.reserve(10);
+	Rooms.push_back(Dirtmouth);
+	Rooms.push_back(ForgottenCrossroads1);
 
-	//Rooms.push_back(ForgottenCrossroads1);
-
-	Dirtmouth->InterLinkRoom(ForgottenCrossroads1);
-	Dirtmouth->SetInitPos({ 0, 100 });
-	ForgottenCrossroads1->SetInitPos({ 6050.0f, -3666.0f / 2.0f - 3500.0f / 2.0f });
-	SetInitCurRoom(Dirtmouth);
+	//Dirtmouth->InterLinkRoom(ForgottenCrossroads1.get(), {6200.0f, -3666.0f / 2.0f - 1413.0f});
+	SetInitCurRoom(Dirtmouth.get());
 
 	//SetInitCurRoom(ForgottenCrossroads1);
 	//ForgottenCrossroads1->SetActorLocation({ 2000, 1000 });
@@ -39,16 +39,16 @@ void URoomManager::CreateAndLinkRoom(AGameMode* _GameMode)
 	// ForgottenCrossroads1->CreateDoor({ 0, 0 }, ForgottenCrossroads1, {100, -100});
 }
 
-ARoom* URoomManager::CreateRoom(std::string_view _RoomName, std::string_view _BackgroundName, std::string_view _PixelCollisionName, FVector _Size, float _ScaleRatio/* = 1.0f*/)
+std::shared_ptr<ARoom> URoomManager::CreateRoom(std::string_view _RoomName, std::string_view _BackgroundName, std::string_view _PixelCollisionName, FVector _Size, float _ScaleRatio/* = 1.0f*/)
 {
 	std::string RoomName = _RoomName.data();
-	ARoom* NewRoom = GameMode->GetWorld()->SpawnActor<ARoom>().get();
+	std::shared_ptr<ARoom> NewRoom = GameMode->GetWorld()->SpawnActor<ARoom>();
 	NewRoom->SetName(RoomName);
 	NewRoom->SetSize(_Size);
-	NewRoom->SetActorLocation({ _Size.X / 2.0f * _ScaleRatio, -_Size.Y / 2.0f * _ScaleRatio });
+	NewRoom->SetActorLocation({ _Size.X / 2.0f , -_Size.Y / 2.0f });
 
 	NewRoom->CreateTexture(_BackgroundName, _ScaleRatio);
-	LoadPixelCollisionTexture(NewRoom, &NewRoom->GetPixelCollisionImage(), _PixelCollisionName, _Size, _ScaleRatio);
+	LoadPixelCollisionTexture(NewRoom.get(), &NewRoom->GetPixelCollisionImage(), _PixelCollisionName, _Size, _ScaleRatio);
 	return NewRoom;
 }
 

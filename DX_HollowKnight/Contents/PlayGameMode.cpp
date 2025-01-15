@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "PlayGameMode.h"
 #include <EnginePlatform/EngineWinImage.h>
+#include <EnginePlatform/EngineInput.h>
 #include <EngineCore/CameraActor.h>
 #include <EngineCore/EngineCamera.h>
 #include <EngineCore/EngineGUIWindow.h>
@@ -19,7 +20,7 @@ APlayGameMode::APlayGameMode()
 	SetCamera();
 	CreateAndLinkCollisionGroup();
 
-	Rooms->CreateAndLinkRoom(this);
+	Rooms.CreateAndLinkRoom(this);
 }
 
 void APlayGameMode::SetCamera()
@@ -40,20 +41,32 @@ void APlayGameMode::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
 	CheckInfo();
+	CheckDebugInput();
+}
+
+void APlayGameMode::CheckDebugInput()
+{
+	if (UEngineInput::IsDown('T'))
+	{
+		ARoom::SwitchDebugActiveGravity();
+	}
+	if (UEngineInput::IsDown('P'))
+	{
+		GetWorld()->GetMainCamera()->FreeCameraSwitch();
+	}
 }
 
 void APlayGameMode::LevelChangeStart()
 {
+	Window = UEngineGUI::FindGUIWindow<UDebugWindowGUI>("DebugWindow");
+
+	if (nullptr == Window)
 	{
-		std::shared_ptr<UDebugWindowGUI> Window = UEngineGUI::FindGUIWindow<UDebugWindowGUI>("DebugWindow");
-
-		if (nullptr == Window)
-		{
-			Window = UEngineGUI::CreateGUIWindow<UDebugWindowGUI>("DebugWindow");
-		}
-
-		Window->SetActive(true);
+		Window = UEngineGUI::CreateGUIWindow<UDebugWindowGUI>("DebugWindow");
 	}
+
+	Window->SetActive(true);
+	
 }
 
 void APlayGameMode::CheckInfo()
@@ -65,8 +78,23 @@ void APlayGameMode::CheckInfo()
 void APlayGameMode::BeginPlay()
 {
 	AActor::BeginPlay();
-	Rooms->SetRooms();
+	SetBasePoint(); // 원점 0, 0 표기
 }
+
+void APlayGameMode::SetBasePoint()
+{ 
+	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
+	RootComponent = Default;
+
+	BasePointCollision = CreateDefaultSubObject<UCollision>();
+	BasePointCollision->SetupAttachment(RootComponent);
+	BasePointCollision->SetCollisionProfileName("Door");
+	float ZSort = static_cast<float>(EZOrder::BACKGROUND);
+	BasePointCollision->GetTransformRef().Location.Z = ZSort;
+	BasePointCollision->SetScale3D({8, 8});
+	BasePointCollision->SetDebugColor({1.0f, 0.0f, 0.0f, 1.0f });
+}
+
 
 APlayGameMode::~APlayGameMode()
 {
