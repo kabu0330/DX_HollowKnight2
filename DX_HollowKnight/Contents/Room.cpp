@@ -19,9 +19,7 @@ ARoom::ARoom()
 
 	BackgroundRenderer = CreateDefaultSubObject<UContentsRenderer>();
 	BackgroundRenderer->SetupAttachment(RootComponent);
-	//BackgroundRenderer->SetTexture("Dirtmouth_Back.png", true, 2.0f);
 
-	//DebugNonGravity = true;
 	bActiveGravity = true;
 }
 

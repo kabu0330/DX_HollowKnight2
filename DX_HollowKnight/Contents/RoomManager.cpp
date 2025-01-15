@@ -69,6 +69,7 @@ void URoomManager::LoadPixelCollisionTexture(ARoom* _Room, UEngineWinImage* _Bmp
 	UEngineFile ImageFiles = Dir.GetFile(_FileName);
 
 	_BmpTexture->Load(nullptr, ImageFiles.GetPathToString()); // 픽셀 충돌 파일 설정
+	
 
 	_Room->CreatePixelCollisionTexture(_FileName, _ScaleRatio);
 
