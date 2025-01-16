@@ -38,50 +38,48 @@ void ARoom::Tick(float _DeltaTime)
 	AActor::Tick(_DeltaTime);
 }
 
-bool ARoom::IsLinking(ARoom* _Room)
-{
-	for (ARoom* Room : Rooms)
-	{
-		if (Room == _Room)
-		{
-			return true;
-		}
-	}
-	return false;
-}
-
-bool ARoom::InterLinkRoom(ARoom* _Room, FVector _OffsetPos)
-{
-	this->LinkRoom(_Room);
-	_Room->LinkRoom(this);
-
-	return true;
-}
-
-ARoom* ARoom::LinkRoom(ARoom* _Room)
-{
-	if (_Room == this)
-	{
-		MSGASSERT("자기 자신을 연결할 수 없습니다.");
-		return nullptr;
-	}
-	if (true == IsLinking(_Room))
-	{
-		MSGASSERT("이미 연결된 맵입니다.");
-		return nullptr;
-	}
-	
-	Rooms.push_back(_Room);
-	return Rooms[Rooms.size() - 1];
-}
+//bool ARoom::IsLinking(ARoom* _Room)
+//{
+//	for (ARoom* Room : Rooms)
+//	{
+//		if (Room == _Room)
+//		{
+//			return true;
+//		}
+//	}
+//	return false;
+//}
+//
+//bool ARoom::InterLinkRoom(ARoom* _Room, FVector _OffsetPos)
+//{
+//	this->LinkRoom(_Room);
+//	_Room->LinkRoom(this);
+//
+//	return true;
+//}
+//
+//ARoom* ARoom::LinkRoom(ARoom* _Room)
+//{
+//	if (_Room == this)
+//	{
+//		MSGASSERT("자기 자신을 연결할 수 없습니다.");
+//		return nullptr;
+//	}
+//	if (true == IsLinking(_Room))
+//	{
+//		MSGASSERT("이미 연결된 맵입니다.");
+//		return nullptr;
+//	}
+//	
+//	Rooms.push_back(_Room);
+//	return Rooms[Rooms.size() - 1];
+//}
 
 void ARoom::CreateTexture(std::string_view _FileName, float _ScaleRatio)
 {
 	float ZSort = static_cast<float>(EZOrder::BACKGROUND);
 
 	BackgroundRenderer->SetTexture(_FileName, true, _ScaleRatio);
-	//BackgroundRenderer->SetRelativeLocation({ Size.X / 2.0f * _ScaleRatio, -Size.Y / 2.0f * _ScaleRatio, ZSort });
-	//BackgroundRenderer->SetRelativeLocation({ 0, 0, ZSort });
 }
 
 void ARoom::SetRoomLocation(FVector _Pos)
@@ -92,19 +90,17 @@ void ARoom::SetRoomLocation(FVector _Pos)
 }
 
 // 좌상단을 0, 0 기준으로 변경
-ADoor* ARoom::CreateDoor(FVector _InitPos, ARoom* _TargetRoom, FVector _TargetPos, bool _IsEnter)
+ADoor* ARoom::CreateDoor(FVector _DoorScale, FVector _InitPos, ARoom* _TargetRoom, FVector _TargetPos, bool _IsDoor)
 {
-	ADoor* Door = GetWorld()->SpawnActor<ADoor>().get();
+	Door = GetWorld()->SpawnActor<ADoor>().get();
 
-	// 이미지 정 가운데를 {0, 0} 기준. 좌상단 기준 {-width / 2, height / 2} 
 	FVector RoomPos = { GetActorLocation().X - (Size.X / 2.0f), GetActorLocation().Y + (Size.Y / 2.0f) };
-	//FVector RoomPos = { GetActorLocation().X, GetActorLocation().Y};
-	Door->SetActorLocation(RoomPos + _InitPos);
+	//Door->SetActorLocation(RoomPos + _InitPos);
+	Door->SetActorLocation( _InitPos);
+	//FVector InitPos = RoomPos + _InitPos;
 
-	FVector InitPos = RoomPos + _InitPos;
-
-	Door->SetWarpPosition(InitPos, _TargetRoom, _TargetPos, _IsEnter);
-
+	Door->SetScale(_DoorScale);
+	Door->SetWarpPosition(_TargetRoom, _TargetPos, _IsDoor);
 	return Door;
 }
 
@@ -112,52 +108,98 @@ ADoor* ARoom::CreateDoor(FVector _InitPos, ARoom* _TargetRoom, FVector _TargetPo
 void ARoom::CheckPixelCollisionWithGravity(AActor* _Actor, class UContentsRenderer* _Renderer)
 {
 	float DeltaTime = UEngineCore::GetDeltaTime();
-	Gravity(_Actor, DeltaTime);
 
-	FVector NextPos = GravityForce * DeltaTime;
-	FVector ActorPos = _Actor->GetActorLocation() - LeftTopPos;
-	float HalfRendererHeight = _Renderer->GetScale().Y * 0.5f;
-
-	FVector CollisionPoint = { ActorPos.X + NextPos.X, ActorPos.Y +  NextPos.Y - HalfRendererHeight };
-
-	// 실수오차 문제 때문에
-	CollisionPoint.X = floorf(CollisionPoint.X);
-	CollisionPoint.Y = floorf(CollisionPoint.Y);
-
-	UColor CollisionColor = PixelCollisionImage.GetColor({ CollisionPoint.X, -CollisionPoint.Y }); // y축 반전
+	//IsOnGround(_Actor, _Renderer);
+	FVector CollisionPoint = GetPixelCollisionPoint(_Actor, _Renderer, FVector::DOWN);
 
 	AKnight* Knight = dynamic_cast<AKnight*>(_Actor);
-
 	if (nullptr != Knight)
 	{
-		if (CollisionColor == UColor::BLACK )
+		if (true == IsOnGround(CollisionPoint))
 		{
-			UEngineDebug::OutPutString("Ground");
 			Knight->SetOnGround(true);
-			return;
 		}
-		else if (CollisionColor == UColor::WHITE)
+		else
 		{
-			UEngineDebug::OutPutString("Airborn");
 			Knight->SetOnGround(false);
-			return;
 		}
 	}
 
 	AMonster* Monster = dynamic_cast<AMonster*>(_Actor);
 	if (nullptr != Monster)
 	{
-		if (CollisionColor == UColor::BLACK )
+		if (true == IsOnGround(CollisionPoint))
 		{
 			Monster->SetOnGround(true);
-			return;
 		}
-		else if (CollisionColor == UColor::WHITE )
+		else
 		{
 			Monster->SetOnGround(false);
-			return;
 		}
 	}
+
+	Gravity(_Actor, DeltaTime);
+}
+
+FVector ARoom::GetPixelCollisionPoint(AActor* _Actor, UContentsRenderer* _Renderer, FVector _Offset)
+{
+	float DeltaTime = UEngineCore::GetDeltaTime();
+
+	FVector ActorPos = _Actor->GetActorLocation() - LeftTopPos;
+	FVector NextPos = GravityForce * DeltaTime;
+	float HalfRendererHeight = _Renderer->GetScale().Y * 0.5f;
+
+	FVector CollisionPoint = { ActorPos.X + NextPos.X + _Offset.X, ActorPos.Y + NextPos.Y - HalfRendererHeight + _Offset.Y }; // 1픽셀 보정
+
+	CollisionPoint.RoundVector();
+
+	return CollisionPoint;
+}
+
+bool ARoom::IsOnGround(FVector _Pos)
+{
+	FVector CollisionPoint = _Pos;
+
+	CollisionPoint.RoundVector();
+
+	UColor CollisionColor = PixelCollisionImage.GetColor({ CollisionPoint.X, -CollisionPoint.Y }); // y축 반전
+
+	if (CollisionColor == UColor::BLACK)
+	{
+		return true;
+	}
+	else if (CollisionColor == UColor::WHITE)
+	{
+		return false;
+	}
+
+	return false;
+}
+
+bool ARoom::IsOnGround(AActor* _Actor, UContentsRenderer* _Renderer, FVector _Pos)
+{
+	float DeltaTime = UEngineCore::GetDeltaTime();
+
+	FVector ActorPos = _Actor->GetActorLocation() - LeftTopPos;
+	FVector NextPos = GravityForce * DeltaTime;
+	float HalfRendererHeight = _Renderer->GetScale().Y * 0.5f;
+
+	FVector CollisionPoint = { ActorPos.X + NextPos.X, ActorPos.Y + NextPos.Y - HalfRendererHeight - 1.0f }; // 1픽셀 보정
+	CollisionPoint += _Pos;
+	CollisionPoint.RoundVector();
+
+	UColor CollisionColor = PixelCollisionImage.GetColor({ CollisionPoint.X, -CollisionPoint.Y }); // y축 반전
+
+	if (CollisionColor == UColor::BLACK)
+	{
+		return true;
+	}
+	else if (CollisionColor == UColor::WHITE)
+	{
+		return false;
+	}
+
+	return false;
 }
 
 void ARoom::Gravity(AActor* _Actor, float _DeltaTime)
@@ -179,11 +221,16 @@ void ARoom::Gravity(AActor* _Actor, float _DeltaTime)
 		{
 			GravityForce = FVector::ZERO;
 		}
-	}
 
-	if (1500.0f <= GravityForce.Length())
-	{
-		GravityForce = FVector::DOWN * 1000.0f;
+		if (1500.0f <= GravityForce.Length())
+		{
+			GravityForce = FVector::DOWN * 1000.0f;
+		}
+		
+		while (true == IsOnGround(Knight->GetActorLocation() + FVector{0.0f, 2.0f}))
+		{
+			Knight->AddRelativeLocation(FVector::UP);
+		}
 	}
 
 	// 몬스터 로직 추가 필요
@@ -197,7 +244,6 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Rend
 	}
 
 	float DeltaTime = UEngineCore::GetDeltaTime();
-	BlockByWall(_Actor, _Speed, DeltaTime);
 
 	float NextPos = _Speed * DeltaTime;
 	FVector ActorPos = _Actor->GetActorLocation() - LeftTopPos;
@@ -209,32 +255,29 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Rend
 	// 왼쪽, 오른쪽 방향 구분
 	if (true == _Left)
 	{
-		CollisionPoint.X -= HalfRendererWidth;
+		CollisionPoint.X -= HalfRendererWidth - 1.0f;
 	}
 	else
 	{
-		CollisionPoint.X += HalfRendererWidth;
+		CollisionPoint.X += HalfRendererWidth + 1.0;
 	}
 
 	// 실수오차 문제 때문에
-	CollisionPoint.X = floorf(CollisionPoint.X);
-	CollisionPoint.Y = floorf(CollisionPoint.Y);
+	CollisionPoint.X = ::roundf(CollisionPoint.X);
+	CollisionPoint.Y = ::roundf(CollisionPoint.Y);
 
 	UColor CollisionColor = PixelCollisionImage.GetColor({ CollisionPoint.X, -CollisionPoint.Y }); // y축 반전
 
 	AKnight* Knight = dynamic_cast<AKnight*>(_Actor);
-
 	if (nullptr != Knight)
 	{
 		if (CollisionColor == UColor::YELLOW )
 		{
 			Knight->SetWallHere(true);
-			return;
 		}
-		else if (CollisionColor == UColor::WHITE)
+		else
 		{
 			Knight->SetWallHere(false);
-			return;
 		}
 	}
 
@@ -243,39 +286,59 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Rend
 	{
 		if (CollisionColor == UColor::YELLOW)
 		{
-			//Monster->SetOnGround(true);
-			return;
+			//Knight->SetWallHere(true);
 		}
-		else if (CollisionColor == UColor::WHITE)
+		else
 		{
-			//Monster->SetOnGround(false);
-			return;
+			//Knight->SetWallHere(false);
 		}
 	}
 }
 
-void ARoom::BlockByWall(AActor* _Actor, float _Speed, float _DeltaTime)
+void ARoom::CheckPixelCollisionWithCeil(AActor* _Actor, UContentsRenderer* _Renderer, float _Speed, bool _Left)
 {
+	if (true == bActiveGravity)
+	{
+		return;
+	}
+
+	float DeltaTime = UEngineCore::GetDeltaTime();
+
+	float NextPos = _Speed * DeltaTime;
+	FVector ActorPos = _Actor->GetActorLocation() - LeftTopPos;
+	float HalfRendererHeight = _Renderer->GetScale().Y * 0.5f;
+
+	FVector CollisionPoint = { ActorPos.X + NextPos , ActorPos.Y - HalfRendererHeight };
+
+	// 실수오차 문제 때문에
+	CollisionPoint.X = ::roundf(CollisionPoint.X);
+	CollisionPoint.Y = ::roundf(CollisionPoint.Y);
+
+	UColor CollisionColor = PixelCollisionImage.GetColor({ CollisionPoint.X, -CollisionPoint.Y }); // y축 반전
+
 	AKnight* Knight = dynamic_cast<AKnight*>(_Actor);
-	FVector PushValue = FVector::ZERO;
 	if (nullptr != Knight)
 	{
-		if (false == Knight->IsWallHere())
+		if (CollisionColor == UColor::RED)
 		{
-			return;
-		}
-
-		if (true == Knight->IsLeft()) // 왼쪽에 벽이 있으면
-		{
-			Knight->SetActorLocation({ Knight->GetPrevPos().X, Knight->GetActorLocation().Y});
-			//PushValue = FVector::RIGHT * _Speed * 100.0f * _DeltaTime;
-			//Knight->AddRelativeLocation(PushValue * _DeltaTime);
+			Knight->SetCeilHere(true);
 		}
 		else
 		{
-			Knight->SetActorLocation({ Knight->GetPrevPos().X, Knight->GetActorLocation().Y });
-			//PushValue = FVector::LEFT * _Speed * 100.0f * _DeltaTime;
-			//Knight->AddRelativeLocation(PushValue * _DeltaTime);
+			Knight->SetCeilHere(false);
+		}
+	}
+
+	AMonster* Monster = dynamic_cast<AMonster*>(_Actor);
+	if (nullptr != Monster)
+	{
+		if (CollisionColor == UColor::RED)
+		{
+			//Knight->SetWallHere(true);
+		}
+		else
+		{
+			//Knight->SetWallHere(false);
 		}
 	}
 }

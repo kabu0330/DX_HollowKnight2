@@ -29,10 +29,20 @@ public:
 		return Pause;
 	}
 
+	URoomManager& GetRoomsRef()
+	{
+		return Rooms;
+	}
+	static APlayGameMode* GetPlayGameMode()
+	{
+		return PlayGameMode;
+	}
+
 protected:
 
 private:
 	inline static bool Pause = false;
+	inline static APlayGameMode* PlayGameMode = nullptr;
 
 	void SetCamera();
 	void SetBasePoint();

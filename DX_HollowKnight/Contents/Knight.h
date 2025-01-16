@@ -22,6 +22,9 @@ public:
 
 	void TimeElapsed(float _DeltaTime);
 
+	void CheckEnterDoor(class UCollision* _This, class UCollision* _Target);
+
+
 	static AKnight* GetPawn()
 	{
 		return MainPawn;
@@ -37,6 +40,12 @@ public:
 		return BodyRenderer.get();
 	}
 
+	UCollision* GetCollision()
+	{
+		return BodyCollision.get();
+	}
+
+	// 맵과 충돌
 	void SetOnGround(bool _Value)
 	{
 		bIsOnGround = _Value;
@@ -45,6 +54,7 @@ public:
 	{
 		return bIsOnGround;
 	}
+
 	void SetWallHere(bool _Value)
 	{
 		bIsWallHere = _Value;
@@ -54,6 +64,16 @@ public:
 		return bIsWallHere;
 	}
 
+	void SetCeilHere(bool _Value)
+	{
+		bIsCeilHere = _Value;
+	}
+	bool GetCeilHere() const
+	{
+		return bIsCeilHere;
+	}
+	//
+
 	float JumpForce = 0.0f;
 
 	bool IsLeft()
@@ -61,10 +81,6 @@ public:
 		return bIsLeft;
 	}
 
-	FVector GetPrevPos() const
-	{
-		return PrevPos;
-	}
 	
 	void SwitchActiveGravity()
 	{
@@ -84,7 +100,6 @@ private:
 	bool NoneGravity = false;
 	static AKnight* MainPawn;
 	FVector CameraPos = { 0.0f, 0.0f, 0.0f };
-	FVector PrevPos = FVector::ZERO;
 
 
 	// Renderer
@@ -93,6 +108,7 @@ private:
 
 	// Collision
 	bool bIsWallHere = false;
+	bool bIsCeilHere = false;
 	std::shared_ptr<class UCollision> BodyCollision;
 	void CreateCollision();
 
@@ -139,9 +155,11 @@ private:
 	
 	// Dash : C키
 	bool bIsDashing = false;
+	bool bCanDash = true;
 	bool bCanRotation = true; // 방향전환 여부, 대시 중에는 불가
 	float DashCooldownElapsed = 0.0f;
 	void ChangeDash();
+	void Dash();
 
 	// Spell : A키
 	bool bIsEffectActive = false;

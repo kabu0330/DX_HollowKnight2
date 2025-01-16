@@ -1,6 +1,8 @@
 #include "PreCompile.h"
 #include "RoomManager.h"
 #include "Room.h"
+#include "ContentsConst.h"
+#include "Door.h"
 
 URoomManager::URoomManager()
 	: Rooms()
@@ -17,26 +19,35 @@ void URoomManager::CreateAndLinkRoom(AGameMode* _GameMode)
 	std::string PNG = "_back.png";
 	std::string BMP = "_pixel.bmp";
 	std::string DirtmouthStr = "Dirtmouth";
-	std::string ForgottenCrossroadsStr1 = "ForgottenCrossroads1";
-	std::string ForgottenCrossroadsStr2 = "ForgottenCrossroads2";
-	std::string ForgottenCrossroadsStr3 = "ForgottenCrossroads3";
+	std::string CrossroadsStr1 = "ForgottenCrossroads1";
+	std::string CrossroadsStr2 = "ForgottenCrossroads2";
+	std::string CrossroadsStr3 = "ForgottenCrossroads3";
 
 	// 맵 세팅
 	std::shared_ptr<ARoom> Dirtmouth = CreateRoom(DirtmouthStr, DirtmouthStr + PNG, DirtmouthStr + BMP, { 13652, 3666 });
-	std::shared_ptr<ARoom> ForgottenCrossroads1 = CreateRoom(ForgottenCrossroadsStr1, ForgottenCrossroadsStr1 + PNG, ForgottenCrossroadsStr1 + BMP, { 5878, 2826 });
+	std::shared_ptr<ARoom> Crossroads1 = CreateRoom(CrossroadsStr1, CrossroadsStr1 + PNG, CrossroadsStr1 + BMP, { 5878, 2826 });
+	std::shared_ptr<ARoom> Crossroads2 = CreateRoom(CrossroadsStr2, CrossroadsStr2 + PNG, CrossroadsStr2 + BMP, { 5752, 2470 });
 
 	Rooms.reserve(10);
 	Rooms.push_back(Dirtmouth);
-	//Rooms.push_back(ForgottenCrossroads1);
+	Rooms.push_back(Crossroads1);
+	Rooms.push_back(Crossroads2);
 
 	Dirtmouth->SetRoomLocation({ 100, 100 });
-	ForgottenCrossroads1->SetRoomLocation({ 6150, -3550 });
-	SetInitCurRoom(Dirtmouth.get());
+	Crossroads1->SetRoomLocation({ 6150, -3550 });
+	Crossroads2->SetRoomLocation({ 6120 + 5952, -3580 });
+
 	//SetInitCurRoom(ForgottenCrossroads1.get());
 
-
-	Dirtmouth->CreateDoor({ 9418, -3308 }, ForgottenCrossroads1.get(), { 9384, -5595 });
+	//                      문 크기               문 위치                    도착 맵             도착 위치              입력 키 받을건지?
+	ADoor* Door0 =   Dirtmouth->CreateDoor({ 300, 100 }, RoomPos::FromDirtmouth,   Crossroads1.get(), RoomPos::ToCrossroads1      );
+	ADoor* Door1 = Crossroads1->CreateDoor({ 300, 200 }, RoomPos::FromCrossroads1, Dirtmouth.get()  , RoomPos::ToDirtmouth  , true);
+	ADoor* Door2 = Crossroads1->CreateDoor({ 100, 300 }, RoomPos::Crossroads1Right, Crossroads2.get(), RoomPos::Crossroads2Left);
+	ADoor* Door3 = Crossroads1->CreateDoor({ 100, 300 }, RoomPos::Crossroads2Left, Crossroads2.get(), RoomPos::Crossroads1Right);
+	Door0->GetCollision()->SetDebugColor({ 1.0f, 0.0f, 1.0f, 1.0f }); 
 	// ForgottenCrossroads1->CreateDoor({ 0, 0 }, ForgottenCrossroads1, {100, -100});
+
+	SetInitCurRoom(Dirtmouth.get());
 }
 
 std::shared_ptr<ARoom> URoomManager::CreateRoom(std::string_view _RoomName, std::string_view _BackgroundName, std::string_view _PixelCollisionName, FVector _Size, float _ScaleRatio/* = 1.0f*/)

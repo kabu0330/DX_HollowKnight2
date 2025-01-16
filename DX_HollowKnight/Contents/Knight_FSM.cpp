@@ -69,7 +69,6 @@ void AKnight::SetRunToIdle(float _DeltaTime)
 	bCanRotation = true;
 	bIsDashing = false;
 
-
 	ChangeNextAnimation(EKnightState::IDLE);
 
 	if (UEngineInput::IsPress(VK_LEFT) || UEngineInput::IsPress(VK_RIGHT))
@@ -95,6 +94,8 @@ void AKnight::SetJump(float _DeltaTime)
 	bCanRotation = true;
 
 	ChangeDash(); // 대시
+	ChangeAttackAnimation(EKnightState::AIRBORN); // 공중 공격
+
 
 	if (true == bIsOnGround)
 	{
@@ -113,14 +114,15 @@ void AKnight::SetAirborn(float _DeltaTime)
 	Move(_DeltaTime);
 
 	bCanRotation = true;
+	bIsDashing = false;
 
 	ChangeDash(); // 대시
+	ChangeAttackAnimation(EKnightState::AIRBORN); // 공중 공격
 
 	if (true == bIsOnGround)
 	{
 		FSM.ChangeState(EKnightState::LAND);
 	}
-
 }
 
 void AKnight::SetLand(float _DeltaTime)
@@ -130,13 +132,14 @@ void AKnight::SetLand(float _DeltaTime)
 
 	float InitJumpForce = 600.0f;
 	JumpForce = InitJumpForce;
+	ChangeAttackAnimation(EKnightState::IDLE); // 공중 공격
 
 	ChangeNextAnimation(EKnightState::IDLE);
 }
 
 void AKnight::SetHardLand(float _DeltaTime)
 {
-
+	ActiveGravity();
 	float InitJumpForce = 600.0f;
 	JumpForce = InitJumpForce;
 
@@ -145,35 +148,27 @@ void AKnight::SetHardLand(float _DeltaTime)
 
 void AKnight::SetDash(float _DeltaTime)
 {
-	bCanRotation = false;
-	bIsDashing = true;
+	Dash();
 
-	if (true == bIsLeft)
+	if (true == IsOnGround())
 	{
-		AddRelativeLocation(FVector{ -Velocity * _DeltaTime, 0.0f, 0.0f });
+	
+		ChangeNextAnimation(EKnightState::RUN_TO_IDLE);
+		return;
 	}
 	else
 	{
-		AddRelativeLocation(FVector{ Velocity * _DeltaTime, 0.0f, 0.0f });
+		ChangeNextAnimation(EKnightState::AIRBORN);
+		return;
 	}
 
-	//if (true == IsOnGround())
-	//{
-	//	ChangeNextAnimation(EKnightState::RUN_TO_IDLE);
-	//	return;
-	//}
-	//else
-	//{
-	//	ChangeNextAnimation(EKnightState::AIRBORN);
-	//	return;
-	//}
-
-	ChangeNextAnimation(EKnightState::RUN_TO_IDLE);
+	//ChangeNextAnimation(EKnightState::RUN_TO_IDLE);
 
 }
 
 void AKnight::SetSlash(float _DeltaTime)
 {
+	ActiveGravity();
 	Move(_DeltaTime);
 
 	CreateSlashEffect();
@@ -182,6 +177,7 @@ void AKnight::SetSlash(float _DeltaTime)
 
 void AKnight::SetUpSlash(float _DeltaTime)
 {
+	ActiveGravity();
 	Move(_DeltaTime);
 
 	CreateUpSlashEffect();
@@ -190,6 +186,7 @@ void AKnight::SetUpSlash(float _DeltaTime)
 
 void AKnight::SetDownSlash(float _DeltaTime)
 {
+	ActiveGravity();
 	Move(_DeltaTime);
 
 	CreateDownSlashEffect();

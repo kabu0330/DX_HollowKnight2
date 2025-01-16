@@ -17,6 +17,7 @@ FVector APlayGameMode::KnightPos = { 0.0f, 0.0f, 0.0f };
 
 APlayGameMode::APlayGameMode()
 {
+	PlayGameMode = this;
 	SetCamera();
 	CreateAndLinkCollisionGroup();
 
@@ -94,7 +95,6 @@ void APlayGameMode::SetBasePoint()
 	BasePointCollision->SetScale3D({8, 8});
 	BasePointCollision->SetDebugColor({1.0f, 0.0f, 0.0f, 1.0f });
 }
-
 
 APlayGameMode::~APlayGameMode()
 {

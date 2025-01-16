@@ -18,17 +18,33 @@ public:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
-	void SetWarpPosition(FVector _InitPos, class ARoom* _TargetRoom, FVector _TargetPos, bool _IsEnter);
+	void SetWarpPosition(class ARoom* _TargetRoom, FVector _TargetPos, bool _IsEnter);
 	void SetScale(FVector _Scale);
 	void Warp(class UCollision* _Actor1, class UCollision* _Actor2);
+	void EnterDoor()
+	{
+		bIsDoor = false;
+	}
+	void EnterDoorEnd()
+	{
+		bIsDoor = true;
+	}
+	UCollision* GetCollision()
+	{
+		return BodyCollision.get();
+	}
 
 protected:
-
+	void ActiveKnightCollision();
 private:
 	std::shared_ptr<class UCollision> BodyCollision;
+	std::shared_ptr<class UTimeEventComponent> TimeEventor;
 	FVector Scale;
 	FVector TargetPos = FVector::ZERO;
 	FVector InitPos = FVector::ZERO;
+	class ARoom* TargetRoom = nullptr;
+	bool bIsDoor = true;
+
 	class AKnight* Knight = nullptr;
 };
 

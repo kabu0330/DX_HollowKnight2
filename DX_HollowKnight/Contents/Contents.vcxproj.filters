@@ -85,6 +85,9 @@
     <ClInclude Include="Door.h">
       <Filter>Play</Filter>
     </ClInclude>
+    <ClInclude Include="ContentsConst.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">

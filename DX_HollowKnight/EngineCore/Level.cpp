@@ -31,7 +31,8 @@ ULevel::ULevel()
 {
 	SpawnCamera(EEngineCameraType::MainCamera); // 메인카메라
 
-	SpawnCamera(EEngineCameraType::UICamera); // UI 카메라
+	std::shared_ptr<ACameraActor> UICamera = SpawnCamera(EEngineCameraType::UICamera); // UI 카메라
+	UICamera->GetCameraComponent()->SetProjectionType(EProjectionType::Orthographic); // UI카메라는 원근투영 안한다.
 
 	// 화면에 그려질 최종 렌더타겟을 만든다.
 	LastRenderTarget = std::make_shared<UEngineRenderTarget>();

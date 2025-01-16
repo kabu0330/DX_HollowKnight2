@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "Door.h"
 #include "Room.h"
+#include <EngineCore/TimeEventComponent.h>
 
 ADoor::ADoor()
 {
@@ -12,10 +13,12 @@ ADoor::ADoor()
 	BodyCollision->SetCollisionProfileName("Door");
 	float ZSort = static_cast<float>(EZOrder::BACKGROUND);
 	BodyCollision->GetTransformRef().Location.Z = ZSort;
-	Scale = FVector(300, 300);
+	Scale = FVector(200, 100);
 	BodyCollision->SetScale3D(Scale);
 
-	BodyCollision->SetCollisionEnter(std::bind(&ADoor::Warp, this, std::placeholders::_1, std::placeholders::_2));
+	BodyCollision->SetCollisionStay(std::bind(&ADoor::Warp, this, std::placeholders::_1, std::placeholders::_2));
+
+	TimeEventor = CreateDefaultSubObject<UTimeEventComponent>();
 }
 
 ADoor::~ADoor()
@@ -25,7 +28,6 @@ ADoor::~ADoor()
 void ADoor::BeginPlay()
 {
 	AActor::BeginPlay();
-
 	Knight = AKnight::GetPawn();
 }
 
@@ -34,32 +36,33 @@ void ADoor::Tick(float _DeltaTime)
 	AActor::Tick(_DeltaTime);
 }
 
-void ADoor::SetWarpPosition(FVector _InitPos, ARoom* _TargetRoom, FVector _TargetPos, bool _IsEnter)
+void ADoor::SetWarpPosition(ARoom* _TargetRoom, FVector _TargetPos, bool _IsDoor)
 {
-	FVector RoomPos = _TargetRoom->GetActorLocation();
-	FVector RoomSize = _TargetRoom->GetSize();
-	FVector RoomLeftTop = { RoomPos.X - (RoomSize.X / 2.0f), RoomPos.Y + (RoomSize.Y / 2.0f)};
-
-	InitPos = _InitPos;
-	TargetPos = RoomLeftTop + _TargetPos;
-
+	TargetPos = _TargetPos;
+	TargetRoom = _TargetRoom;
+	bIsDoor = _IsDoor;
 }
 
 void ADoor::SetScale(FVector _Scale)
 {
-	Scale = _Scale;
-	BodyCollision->SetScale3D(Scale);
+	BodyCollision->SetRelativeScale3D(_Scale);
 }
 
 void ADoor::Warp(UCollision* _Actor1, UCollision* _Actor2)
 {
+	if (true == bIsDoor)
+	{
+		return;
+	}
 	UEngineDebug::OutPutString("Enter");
 	Knight->SetActorLocation(TargetPos); 
-	ARoom* TargetRoom = dynamic_cast<ARoom*>(_Actor2->GetActor());
-	if (nullptr == TargetRoom)
-	{
-		int a = 0;
-	}
-	//ARoom::SetCurRoom(_TargetRoom); // ÀÌµ¿ÇÏ´Â ¸Ê À§Ä¡·Î ÇÈ¼¿ Ãæµ¹ ÀÌµ¿
+	ARoom::SetCurRoom(TargetRoom); // ÇÈ¼¿Ãæµ¹ ±âÁØ ¸ÊÀ» ¹Ù²Û´Ù.
+	Knight->GetCollision()->SetActive(false);
+	TimeEventor->AddEndEvent(2.0f, std::bind(&ADoor::ActiveKnightCollision, this));
+}
+
+void ADoor::ActiveKnightCollision()
+{
+	Knight->GetCollision()->SetActive(true);
 }
 

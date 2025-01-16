@@ -12,6 +12,8 @@
 
 #include "KnightSkill.h"
 #include "Room.h"
+#include "PlayGameMode.h"
+#include "Door.h"
 
 AKnight* AKnight::MainPawn = nullptr;
 
@@ -26,7 +28,7 @@ AKnight::AKnight()
 
 	Velocity = 400.0f;
 	InitVelocity = Velocity;
-	DashSpeed = Velocity * 3.0f;
+	DashSpeed = Velocity * 4.0f;
 	JumpForce = InitJumpForce;
 	bCanRotation = true;
 
@@ -43,6 +45,7 @@ AKnight::AKnight()
 		DashSpeed = Velocity * 3.0f;
 	}
 
+	BodyCollision->SetCollisionStay(std::bind(&AKnight::CheckEnterDoor, this, std::placeholders::_1, std::placeholders::_2));
 }
 
 void AKnight::BeginPlay()
@@ -60,6 +63,8 @@ void AKnight::Tick(float _DeltaTime)
 	AActor::Tick(_DeltaTime);
 
 	ActiveWallCollsion();
+
+
 	SetCameraPosition();
 	FSM.Update(_DeltaTime);
 
@@ -75,11 +80,15 @@ void AKnight::ActiveGravity()
 	{
 		return;
 	}
+
 	ARoom* Room = ARoom::GetCurRoom();
 	if (nullptr != Room)
 	{
 		Room->CheckPixelCollisionWithGravity(this, BodyRenderer.get());
 	}
+
+	//URoomManager& Rooms = APlayGameMode::GetPlayGameMode()->GetRoomsRef();
+	//Rooms.AllRoomGravity(this, BodyRenderer.get(), Velocity, bIsLeft);
 }
 
 void AKnight::ActiveWallCollsion()
@@ -92,13 +101,12 @@ void AKnight::ActiveWallCollsion()
 	if (nullptr != Room)
 	{
 		Room->CheckPixelCollisionWithWall(this, BodyRenderer.get(), Velocity, bIsLeft);
+		Room->CheckPixelCollisionWithCeil(this, BodyRenderer.get(), Velocity, bIsLeft);
 	}
 }
 
 void AKnight::Move(float _DeltaTime)
 {
-	PrevPos = GetActorLocation();
-
 	if (false == bIsDashing)
 	{
 		Velocity = InitVelocity;
@@ -108,7 +116,6 @@ void AKnight::Move(float _DeltaTime)
 	{
 		Velocity = DashSpeed;
 	}
-
 	if (true == bIsDashing)
 	{
 		return;
@@ -118,48 +125,38 @@ void AKnight::Move(float _DeltaTime)
 
 	if (UEngineInput::IsPress(VK_LEFT))
 	{
-		AddRelativeLocation(FVector{ -Velocity * _DeltaTime, 0.0f, 0.0f });
+		if (false == bIsWallHere)
+		{
+			AddRelativeLocation(FVector{ -Velocity * _DeltaTime, 0.0f, 0.0f });
+		}
+
+		//if (true == IsOnGround(FVector{ -Velocity * _DeltaTime, 0.0f, 0.0f }))
+		//{
+		//	while (true == IsOnGround(GetActorLocation() + {0.0f, -1.0f, 0.0f}))
+		//	{
+		//		AddRelativeLocation(0.0f, -1.0f, 0.0f);
+
+		//		// 
+		//		FVector CurPos = GetActorLocation();
+		//		CurPos.RoundVector();
+		//	}
+
+		//	// AddRelativeLocation(FVector{ 0.0f, -Gravity * _DeltaTime, 0.0f });
+		//}
+		//else 
+		//{
+		//	AddRelativeLocation(FVector{ 0.0f, -Gravity * _DeltaTime, 0.0f });
+		//}
 
 	}
 	if (UEngineInput::IsPress(VK_RIGHT))
 	{
-		AddRelativeLocation(FVector{ Velocity * _DeltaTime, 0.0f, 0.0f });
+		if (false == bIsWallHere)
+		{
+			AddRelativeLocation(FVector{ Velocity * _DeltaTime, 0.0f, 0.0f });
+		}
 	}
 
-	// Debug Input
-	if (UEngineInput::IsPress(VK_UP))
-	{
-		AddRelativeLocation(FVector{ 0.0f, Velocity * _DeltaTime, 0.0f });
-	}
-	if (UEngineInput::IsPress(VK_DOWN))
-	{
-		AddRelativeLocation(FVector{ 0.0f, -Velocity * _DeltaTime, 0.0f });
-	}
-
-
-	//while (true)
-	//{
-	//	if (nullptr == ARoom::GetCurRoom())
-	//	{
-	//		return;
-	//	}
-
-	//	FVector Pos = { GetActorTransform().RelativeLocation.X, -GetActorTransform().RelativeLocation.Y };
-	//	FVector CollisionPos = { GetActorTransform().RelativeLocation.X, -GetActorTransform().RelativeLocation.Y + (BodyRenderer->GetScale().Y * 0.5f)};
-	//	CollisionPos.X = floorf(CollisionPos.X);
-	//	CollisionPos.Y = floorf(CollisionPos.Y);
-
-	//	UColor GroundColor = ARoom::GetCurRoom()->GetPixelCollisionImage().GetColor(CollisionPos);
-	//	
-	//	if (GroundColor == UColor::BLACK)
-	//	{
-	//		AddRelativeLocation(FVector::UP);			
-	//	}
-	//	else 
-	//	{
-	//		return;
-	//	}
-	//}
 }
 
 void AKnight::SetCameraPosition()
@@ -187,6 +184,40 @@ void AKnight::TimeElapsed(float _DeltaTime)
 			bIsShowEffect = false;
 			AttackCooldownElapsed = 0.0f;
 		}
+	}
+
+	float DashCooldown = 0.4f;
+	if (false == bCanDash)
+	{
+		DashCooldownElapsed += _DeltaTime;
+		if (DashCooldownElapsed >= DashCooldown)
+		{
+			if (true == bIsOnGround)
+			{
+				bCanDash = true;
+				DashCooldownElapsed = 0.0f;
+			}
+
+		}
+	}
+}
+
+void AKnight::CheckEnterDoor(UCollision* _This, UCollision* _Target)
+{
+	AActor* TargetActor =  _Target->GetActor();
+	ADoor* Door = dynamic_cast<ADoor*>(TargetActor);
+	if (nullptr == Door)
+	{
+		return;
+	}
+
+	if (UEngineInput::IsDown(VK_UP))
+	{
+		Door->EnterDoor();
+	}
+	if (UEngineInput::IsUp(VK_UP))
+	{
+		Door->EnterDoorEnd();
 	}
 }
 
@@ -219,11 +250,36 @@ void AKnight::ChangeDash()
 		return;
 	}
 
+	if (false == bCanDash)
+	{
+		return;
+	}
 	if (UEngineInput::IsDown('C'))
 	{
 		bIsDashing = true;
 		FSM.ChangeState(EKnightState::DASH);
 		return;
+	}
+}
+
+void AKnight::Dash()
+{
+	float DeltaTime = UEngineCore::GetDeltaTime();
+	bCanRotation = false;
+	bIsDashing = true;
+	bCanDash = false;
+
+	if (false == bIsWallHere)
+	{
+		if (true == bIsLeft)
+		{
+			AddRelativeLocation(FVector{ -Velocity * DeltaTime, 0.0f, 0.0f });
+
+		}
+		else
+		{
+			AddRelativeLocation(FVector{ Velocity * DeltaTime, 0.0f, 0.0f });
+		}
 	}
 }
 
@@ -280,18 +336,31 @@ void AKnight::Jump(float _DeltaTime)
 	{
 		if (UEngineInput::IsPress('Z'))
 		{		
+			float JumpForceMax = 1000.0f;
+			if (true == bIsCeilHere)
+			{
+				JumpForceMax = 0.0f;
+			}
+			else
+			{
+				JumpForceMax = 1000.0f;
+			}
 			float JumpAccTime = 0.4f;
 			float JumpKeyDuration = UEngineInput::IsPressTime('Z');
 			if (JumpAccTime >= JumpKeyDuration)
 			{
 				JumpForce += 500.0f;
-				float JumpForceMax = 1000.0f;
+
 				if (JumpForce >= JumpForceMax)
 				{
 					JumpForce = JumpForceMax;
 				}
 			}
+	
 			AddRelativeLocation(FVector{ 0.0f, JumpForce * _DeltaTime, 0.0f });
+		
+
+
 		}
 	}
 }
@@ -356,6 +425,20 @@ void AKnight::DebugInput(float _DeltaTime)
 	{
 		SwitchActiveGravity();
 	}
+
+	// Debug Input
+	if (true == ARoom::GetActiveGravity())
+	{
+		if (UEngineInput::IsPress(VK_UP))
+		{
+			AddRelativeLocation(FVector{ 0.0f, Velocity * _DeltaTime, 0.0f });
+		}
+		if (UEngineInput::IsPress(VK_DOWN))
+		{
+			AddRelativeLocation(FVector{ 0.0f, -Velocity * _DeltaTime, 0.0f });
+		}
+	}
+
 
 	//if (UEngineInput::IsPress('S'))
 	//{

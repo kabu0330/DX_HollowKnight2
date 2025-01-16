@@ -31,20 +31,23 @@ public:
 		CurRoom = _Room;
 	}
 	
-	bool IsLinking(ARoom* _Room);
-	bool InterLinkRoom(ARoom* _Room, FVector _OffsetPos);
-	ARoom* LinkRoom(ARoom* _Room);
+	//bool IsLinking(ARoom* _Room);
+	//bool InterLinkRoom(ARoom* _Room, FVector _OffsetPos);
+	//ARoom* LinkRoom(ARoom* _Room);
 
 	// 초기 세팅
 	void CreateTexture(std::string_view _FileName, float _ScaleRatio);
 	void SetRoomLocation(FVector _Pos);
 
-	class ADoor* CreateDoor(FVector _InitPos, ARoom* _TargetRoom, FVector _TargetPos, bool _IsEnter = false);
+	class ADoor* CreateDoor(FVector _DoorScale, FVector _InitPos, ARoom* _TargetRoom, FVector _TargetPos, bool _IsDoor = false);
 
 	// 중력과 벽
 	void CheckPixelCollisionWithGravity(AActor* _Actor, class UContentsRenderer* _Renderer);
 	void CheckPixelCollisionWithWall(AActor* _Actor, class UContentsRenderer* _Renderer, float _Speed, bool _Left);
-
+	void CheckPixelCollisionWithCeil(AActor* _Actor, class UContentsRenderer* _Renderer, float _Speed, bool _Left);
+	bool IsOnGround(FVector _Pos);
+	bool IsOnGround(AActor* _Actor, class UContentsRenderer* _Renderer, FVector _Pos);
+	FVector GetPixelCollisionPoint(AActor* _Actor, class UContentsRenderer* _Renderer, FVector _Offset);
 
 	FVector GetSize() const
 	{
@@ -63,10 +66,19 @@ public:
 	{
 		bActiveGravity = !bActiveGravity;
 	}
+	static bool GetActiveGravity()
+	{
+		return bActiveGravity;
+	}
+
+	FVector GetGravityForce() const
+	{
+		return GravityForce;
+	}
+
 
 protected:
 	void Gravity(AActor* _Actor, float _DeltaTime);
-	void BlockByWall(AActor* _Actor, float _Speed, float _DeltaTime);
 
 private:
 	inline static bool bActiveGravity = false;
@@ -81,6 +93,6 @@ private:
 	std::shared_ptr<class UContentsRenderer> PixelCollisionTexture;
 	std::shared_ptr<class UContentsRenderer> BackgroundRenderer;
 
-	std::vector<ARoom*> Rooms;
+	class ADoor* Door = nullptr;
 };
 

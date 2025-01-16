@@ -61,7 +61,7 @@ private:
 
 	FTransform PrevTrans;
 	EProjectionType PrevProjectionType = EProjectionType::Orthographic;
-	float FreeSpeed = 1000.0f;
+	float FreeSpeed = 2000.0f;
 
 	FVector ScreenPos;
 	FVector PrevScreenPos;

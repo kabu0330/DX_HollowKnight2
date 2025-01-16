@@ -142,6 +142,13 @@ public:
 		return acos(CosRad);
 	}
 
+	void RoundVector()
+	{
+		X = ::roundf(X);
+		Y = ::roundf(Y);
+		Z = ::roundf(Z);
+	}
+
 	static TVector Cross(const TVector& _Left, const TVector& _Right)
 	{
 		TVector Result;
@@ -470,6 +477,7 @@ public:
 	}
 
 	class FQuat DegAngleToQuaternion();
+
 };
 
 template<>

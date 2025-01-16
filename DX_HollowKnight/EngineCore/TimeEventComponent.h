@@ -26,14 +26,12 @@ public:
 	UTimeEventComponent& operator=(UTimeEventComponent&& _Other) noexcept = delete;
 
 	//                      5초 가 지나면                        5초동안만 이 함수를 업데이트해라
-	ENGINEAPI void AddEvent(float _Time, std::function<void(float, float)> _TimeUpdateEvent, std::function<void()> _TimeEndEvent, bool _Loop = false
-	);
+	ENGINEAPI void AddEvent(float _Time, std::function<void(float, float)> _TimeUpdateEvent, std::function<void()> _TimeEndEvent, bool _Loop = false);
 
+	// 5초가 끝날때 이 함수를 호출해라
 	ENGINEAPI void AddEndEvent(float _Time, std::function<void()> _TimeEndEvent, bool _Loop = false);
 
-	ENGINEAPI void AddUpdateEvent(float _Time, std::function<void(float, float)> _TimeUpdateEvent,		bool _Loop = false
-	);
-	// ENGINEAPI void AddEvent();
+	ENGINEAPI void AddUpdateEvent(float _Time, std::function<void(float, float)> _TimeUpdateEvent, bool _Loop = false);
 
 protected:
 	ENGINEAPI void BeginPlay() override;
