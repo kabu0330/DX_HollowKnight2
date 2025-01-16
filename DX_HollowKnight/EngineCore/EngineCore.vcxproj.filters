@@ -176,6 +176,7 @@
     <ClInclude Include="ImageWidget.h">
       <Filter>11_UI</Filter>
     </ClInclude>
+    <ClInclude Include="GameInstance.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -335,6 +336,7 @@
     <ClCompile Include="ImageWidget.cpp">
       <Filter>11_UI</Filter>
     </ClCompile>
+    <ClCompile Include="GameInstance.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="00_PreCompile">

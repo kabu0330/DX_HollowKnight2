@@ -8,6 +8,7 @@
 #include "EngineConstantBuffer.h"
 #include "EngineGUI.h"
 #include "Level.h"
+#include "GameInstance.h"
 
 // EngineCore.dll에 생성된 메모리여야 하므로 cpp 파일에서 Getter 함수를 구현한다. 헤더에서 구현하니 복사된 메모리를 참조하더라.
 UEngineGraphicDevice& UEngineCore::GetDevice()
@@ -29,6 +30,12 @@ std::map<std::string, std::shared_ptr<class ULevel>> UEngineCore::GetAllLevelMap
 {
 	return GEngine->LevelMap;
 }
+
+UGameInstance* UEngineCore::GetGameInstance()
+{
+	return GEngine->GameInstance.get();
+}
+
 UEngineCore* GEngine = nullptr;
 
 //UEngineGraphicDevice UEngineCore::Device; // UEngineGraphicDevice EngienCore.dll::UEngineCore::Device;
