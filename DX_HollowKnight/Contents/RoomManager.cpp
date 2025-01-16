@@ -27,15 +27,15 @@ void URoomManager::CreateAndLinkRoom(AGameMode* _GameMode)
 
 	Rooms.reserve(10);
 	Rooms.push_back(Dirtmouth);
-	Rooms.push_back(ForgottenCrossroads1);
+	//Rooms.push_back(ForgottenCrossroads1);
 
-	//Dirtmouth->InterLinkRoom(ForgottenCrossroads1.get(), {6200.0f, -3666.0f / 2.0f - 1413.0f});
+	Dirtmouth->SetRoomLocation({ 100, 100 });
+	ForgottenCrossroads1->SetRoomLocation({ 6150, -3550 });
 	SetInitCurRoom(Dirtmouth.get());
+	//SetInitCurRoom(ForgottenCrossroads1.get());
 
-	//SetInitCurRoom(ForgottenCrossroads1);
-	//ForgottenCrossroads1->SetActorLocation({ 2000, 1000 });
 
-	//Dirtmouth->CreateDoor({ 1500, -2600 }, Dirtmouth, {1100, -2600});
+	Dirtmouth->CreateDoor({ 9418, -3308 }, ForgottenCrossroads1.get(), { 9384, -5595 });
 	// ForgottenCrossroads1->CreateDoor({ 0, 0 }, ForgottenCrossroads1, {100, -100});
 }
 
@@ -45,7 +45,8 @@ std::shared_ptr<ARoom> URoomManager::CreateRoom(std::string_view _RoomName, std:
 	std::shared_ptr<ARoom> NewRoom = GameMode->GetWorld()->SpawnActor<ARoom>();
 	NewRoom->SetName(RoomName);
 	NewRoom->SetSize(_Size);
-	NewRoom->SetActorLocation({ _Size.X / 2.0f , -_Size.Y / 2.0f });
+	float ZOrder = static_cast<float>(EZOrder::BACKGROUND);
+	NewRoom->SetActorLocation({ _Size.X / 2.0f , -_Size.Y / 2.0f, ZOrder });
 
 	NewRoom->CreateTexture(_BackgroundName, _ScaleRatio);
 	LoadPixelCollisionTexture(NewRoom.get(), &NewRoom->GetPixelCollisionImage(), _PixelCollisionName, _Size, _ScaleRatio);
@@ -69,9 +70,6 @@ void URoomManager::LoadPixelCollisionTexture(ARoom* _Room, UEngineWinImage* _Bmp
 	UEngineFile ImageFiles = Dir.GetFile(_FileName);
 
 	_BmpTexture->Load(nullptr, ImageFiles.GetPathToString()); // 픽셀 충돌 파일 설정
-	
-
-	_Room->CreatePixelCollisionTexture(_FileName, _ScaleRatio);
 
 }
 

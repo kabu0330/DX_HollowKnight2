@@ -30,8 +30,8 @@ AKnight::AKnight()
 	JumpForce = InitJumpForce;
 	bCanRotation = true;
 
-	//SetActorLocation({ 1100.0f, -3050.0f });
-	//SetActorLocation({ 9311.0f, -5711.0f });
+	//SetActorLocation({ 1100.0f, -3000.0f });
+	SetActorLocation({ 9262, -3108 });
 
 	// Debug
 	BodyRenderer->BillboardOn();
@@ -284,7 +284,7 @@ void AKnight::Jump(float _DeltaTime)
 			float JumpKeyDuration = UEngineInput::IsPressTime('Z');
 			if (JumpAccTime >= JumpKeyDuration)
 			{
-				JumpForce += 200.0f;
+				JumpForce += 500.0f;
 				float JumpForceMax = 1000.0f;
 				if (JumpForce >= JumpForceMax)
 				{

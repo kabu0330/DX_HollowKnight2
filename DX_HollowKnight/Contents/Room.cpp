@@ -20,7 +20,7 @@ ARoom::ARoom()
 	BackgroundRenderer = CreateDefaultSubObject<UContentsRenderer>();
 	BackgroundRenderer->SetupAttachment(RootComponent);
 
-	bActiveGravity = true;
+	//bActiveGravity = true;
 }
 
 ARoom::~ARoom()
@@ -31,18 +31,11 @@ void ARoom::BeginPlay()
 {
 	AActor::BeginPlay();
 
-	//SetActorLocation(InitPos);
-	FVector Result = GetActorLocation();
-	int a = 0;
  }
 
 void ARoom::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
-	float ZSort = static_cast<float>(EZOrder::BACKGROUND);
-	BackgroundRenderer->SetZSort(ZSort);
-
-	FVector Result = GetActorLocation();
 }
 
 bool ARoom::IsLinking(ARoom* _Room)
@@ -61,15 +54,8 @@ bool ARoom::InterLinkRoom(ARoom* _Room, FVector _OffsetPos)
 {
 	this->LinkRoom(_Room);
 	_Room->LinkRoom(this);
-	SetPixelCollisionCheckPosition(_Room, _OffsetPos);
 
 	return true;
-}
-
-void ARoom::SetPixelCollisionCheckPosition(ARoom* _Room, FVector _OffsetPos)
-{
-	_Room->SetActorLocation(this->GetActorLocation() + _OffsetPos);
-	_Room->SetLeftTopPos(_Room->GetActorLocation());
 }
 
 ARoom* ARoom::LinkRoom(ARoom* _Room)
@@ -94,16 +80,15 @@ void ARoom::CreateTexture(std::string_view _FileName, float _ScaleRatio)
 	float ZSort = static_cast<float>(EZOrder::BACKGROUND);
 
 	BackgroundRenderer->SetTexture(_FileName, true, _ScaleRatio);
-	BackgroundRenderer->SetRelativeLocation({ Size.X / 2.0f * _ScaleRatio, -Size.Y / 2.0f * _ScaleRatio, ZSort });
+	//BackgroundRenderer->SetRelativeLocation({ Size.X / 2.0f * _ScaleRatio, -Size.Y / 2.0f * _ScaleRatio, ZSort });
+	//BackgroundRenderer->SetRelativeLocation({ 0, 0, ZSort });
 }
 
-void ARoom::CreatePixelCollisionTexture(std::string_view _FileName, float _ScaleRatio)
+void ARoom::SetRoomLocation(FVector _Pos)
 {
-	float ZSort = static_cast<float>(EZOrder::PIXELCOLLISION);
-
-	//PixelCollisionTexture->SetTexture(_FileName, true, _ScaleRatio);
-	//PixelCollisionTexture->SetRelativeLocation({ Size.X / 2.0f * _ScaleRatio, -Size.Y / 2.0f * _ScaleRatio, ZSort });
-	//PixelCollisionTexture->SetRelativeLocation({Pos.X, Pos.Y, ZSort });
+	float ZOrder = static_cast<float>(EZOrder::BACKGROUND);
+	SetActorLocation({ GetActorLocation().X + _Pos.X, GetActorLocation().Y + _Pos.Y, ZOrder });
+	LeftTopPos = _Pos;
 }
 
 // 좌상단을 0, 0 기준으로 변경
@@ -130,7 +115,7 @@ void ARoom::CheckPixelCollisionWithGravity(AActor* _Actor, class UContentsRender
 	Gravity(_Actor, DeltaTime);
 
 	FVector NextPos = GravityForce * DeltaTime;
-	FVector ActorPos = LeftTopPos - _Actor->GetActorLocation();
+	FVector ActorPos = _Actor->GetActorLocation() - LeftTopPos;
 	float HalfRendererHeight = _Renderer->GetScale().Y * 0.5f;
 
 	FVector CollisionPoint = { ActorPos.X + NextPos.X, ActorPos.Y +  NextPos.Y - HalfRendererHeight };
@@ -147,11 +132,13 @@ void ARoom::CheckPixelCollisionWithGravity(AActor* _Actor, class UContentsRender
 	{
 		if (CollisionColor == UColor::BLACK )
 		{
+			UEngineDebug::OutPutString("Ground");
 			Knight->SetOnGround(true);
 			return;
 		}
 		else if (CollisionColor == UColor::WHITE)
 		{
+			UEngineDebug::OutPutString("Airborn");
 			Knight->SetOnGround(false);
 			return;
 		}
@@ -194,9 +181,9 @@ void ARoom::Gravity(AActor* _Actor, float _DeltaTime)
 		}
 	}
 
-	if (2000.0f <= GravityForce.Length())
+	if (1500.0f <= GravityForce.Length())
 	{
-		GravityForce.Y = 1000.0f;
+		GravityForce = FVector::DOWN * 1000.0f;
 	}
 
 	// 몬스터 로직 추가 필요
@@ -213,7 +200,7 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Rend
 	BlockByWall(_Actor, _Speed, DeltaTime);
 
 	float NextPos = _Speed * DeltaTime;
-	FVector ActorPos = LeftTopPos - _Actor->GetActorLocation();
+	FVector ActorPos = _Actor->GetActorLocation() - LeftTopPos;
 	float HalfRendererWidth = _Renderer->GetScale().X * 0.5f;
 	float HalfRendererHeight = _Renderer->GetScale().Y * 0.4f;
 

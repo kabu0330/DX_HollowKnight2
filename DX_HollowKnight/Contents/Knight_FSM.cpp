@@ -98,7 +98,7 @@ void AKnight::SetJump(float _DeltaTime)
 
 	if (true == bIsOnGround)
 	{
-		//FSM.ChangeState(EKnightState::LAND);
+		ChangeNextAnimation(EKnightState::LAND);
 	}
 	else
 	{

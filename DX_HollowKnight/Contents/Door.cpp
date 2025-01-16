@@ -42,6 +42,7 @@ void ADoor::SetWarpPosition(FVector _InitPos, ARoom* _TargetRoom, FVector _Targe
 
 	InitPos = _InitPos;
 	TargetPos = RoomLeftTop + _TargetPos;
+
 }
 
 void ADoor::SetScale(FVector _Scale)
@@ -54,5 +55,11 @@ void ADoor::Warp(UCollision* _Actor1, UCollision* _Actor2)
 {
 	UEngineDebug::OutPutString("Enter");
 	Knight->SetActorLocation(TargetPos); 
+	ARoom* TargetRoom = dynamic_cast<ARoom*>(_Actor2->GetActor());
+	if (nullptr == TargetRoom)
+	{
+		int a = 0;
+	}
+	//ARoom::SetCurRoom(_TargetRoom); // 이동하는 맵 위치로 픽셀 충돌 이동
 }
 
