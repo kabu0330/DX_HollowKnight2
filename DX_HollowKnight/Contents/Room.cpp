@@ -20,7 +20,6 @@ ARoom::ARoom()
 	BackgroundRenderer = CreateDefaultSubObject<UContentsRenderer>();
 	BackgroundRenderer->SetupAttachment(RootComponent);
 
-	//bActiveGravity = true;
 }
 
 ARoom::~ARoom()
@@ -37,43 +36,6 @@ void ARoom::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
 }
-
-//bool ARoom::IsLinking(ARoom* _Room)
-//{
-//	for (ARoom* Room : Rooms)
-//	{
-//		if (Room == _Room)
-//		{
-//			return true;
-//		}
-//	}
-//	return false;
-//}
-//
-//bool ARoom::InterLinkRoom(ARoom* _Room, FVector _OffsetPos)
-//{
-//	this->LinkRoom(_Room);
-//	_Room->LinkRoom(this);
-//
-//	return true;
-//}
-//
-//ARoom* ARoom::LinkRoom(ARoom* _Room)
-//{
-//	if (_Room == this)
-//	{
-//		MSGASSERT("자기 자신을 연결할 수 없습니다.");
-//		return nullptr;
-//	}
-//	if (true == IsLinking(_Room))
-//	{
-//		MSGASSERT("이미 연결된 맵입니다.");
-//		return nullptr;
-//	}
-//	
-//	Rooms.push_back(_Room);
-//	return Rooms[Rooms.size() - 1];
-//}
 
 void ARoom::CreateTexture(std::string_view _FileName, float _ScaleRatio)
 {
@@ -101,6 +63,7 @@ ADoor* ARoom::CreateDoor(FVector _DoorScale, FVector _InitPos, ARoom* _TargetRoo
 
 	Door->SetScale(_DoorScale);
 	Door->SetWarpPosition(_TargetRoom, _TargetPos, _IsDoor);
+	Door->GetCollision()->SetDebugColor({ 1.0f, 0.0f, 1.0f, 1.0f });
 	return Door;
 }
 
@@ -109,7 +72,6 @@ void ARoom::CheckPixelCollisionWithGravity(AActor* _Actor, class UContentsRender
 {
 	float DeltaTime = UEngineCore::GetDeltaTime();
 
-	//IsOnGround(_Actor, _Renderer);
 	FVector CollisionPoint = GetPixelCollisionPoint(_Actor, _Renderer, FVector::DOWN);
 
 	AKnight* Knight = dynamic_cast<AKnight*>(_Actor);
@@ -164,16 +126,14 @@ bool ARoom::IsOnGround(FVector _Pos)
 
 	UColor CollisionColor = PixelCollisionImage.GetColor({ CollisionPoint.X, -CollisionPoint.Y }); // y축 반전
 
-	if (CollisionColor == UColor::BLACK)
+	if (CollisionColor == UColor::BLACK || CollisionColor == UColor(0, 0, 0, 0))
 	{
 		return true;
 	}
-	else if (CollisionColor == UColor::WHITE)
+	else
 	{
 		return false;
 	}
-
-	return false;
 }
 
 bool ARoom::IsOnGround(AActor* _Actor, UContentsRenderer* _Renderer, FVector _Pos)
@@ -184,7 +144,7 @@ bool ARoom::IsOnGround(AActor* _Actor, UContentsRenderer* _Renderer, FVector _Po
 	FVector NextPos = GravityForce * DeltaTime;
 	float HalfRendererHeight = _Renderer->GetScale().Y * 0.5f;
 
-	FVector CollisionPoint = { ActorPos.X + NextPos.X, ActorPos.Y + NextPos.Y - HalfRendererHeight - 1.0f }; // 1픽셀 보정
+	FVector CollisionPoint = { ActorPos.X + NextPos.X, ActorPos.Y + NextPos.Y - HalfRendererHeight /*- 1.0f*/ }; // 1픽셀 보정
 	CollisionPoint += _Pos;
 	CollisionPoint.RoundVector();
 
@@ -194,12 +154,10 @@ bool ARoom::IsOnGround(AActor* _Actor, UContentsRenderer* _Renderer, FVector _Po
 	{
 		return true;
 	}
-	else if (CollisionColor == UColor::WHITE)
+	else
 	{
 		return false;
 	}
-
-	return false;
 }
 
 void ARoom::Gravity(AActor* _Actor, float _DeltaTime)
@@ -213,6 +171,13 @@ void ARoom::Gravity(AActor* _Actor, float _DeltaTime)
 	{
 		if (false == Knight->IsOnGround())
 		{
+			//float DeltaTime = UEngineCore::GetDeltaTime();
+			//FVector NextPos = GravityForce * DeltaTime;
+			//FVector Pos = Knight->GetActorLocation() + Knight->GetRenderer()->GetScale() * 0.5f - LeftTopPos + NextPos + FVector(0.0f, -1.0f, 0.0f);
+			//while (true == IsOnGround(Pos))
+			//{
+			//	Knight->AddRelativeLocation(FVector::UP);
+			//}
 			float GravityValue = 1000.0f;
 			GravityForce += FVector::DOWN * GravityValue * _DeltaTime;
 			Knight->AddRelativeLocation(GravityForce * _DeltaTime);
@@ -225,13 +190,26 @@ void ARoom::Gravity(AActor* _Actor, float _DeltaTime)
 		if (1500.0f <= GravityForce.Length())
 		{
 			GravityForce = FVector::DOWN * 1000.0f;
-		}
-		
-		while (true == IsOnGround(Knight->GetActorLocation() + FVector{0.0f, 2.0f}))
-		{
-			Knight->AddRelativeLocation(FVector::UP);
-		}
+		}		
 	}
+
+	//if (true == IsOnGround(FVector{ -Velocity * _DeltaTime, 0.0f, 0.0f }))
+//{
+//	while (true == IsOnGround(GetActorLocation() + {0.0f, -1.0f, 0.0f}))
+//	{
+//		AddRelativeLocation(0.0f, -1.0f, 0.0f);
+
+//		// 
+//		FVector CurPos = GetActorLocation();
+//		CurPos.RoundVector();
+//	}
+
+//	// AddRelativeLocation(FVector{ 0.0f, -Gravity * _DeltaTime, 0.0f });
+//}
+//else 
+//{
+//	AddRelativeLocation(FVector{ 0.0f, -Gravity * _DeltaTime, 0.0f });
+//}
 
 	// 몬스터 로직 추가 필요
 }
@@ -259,7 +237,7 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Rend
 	}
 	else
 	{
-		CollisionPoint.X += HalfRendererWidth + 1.0;
+		CollisionPoint.X += HalfRendererWidth + 1.0f;
 	}
 
 	// 실수오차 문제 때문에

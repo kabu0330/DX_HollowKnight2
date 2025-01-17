@@ -110,7 +110,7 @@ void AKnight::SetJump(float _DeltaTime)
 
 void AKnight::SetAirborn(float _DeltaTime)
 {
-	ActiveGravity();
+ 	ActiveGravity();
 	Move(_DeltaTime);
 
 	bCanRotation = true;

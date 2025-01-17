@@ -1,5 +1,6 @@
 #pragma once
 #include <EngineCore/Actor.h>
+#include "Monster.h"
 
 // Ό³Έν :
 class ARoom : public AActor
@@ -76,6 +77,24 @@ public:
 		return GravityForce;
 	}
 
+	template<typename MonsterType>
+	AMonster* CreateMonster(FVector _Pos, bool _CanWorldPos = true)
+	{
+		AMonster* NewMonster = GetWorld()->SpawnActor<MonsterType>().get();
+		if (false == _CanWorldPos)
+		{
+			NewMonster->SetActorLocation(this->GetActorLocation() + _Pos);
+		}
+		else
+		{
+			NewMonster->SetActorLocation(_Pos);
+		}
+
+		NewMonster->SetParentRoom(this);
+		Monsters.push_back(NewMonster);
+		return NewMonster;
+	}
+
 
 protected:
 	void Gravity(AActor* _Actor, float _DeltaTime);
@@ -94,5 +113,7 @@ private:
 	std::shared_ptr<class UContentsRenderer> BackgroundRenderer;
 
 	class ADoor* Door = nullptr;
+
+	std::list<AMonster*> Monsters;
 };
 

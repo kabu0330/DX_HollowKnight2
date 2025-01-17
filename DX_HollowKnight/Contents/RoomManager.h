@@ -17,7 +17,7 @@ public:
 
 	void CreateAndLinkRoom(class AGameMode* _GameMode);
 
-	std::vector<ARoom*> GetRooms()
+	std::vector<ARoom*>& GetRoomsRef()
 	{
 		std::vector<ARoom*> NewRooms;
 		for (int i = 0; i < Rooms.size(); i++)
@@ -25,16 +25,6 @@ public:
 			NewRooms.push_back(Rooms[i].get());
 		}
 		return NewRooms;
-	}
-
-	void AllRoomGravity(class AActor* _Actor, class UContentsRenderer* _Renderer, float _Speed, bool _Left)
-	{
-		std::vector<ARoom*> NewRooms = GetRooms();
-		for (ARoom* Room : NewRooms)
-		{
-			Room->CheckPixelCollisionWithGravity(_Actor, _Renderer);
-			Room->CheckPixelCollisionWithWall(_Actor, _Renderer, _Speed, _Left);
-		}
 	}
 
 protected:

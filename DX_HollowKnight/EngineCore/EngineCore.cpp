@@ -21,9 +21,11 @@ UEngineWindow& UEngineCore::GetMainWindow()
 	return GEngine->MainWindow;
 }
 
-const float& UEngineCore::GetDeltaTime()
+float UEngineCore::GetDeltaTime()
 {
-	return GEngine->Timer.GetDeltaTime();
+	float Time = GEngine->Timer.GetDeltaTime();
+
+	return Time;
 }
 
 std::map<std::string, std::shared_ptr<class ULevel>> UEngineCore::GetAllLevelMap()
@@ -34,6 +36,11 @@ std::map<std::string, std::shared_ptr<class ULevel>> UEngineCore::GetAllLevelMap
 UGameInstance* UEngineCore::GetGameInstance()
 {
 	return GEngine->GameInstance.get();
+}
+
+UEngineWorkThreadPool& UEngineCore::GetThreadPool()
+{
+	return GEngine->ThreadPool;
 }
 
 UEngineCore* GEngine = nullptr;
@@ -120,6 +127,8 @@ void UEngineCore::EngineStart(HINSTANCE _Instance, std::string_view _DllName)
 	UEngineCore EngineCore;
 
 	GEngine = &EngineCore;
+
+	GEngine->ThreadPool.Initialize();
 
 	WindowInit(_Instance);
 
@@ -222,6 +231,11 @@ void UEngineCore::EngineFrame()
 
 	GEngine->CurLevel->Collision(DeltaTime);
 	GEngine->CurLevel->Release(DeltaTime);
+}
+
+void UEngineCore::SetGameInstance(std::shared_ptr<UGameInstance> _Inst)
+{
+	GEngine->GameInstance = _Inst;
 }
 
 void UEngineCore::EngineEnd()

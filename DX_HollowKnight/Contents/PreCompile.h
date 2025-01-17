@@ -15,3 +15,4 @@
 #include "Knight.h"
 #include "ContentsRenderer.h"
 #include "Room.h"
+#include "ContentsConst.h"

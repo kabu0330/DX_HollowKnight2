@@ -113,12 +113,12 @@ public:
 	FUVValue UVValue;
 	FSpriteData SpriteData;
 
-	const FVector& GetScale()
+	FVector GetScale()
 	{
 		return CurAnimation->Sprite->GetTexture()->GetTextureSize();
 	}
 
-	const FVector& GetActorLocation() 
+	FVector GetActorLocation() 
 	{
 		return Transform.RelativeLocation;
 	}

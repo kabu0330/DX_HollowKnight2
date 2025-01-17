@@ -106,3 +106,4 @@ FVector AActor::GetActorForwardVector()
 	}
 	return RootComponent->GetTransformRef().World.GetFoward();
 }
+

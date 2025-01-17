@@ -6,7 +6,7 @@ class UGameInstance
 public:
 	// constrcuter destructer
 	ENGINEAPI UGameInstance();
-	ENGINEAPI ~UGameInstance();
+	ENGINEAPI virtual ~UGameInstance();
 
 	// delete Function
 	UGameInstance(const UGameInstance& _Other) = delete;

@@ -57,19 +57,6 @@ void APlayGameMode::CheckDebugInput()
 	}
 }
 
-void APlayGameMode::LevelChangeStart()
-{
-	Window = UEngineGUI::FindGUIWindow<UDebugWindowGUI>("DebugWindow");
-
-	if (nullptr == Window)
-	{
-		Window = UEngineGUI::CreateGUIWindow<UDebugWindowGUI>("DebugWindow");
-	}
-
-	Window->SetActive(true);
-	
-}
-
 void APlayGameMode::CheckInfo()
 {
 	MousePos = Camera->ScreenMousePosToWorldPos();
@@ -80,6 +67,7 @@ void APlayGameMode::BeginPlay()
 {
 	AActor::BeginPlay();
 	SetBasePoint(); // 원점 0, 0 표기
+
 }
 
 void APlayGameMode::SetBasePoint()
@@ -94,6 +82,18 @@ void APlayGameMode::SetBasePoint()
 	BasePointCollision->GetTransformRef().Location.Z = ZSort;
 	BasePointCollision->SetScale3D({8, 8});
 	BasePointCollision->SetDebugColor({1.0f, 0.0f, 0.0f, 1.0f });
+}
+
+void APlayGameMode::LevelChangeStart()
+{
+	Window = UEngineGUI::FindGUIWindow<UDebugWindowGUI>("DebugWindow");
+
+	if (nullptr == Window)
+	{
+		Window = UEngineGUI::CreateGUIWindow<UDebugWindowGUI>("DebugWindow");
+	}
+
+	Window->SetActive(true);
 }
 
 APlayGameMode::~APlayGameMode()

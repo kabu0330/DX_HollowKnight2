@@ -1,12 +1,29 @@
 #include "PreCompile.h"
 #include "Monster.h"
 
+
 AMonster::AMonster()
 {
 	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
 	RootComponent = Default;
 
-	CreateRenderer();
+
+	// Renderer
+	BodyRenderer = CreateDefaultSubObject<UContentsRenderer>();
+	BodyRenderer->SetupAttachment(RootComponent);
+	BodyRenderer->SetAutoScaleRatio(1.0f);
+	float ZSort = static_cast<float>(EZOrder::MONSTER);
+	BodyRenderer->SetWorldLocation({ 0.0f, 0.0f, ZSort });
+	CreateAnimation();
+
+	// Collision
+	BodyCollision = CreateDefaultSubObject<UCollision>();
+	BodyCollision->SetupAttachment(RootComponent);
+	BodyCollision->SetScale3D(BodyRenderer->GetScale());
+	BodyCollision->SetWorldLocation({ 0.0f, 0.0f, ZSort });
+	//BodyCollision->SetActive(false);
+	BodyCollision->SetCollisionProfileName("Monster");
+
 
 }
 
@@ -17,34 +34,30 @@ AMonster::~AMonster()
 void AMonster::BeginPlay()
 {
 	AActor::BeginPlay();
-
+	CreateCollision();
 }
 
 void AMonster::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
+	BodyCollision;
 
+	int a = 0;
 }
 
-void AMonster::CreateRenderer()
+void AMonster::CreateAnimation()
 {
-	BodyRenderer = CreateDefaultSubObject<USpriteRenderer>();
-	BodyRenderer->SetupAttachment(RootComponent);
-	BodyRenderer->SetAutoScaleRatio(1.0f);
-	float ZSort = -100.0f;
-	BodyRenderer->SetWorldLocation({ 0.0f, 0.0f, ZSort });
+	std::string DashBug = "DashBug";
+	std::string PNG = ".png";
+	BodyRenderer->CreateAnimation(DashBug, DashBug + PNG, 0, 5, 0.2f);
+	BodyRenderer->ChangeAnimation(DashBug);
+
 	
 	//BodyRenderer->CreateAnimation()
 }
 
 void AMonster::CreateCollision()
 {
-	BodyCollision = CreateDefaultSubObject<UCollision>();
-	BodyCollision->SetupAttachment(RootComponent);
-	BodyCollision->SetCollisionProfileName("Monster");
-	BodyCollision->SetScale3D({ 100.0f, 130.0f });
-	BodyCollision->GetTransformRef().Location.Y += 50.0f;
-
 	BodyCollision->SetCollisionEnter([](UCollision* _This, UCollision* _Other)
 		{
 			//_Other->GetActor()->Destroy();

@@ -11,19 +11,33 @@ UCollisionManager::~UCollisionManager()
 
 void UCollisionManager::CreateCollisionProfile(AGameMode* _GameMode)
 {
+	// 나이트
 	_GameMode->GetWorld()->CreateCollisionProfile("Knight");
-	_GameMode->GetWorld()->CreateCollisionProfile("KnightSkill");
+	_GameMode->GetWorld()->CreateCollisionProfile("KnightObject");
+
+	// 몬스터
 	_GameMode->GetWorld()->CreateCollisionProfile("Monster");
+	_GameMode->GetWorld()->CreateCollisionProfile("MonsterObject");
+
+	// 기타 오브젝트
 	_GameMode->GetWorld()->CreateCollisionProfile("Object");
+
+	// 워프
 	_GameMode->GetWorld()->CreateCollisionProfile("Door");
 }
 
 void UCollisionManager::LinkCollision(AGameMode* _GameMode)
 {
 	// 충돌체크 해야한다.
-	_GameMode->GetWorld()->LinkCollisionProfile("Knight", "Monster");
-	_GameMode->GetWorld()->LinkCollisionProfile("Knight", "Door");
-	_GameMode->GetWorld()->LinkCollisionProfile("Door", "Knight");
-	_GameMode->GetWorld()->LinkCollisionProfile("Monster", "KnightSkill");
+	_GameMode->GetWorld()->LinkCollisionProfile("Knight", "Monster"); // 피격
+	_GameMode->GetWorld()->LinkCollisionProfile("Door", "Knight"); // 워프
+	_GameMode->GetWorld()->LinkCollisionProfile("Knight", "Door"); // 워프 키입력
+
+	// 나이트 공격
+	_GameMode->GetWorld()->LinkCollisionProfile("KnightObject", "Monster"); 
+
+	// 몬스터 공격
+	_GameMode->GetWorld()->LinkCollisionProfile("Monster", "Knight"); 
+	_GameMode->GetWorld()->LinkCollisionProfile("MonsterObject", "Knight");
 }
 

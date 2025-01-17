@@ -1,7 +1,6 @@
 #include "PreCompile.h"
 #include "RoomManager.h"
 #include "Room.h"
-#include "ContentsConst.h"
 #include "Door.h"
 
 URoomManager::URoomManager()
@@ -44,10 +43,11 @@ void URoomManager::CreateAndLinkRoom(AGameMode* _GameMode)
 	ADoor* Door1 = Crossroads1->CreateDoor({ 300, 200 }, RoomPos::FromCrossroads1, Dirtmouth.get()  , RoomPos::ToDirtmouth  , true);
 	ADoor* Door2 = Crossroads1->CreateDoor({ 100, 300 }, RoomPos::Crossroads1Right, Crossroads2.get(), RoomPos::Crossroads2Left);
 	ADoor* Door3 = Crossroads1->CreateDoor({ 100, 300 }, RoomPos::Crossroads2Left, Crossroads2.get(), RoomPos::Crossroads1Right);
-	Door0->GetCollision()->SetDebugColor({ 1.0f, 0.0f, 1.0f, 1.0f }); 
 	// ForgottenCrossroads1->CreateDoor({ 0, 0 }, ForgottenCrossroads1, {100, -100});
 
 	SetInitCurRoom(Dirtmouth.get());
+
+	Dirtmouth->CreateMonster<AMonster>(InitPos::Dirtmouth_well);
 }
 
 std::shared_ptr<ARoom> URoomManager::CreateRoom(std::string_view _RoomName, std::string_view _BackgroundName, std::string_view _PixelCollisionName, FVector _Size, float _ScaleRatio/* = 1.0f*/)

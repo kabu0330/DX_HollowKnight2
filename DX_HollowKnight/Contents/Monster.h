@@ -24,16 +24,27 @@ public:
 		return bIsOnGround;
 	}
 
+	void SetParentRoom(class ARoom* _ParentRoom)
+	{
+		ParentRoom = _ParentRoom;
+	}
+	class ARoom* GetParentRoom()
+	{
+		return ParentRoom;
+	}
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
-	void CreateRenderer();
+	void CreateAnimation();
 	void CreateCollision();
 
 private:
 	bool bIsOnGround = false;
 
-	std::shared_ptr<class USpriteRenderer> BodyRenderer;
+	class ARoom* ParentRoom = nullptr;
+
+	std::shared_ptr<class UContentsRenderer> BodyRenderer;
 	std::shared_ptr<class UCollision> BodyCollision;
 };
 

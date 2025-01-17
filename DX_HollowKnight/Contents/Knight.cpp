@@ -15,6 +15,8 @@
 #include "PlayGameMode.h"
 #include "Door.h"
 
+
+
 AKnight* AKnight::MainPawn = nullptr;
 
 AKnight::AKnight()
@@ -33,7 +35,7 @@ AKnight::AKnight()
 	bCanRotation = true;
 
 	//SetActorLocation({ 1100.0f, -3000.0f });
-	SetActorLocation({ 9262, -3108 });
+	SetActorLocation(InitPos::Dirtmouth_well);
 
 	// Debug
 	BodyRenderer->BillboardOn();
@@ -52,10 +54,6 @@ void AKnight::BeginPlay()
 {
 	AActor::BeginPlay();
 	SetFSM();
-	//BodyRenderer->ColorData.MulColor += {0.0f, 1.0f, 0.0f, 1.0f};
-
-
-	int a = 0;
 }
 
 void AKnight::Tick(float _DeltaTime)
@@ -64,18 +62,16 @@ void AKnight::Tick(float _DeltaTime)
 
 	ActiveWallCollsion();
 
-
 	SetCameraPosition();
 	FSM.Update(_DeltaTime);
 
 	TimeElapsed(_DeltaTime);
 
 	DebugInput(_DeltaTime);
-
 }
 
 void AKnight::ActiveGravity()
-{
+ {
 	if (true == NoneGravity)
 	{
 		return;
@@ -86,9 +82,6 @@ void AKnight::ActiveGravity()
 	{
 		Room->CheckPixelCollisionWithGravity(this, BodyRenderer.get());
 	}
-
-	//URoomManager& Rooms = APlayGameMode::GetPlayGameMode()->GetRoomsRef();
-	//Rooms.AllRoomGravity(this, BodyRenderer.get(), Velocity, bIsLeft);
 }
 
 void AKnight::ActiveWallCollsion()
@@ -130,24 +123,6 @@ void AKnight::Move(float _DeltaTime)
 			AddRelativeLocation(FVector{ -Velocity * _DeltaTime, 0.0f, 0.0f });
 		}
 
-		//if (true == IsOnGround(FVector{ -Velocity * _DeltaTime, 0.0f, 0.0f }))
-		//{
-		//	while (true == IsOnGround(GetActorLocation() + {0.0f, -1.0f, 0.0f}))
-		//	{
-		//		AddRelativeLocation(0.0f, -1.0f, 0.0f);
-
-		//		// 
-		//		FVector CurPos = GetActorLocation();
-		//		CurPos.RoundVector();
-		//	}
-
-		//	// AddRelativeLocation(FVector{ 0.0f, -Gravity * _DeltaTime, 0.0f });
-		//}
-		//else 
-		//{
-		//	AddRelativeLocation(FVector{ 0.0f, -Gravity * _DeltaTime, 0.0f });
-		//}
-
 	}
 	if (UEngineInput::IsPress(VK_RIGHT))
 	{
@@ -156,7 +131,6 @@ void AKnight::Move(float _DeltaTime)
 			AddRelativeLocation(FVector{ Velocity * _DeltaTime, 0.0f, 0.0f });
 		}
 	}
-
 }
 
 void AKnight::SetCameraPosition()
@@ -168,7 +142,6 @@ void AKnight::SetCameraPosition()
 	//CameraPos = { Pos.X, Pos.Y };
 	Camera->SetActorLocation(CameraPos);
 	FVector CameraResult = GetActorLocation();
-	int a = 0;
 }
 
 void AKnight::TimeElapsed(float _DeltaTime)
@@ -197,7 +170,6 @@ void AKnight::TimeElapsed(float _DeltaTime)
 				bCanDash = true;
 				DashCooldownElapsed = 0.0f;
 			}
-
 		}
 	}
 }
@@ -274,7 +246,6 @@ void AKnight::Dash()
 		if (true == bIsLeft)
 		{
 			AddRelativeLocation(FVector{ -Velocity * DeltaTime, 0.0f, 0.0f });
-
 		}
 		else
 		{
@@ -357,10 +328,7 @@ void AKnight::Jump(float _DeltaTime)
 				}
 			}
 	
-			AddRelativeLocation(FVector{ 0.0f, JumpForce * _DeltaTime, 0.0f });
-		
-
-
+			AddRelativeLocation(FVector{ 0.0f, JumpForce * _DeltaTime, 0.0f });	
 		}
 	}
 }
@@ -438,12 +406,6 @@ void AKnight::DebugInput(float _DeltaTime)
 			AddRelativeLocation(FVector{ 0.0f, -Velocity * _DeltaTime, 0.0f });
 		}
 	}
-
-
-	//if (UEngineInput::IsPress('S'))
-	//{
-	//	BodyRenderer->AddRelativeLocation({ 0.0f, 0.0f, -1.0f * _DeltaTime });
-	//}
 }
 
 void AKnight::CreateSlashEffect()

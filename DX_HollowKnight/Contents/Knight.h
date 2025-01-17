@@ -87,6 +87,11 @@ public:
 		NoneGravity = !NoneGravity;
 	}
 
+	float GetVelocity() const
+	{
+		return Velocity;
+	}
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;

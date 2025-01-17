@@ -22,9 +22,6 @@
     <ClInclude Include="TitleScene.h">
       <Filter>Title</Filter>
     </ClInclude>
-    <ClInclude Include="Room.h">
-      <Filter>Play</Filter>
-    </ClInclude>
     <ClInclude Include="KnightSkill.h">
       <Filter>Global\Knight</Filter>
     </ClInclude>
@@ -43,12 +40,6 @@
     <ClInclude Include="MapEditorGameMode.h">
       <Filter>Level</Filter>
     </ClInclude>
-    <ClInclude Include="MapObject.h">
-      <Filter>Play</Filter>
-    </ClInclude>
-    <ClInclude Include="Background.h">
-      <Filter>Play</Filter>
-    </ClInclude>
     <ClInclude Include="TestMapEditorMode.h">
       <Filter>Test</Filter>
     </ClInclude>
@@ -60,9 +51,6 @@
     </ClInclude>
     <ClInclude Include="MapEditorGUI.h">
       <Filter>ContentsSetting\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Monster.h">
-      <Filter>Play</Filter>
     </ClInclude>
     <ClInclude Include="ContentsResource.h">
       <Filter>ContentsSetting\Resource</Filter>
@@ -82,11 +70,23 @@
     <ClInclude Include="Effect.h">
       <Filter>Global</Filter>
     </ClInclude>
-    <ClInclude Include="Door.h">
-      <Filter>Play</Filter>
-    </ClInclude>
     <ClInclude Include="ContentsConst.h">
       <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Play\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>Play\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Door.h">
+      <Filter>Play\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Background.h">
+      <Filter>Play\MapEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="MapObject.h">
+      <Filter>Play\MapEditor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -111,9 +111,6 @@
     <ClCompile Include="TitleScene.cpp">
       <Filter>Title</Filter>
     </ClCompile>
-    <ClCompile Include="Room.cpp">
-      <Filter>Play</Filter>
-    </ClCompile>
     <ClCompile Include="Knight.cpp">
       <Filter>Global\Knight</Filter>
     </ClCompile>
@@ -132,12 +129,6 @@
     <ClCompile Include="MapEditorGameMode.cpp">
       <Filter>Level</Filter>
     </ClCompile>
-    <ClCompile Include="MapObject.cpp">
-      <Filter>Play</Filter>
-    </ClCompile>
-    <ClCompile Include="Background.cpp">
-      <Filter>Play</Filter>
-    </ClCompile>
     <ClCompile Include="TestMapEditorMode.cpp">
       <Filter>Test</Filter>
     </ClCompile>
@@ -149,9 +140,6 @@
     </ClCompile>
     <ClCompile Include="MapEditorGUI.cpp">
       <Filter>ContentsSetting\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Monster.cpp">
-      <Filter>Play</Filter>
     </ClCompile>
     <ClCompile Include="ContentsResource.cpp">
       <Filter>ContentsSetting\Resource</Filter>
@@ -177,8 +165,20 @@
     <ClCompile Include="Effect.cpp">
       <Filter>Global</Filter>
     </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Play\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Room.cpp">
+      <Filter>Play\Map</Filter>
+    </ClCompile>
     <ClCompile Include="Door.cpp">
-      <Filter>Play</Filter>
+      <Filter>Play\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Background.cpp">
+      <Filter>Play\MapEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="MapObject.cpp">
+      <Filter>Play\MapEditor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +223,15 @@
     </Filter>
     <Filter Include="Play\Setting">
       <UniqueIdentifier>{cbf9cc41-8d7d-4084-959d-3decaa2e300c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Play\Monster">
+      <UniqueIdentifier>{49b0de12-e844-402b-8ba8-d1b81d51b80a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Play\Map">
+      <UniqueIdentifier>{984de52d-cd76-4f19-8dcb-bfa33fefa2cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Play\MapEditor">
+      <UniqueIdentifier>{b1501c4b-3474-4292-923d-b04a0b5a6cb4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
