@@ -21,14 +21,6 @@ public:
 	void SetWarpPosition(class ARoom* _TargetRoom, FVector _TargetPos, bool _IsEnter);
 	void SetScale(FVector _Scale);
 	void Warp(class UCollision* _Actor1, class UCollision* _Actor2);
-	void EnterDoor()
-	{
-		bIsDoor = false;
-	}
-	void EnterDoorEnd()
-	{
-		bIsDoor = true;
-	}
 	UCollision* GetCollision()
 	{
 		return BodyCollision.get();

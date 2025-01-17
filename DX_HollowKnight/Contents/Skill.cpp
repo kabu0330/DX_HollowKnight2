@@ -15,8 +15,9 @@ ASkill::ASkill()
 
 	Collision = CreateDefaultSubObject<UCollision>();
 	Collision->SetupAttachment(RootComponent);
-	Collision->SetCollisionProfileName("KnightSkill");
+	Collision->SetCollisionProfileName("KnightObject");
 	Collision->GetTransformRef().Location.Z = ZSort;
+	//Collision->SetCollisionType(ECollisionType::AABB);
 
 }
 
@@ -89,6 +90,10 @@ void ASkill::Release()
 
 	if (true == BodyRenderer->IsCurAnimationEnd())
 	{
+		if (nullptr != Collision)
+		{
+			Collision->Destroy();
+		}
 		Destroy();
 	}
 }

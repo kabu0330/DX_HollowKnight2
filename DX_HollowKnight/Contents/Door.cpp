@@ -15,6 +15,7 @@ ADoor::ADoor()
 	BodyCollision->GetTransformRef().Location.Z = ZSort;
 	Scale = FVector(200, 100);
 	BodyCollision->SetScale3D(Scale);
+	//BodyCollision->SetCollisionType(ECollisionType::AABB);
 
 	BodyCollision->SetCollisionStay(std::bind(&ADoor::Warp, this, std::placeholders::_1, std::placeholders::_2));
 
@@ -52,7 +53,12 @@ void ADoor::Warp(UCollision* _Actor1, UCollision* _Actor2)
 {
 	if (true == bIsDoor)
 	{
-		return;
+		AActor* Actor = _Actor2->GetActor();
+		AKnight* Knight = dynamic_cast<AKnight*>(Actor);
+		if (nullptr == Knight || false == Knight->GetEnter())
+		{
+			return;
+		}
 	}
 	UEngineDebug::OutPutString("Enter");
 	Knight->SetActorLocation(TargetPos); 

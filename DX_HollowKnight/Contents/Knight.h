@@ -91,6 +91,10 @@ public:
 	{
 		return Velocity;
 	}
+	bool GetEnter()
+	{
+		return bIsEnter;
+	}
 
 protected:
 	void BeginPlay() override;
@@ -105,6 +109,9 @@ private:
 	bool NoneGravity = false;
 	static AKnight* MainPawn;
 	FVector CameraPos = { 0.0f, 0.0f, 0.0f };
+
+
+	bool bIsEnter = false;
 
 
 	// Renderer

@@ -88,6 +88,9 @@
     <ClInclude Include="MapObject.h">
       <Filter>Play\MapEditor</Filter>
     </ClInclude>
+    <ClInclude Include="Platform.h">
+      <Filter>Play\Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -179,6 +182,9 @@
     </ClCompile>
     <ClCompile Include="MapObject.cpp">
       <Filter>Play\MapEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform.cpp">
+      <Filter>Play\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -109,8 +109,8 @@ void UContentsResource::LoadFolder()
 
 void UContentsResource::LoadSprite()
 {
-	UEngineSprite::CreateSpriteToMeta("Knight_Idle.png", ".smeta");
-	UEngineSprite::CreateSpriteToMeta("DashBug.png", ".smeta");
+	//UEngineSprite::CreateSpriteToMeta("Knight_Idle.png", ".smeta");
+	//UEngineSprite::CreateSpriteToMeta("HuskBully.png", ".smeta");
 }
 
 void UContentsResource::LoadShaderResource()

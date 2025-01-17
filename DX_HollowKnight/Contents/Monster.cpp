@@ -19,7 +19,7 @@ AMonster::AMonster()
 	// Collision
 	BodyCollision = CreateDefaultSubObject<UCollision>();
 	BodyCollision->SetupAttachment(RootComponent);
-	BodyCollision->SetScale3D(BodyRenderer->GetScale());
+	BodyCollision->SetScale3D({150, 150});
 	BodyCollision->SetWorldLocation({ 0.0f, 0.0f, ZSort });
 	//BodyCollision->SetActive(false);
 	BodyCollision->SetCollisionProfileName("Monster");
@@ -47,10 +47,10 @@ void AMonster::Tick(float _DeltaTime)
 
 void AMonster::CreateAnimation()
 {
-	std::string DashBug = "DashBug";
+	std::string DashBug = "HuskBully";
 	std::string PNG = ".png";
-	BodyRenderer->CreateAnimation(DashBug, DashBug + PNG, 0, 5, 0.2f);
-	BodyRenderer->ChangeAnimation(DashBug);
+	//BodyRenderer->CreateAnimation(DashBug, DashBug + PNG, 0, 5, 0.2f);
+	//BodyRenderer->ChangeAnimation(DashBug);
 
 	
 	//BodyRenderer->CreateAnimation()

@@ -71,6 +71,10 @@ public:
 	{
 		return bActiveGravity;
 	}
+	static void SetActiveGravity(bool _bActiveGravity)
+	{
+		bActiveGravity = _bActiveGravity;
+	}
 
 	FVector GetGravityForce() const
 	{
@@ -93,6 +97,23 @@ public:
 		NewMonster->SetParentRoom(this);
 		Monsters.push_back(NewMonster);
 		return NewMonster;
+	}
+
+	template<typename MapObjectType>
+	MapObjectType* CreateObject(FVector _Pos, FVector _Scale, bool _CanWorldPos = true)
+	{
+		MapObjectType* NewObject = GetWorld()->SpawnActor<MapObjectType>().get();
+		NewObject->SetScale(_Scale);
+		if (false == _CanWorldPos)
+		{
+			NewObject->SetActorLocation(this->GetActorLocation() + _Pos);
+		}
+		else
+		{
+			NewObject->SetActorLocation(_Pos);
+		}
+
+		return NewObject;
 	}
 
 

@@ -13,9 +13,7 @@ ARoom::ARoom()
 	RootComponent = Default;
 
 	std::shared_ptr<ACameraActor> Camera = GetWorld()->GetCamera(0);
-	//PixelCollisionTexture = CreateDefaultSubObject<UContentsRenderer>();
-	//PixelCollisionTexture->SetupAttachment(RootComponent);
-	//PixelCollisionTexture->SetAutoScaleRatio(1.0f);
+
 
 	BackgroundRenderer = CreateDefaultSubObject<UContentsRenderer>();
 	BackgroundRenderer->SetupAttachment(RootComponent);
@@ -57,9 +55,7 @@ ADoor* ARoom::CreateDoor(FVector _DoorScale, FVector _InitPos, ARoom* _TargetRoo
 	Door = GetWorld()->SpawnActor<ADoor>().get();
 
 	FVector RoomPos = { GetActorLocation().X - (Size.X / 2.0f), GetActorLocation().Y + (Size.Y / 2.0f) };
-	//Door->SetActorLocation(RoomPos + _InitPos);
 	Door->SetActorLocation( _InitPos);
-	//FVector InitPos = RoomPos + _InitPos;
 
 	Door->SetScale(_DoorScale);
 	Door->SetWarpPosition(_TargetRoom, _TargetPos, _IsDoor);
@@ -286,7 +282,7 @@ void ARoom::CheckPixelCollisionWithCeil(AActor* _Actor, UContentsRenderer* _Rend
 	FVector ActorPos = _Actor->GetActorLocation() - LeftTopPos;
 	float HalfRendererHeight = _Renderer->GetScale().Y * 0.5f;
 
-	FVector CollisionPoint = { ActorPos.X + NextPos , ActorPos.Y - HalfRendererHeight };
+	FVector CollisionPoint = { ActorPos.X + NextPos , ActorPos.Y + HalfRendererHeight };
 
 	// 실수오차 문제 때문에
 	CollisionPoint.X = ::roundf(CollisionPoint.X);

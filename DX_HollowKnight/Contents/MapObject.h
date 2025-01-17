@@ -43,5 +43,7 @@ protected:
 	std::shared_ptr<class USpriteRenderer> Renderer;
 	int Index = 0;
 private:
+
+
 };
 

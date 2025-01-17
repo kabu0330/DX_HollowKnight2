@@ -35,7 +35,9 @@ AKnight::AKnight()
 	bCanRotation = true;
 
 	//SetActorLocation({ 1100.0f, -3000.0f });
-	SetActorLocation(InitPos::Dirtmouth_well);
+	//SetActorLocation(InitPos::Dirtmouth_well);
+	SetActorLocation(InitPos::CrossroadsEntrance);
+	SetActorLocation({9911, -5550});
 
 	// Debug
 	BodyRenderer->BillboardOn();
@@ -48,6 +50,7 @@ AKnight::AKnight()
 	}
 
 	BodyCollision->SetCollisionStay(std::bind(&AKnight::CheckEnterDoor, this, std::placeholders::_1, std::placeholders::_2));
+
 }
 
 void AKnight::BeginPlay()
@@ -68,6 +71,12 @@ void AKnight::Tick(float _DeltaTime)
 	TimeElapsed(_DeltaTime);
 
 	DebugInput(_DeltaTime);
+
+	if (UEngineInput::IsUp(VK_UP))
+	{
+		bIsEnter = false;
+	}
+
 }
 
 void AKnight::ActiveGravity()
@@ -185,11 +194,7 @@ void AKnight::CheckEnterDoor(UCollision* _This, UCollision* _Target)
 
 	if (UEngineInput::IsDown(VK_UP))
 	{
-		Door->EnterDoor();
-	}
-	if (UEngineInput::IsUp(VK_UP))
-	{
-		Door->EnterDoorEnd();
+		bIsEnter = true;
 	}
 }
 
@@ -305,17 +310,13 @@ void AKnight::Jump(float _DeltaTime)
 {
 	if (true == CanAction())
 	{
+		if (true == bIsCeilHere)
+		{
+			return;
+		}
 		if (UEngineInput::IsPress('Z'))
 		{		
 			float JumpForceMax = 1000.0f;
-			if (true == bIsCeilHere)
-			{
-				JumpForceMax = 0.0f;
-			}
-			else
-			{
-				JumpForceMax = 1000.0f;
-			}
 			float JumpAccTime = 0.4f;
 			float JumpKeyDuration = UEngineInput::IsPressTime('Z');
 			if (JumpAccTime >= JumpKeyDuration)
@@ -490,6 +491,7 @@ void AKnight::CreateCollision()
 	BodyCollision->SetScale3D({ 100.0f, 130.0f });
 	BodyCollision->GetTransformRef().Location.Y += 0.0f;
 	BodyCollision->SetRelativeLocation(BodyRenderer->GetActorLocation());
+	//BodyCollision->SetCollisionType(ECollisionType::AABB);
 
 	BodyCollision->SetCollisionEnter([](UCollision* _This, UCollision* _Other)
 		{

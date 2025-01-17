@@ -22,4 +22,5 @@ class InitPos
 {
 public:
 	inline static FVector Dirtmouth_well = { 9262, -3108 };
+	inline static FVector CrossroadsEntrance = { 9390, -5500 };
 };
