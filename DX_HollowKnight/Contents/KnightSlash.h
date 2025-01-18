@@ -15,10 +15,11 @@ public:
 	AKnightSlash& operator=(const AKnightSlash& _Other) = delete;
 	AKnightSlash& operator=(AKnightSlash&& _Other) noexcept = delete;
 
+protected:
+
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
-
-protected:
+	void SetCollisionEvent() override;
 
 private:
 

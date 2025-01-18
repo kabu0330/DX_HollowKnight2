@@ -97,12 +97,13 @@ void UContentsResource::LoadResourceDirectory()
 	LoadContentsResource("Image/Effect/Knight/SlashEffect");
 	LoadContentsResource("Image/Effect/Knight/UpSlashEffect");
 	LoadContentsResource("Image/Effect/Knight/DownSlashEffect");
+	LoadContentsResource("Image/Effect/Knight/NailHitEffect");
 	LoadContentsResource("Image/Effect/Knight/FocusEffect");
 	LoadContentsResource("Image/Effect/Knight/FocusEffectEnd");
 	LoadContentsResource("Image/Effect/Knight/Dash_effect");
 	LoadContentsResource("Image/Effect/Knight/Dash_effect2");
 	LoadContentsResource("Image/Effect/Knight/Fireball");
-	LoadContentsResource("Image/Effect/Knight/Fireball_Impact");
+	LoadContentsResource("Image/Effect/Knight/FireballImpact");
 
 	// Monster
 	LoadContentsResource("Image/Monster/HuskBully");

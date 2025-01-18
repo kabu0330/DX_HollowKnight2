@@ -24,6 +24,7 @@ protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 	void Release() override;
+	virtual void SetCollisionEvent();
 
 	std::shared_ptr<class UCollision> Collision;
 	FVector CollisionScale = FVector::ZERO;

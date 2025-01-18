@@ -97,6 +97,9 @@
     <ClInclude Include="KnightSlash.h">
       <Filter>Global\Knight\Skill</Filter>
     </ClInclude>
+    <ClInclude Include="KnightFireball.h">
+      <Filter>Global\Knight\Skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -199,6 +202,9 @@
       <Filter>Global\Knight\Skill</Filter>
     </ClCompile>
     <ClCompile Include="KnightSlash.cpp">
+      <Filter>Global\Knight\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="KnightFireball.cpp">
       <Filter>Global\Knight\Skill</Filter>
     </ClCompile>
   </ItemGroup>

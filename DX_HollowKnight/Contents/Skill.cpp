@@ -4,6 +4,8 @@
 
 ASkill::ASkill()
 {
+	SetName("ASkill");
+
 	Collision = CreateDefaultSubObject<UCollision>();
 	Collision->SetupAttachment(RootComponent);
 	Collision->SetCollisionProfileName("KnightObject");
@@ -17,16 +19,10 @@ ASkill::ASkill()
 void ASkill::BeginPlay()
 {
 	AEffect::BeginPlay();
+	SetCollisionEvent();
 
 	CollisionScale = BodyRenderer->GetScale();
 	Collision->SetScale3D(CollisionScale);
-
-	Collision->SetCollisionEnter([](UCollision* _This, UCollision* _Other)
-		{
-			//_Other->GetActor()->Destroy();
-			// _Other->Destroy();
-			UEngineDebug::OutPutString("Attack");
-		});
 }
 
 void ASkill::Tick(float _DeltaTime)
@@ -46,10 +42,19 @@ void ASkill::Release()
 	{
 		if (nullptr != Collision)
 		{
+			UEngineDebug::OutPutString(GetName() + " Skill Collision Destroy");
 			Collision->Destroy();
 		}
 		Destroy();
 	}
+}
+
+void ASkill::SetCollisionEvent()
+{
+	Collision->SetCollisionEnter([](UCollision* _This, UCollision* _Other)
+		{
+			UEngineDebug::OutPutString("AKnightSkillEffect");
+		});
 }
 
 ASkill::~ASkill()

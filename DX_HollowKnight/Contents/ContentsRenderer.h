@@ -125,7 +125,7 @@ public:
 
 	void SetZSort(float _ZValue)
 	{
-		SetWorldLocation({ Transform.WorldLocation.X, Transform.WorldLocation.Y ,_ZValue });
+		Transform.WorldLocation.Z = _ZValue;
 	}
 
 protected:

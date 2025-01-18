@@ -3,6 +3,7 @@
 
 AKnightEffect::AKnightEffect()
 {
+	SetName("Knight Effect");
 
 	float FrameTime = 0.06f;
 	float DashFrameTime = 0.03f;
@@ -20,6 +21,11 @@ AKnightEffect::AKnightEffect()
 	std::string DashEffect2 = "Dash_effect2";
 	BodyRenderer->CreateAnimation(DashEffect2, DashEffect2, 0, 7, DashFrameTime2, false);
 
+	std::string NailHitEffect = "NailHitEffect";
+	BodyRenderer->CreateAnimation(NailHitEffect, NailHitEffect, 0, 4, FrameTime, false);
+
+	std::string FireballImpact = "FireballImpact";
+	BodyRenderer->CreateAnimation(FireballImpact, FireballImpact, 0, 5, FrameTime);
 
 	BodyRenderer->ChangeAnimation(FocusEffect);
 }

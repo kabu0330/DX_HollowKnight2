@@ -4,6 +4,7 @@
 #include "Skill.h"
 #include "KnightSkill.h"
 #include "KnightSlash.h"
+#include "KnightFireball.h"
 
 void AKnight::CreateDashEffect()
 {
@@ -57,12 +58,11 @@ void AKnight::CreateFireballEffect()
 	{
 		return;
 	}
-	std::shared_ptr<AKnightSkill> Effect = GetWorld()->SpawnActor<AKnightSkill>();
+	std::shared_ptr<AKnightFireball> Effect = GetWorld()->SpawnActor<AKnightFireball>();
 	Effect->ChangeAnimation("Fireball");
 	FVector Speed = { 2000.0f, 0.0f,0.0f };
 	Effect->AddLocation(this, Speed);
 	Effect->ToggleFlip(); // ÁÂ¿ì¹ÝÀü
-	Effect->Destroy(1.0f);
 	bIsFireballEffect = true;
 }
 

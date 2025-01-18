@@ -1,5 +1,6 @@
 #pragma once
 #include "Skill.h"
+#include "KnightEffect.h"
 
 // Ό³Έν :
 class AKnightSkill : public ASkill
@@ -15,15 +16,11 @@ public:
 	AKnightSkill& operator=(const AKnightSkill& _Other) = delete;
 	AKnightSkill& operator=(AKnightSkill&& _Other) noexcept = delete;
 
+protected:
+
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
-
-	void SetCollisionEvent();
-
-	//void CheckKnightPos();
-
-
-protected:
+	void SetCollisionEvent() override;
 
 private:
 

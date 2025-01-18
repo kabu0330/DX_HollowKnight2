@@ -64,7 +64,7 @@ public:
 enum class EZOrder
 {
 	NONE = 100,
-	SKILL_FRONT = 890,
+	SKILL_FRONT = 800,
 	PLAYER = 900,
 	MONSTER = 910,
 	SKILL_BACK = 920,

@@ -3,6 +3,8 @@
 
 AEffect::AEffect()
 {
+	SetName("AEffect");
+
 	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
 	RootComponent = Default;
 
@@ -59,6 +61,8 @@ void AEffect::Release()
 
 	if (true == BodyRenderer->IsCurAnimationEnd())
 	{
+		UEngineDebug::OutPutString(GetName() + " Effect Destroy");
+		EndFunction();
 		Destroy();
 		return;
 	}

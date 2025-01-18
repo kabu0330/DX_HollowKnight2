@@ -20,6 +20,7 @@ AKnight* AKnight::MainPawn = nullptr;
 
 AKnight::AKnight()
 {
+	SetName("AKnight");
 	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
 	RootComponent = Default;
 	CreateRenderer();

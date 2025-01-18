@@ -22,6 +22,7 @@ public:
 
 	void ChangeAnimation(std::string_view _AnimationName);
 	void ChangeAnimation(AActor* _Actor, std::string_view _AnimationName);
+	virtual void EndFunction() {} // 렌더러 디스트로이 직전 함수 호출
 
 
 	virtual void Release();
