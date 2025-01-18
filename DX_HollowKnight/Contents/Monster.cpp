@@ -78,11 +78,6 @@ void AMonster::CreateAnimation()
 	std::string Vengefly = "Vengefly";
 	BodyRenderer->CreateAnimation(Vengefly, Vengefly, 0, 2, 0.2f);
 
-
-
-
-
-	
 }
 
 void AMonster::CreateCollision()
@@ -129,7 +124,7 @@ void AMonster::SetFSM()
 	CreateState(EMonsterState::THROW_RECOVERY, &AMonster::SetThrowRecovery, "ThrowRecovery");
 
 	CreateState(EMonsterState::WALL_ANTICIPATE, &AMonster::SetWallAnticipate, "WallAnticipate");
-	CreateState(EMonsterState::WALK, &AMonster::SetWall, "Wall");
+	CreateState(EMonsterState::WALL, &AMonster::SetWall, "Wall");
 	CreateState(EMonsterState::WALL_ATTACK, &AMonster::SetWallAttack, "WallAttack");
 	CreateState(EMonsterState::WALL_RECOVERY, &AMonster::SetWallRecovery, "WallRecovery");
 
@@ -138,7 +133,6 @@ void AMonster::SetFSM()
 	CreateState(EMonsterState::COUNTER, &AMonster::SetCounter, "Counter");
 	CreateState(EMonsterState::COUNTER_RECOVERY, &AMonster::SetCounterRecovery, "CounterRecovery");
 	CreateState(EMonsterState::COUNTER_ATTACK, &AMonster::SetCounterAttack, "CounterAttack");
-	CreateState(EMonsterState::COUNTER_ATTACK_RECOVERY, &AMonster::SetCounterAttackRecovery, "CounterAttackRecovery");
 	CreateState(EMonsterState::COUNTER_ATTACK_RECOVERY, &AMonster::SetCounterAttackRecovery, "CounterAttackRecovery");
 	CreateState(EMonsterState::SHIELD_ANTICIPATE, &AMonster::SetShieldAnticipate, "ShieldAnticipate");
 	CreateState(EMonsterState::SHIELD_FRONT, &AMonster::SetShieldFront, "ShieldFront");
@@ -154,7 +148,6 @@ void AMonster::SetFSM()
 	CreateState(EMonsterState::STUN_ROLL_END, &AMonster::SetStunRollEnd, "StunRollEnd");
 	CreateState(EMonsterState::STUN_OPEN, &AMonster::SetStunOpen, "StunOpen");
 	CreateState(EMonsterState::STUN_HIT, &AMonster::SetStunHit, "StunHit");
-	CreateState(EMonsterState::STUN_HIT, &AMonster::SetStunHit, "StunHit");
 
 	CreateState(EMonsterState::DEATH_AIR, &AMonster::SetDeathAir, "DeathAir");
 	CreateState(EMonsterState::DEATH_LAND, &AMonster::SetDeathLand, "DeathLand");
@@ -162,10 +155,13 @@ void AMonster::SetFSM()
 	CreateState(EMonsterState::FLY, &AMonster::SetFly, "Fly");
 	CreateState(EMonsterState::FIRE, &AMonster::SetFire, "Fire");
 	CreateState(EMonsterState::BURST, &AMonster::SetBurst, "Burst");
+
+	FSM.ChangeState(EMonsterState::IDLE);
 }
 
 void AMonster::SetIdle(float _DeltaTime)
 {
+	BodyRenderer->ChangeAnimation("Idle");
 }
 
 void AMonster::SetWalk(float _DeltaTime)

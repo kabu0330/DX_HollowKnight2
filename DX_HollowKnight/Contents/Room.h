@@ -1,6 +1,7 @@
 #pragma once
 #include <EngineCore/Actor.h>
 #include "Monster.h"
+#include <EnginePlatform/EngineWinImage.h>
 
 // Ό³Έν :
 class ARoom : public AActor

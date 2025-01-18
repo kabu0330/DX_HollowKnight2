@@ -6,15 +6,6 @@ AKnightSkill::AKnightSkill()
 {
 	float FrameTime = 0.03f;
 
-	std::string SlashEffect = "SlashEffect";
-	BodyRenderer->CreateAnimation(SlashEffect, SlashEffect, 0, 5, FrameTime, false);
-
-	std::string UpSlashEffect = "UpSlashEffect";
-	BodyRenderer->CreateAnimation(UpSlashEffect, UpSlashEffect, 0, 5, FrameTime, false);
-
-	std::string DownSlashEffect = "DownSlashEffect";
-	BodyRenderer->CreateAnimation(DownSlashEffect, DownSlashEffect, 0, 5, FrameTime, false);
-
 	float FireballFrame = 0.1f;
 	std::string Fireball = "Fireball";
 	BodyRenderer->CreateAnimation(Fireball, Fireball, 0, 3, FireballFrame);
@@ -22,7 +13,7 @@ AKnightSkill::AKnightSkill()
 	std::string FireballImpact = "Fireball_Impact";
 	BodyRenderer->CreateAnimation(FireballImpact, FireballImpact, 0, 5, FireballFrame);
 
-	BodyRenderer->ChangeAnimation(SlashEffect);
+	BodyRenderer->ChangeAnimation(FireballImpact);
 }
 
 AKnightSkill::~AKnightSkill()

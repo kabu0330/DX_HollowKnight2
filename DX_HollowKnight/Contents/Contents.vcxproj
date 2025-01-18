@@ -213,7 +213,15 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="KnightEffect.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="KnightSkill.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="KnightSlash.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -307,6 +315,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Knight.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="KnightEffect.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="KnightSlash.cpp">
       <SubType>
       </SubType>
     </ClCompile>

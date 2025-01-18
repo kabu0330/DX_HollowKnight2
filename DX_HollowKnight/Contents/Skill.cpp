@@ -9,11 +9,9 @@ ASkill::ASkill()
 	Collision->SetCollisionProfileName("KnightObject");
 	ZSort = static_cast<float>(EZOrder::SKILL_FRONT);
 	Collision->GetTransformRef().Location.Z = ZSort;
-		//Collision->SetCollisionType(ECollisionType::AABB);
+	//Collision->SetCollisionType(ECollisionType::AABB);
 
 	BodyRenderer->SetWorldLocation({ 0.0f, 0.0f, ZSort });
-
-
 }
 
 void ASkill::BeginPlay()

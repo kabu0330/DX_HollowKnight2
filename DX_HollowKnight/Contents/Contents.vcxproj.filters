@@ -22,9 +22,6 @@
     <ClInclude Include="TitleScene.h">
       <Filter>Title</Filter>
     </ClInclude>
-    <ClInclude Include="KnightSkill.h">
-      <Filter>Global\Knight</Filter>
-    </ClInclude>
     <ClInclude Include="Knight.h">
       <Filter>Global\Knight</Filter>
     </ClInclude>
@@ -91,6 +88,15 @@
     <ClInclude Include="Platform.h">
       <Filter>Play\Map</Filter>
     </ClInclude>
+    <ClInclude Include="KnightEffect.h">
+      <Filter>Global\Knight</Filter>
+    </ClInclude>
+    <ClInclude Include="KnightSkill.h">
+      <Filter>Global\Knight\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="KnightSlash.h">
+      <Filter>Global\Knight\Skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -115,9 +121,6 @@
       <Filter>Title</Filter>
     </ClCompile>
     <ClCompile Include="Knight.cpp">
-      <Filter>Global\Knight</Filter>
-    </ClCompile>
-    <ClCompile Include="KnightSkill.cpp">
       <Filter>Global\Knight</Filter>
     </ClCompile>
     <ClCompile Include="FightUnit.cpp">
@@ -189,6 +192,15 @@
     <ClCompile Include="Knight_Animation.cpp">
       <Filter>Global\Knight</Filter>
     </ClCompile>
+    <ClCompile Include="KnightEffect.cpp">
+      <Filter>Global\Knight</Filter>
+    </ClCompile>
+    <ClCompile Include="KnightSkill.cpp">
+      <Filter>Global\Knight\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="KnightSlash.cpp">
+      <Filter>Global\Knight\Skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -241,6 +253,9 @@
     </Filter>
     <Filter Include="Play\MapEditor">
       <UniqueIdentifier>{b1501c4b-3474-4292-923d-b04a0b5a6cb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Global\Knight\Skill">
+      <UniqueIdentifier>{b7206834-6b8c-4154-b91a-056981c7e22e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

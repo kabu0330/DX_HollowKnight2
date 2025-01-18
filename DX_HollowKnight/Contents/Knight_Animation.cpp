@@ -3,6 +3,7 @@
 #include "Effect.h"
 #include "Skill.h"
 #include "KnightSkill.h"
+#include "KnightSlash.h"
 
 void AKnight::CreateDashEffect()
 {
@@ -65,7 +66,6 @@ void AKnight::CreateFireballEffect()
 	bIsFireballEffect = true;
 }
 
-
 void AKnight::CreateSlashEffect()
 {
 	if (true == bIsShowEffect)
@@ -73,7 +73,7 @@ void AKnight::CreateSlashEffect()
 		return;
 	}
 
-	std::shared_ptr<AKnightSkill> SlashEffect = GetWorld()->SpawnActor<AKnightSkill>();
+	std::shared_ptr<AKnightSlash> SlashEffect = GetWorld()->SpawnActor<AKnightSlash>();
 	SlashEffect->ChangeAnimation("SlashEffect");
 
 	FVector Offset = FVector{ -100.0f, 0.0f };
@@ -90,7 +90,7 @@ void AKnight::CreateUpSlashEffect()
 		return;
 	}
 
-	std::shared_ptr<AKnightSkill> SlashEffect = GetWorld()->SpawnActor<AKnightSkill>();
+	std::shared_ptr<AKnightSlash> SlashEffect = GetWorld()->SpawnActor<AKnightSlash>();
 	SlashEffect->ChangeAnimation("UpSlashEffect");
 	FVector Offset = FVector{ 0.0f, 100.0f };
 	SlashEffect->SetLocation(this, Offset);
@@ -105,7 +105,7 @@ void AKnight::CreateDownSlashEffect()
 		return;
 	}
 
-	std::shared_ptr<AKnightSkill> SlashEffect = GetWorld()->SpawnActor<AKnightSkill>();
+	std::shared_ptr<AKnightSlash> SlashEffect = GetWorld()->SpawnActor<AKnightSlash>();
 	SlashEffect->ChangeAnimation("DownSlashEffect");
 	FVector Offset = FVector{ 0.0f, -100.0f };
 	SlashEffect->SetLocation(this, Offset);
