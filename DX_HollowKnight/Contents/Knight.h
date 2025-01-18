@@ -21,7 +21,7 @@ public:
 	void TimeElapsed(float _DeltaTime);
 
 	void CheckEnterDoor(class UCollision* _This, class UCollision* _Target);
-
+	void SetCameraPos();
 
 	static AKnight* GetPawn()
 	{
@@ -143,7 +143,7 @@ private:
 private:
 	void DebugInput(float _DeltaTime);
 
-	void SetCameraPosition();
+	void SetCameraLerp();
 	void CheckCameraPos();
 	bool bIsCameraMove = false;
 	FVector CameraCurPos = FVector::ZERO;

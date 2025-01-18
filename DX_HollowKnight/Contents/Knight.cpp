@@ -50,15 +50,7 @@ void AKnight::BeginPlay()
 {
 	AActor::BeginPlay();
 	SetFSM();
-	std::shared_ptr<ACameraActor> Camera = GetWorld()->GetCamera(0);
-	FVector KnightPos = GetActorLocation();
-	FVector CameraPos = Camera->GetActorLocation();
-	FVector ScreenSize = UEngineCore::GetScreenScale();
-	ScreenRatioY = 0.2f;
-	Camera->SetActorLocation({ KnightPos.X, KnightPos.Y + ScreenSize.Y * ScreenRatioY });
-	FVector Pos = Camera->GetActorLocation();
-
-	int a = 0;
+	SetCameraPos();
 }
 
 void AKnight::Tick(float _DeltaTime)
@@ -68,7 +60,7 @@ void AKnight::Tick(float _DeltaTime)
 	ActiveWallCollsion();
 
 	CheckCameraPos();
-	SetCameraPosition();
+	SetCameraLerp();
 
 	FSM.Update(_DeltaTime);
 
@@ -145,8 +137,17 @@ void AKnight::Move(float _DeltaTime)
 			AddRelativeLocation(FVector{ Velocity * _DeltaTime, 0.0f, 0.0f });
 		}
 	}
+}
 
-	
+void AKnight::SetCameraPos()
+{
+	bIsCameraMove = false;
+	std::shared_ptr<ACameraActor> Camera = GetWorld()->GetCamera(0);
+	FVector KnightPos = GetActorLocation();
+	FVector ScreenSize = UEngineCore::GetScreenScale();
+	ScreenRatioY = 0.2f;
+	Camera->SetActorLocation({ KnightPos.X, KnightPos.Y + ScreenSize.Y * ScreenRatioY });
+	FVector Pos = Camera->GetActorLocation();
 }
 
 void AKnight::CheckCameraPos()
@@ -176,7 +177,7 @@ void AKnight::CheckCameraPos()
 	}
 }
 
-void AKnight::SetCameraPosition()
+void AKnight::SetCameraLerp()
 {
 	if (false == bIsCameraMove)
 	{

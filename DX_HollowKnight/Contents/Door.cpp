@@ -64,6 +64,7 @@ void ADoor::Warp(UCollision* _Actor1, UCollision* _Actor2)
 	Knight->SetActorLocation(TargetPos); 
 	ARoom::SetCurRoom(TargetRoom); // ÇÈ¼¿Ãæµ¹ ±âÁØ ¸ÊÀ» ¹Ù²Û´Ù.
 	Knight->GetCollision()->SetActive(false);
+	Knight->SetCameraPos();
 	TimeEventor->AddEndEvent(2.0f, std::bind(&ADoor::ActiveKnightCollision, this));
 }
 
