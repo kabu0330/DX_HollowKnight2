@@ -203,6 +203,7 @@
     <ClInclude Include="EngineVertex.h" />
     <ClInclude Include="EngineVertexBuffer.h" />
     <ClInclude Include="EngineVertexShader.h" />
+    <ClInclude Include="FontRenderer.h" />
     <ClInclude Include="FontWidget.h" />
     <ClInclude Include="GameInstance.h" />
     <ClInclude Include="GameMode.h" />
@@ -267,6 +268,7 @@
     <ClCompile Include="EngineVertex.cpp" />
     <ClCompile Include="EngineVertexBuffer.cpp" />
     <ClCompile Include="EngineVertexShader.cpp" />
+    <ClCompile Include="FontRenderer.cpp" />
     <ClCompile Include="FontWidget.cpp" />
     <ClCompile Include="GameInstance.cpp" />
     <ClCompile Include="GameMode.cpp" />

@@ -162,15 +162,24 @@ void AKnight::CheckCameraPos()
 	FVector CameraPos = Camera->GetActorLocation();
 	FVector ScreenSize = UEngineCore::GetScreenScale();
 
-	float Distance = ::abs(KnightPos.X - CameraPos.X);
+	float Distance = ::abs(KnightPos.Length() - CameraPos.Length());
+	float Width = ::abs(KnightPos.X - CameraPos.X);
 	float Height = ::abs(KnightPos.Y - (CameraPos.Y - ScreenSize.Y * ScreenRatioY));
-	//float Height = ::abs(KnightPos.Y - CameraPos.Y);
-	if (Distance > 50.0f || Height > 300.0f)
+	float KnightPosY = KnightPos.Y - BodyRenderer->GetScale().Y * 0.5f;
+	float Rs = CameraPos.Y - ScreenSize.Y * ScreenRatioY;
+	//if (KnightPosY < CameraPos.Y - ScreenSize.Y * ScreenRatioY)
+	//{
+	//	CameraCurPos = CameraPos;
+	//	CameraTargetPos = { KnightPos.X, KnightPos.Y + ScreenSize.Y * ScreenRatioY };
+	//	bIsCameraMove = true;
+	//}
+
+	if (Distance > 350.0f || Height > 350.0f || Width > 100.0f)
 	{
 		CameraCurPos = CameraPos;
 		
 		float TargetY = KnightPos.Y + ScreenSize.Y * ScreenRatioY;
-		float ClampPosY = UEngineMath::Clamp(TargetY, (CameraPos.Y - 100.0f) , (CameraPos.Y + 100.0f));
+		float ClampPosY = UEngineMath::Clamp(TargetY, (CameraPos.Y - 100.0f) , (CameraPos.Y + 50.0f));
 		CameraTargetPos = { KnightPos.X, ClampPosY };
 
 		bIsCameraMove = true;

@@ -233,11 +233,6 @@ void UEngineCore::EngineFrame()
 	GEngine->CurLevel->Release(DeltaTime);
 }
 
-void UEngineCore::SetGameInstance(std::shared_ptr<UGameInstance> _Inst)
-{
-	GEngine->GameInstance = _Inst;
-}
-
 void UEngineCore::EngineEnd()
 {
 	UEngineGUI::Release();
@@ -252,4 +247,9 @@ void UEngineCore::EngineEnd()
 	GEngine->LevelMap.clear();
 
 	UEngineDebug::EndConsole();
+}
+
+void UEngineCore::SetGameInstance(std::shared_ptr<UGameInstance> _Inst)
+{
+	GEngine->GameInstance = _Inst;
 }

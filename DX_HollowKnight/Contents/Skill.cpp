@@ -23,7 +23,7 @@ void ASkill::BeginPlay()
 
 	Collision->SetCollisionEnter([](UCollision* _This, UCollision* _Other)
 		{
-			_Other->GetActor()->Destroy();
+			//_Other->GetActor()->Destroy();
 			// _Other->Destroy();
 			UEngineDebug::OutPutString("Attack");
 		});

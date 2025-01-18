@@ -148,21 +148,17 @@
     <ClInclude Include="Collision.h">
       <Filter>04_Object\Component\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="TimeEventComponent.h">
-      <Filter>04_Object\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="TransformObject.h" />
     <ClInclude Include="ThirdParty\FW1FontWrapper\Inc\FW1FontWrapper.h">
       <Filter>06_ThirdParty\FW1FontWrapper\Inc</Filter>
     </ClInclude>
     <ClInclude Include="HUD.h">
-      <Filter>11_UI</Filter>
+      <Filter>04_Object\UI</Filter>
     </ClInclude>
     <ClInclude Include="EngineDataStruct.h">
       <Filter>09_Data</Filter>
     </ClInclude>
     <ClInclude Include="Widget.h">
-      <Filter>11_UI</Filter>
+      <Filter>04_Object\UI</Filter>
     </ClInclude>
     <ClInclude Include="EngineFont.h">
       <Filter>07_Resources\Font</Filter>
@@ -171,12 +167,23 @@
       <Filter>07_Resources\Texture</Filter>
     </ClInclude>
     <ClInclude Include="FontWidget.h">
-      <Filter>11_UI</Filter>
+      <Filter>04_Object\UI</Filter>
     </ClInclude>
     <ClInclude Include="ImageWidget.h">
-      <Filter>11_UI</Filter>
+      <Filter>04_Object\UI</Filter>
     </ClInclude>
-    <ClInclude Include="GameInstance.h" />
+    <ClInclude Include="GameInstance.h">
+      <Filter>03_Core</Filter>
+    </ClInclude>
+    <ClInclude Include="FontRenderer.h">
+      <Filter>04_Object\Component\Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeEventComponent.h">
+      <Filter>04_Object\Component\Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformObject.h">
+      <Filter>04_Object\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -314,15 +321,11 @@
     <ClCompile Include="Collision.cpp">
       <Filter>04_Object\Component\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="TimeEventComponent.cpp">
-      <Filter>04_Object\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="TransformObject.cpp" />
     <ClCompile Include="Widget.cpp">
-      <Filter>11_UI</Filter>
+      <Filter>04_Object\UI</Filter>
     </ClCompile>
     <ClCompile Include="HUD.cpp">
-      <Filter>11_UI</Filter>
+      <Filter>04_Object\UI</Filter>
     </ClCompile>
     <ClCompile Include="EngineFont.cpp">
       <Filter>07_Resources\Font</Filter>
@@ -331,12 +334,23 @@
       <Filter>07_Resources\Texture</Filter>
     </ClCompile>
     <ClCompile Include="FontWidget.cpp">
-      <Filter>11_UI</Filter>
+      <Filter>04_Object\UI</Filter>
     </ClCompile>
     <ClCompile Include="ImageWidget.cpp">
-      <Filter>11_UI</Filter>
+      <Filter>04_Object\UI</Filter>
     </ClCompile>
-    <ClCompile Include="GameInstance.cpp" />
+    <ClCompile Include="GameInstance.cpp">
+      <Filter>03_Core</Filter>
+    </ClCompile>
+    <ClCompile Include="FontRenderer.cpp">
+      <Filter>04_Object\Component\Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeEventComponent.cpp">
+      <Filter>04_Object\Component\Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformObject.cpp">
+      <Filter>04_Object\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="00_PreCompile">
@@ -429,11 +443,11 @@
     <Filter Include="06_ThirdParty\FW1FontWrapper\Inc">
       <UniqueIdentifier>{feffa54c-fc8a-4164-b597-a683fd27acff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="11_UI">
-      <UniqueIdentifier>{5c644b65-9af3-4291-93e6-26e0a070c8ad}</UniqueIdentifier>
-    </Filter>
     <Filter Include="07_Resources\Font">
       <UniqueIdentifier>{7455c403-b120-4677-b007-381a53235298}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04_Object\UI">
+      <UniqueIdentifier>{5c644b65-9af3-4291-93e6-26e0a070c8ad}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

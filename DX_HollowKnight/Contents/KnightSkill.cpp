@@ -23,21 +23,24 @@ AKnightSkill::~AKnightSkill()
 void AKnightSkill::BeginPlay()
 {
 	ASkill::BeginPlay();
-
+	SetCollisionEvent();
 }
 
 void AKnightSkill::Tick(float _DeltaTime)
 {
 	ASkill::Tick(_DeltaTime);
-	this;
-	//CheckKnightPos();
-	//Release();
 }
 
-//void AKnightSkill::CheckKnightPos()
-//{
-//	//KnightPos = AKnight::GetPawn()->GetRootComponent()->GetTransformRef().RelativeLocation;
-//}
+void AKnightSkill::SetCollisionEvent()
+{
+	Collision->SetCollisionEnter([](UCollision* _This, UCollision* _Other)
+		{
+			//_Other->GetActor()->Destroy();
+			// _Other->Destroy();
+			UEngineDebug::OutPutString("Enter");
+		});
+}
+
 
 
 
