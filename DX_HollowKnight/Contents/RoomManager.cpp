@@ -62,8 +62,8 @@ void URoomManager::CreateRoom(AGameMode* _GameMode)
 
 	// 5. 시작 위치 중력 설정 : 문과 충돌해야만 픽셀충돌 맵이 지정되기 때문에 여기서 강제로 설정 필요한 경우 사용
 	//SetInitCurRoom(ForgottenCrossroads1.get());
-	//SetInitCurRoom(Dirtmouth.get());
-	SetInitCurRoom(Crossroads1.get());
+	SetInitCurRoom(Dirtmouth.get());
+	//SetInitCurRoom(Crossroads1.get());
 
 	// 6. 몬스터 생성
 	Dirtmouth->CreateMonster<AMonster>(InitPos::Dirtmouth_well);

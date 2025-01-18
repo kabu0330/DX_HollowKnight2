@@ -10,7 +10,7 @@ public:
 
 	// 잊혀진 교차로에서 다시 마을로
 	inline static FVector FromCrossroads1 = { 9384, -5595 };
-	inline static FVector ToDirtmouth = { 9075, -3060 };
+	inline static FVector ToDirtmouth = { 9000, -3000 };
 
 	// 교차로 1
 	inline static FVector Crossroads1Left = { 6210, -5740 };
@@ -30,6 +30,6 @@ public:
 class InitPos
 {
 public:
-	inline static FVector Dirtmouth_well = { 9262, -3108 };
+	inline static FVector Dirtmouth_well = { 9000, -3000 };
 	inline static FVector CrossroadsEntrance = { 9390, -5500 };
 };

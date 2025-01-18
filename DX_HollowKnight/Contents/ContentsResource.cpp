@@ -103,6 +103,11 @@ void UContentsResource::LoadResourceDirectory()
 	LoadContentsResource("Image/Effect/Knight/Dash_effect2");
 	LoadContentsResource("Image/Effect/Knight/Fireball");
 	LoadContentsResource("Image/Effect/Knight/Fireball_Impact");
+
+	// Monster
+	LoadContentsResource("Image/Monster/HuskBully");
+	LoadContentsResource("Image/Monster/Vengefly");
+
 }
 
 void UContentsResource::LoadFolder()

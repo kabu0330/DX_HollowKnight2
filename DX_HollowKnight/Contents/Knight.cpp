@@ -34,9 +34,9 @@ AKnight::AKnight()
 	bCanRotation = true;
 
 	//SetActorLocation({ 1100.0f, -3000.0f });
-	//SetActorLocation(InitPos::Dirtmouth_well);
-	SetActorLocation(InitPos::CrossroadsEntrance);
-	SetActorLocation({9911, -5500});
+	SetActorLocation(InitPos::Dirtmouth_well);
+	//SetActorLocation(InitPos::CrossroadsEntrance);
+	//SetActorLocation({9911, -5500});
 
 	// Debug
 	BodyRenderer->BillboardOn();

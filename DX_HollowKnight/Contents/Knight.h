@@ -1,6 +1,5 @@
 #pragma once
 #include <EngineBase/FSMStateManager.h>
-#include <EnginePlatform/EngineWinImage.h>
 #include <EngineCore/Pawn.h>
 #include "Global.h"
 
@@ -43,7 +42,7 @@ public:
 		return BodyCollision.get();
 	}
 
-	// ¸Ê°ú Ãæµ¹
+	// ÇÈ¼¿ Ãæµ¹
 	void SetOnGround(bool _Value)
 	{
 		bIsOnGround = _Value;
@@ -126,6 +125,7 @@ private:
 	bool bIsAttacking = false;
 	bool bIsBeingHit = false;
 	bool bIsCastingSpell = false;
+	bool bIsStun = false;
 	bool bIsDeath = false;
 
 	float HitStunDuration = 1.0f;
@@ -203,9 +203,10 @@ private:
 	using StateCallback = void(AKnight::*)(float);
 	void CreateState(EKnightState _State, StateCallback _Callback, std::string_view _AnimationName);
 
+	void SetFSM();
 	UFSMStateManager FSM;
 	EKnightState NextState = EKnightState::IDLE;
-	void SetFSM();
+
 	void SetIdle(float _DeltaTime);
 	void SetRun(float _DeltaTime);
 	void SetIdleToRun(float _DeltaTime);
