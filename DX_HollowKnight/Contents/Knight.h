@@ -18,8 +18,6 @@ public:
 	AKnight& operator=(const AKnight& _Other) = delete;
 	AKnight& operator=(AKnight&& _Other) noexcept = delete;
 
-	void SetCameraPosition();
-
 	void TimeElapsed(float _DeltaTime);
 
 	void CheckEnterDoor(class UCollision* _This, class UCollision* _Target);
@@ -103,7 +101,6 @@ protected:
 	void ActiveGravity();
 	void ActiveWallCollsion();
 
-
 private:
 	// Debug
 	bool NoneGravity = false;
@@ -146,6 +143,14 @@ private:
 private:
 	void DebugInput(float _DeltaTime);
 
+	void SetCameraPosition();
+	void CheckCameraPos();
+	bool bIsCameraMove = false;
+	FVector CameraCurPos = FVector::ZERO;
+	FVector CameraTargetPos = FVector::ZERO;
+	float CameraMoveTime = 0.0f;
+	float ScreenRatioY = 0.0f;
+
 	bool CanAction();
 
 	void Move(float _DeltaTime);
@@ -172,11 +177,17 @@ private:
 	float DashCooldownElapsed = 0.0f;
 	void ChangeDash();
 	void Dash();
+	void CreateDashEffect();
 
 	// Spell : AŰ
-	bool bIsEffectActive = false;
-	void CastFocus();
+	bool bIsFireballEffect = false;
 	void CastFireball();
+	void CreateFireballEffect();
+	bool bIsFocusEffect = false;
+	void CastFocus();
+	void CreateFocusEffect();
+	bool bIsFocusEndEffect = false;
+	void CreateFocusEndEffect();
 
 	// Animation
 	void InitAnimation();

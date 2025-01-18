@@ -179,6 +179,11 @@ public:
 		return;
 	}
 
+	class USceneComponent* GetRootComponent()
+	{
+		return RootComponent.get();
+	}
+
 
 	ENGINEAPI FVector GetActorUpVector();
 	ENGINEAPI FVector GetActorRightVector();

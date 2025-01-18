@@ -14,8 +14,7 @@
 #include "Room.h"
 #include "PlayGameMode.h"
 #include "Door.h"
-
-
+#include <math.h>
 
 AKnight* AKnight::MainPawn = nullptr;
 
@@ -28,26 +27,20 @@ AKnight::AKnight()
 
 	MainPawn = this;
 
-	Velocity = 400.0f;
+	Velocity = 500.0f;
 	InitVelocity = Velocity;
-	DashSpeed = Velocity * 4.0f;
+	DashSpeed = Velocity * 3.0f;
 	JumpForce = InitJumpForce;
 	bCanRotation = true;
 
 	//SetActorLocation({ 1100.0f, -3000.0f });
 	//SetActorLocation(InitPos::Dirtmouth_well);
 	SetActorLocation(InitPos::CrossroadsEntrance);
-	SetActorLocation({9911, -5550});
+	SetActorLocation({9911, -5500});
 
 	// Debug
 	BodyRenderer->BillboardOn();
-	//NoneGravity = true;
-	if (true == NoneGravity)
-	{
-		Velocity = 800.0f;	
-		InitVelocity = Velocity;
-		DashSpeed = Velocity * 3.0f;
-	}
+
 
 	BodyCollision->SetCollisionStay(std::bind(&AKnight::CheckEnterDoor, this, std::placeholders::_1, std::placeholders::_2));
 
@@ -57,6 +50,15 @@ void AKnight::BeginPlay()
 {
 	AActor::BeginPlay();
 	SetFSM();
+	std::shared_ptr<ACameraActor> Camera = GetWorld()->GetCamera(0);
+	FVector KnightPos = GetActorLocation();
+	FVector CameraPos = Camera->GetActorLocation();
+	FVector ScreenSize = UEngineCore::GetScreenScale();
+	ScreenRatioY = 0.2f;
+	Camera->SetActorLocation({ KnightPos.X, KnightPos.Y + ScreenSize.Y * ScreenRatioY });
+	FVector Pos = Camera->GetActorLocation();
+
+	int a = 0;
 }
 
 void AKnight::Tick(float _DeltaTime)
@@ -65,7 +67,9 @@ void AKnight::Tick(float _DeltaTime)
 
 	ActiveWallCollsion();
 
+	CheckCameraPos();
 	SetCameraPosition();
+
 	FSM.Update(_DeltaTime);
 
 	TimeElapsed(_DeltaTime);
@@ -109,6 +113,7 @@ void AKnight::ActiveWallCollsion()
 
 void AKnight::Move(float _DeltaTime)
 {
+
 	if (false == bIsDashing)
 	{
 		Velocity = InitVelocity;
@@ -140,22 +145,70 @@ void AKnight::Move(float _DeltaTime)
 			AddRelativeLocation(FVector{ Velocity * _DeltaTime, 0.0f, 0.0f });
 		}
 	}
+
+	
+}
+
+void AKnight::CheckCameraPos()
+{
+	if (bIsCameraMove == true)
+	{
+		return;
+	}
+
+	std::shared_ptr<ACameraActor> Camera = GetWorld()->GetCamera(0);
+	FVector KnightPos = GetActorLocation();
+	FVector CameraPos = Camera->GetActorLocation();
+	FVector ScreenSize = UEngineCore::GetScreenScale();
+
+	float Distance = ::abs(KnightPos.X - CameraPos.X);
+	float Height = ::abs(KnightPos.Y - (CameraPos.Y - ScreenSize.Y * ScreenRatioY));
+	//float Height = ::abs(KnightPos.Y - CameraPos.Y);
+	if (Distance > 50.0f || Height > 300.0f)
+	{
+		CameraCurPos = CameraPos;
+		
+		float TargetY = KnightPos.Y + ScreenSize.Y * ScreenRatioY;
+		float ClampPosY = UEngineMath::Clamp(TargetY, (CameraPos.Y - 100.0f) , (CameraPos.Y + 100.0f));
+		CameraTargetPos = { KnightPos.X, ClampPosY };
+
+		bIsCameraMove = true;
+	}
 }
 
 void AKnight::SetCameraPosition()
 {
+	if (false == bIsCameraMove)
+	{
+		return;
+	}
+
 	std::shared_ptr<ACameraActor> Camera = GetWorld()->GetCamera(0);
-	FVector Pos = RootComponent->GetTransformRef().RelativeLocation;
-	FVector ScreenSize = UEngineCore::GetScreenScale();
-	CameraPos = { Pos.X, Pos.Y + ScreenSize.Y * 0.25f };
-	//CameraPos = { Pos.X, Pos.Y };
-	Camera->SetActorLocation(CameraPos);
+	float MoveDuration = 0.2f;
+	float Alpha = CameraMoveTime / MoveDuration;
+
+	FVector CameraDest = UEngineMath::Lerp(CameraCurPos, CameraTargetPos, Alpha);
+	Camera->SetActorLocation(CameraDest);
+
+
+	float DeltaTime = UEngineCore::GetDeltaTime();
+	CameraMoveTime += DeltaTime;
+	if (MoveDuration <= CameraMoveTime)
+	{
+		CameraMoveTime = 0.0f;
+		bIsCameraMove = false;
+	}
+
 	FVector CameraResult = GetActorLocation();
 }
 
 void AKnight::TimeElapsed(float _DeltaTime)
 {
-	float AttackCooldown = 0.6f;
+	if (true == ARoom::GetActiveGravity())
+	{
+		return;
+	}
+	float AttackCooldown = 0.5f;
 
 	if (true == bIsAttacking)
 	{
@@ -168,7 +221,7 @@ void AKnight::TimeElapsed(float _DeltaTime)
 		}
 	}
 
-	float DashCooldown = 0.4f;
+	float DashCooldown = 0.3f;
 	if (false == bCanDash)
 	{
 		DashCooldownElapsed += _DeltaTime;
@@ -241,6 +294,8 @@ void AKnight::ChangeDash()
 
 void AKnight::Dash()
 {
+	CreateDashEffect();
+
 	float DeltaTime = UEngineCore::GetDeltaTime();
 	bCanRotation = false;
 	bIsDashing = true;
@@ -269,7 +324,7 @@ void AKnight::CastFocus()
 	if (UEngineInput::IsPress('A'))
 	{
 		float PressTime = UEngineInput::IsPressTime('A');
-		float TriggerTime = 0.5f;
+		float TriggerTime = 0.3f;
 
 		if (PressTime >= TriggerTime)
 		{
@@ -278,6 +333,7 @@ void AKnight::CastFocus()
 		}
 	}
 }
+
 
 void AKnight::CastFireball()
 {
@@ -316,13 +372,13 @@ void AKnight::Jump(float _DeltaTime)
 		}
 		if (UEngineInput::IsPress('Z'))
 		{		
-			float JumpForceMax = 1000.0f;
-			float JumpAccTime = 0.4f;
+			float JumpAccTime = 0.3f;
 			float JumpKeyDuration = UEngineInput::IsPressTime('Z');
 			if (JumpAccTime >= JumpKeyDuration)
 			{
-				JumpForce += 500.0f;
+				JumpForce = 1200.0f;
 
+				float JumpForceMax = 1800.0f;
 				if (JumpForce >= JumpForceMax)
 				{
 					JumpForce = JumpForceMax;
@@ -382,6 +438,22 @@ void AKnight::ChangeLookAnimation()
 
 void AKnight::DebugInput(float _DeltaTime)
 {
+	if (true == ARoom::GetActiveGravity())
+	{
+		bIsOnGround = true;
+	}
+
+	if (UEngineInput::IsDown('T'))
+	{
+		if (true == ARoom::GetActiveGravity())
+		{
+			Velocity = 1500.0f;
+			InitVelocity = Velocity;
+			DashSpeed = Velocity * 3.0f;
+			bCanDash = true;
+		}		
+	}
+
 	if (UEngineInput::IsPress('V'))
 	{
 		FSM.ChangeState(EKnightState::DEATH_DAMAGE);
@@ -407,52 +479,6 @@ void AKnight::DebugInput(float _DeltaTime)
 			AddRelativeLocation(FVector{ 0.0f, -Velocity * _DeltaTime, 0.0f });
 		}
 	}
-}
-
-void AKnight::CreateSlashEffect()
-{
-	if (true == bIsShowEffect)
-	{
-		return;
-	}
-
-	std::shared_ptr<AKnightSkill> SlashEffect = GetWorld()->SpawnActor<AKnightSkill>();
-	SlashEffect->ChangeAnimation("SlashEffect");
-	FVector Offset = FVector{ -100.0f, 0.0f};
-	SlashEffect->SetLocation(this, Offset);
-	bIsShowEffect = true;
-
-	return;
-}
-
-void AKnight::CreateUpSlashEffect()
-{
-	if (true == bIsShowEffect)
-	{
-		return;
-	}
-
-	std::shared_ptr<AKnightSkill> SlashEffect = GetWorld()->SpawnActor<AKnightSkill>();
-	SlashEffect->ChangeAnimation("UpSlashEffect");
-	FVector Offset = FVector{ 0.0f, 100.0f };
-	SlashEffect->SetLocation(this, Offset);
-	SlashEffect->EnableRotation(false); // 좌우반전에 따라 
-	bIsShowEffect = true;
-}
-
-void AKnight::CreateDownSlashEffect()
-{
-	if (true == bIsShowEffect)
-	{
-		return;
-	}
-
-	std::shared_ptr<AKnightSkill> SlashEffect = GetWorld()->SpawnActor<AKnightSkill>();
-	SlashEffect->ChangeAnimation("DownSlashEffect");
-	FVector Offset = FVector{ 0.0f, -100.0f };
-	SlashEffect->SetLocation(this, Offset);
-	SlashEffect->EnableRotation(false);
-	bIsShowEffect = true;
 }
 
 void AKnight::ChangeAttackAnimation(EKnightState _PrevState)

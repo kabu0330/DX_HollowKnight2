@@ -28,7 +28,6 @@ void USceneComponent::ComponentTick(float _DeltaTime)
 
 	for (UTransformObject* Child : Childs)
 	{
-
 		USceneComponent* SceneChild = dynamic_cast<USceneComponent*>(Child);
 
 		if (false == SceneChild->IsActive())

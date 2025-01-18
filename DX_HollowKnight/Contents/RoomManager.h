@@ -15,7 +15,7 @@ public:
 	URoomManager& operator=(const URoomManager& _Other) = delete;
 	URoomManager& operator=(URoomManager&& _Other) noexcept = delete;
 
-	void CreateAndLinkRoom(class AGameMode* _GameMode);
+	void CreateRoom(class AGameMode* _GameMode);
 
 	std::vector<ARoom*>& GetRoomsRef()
 	{

@@ -186,6 +186,9 @@
     <ClCompile Include="Platform.cpp">
       <Filter>Play\Map</Filter>
     </ClCompile>
+    <ClCompile Include="Knight_Animation.cpp">
+      <Filter>Global\Knight</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">

@@ -2,6 +2,7 @@
 #include "Knight.h"
 #include <EnginePlatform/EngineInput.h>
 #include "KnightSkill.h"
+#include "Effect.h"
 
 
 void AKnight::SetIdle(float _DeltaTime)
@@ -9,6 +10,7 @@ void AKnight::SetIdle(float _DeltaTime)
 	ActiveGravity();
 	Move(_DeltaTime);
 	bCanRotation = true;
+	bIsFireballEffect = false;
 
 	if (UEngineInput::IsPress(VK_LEFT) || UEngineInput::IsPress(VK_RIGHT))
 	{
@@ -21,10 +23,10 @@ void AKnight::SetIdle(float _DeltaTime)
 
 	ChangeLookAnimation(); // 위 아래 쳐다보기
 
-	ChangeAttackAnimation(EKnightState::IDLE); // 지상 공격
 	CastFocus(); // 집중
 	CastFireball(); // 파이어볼
 
+	ChangeAttackAnimation(EKnightState::IDLE); // 지상 공격
 }
 
 void AKnight::SetRun(float _DeltaTime)
@@ -43,6 +45,8 @@ void AKnight::SetRun(float _DeltaTime)
 	ChangeJumpAnimation();
 	ChangeDash(); // 대시
 
+	CastFireball();
+
 	ChangeAttackAnimation(EKnightState::RUN); // 지상 공격
 }
 
@@ -53,11 +57,12 @@ void AKnight::SetIdleToRun(float _DeltaTime)
 
 	bCanRotation = true;
 
-	ChangeNextAnimation(EKnightState::RUN);
-
 	ChangeJumpAnimation();
 	ChangeDash(); // 대시
 
+	CastFireball(); 
+
+	ChangeNextAnimation(EKnightState::RUN);
 	ChangeAttackAnimation(EKnightState::RUN); // 지상 공격
 }
 
@@ -67,7 +72,7 @@ void AKnight::SetRunToIdle(float _DeltaTime)
 	Move(_DeltaTime);
 
 	bCanRotation = true;
-	bIsDashing = false;
+	bIsDashing = false; // 이 동작으로 돌아와야만 대시 상태가 해제된 것으로 판단
 
 	ChangeNextAnimation(EKnightState::IDLE);
 
@@ -79,6 +84,8 @@ void AKnight::SetRunToIdle(float _DeltaTime)
 
 	ChangeJumpAnimation();
 	ChangeDash(); // 대시
+
+	CastFireball();
 
 	ChangeAttackAnimation(EKnightState::RUN); // 지상 공격
 }
@@ -94,6 +101,8 @@ void AKnight::SetJump(float _DeltaTime)
 	bCanRotation = true;
 
 	ChangeDash(); // 대시
+	CastFireball();
+
 	ChangeAttackAnimation(EKnightState::AIRBORN); // 공중 공격
 
 
@@ -115,8 +124,11 @@ void AKnight::SetAirborn(float _DeltaTime)
 
 	bCanRotation = true;
 	bIsDashing = false;
+	bIsFireballEffect = false;
 
 	ChangeDash(); // 대시
+	CastFireball();
+
 	ChangeAttackAnimation(EKnightState::AIRBORN); // 공중 공격
 
 	if (true == bIsOnGround)
@@ -171,6 +183,8 @@ void AKnight::SetSlash(float _DeltaTime)
 	ActiveGravity();
 	Move(_DeltaTime);
 
+	bCanRotation = true; // 회전 허용
+
 	CreateSlashEffect();
 	ChangePrevAnimation();
 }
@@ -195,51 +209,43 @@ void AKnight::SetDownSlash(float _DeltaTime)
 
 void AKnight::SetFocus(float _DeltaTime)
 {
+	bIsFocusEffect = false;
+	bIsFocusEndEffect = false;
 
-	//if (UEngineInput::IsFree('A'))
-	//{
-	//	ChangeNextAnimation(EKnightState::IDLE);
-	//	return;
-	//}
+	if (UEngineInput::IsUp('A'))
+	{
+		ChangeNextAnimation(EKnightState::IDLE);
+		return;
+	}
 
 	ChangeNextAnimation(EKnightState::FOCUS_GET);
 }
 
 void AKnight::SetFocusGet(float _DeltaTime)
 {
-	if (false == bIsEffectActive)
+	CreateFocusEffect();
+
+	if (UEngineInput::IsUp('A'))
 	{
-		std::shared_ptr<AKnightSkill> FocusEffect = GetWorld()->SpawnActor<AKnightSkill>();
-		FocusEffect->ChangeAnimation("FocusEffect");
-		//GlobalFunc::SetLocation(RootComponent, FocusEffect->GetRenderer());
-		bIsEffectActive = true;
+		ChangeNextAnimation(EKnightState::IDLE);
+		return;
 	}
 
-	//if (UEngineInput::IsFree('A'))
-	//{
-	//	ChangeNextAnimation(EKnightState::IDLE);
-	//	return;
-	//}
 	ChangeNextAnimation(EKnightState::FOCUS_END);
 }
 
 void AKnight::SetFocusEnd(float _DeltaTime)
 {
+	CreateFocusEndEffect();
+	bIsFocusEndEffect = true;
 	if (UEngineInput::IsPress('A'))
 	{
 		FSM.ChangeState(EKnightState::FOCUS);
-		bIsEffectActive = false;
+		bIsFocusEffect = false;
 		return;
 	}
 	else // 스킬 시전 종료
 	{
-		if (true == bIsEffectActive)
-		{
-			std::shared_ptr<AKnightSkill> FocusEffect = GetWorld()->SpawnActor<AKnightSkill>();
-			FocusEffect->ChangeAnimation("FocusEffectEnd");
-			//GlobalFunc::SetLocation(RootComponent, FocusEffect->GetRenderer());
-			bIsEffectActive = false;
-		}
 		ChangeNextAnimation(EKnightState::IDLE);
 	}
 }
@@ -251,6 +257,8 @@ void AKnight::SetFireballAntic(float _DeltaTime)
 
 void AKnight::SetFireballCast(float _DeltaTime)
 {
+	CreateFireballEffect(); // 이펙트 발사
+
 	if (true == bIsOnGround)
 	{
 		ChangeNextAnimation(EKnightState::IDLE);
@@ -351,7 +359,8 @@ void AKnight::SetFSM()
 
 	// 전투 애니메이션
 	// 일반공격
-	CreateState(EKnightState::SLASH, &AKnight::SetSlash, "Slash");
+	//CreateState(EKnightState::SLASH, &AKnight::SetSlash, "Slash");
+	CreateState(EKnightState::SLASH, &AKnight::SetSlash, "SlashAlt");
 	CreateState(EKnightState::UP_SLASH, &AKnight::SetUpSlash, "UpSlash");
 	CreateState(EKnightState::DOWN_SLASH, &AKnight::SetDownSlash, "DownSlash");
 

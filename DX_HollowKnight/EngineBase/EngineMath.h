@@ -57,6 +57,17 @@ public:
 	{
 		return A * (1 - Alpha) + B * Alpha;
 	}
+
+	template <typename DataType>
+	static DataType Lerp(DataType A, DataType B, float Alpha)
+	{
+		return A * (1.0f - Alpha) + B * Alpha;
+	}
+
+	static float Lerp(float A, float B, float Alpha)
+	{
+		return A * (1.0f - Alpha) + B * Alpha;
+	}
 };
 
 template<typename ValueType>

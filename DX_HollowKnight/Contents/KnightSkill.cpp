@@ -15,11 +15,12 @@ AKnightSkill::AKnightSkill()
 	std::string DownSlashEffect = "DownSlashEffect";
 	BodyRenderer->CreateAnimation(DownSlashEffect, DownSlashEffect, 0, 5, FrameTime, false);
 
-	std::string FocusEffect = "FocusEffect";
-	BodyRenderer->CreateAnimation(FocusEffect, FocusEffect, 0, 12, FrameTime, false);
+	float FireballFrame = 0.1f;
+	std::string Fireball = "Fireball";
+	BodyRenderer->CreateAnimation(Fireball, Fireball, 0, 3, FireballFrame);
 
-	std::string FocusEffectEnd = "FocusEffectEnd";
-	BodyRenderer->CreateAnimation(FocusEffectEnd, FocusEffectEnd, 0, 1, FrameTime, false);
+	std::string FireballImpact = "Fireball_Impact";
+	BodyRenderer->CreateAnimation(FireballImpact, FireballImpact, 0, 5, FireballFrame);
 
 	BodyRenderer->ChangeAnimation(SlashEffect);
 }

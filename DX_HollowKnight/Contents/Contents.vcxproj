@@ -310,6 +310,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Knight_Animation.cpp" />
     <ClCompile Include="Knight_AnimSetting.cpp" />
     <ClCompile Include="KnightSkill.cpp">
       <SubType>

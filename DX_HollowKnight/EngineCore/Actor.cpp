@@ -38,8 +38,6 @@ void AActor::Tick(float _DeltaTime)
 		Actor->Tick(_DeltaTime);
 	}
 
-	// 엄마아빠가 내 rootcomponent의 tick들 올려줄꺼라
-	// 엄마아빠가 있는 actor는 자신의 root를 컴포넌트를 돌릴필요가 벗어요.
 	if (nullptr == Parent)
 	{
 		if (nullptr != RootComponent)

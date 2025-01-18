@@ -72,6 +72,7 @@ void UContentsResource::LoadResourceDirectory()
 	LoadContentsResource("Image/Knight/RunToIdle");
 	LoadContentsResource("Image/Knight/IdleToRun");
 	LoadContentsResource("Image/Knight/Slash");
+	LoadContentsResource("Image/Knight/SlashAlt");
 	LoadContentsResource("Image/Knight/UpSlash");
 	LoadContentsResource("Image/Knight/DownSlash");
 	LoadContentsResource("Image/Knight/Damage");
@@ -98,6 +99,10 @@ void UContentsResource::LoadResourceDirectory()
 	LoadContentsResource("Image/Effect/Knight/DownSlashEffect");
 	LoadContentsResource("Image/Effect/Knight/FocusEffect");
 	LoadContentsResource("Image/Effect/Knight/FocusEffectEnd");
+	LoadContentsResource("Image/Effect/Knight/Dash_effect");
+	LoadContentsResource("Image/Effect/Knight/Dash_effect2");
+	LoadContentsResource("Image/Effect/Knight/Fireball");
+	LoadContentsResource("Image/Effect/Knight/Fireball_Impact");
 }
 
 void UContentsResource::LoadFolder()

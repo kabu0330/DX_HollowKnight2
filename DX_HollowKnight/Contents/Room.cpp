@@ -174,7 +174,7 @@ void ARoom::Gravity(AActor* _Actor, float _DeltaTime)
 			//{
 			//	Knight->AddRelativeLocation(FVector::UP);
 			//}
-			float GravityValue = 1000.0f;
+			float GravityValue = 2000.0f;
 			GravityForce += FVector::DOWN * GravityValue * _DeltaTime;
 			Knight->AddRelativeLocation(GravityForce * _DeltaTime);
 		}
@@ -245,7 +245,7 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Rend
 	AKnight* Knight = dynamic_cast<AKnight*>(_Actor);
 	if (nullptr != Knight)
 	{
-		if (CollisionColor == UColor::YELLOW )
+		if (CollisionColor == UColor::YELLOW || CollisionColor == UColor::BLACK || CollisionColor == UColor::RED)
 		{
 			Knight->SetWallHere(true);
 		}

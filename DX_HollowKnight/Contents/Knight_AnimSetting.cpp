@@ -17,7 +17,7 @@ void AKnight::InitAnimation()
 	float IdleFrameTime = 0.2f;
 	float RunFrameTime = 0.1f;
 	float ChangeFrameTime = 0.05f;
-	float SlashFrameTime = 0.03f;
+	float SlashFrameTime = 0.04f;
 
 	// 이동 애니메이션
 	std::string Idle = "Idle";
@@ -64,8 +64,11 @@ void AKnight::InitAnimation()
 
 
 	// 전투 애니메이션
-	std::string Slash = "Slash";
-	BodyRenderer->CreateAnimation(Slash, Slash, 0, 6, SlashFrameTime, false);
+	//std::string Slash = "Slash";
+	//BodyRenderer->CreateAnimation(Slash, Slash, 0, 6, SlashFrameTime, false);
+
+	std::string SlashAlt = "SlashAlt";
+	BodyRenderer->CreateAnimation(SlashAlt, SlashAlt, 0, 5, SlashFrameTime, false);
 
 	std::string UpSlash = "UpSlash";
 	BodyRenderer->CreateAnimation(UpSlash, UpSlash, 0, 6, SlashFrameTime, false);
@@ -75,20 +78,21 @@ void AKnight::InitAnimation()
 
 
 	// 스펠 애니메이션
+	float FocusFrameTime = 0.07f;
 	std::string Focus = "Focus";
-	BodyRenderer->CreateAnimation(Focus, Focus, 0, 6, RunFrameTime, false);
+	BodyRenderer->CreateAnimation(Focus, Focus, 0, 6, FocusFrameTime, false);
 
 	std::string FocusGet = "FocusGet";
-	BodyRenderer->CreateAnimation(FocusGet, FocusGet, 0, 10, RunFrameTime, false);
+	BodyRenderer->CreateAnimation(FocusGet, FocusGet, 0, 10, FocusFrameTime, false);
 
 	std::string FocusEnd = "FocusEnd";
-	BodyRenderer->CreateAnimation(FocusEnd, FocusEnd, 0, 2, RunFrameTime, false);
+	BodyRenderer->CreateAnimation(FocusEnd, FocusEnd, 0, 2, FocusFrameTime, false);
 
 	std::string FireballAntic = "FireballAntic";
-	BodyRenderer->CreateAnimation(FireballAntic, FireballAntic, 0, 2, RunFrameTime, false);
+	BodyRenderer->CreateAnimation(FireballAntic, FireballAntic, 0, 2, ChangeFrameTime, false);
 
 	std::string FireballCast = "FireballCast";
-	BodyRenderer->CreateAnimation(FireballCast, FireballCast, 0, 5, RunFrameTime, false);
+	BodyRenderer->CreateAnimation(FireballCast, FireballCast, 0, 5, ChangeFrameTime, false);
 
 
 	// 피격 애니메이션

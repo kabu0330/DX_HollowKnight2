@@ -21,7 +21,7 @@ APlayGameMode::APlayGameMode()
 	SetCamera();
 	CreateAndLinkCollisionGroup();
 
-	Rooms.CreateAndLinkRoom(this);
+	Rooms.CreateRoom(this);
 }
 
 void APlayGameMode::SetCamera()
