@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "ContentsResource.h"
+#include <EngineCore/EngineFont.h>
 
 void UContentsResource::LoadResource()
 {
@@ -46,6 +47,16 @@ void UContentsResource::LoadResource()
 			UEngineTexture::Load(FilePath);
 		}
 	}
+
+	{
+		// ÆùÆ®
+		UEngineDirectory Dir;
+		Dir.MoveParentToDirectory("ContentsResources");
+		Dir.Append("Font/TrajanPro-Regular.otf");
+		std::string FilePath = Dir.GetPathToString();
+		UEngineFont::Load("TrajanPro-Regular", FilePath);
+	}
+	
 }
 
 void UContentsResource::LoadContentsResource(std::string_view _Path)

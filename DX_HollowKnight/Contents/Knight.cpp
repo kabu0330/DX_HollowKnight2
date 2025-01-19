@@ -21,20 +21,15 @@ AKnight* AKnight::MainPawn = nullptr;
 AKnight::AKnight()
 {
 	SetName("AKnight");
+	MainPawn = this;
+
 	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
 	RootComponent = Default;
 	TimeEventor = CreateDefaultSubObject<UTimeEventComponent>().get();
 
 	CreateRenderer();
 	CreateCollision();
-
-	MainPawn = this;
-
-	Velocity = 500.0f;
-	InitVelocity = Velocity;
-	DashSpeed = Velocity * 3.0f;
-	JumpForce = InitJumpForce;
-	bCanRotation = true;
+	SetStatus();
 
 	//SetActorLocation({ 1100.0f, -3000.0f });
 	//SetActorLocation(InitPos::Dirtmouth_well);
@@ -45,15 +40,13 @@ AKnight::AKnight()
 	// Debug
 	BodyRenderer->BillboardOn();
 
-
-	BodyCollision->SetCollisionStay(std::bind(&AKnight::CheckEnterDoor, this, std::placeholders::_1, std::placeholders::_2));
-
 }
 
 void AKnight::BeginPlay()
 {
 	AActor::BeginPlay();
 	SetFSM();
+	SetCollisionEvent();
 	SetCameraPos();
 }
 
@@ -79,6 +72,18 @@ void AKnight::Tick(float _DeltaTime)
 
 }
 
+void AKnight::SetCollisionEvent()
+{
+	BodyCollision->SetCollisionEnter([](UCollision* _This, UCollision* _Other)
+		{
+			//_Other->GetActor()->Destroy();
+			// _Other->Destroy();
+			UEngineDebug::OutPutString("Kinigt Collision Event Enter");
+		});
+
+	BodyCollision->SetCollisionStay(std::bind(&AKnight::CheckEnterDoor, this, std::placeholders::_1, std::placeholders::_2));
+}
+
 void AKnight::ActiveGravity()
  {
 	if (true == NoneGravity)
@@ -102,9 +107,30 @@ void AKnight::ActivePixelCollsion()
 	ARoom* Room = ARoom::GetCurRoom();
 	if (nullptr != Room)
 	{
-		Room->CheckPixelCollisionWithWall(this, BodyRenderer.get(), Velocity, bIsLeft);
-		Room->CheckPixelCollisionWithCeil(this, BodyRenderer.get(), Velocity, bIsLeft);
+		Room->CheckPixelCollisionWithWall(this, BodyRenderer.get(), Stat.GetVelocity(), bIsLeft);
+		Room->CheckPixelCollisionWithCeil(this, BodyRenderer.get(), Stat.GetVelocity(), bIsLeft);
 	}
+}
+
+void AKnight::SetStatus()
+{
+	FStatusData Data;
+	Data.Velocity = 500.0f;
+	Data.InitVelocity = Data.Velocity;
+	Data.DashSpeed = Data.Velocity * 3.0f;
+	Data.MaxHP = 5;
+	Data.HP = 5;
+	Data.MaxMP = 99;
+	Data.MP = 0;
+	Data.Att = 5;
+	Data.SpellAtt = 15;
+	Data.bIsKnockbackable = true;
+	Data.KnockbackDistance = 50.0f;
+	Data.Geo = 0;
+	Stat.CreateStatus(&Data);
+
+	JumpForce = InitJumpForce;
+	bCanRotation = true;
 }
 
 void AKnight::Move(float _DeltaTime)
@@ -112,12 +138,13 @@ void AKnight::Move(float _DeltaTime)
 
 	if (false == bIsDashing)
 	{
-		Velocity = InitVelocity;
+		Stat.SetVelocity(Stat.GetInitVelocity());
 
 	}
 	if (UEngineInput::IsDown('C'))
 	{
-		Velocity = DashSpeed;
+		Stat.SetVelocity(Stat.GetDashSpeed());
+		//Velocity = DashSpeed;
 	}
 	if (true == bIsDashing)
 	{
@@ -130,7 +157,8 @@ void AKnight::Move(float _DeltaTime)
 	{
 		if (false == bIsWallHere)
 		{
-			AddRelativeLocation(FVector{ -Velocity * _DeltaTime, 0.0f, 0.0f });
+			//AddRelativeLocation(FVector{ -Velocity * _DeltaTime, 0.0f, 0.0f });
+			AddRelativeLocation(FVector{ -Stat.GetVelocity() * _DeltaTime, 0.0f, 0.0f });
 		}
 
 	}
@@ -138,7 +166,8 @@ void AKnight::Move(float _DeltaTime)
 	{
 		if (false == bIsWallHere)
 		{
-			AddRelativeLocation(FVector{ Velocity * _DeltaTime, 0.0f, 0.0f });
+			//AddRelativeLocation(FVector{ Velocity * _DeltaTime, 0.0f, 0.0f });
+			AddRelativeLocation(FVector{ Stat.GetVelocity() * _DeltaTime, 0.0f, 0.0f });
 		}
 	}
 }
@@ -313,11 +342,11 @@ void AKnight::Dash()
 	{
 		if (true == bIsLeft)
 		{
-			AddRelativeLocation(FVector{ -Velocity * DeltaTime, 0.0f, 0.0f });
+			AddRelativeLocation(FVector{ -Stat.GetVelocity() * DeltaTime, 0.0f, 0.0f });
 		}
 		else
 		{
-			AddRelativeLocation(FVector{ Velocity * DeltaTime, 0.0f, 0.0f });
+			AddRelativeLocation(FVector{ Stat.GetVelocity() * DeltaTime, 0.0f, 0.0f });
 		}
 	}
 }
@@ -455,9 +484,12 @@ void AKnight::DebugInput(float _DeltaTime)
 	{
 		if (true == ARoom::GetActiveGravity())
 		{
-			Velocity = 1500.0f;
-			InitVelocity = Velocity;
-			DashSpeed = Velocity * 3.0f;
+			//Velocity = 1500.0f;
+			//InitVelocity = Velocity;
+			//DashSpeed = Velocity * 3.0f;
+			Stat.SetVelocity(1500.0f);
+			Stat.SetInitVelocity(Stat.GetVelocity());
+			Stat.SetDashSpeed(Stat.GetVelocity() * 3.0f);
 			bCanDash = true;
 		}		
 	}
@@ -480,11 +512,11 @@ void AKnight::DebugInput(float _DeltaTime)
 	{
 		if (UEngineInput::IsPress(VK_UP))
 		{
-			AddRelativeLocation(FVector{ 0.0f, Velocity * _DeltaTime, 0.0f });
+			AddRelativeLocation(FVector{ 0.0f, Stat.GetVelocity() * _DeltaTime, 0.0f });
 		}
 		if (UEngineInput::IsPress(VK_DOWN))
 		{
-			AddRelativeLocation(FVector{ 0.0f, -Velocity * _DeltaTime, 0.0f });
+			AddRelativeLocation(FVector{ 0.0f, -Stat.GetVelocity() * _DeltaTime, 0.0f });
 		}
 	}
 }
@@ -527,12 +559,7 @@ void AKnight::CreateCollision()
 	BodyCollision->SetRelativeLocation(BodyRenderer->GetActorLocation());
 	//BodyCollision->SetCollisionType(ECollisionType::AABB);
 
-	BodyCollision->SetCollisionEnter([](UCollision* _This, UCollision* _Other)
-		{
-			//_Other->GetActor()->Destroy();
-			// _Other->Destroy();
-			//UEngineDebug::OutPutString("Enter");
-		});
+
 }
 
 void AKnight::CheckDirection()

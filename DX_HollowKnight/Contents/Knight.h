@@ -3,6 +3,7 @@
 #include <EngineCore/Pawn.h>
 #include "Global.h"
 #include <EngineCore/TimeEventComponent.h>
+#include "StatusUnit.h"
 
 // Ό³Έν : Player
 class AKnight : public APawn
@@ -79,16 +80,11 @@ public:
 		return bIsLeft;
 	}
 
-	
 	void SwitchActiveGravity()
 	{
 		NoneGravity = !NoneGravity;
 	}
 
-	float GetVelocity() const
-	{
-		return Velocity;
-	}
 	bool GetEnter()
 	{
 		return bIsEnter;
@@ -103,14 +99,24 @@ public:
 		GravityForce = _GravityForce;
 	}
 
+	UStatusUnit& GetStatRef()
+	{
+		return Stat;
+	}
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
+	void SetCollisionEvent();
 
 	void ActiveGravity();
 	void ActivePixelCollsion();
 
 private:
+	// Stat
+	void SetStatus();
+	UStatusUnit Stat = UStatusUnit();
+
 	// Debug
 	bool NoneGravity = false;
 	static AKnight* MainPawn;
@@ -140,13 +146,6 @@ private:
 	bool bIsDeath = false;
 
 	float HitStunDuration = 1.0f;
-
-	// Stat
-	float Velocity = 300.0f;
-	float InitVelocity = 0.0f;
-	float DashSpeed = 0.0f;
-	int NailDamage = 5;
-	int MaxHealth = 5;
 
 	FVector GravityForce = FVector::ZERO;
 

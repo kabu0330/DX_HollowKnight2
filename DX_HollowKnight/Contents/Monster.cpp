@@ -7,29 +7,25 @@ AMonster::AMonster()
 	RootComponent = Default;
 
 
+	Offset = { 0.0f, -100.0f };
+	ZSort = static_cast<float>(EZOrder::MONSTER);
+
 	// Renderer
 	BodyRenderer = CreateDefaultSubObject<UContentsRenderer>();
 	BodyRenderer->SetupAttachment(RootComponent);
 	BodyRenderer->SetAutoScaleRatio(1.0f);
-	FVector Offset = { 0.0f, -100.0f};
-	float ZSort = static_cast<float>(EZOrder::MONSTER);
-	BodyRenderer->SetWorldLocation({ Offset.X, Offset.Y, ZSort });
-	CreateAnimation();
 
 	// Collision
 	BodyCollision = CreateDefaultSubObject<UCollision>();
 	BodyCollision->SetupAttachment(RootComponent);
-	BodyCollision->SetScale3D(BodyRenderer->GetScale() / 2.0f);
-	BodyCollision->SetWorldLocation({ Offset.X, Offset.Y /2.0f, ZSort });
-	//BodyCollision->SetActive(false);
-	BodyCollision->SetCollisionProfileName("Monster");	
 }
 
 void AMonster::BeginPlay()
 {
 	AActor::BeginPlay();
+	CreateAnimation();
 	CreateCollision();
-
+	SetCollisionEvent();
 	SetFSM();
 }
 
@@ -42,6 +38,14 @@ void AMonster::Tick(float _DeltaTime)
 
 	FSM.Update(_DeltaTime);
 
+}
+
+void AMonster::SetCollisionEvent()
+{
+	BodyCollision->SetCollisionEnter([](UCollision* _This, UCollision* _Other)
+		{
+			UEngineDebug::OutPutString("Monster Collision Event Enter");
+		});
 }
 
 void AMonster::Move(float _DeltaTime)
@@ -72,7 +76,7 @@ void AMonster::CreateAnimation()
 
 
 	BodyRenderer->ChangeAnimation("Idle");
-
+	BodyRenderer->SetWorldLocation({ Offset.X, Offset.Y, ZSort });
 
 	std::string Vengefly = "Vengefly";
 	BodyRenderer->CreateAnimation(Vengefly, Vengefly, 0, 2, 0.2f);
@@ -81,12 +85,10 @@ void AMonster::CreateAnimation()
 
 void AMonster::CreateCollision()
 {
-	BodyCollision->SetCollisionEnter([](UCollision* _This, UCollision* _Other)
-		{
-			//_Other->GetActor()->Destroy();
-			// _Other->Destroy();
-			//UEngineDebug::OutPutString("Enter");
-		});
+	BodyCollision->SetScale3D(BodyRenderer->GetScale() / 2.0f);
+	BodyCollision->SetWorldLocation({ Offset.X, Offset.Y / 2.0f, ZSort });
+	//BodyCollision->SetActive(false);
+	BodyCollision->SetCollisionProfileName("Monster");
 }
 
 bool AMonster::IsCurRoom()

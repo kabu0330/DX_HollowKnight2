@@ -7,30 +7,10 @@
 #include <EngineCore/EngineGUI.h>
 #include <EngineCore/imgui.h>
 #include "TitleScene.h"
-
-class TestWindow : public UEngineGUIWindow
-{
-public:
-	void OnGUI() override
-	{
-		ImGui::Button("WindowButton");
-		ImGui::SameLine(); // 한 칸 띄우기
-		ImGui::Text("test");
-
-	}
-};
+#include "TitleHUD.h"
 
 ATitleGameMode::ATitleGameMode()
 {
-	//UEngineDirectory Dir;
-	//if (false == Dir.MoveParentToDirectory("ContentsResources"))
-	//{
-	//	MSGASSERT("리소스 폴더를 찾지 못했습니다.");
-	//	return;
-	//}
-	//Dir.Append("Image/Title/TitleBackGround");
-	//UEngineSprite::CreateSpriteToFolder(Dir.GetPathToString());
-
 	TitleScene = GetWorld()->SpawnActor<ATitleScene>();
 	TitleScene->SetActorLocation({ 0.0f, 0.0f, 0.0f });
 	std::shared_ptr<ACameraActor> Camera = GetWorld()->GetMainCamera();
@@ -38,7 +18,6 @@ ATitleGameMode::ATitleGameMode()
 
 
 
-	//UEngineGUI::CreateGUIWindow<TestWindow>("TestWindow");
 }
 
 ATitleGameMode::~ATitleGameMode()
@@ -48,7 +27,7 @@ ATitleGameMode::~ATitleGameMode()
 
 void ATitleGameMode::BeginPlay()
 {
-
+	AActor::BeginPlay();
 }
 
 void ATitleGameMode::Tick(float _DeltaTime)

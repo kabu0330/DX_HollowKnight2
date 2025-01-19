@@ -55,10 +55,7 @@ void MapEditorGUI::OnGUI()
 
 	SpawnActor();
 
-
 	RenderPreview();
-
-
 }
 
 void MapEditorGUI::SetScaleButton()

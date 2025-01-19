@@ -2,6 +2,7 @@
 #include <EngineBase/FSMStateManager.h>
 #include <EngineCore/Actor.h>
 #include "Global.h"
+#include "StatusUnit.h"
 
 // 설명 :
 class AMonster : public AActor
@@ -80,9 +81,19 @@ public:
 		GravityForce = _GravityForce;
 	}
 
+	UStatusUnit& GetStatRef()
+	{
+		return Stat;
+	}
+
 protected:
+	UStatusUnit Stat = UStatusUnit();
+	float Velocity = 0.0f;
+
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
+	void SetCollisionEvent();
+
 	void Move(float _DeltaTime);
 	void TimeElapsed(float _DeltaTime);
 	void DebugInput(float _DeltaTime);
@@ -100,7 +111,7 @@ protected:
 
 	float HitStunDuration = 1.0f;
 
-	float Velocity = 0.0f;
+
 	FVector GravityForce = FVector::ZERO;
 
 	// 동작
@@ -114,6 +125,8 @@ protected:
 	void CreateCollision();
 	std::shared_ptr<class UContentsRenderer> BodyRenderer;
 	std::shared_ptr<class UCollision> BodyCollision;
+	FVector Offset = FVector::ZERO;
+	float ZSort = 0.0f;
 
 
 protected:

@@ -14,6 +14,8 @@
 #include "PlayGameMode.h"
 #include "MapEditorGameMode.h"
 #include "ContentsEditorGUI.h"
+#include "TitleHUD.h"
+#include "PlayHUD.h"
 
 // 상위 엔진 레벨에 해당 클래스를 EngineCore에 간접적인 제어권한을 가지는 컨텐츠 코어로 설정한다.
 CreateContentsCoreDefine(UContentsCore);
@@ -44,10 +46,9 @@ void UContentsCore::SetWindowSize(UEngineInitData& _Data)
 
 void UContentsCore::CreateLevel()
 {
-	//UEngineCore::CreateLevel<ATitleGameMode, APawn, AHUD>("Title");
-	UEngineCore::CreateLevel<APlayGameMode, AKnight, AHUD>("Play");
-	//UEngineCore::CreateLevel<AMapEditorGameMode, APawn, AHUD>("MapEditorMode");
-	//UEngineCore::CreateLevel<AMapEditorMode, APawn>("MapEditor");
+	UEngineCore::CreateLevel<ATitleGameMode, APawn, ATitleHUD>("Title");
+	UEngineCore::CreateLevel<APlayGameMode, AKnight, APlayHUD>("Play");
+	UEngineCore::CreateLevel<AMapEditorGameMode, APawn, AHUD>("MapEditorMode");
 
 	//UEngineCore::OpenLevel("Title");
 	//UEngineCore::OpenLevel("MapEditor");

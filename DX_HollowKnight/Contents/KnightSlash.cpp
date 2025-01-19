@@ -6,6 +6,7 @@
 AKnightSlash::AKnightSlash()
 {
 	SetName("Knight Slash");
+	Collision->SetCollisionProfileName("KnightObject");
 
 	float FrameTime = 0.03f;
 

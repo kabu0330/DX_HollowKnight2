@@ -71,8 +71,6 @@ void UEngineFont::ResLoad(std::string_view _Path)
 		blendDesc.RenderTarget[i].DestBlendAlpha = D3D11_BLEND_ONE;
 	}
 
-	
-
 	if (FontFactory->CreateFontWrapper(UEngineCore::GetDevice().GetDevice(), WPath.c_str(), blendDesc, &Font))
 	{
 		MSGASSERT("폰트 생성 실패");

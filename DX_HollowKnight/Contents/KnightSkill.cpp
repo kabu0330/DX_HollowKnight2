@@ -5,6 +5,7 @@
 AKnightSkill::AKnightSkill()
 {
 	SetName("AKnightSkill");
+	Collision->SetCollisionProfileName("KnightObject");
 }
 
 AKnightSkill::~AKnightSkill()

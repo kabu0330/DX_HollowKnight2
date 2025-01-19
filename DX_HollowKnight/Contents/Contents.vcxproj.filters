@@ -103,6 +103,12 @@
     <ClInclude Include="KnightStunEffect.h">
       <Filter>Global\Knight\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="PlayHUD.h">
+      <Filter>Play\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleHUD.h">
+      <Filter>Play\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -216,6 +222,12 @@
     <ClCompile Include="Monster_FSM.cpp">
       <Filter>Play\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="PlayHUD.cpp">
+      <Filter>Play\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleHUD.cpp">
+      <Filter>Play\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -274,6 +286,9 @@
     </Filter>
     <Filter Include="Global\Knight\Effect">
       <UniqueIdentifier>{6b15a996-4177-4a19-ac56-42a6d3291d1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Play\UI">
+      <UniqueIdentifier>{cb882d1b-00c5-45a1-8db7-be1bee71d584}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
