@@ -201,7 +201,7 @@ void AKnight::CheckCameraPos()
 		CameraCurPos = CameraPos;
 		
 		float TargetY = KnightPos.Y + ScreenSize.Y * ScreenRatioY;
-		float ClampPosY = UEngineMath::Clamp(TargetY, (CameraPos.Y - 0.0f) , (CameraPos.Y + 0.0f));
+		float ClampPosY = UEngineMath::Clamp(TargetY, (CameraPos.Y - 120.0f) , (CameraPos.Y + 0.0f));
 		CameraTargetPos = { KnightPos.X, ClampPosY };
 
 		bIsCameraMove = true;
