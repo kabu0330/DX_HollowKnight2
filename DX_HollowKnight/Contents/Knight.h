@@ -2,6 +2,7 @@
 #include <EngineBase/FSMStateManager.h>
 #include <EngineCore/Pawn.h>
 #include "Global.h"
+#include <EngineCore/TimeEventComponent.h>
 
 // 설명 : Player
 class AKnight : public APawn
@@ -106,6 +107,7 @@ private:
 	static AKnight* MainPawn;
 	FVector CameraPos = { 0.0f, 0.0f, 0.0f };
 
+	UTimeEventComponent* TimeEventor = nullptr;
 
 	bool bIsEnter = false;
 
@@ -134,7 +136,6 @@ private:
 	float Velocity = 300.0f;
 	float InitVelocity = 0.0f;
 	float DashSpeed = 0.0f;
-	float NailRange = 100.0f;
 	int NailDamage = 5;
 	int MaxHealth = 5;
 
@@ -189,6 +190,11 @@ private:
 	bool bIsFocusEndEffect = false;
 	void CreateFocusEndEffect();
 
+	// 피격 : 스턴
+	bool bIsStunEffect = false;
+	void CreateStunEffect();
+
+
 	// Animation
 	void InitAnimation();
 	void ChangeNextAnimation(EKnightState _NextState);
@@ -232,7 +238,8 @@ private:
 	void SetFireballAntic(float _DeltaTime);
 	void SetFireballCast(float _DeltaTime);
 
-	void SetDamage(float _DeltaTime);
+	void SetStun(float _DeltaTime);
+
 	void SetDeath(float _DeltaTime);
 	void SetDeathDamage(float _DeltaTime);
 	void SetDeathHead(float _DeltaTime);

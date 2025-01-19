@@ -11,7 +11,7 @@ AEffect::AEffect()
 	BodyRenderer = CreateDefaultSubObject<UContentsRenderer>();
 	BodyRenderer->SetupAttachment(RootComponent);
 	BodyRenderer->SetAutoScaleRatio(1.0f);
-	ZSort = static_cast<float>(EZOrder::SKILL_BACK);
+	ZSort = static_cast<float>(EZOrder::KNIGHT_SKILL_BACK);
 	BodyRenderer->SetWorldLocation({ 0.0f, 0.0f, ZSort });
 
 
@@ -22,14 +22,7 @@ AEffect::AEffect()
 	std::string FocusEffect = "FocusEffect";
 	BodyRenderer->CreateAnimation(FocusEffect, FocusEffect, 0, 10, FrameTime, false);
 
-	std::string FocusEffectEnd = "FocusEffectEnd";
-	BodyRenderer->CreateAnimation(FocusEffectEnd, FocusEffectEnd, 0, 1, FrameTime, false);
 
-	std::string DashEffect = "Dash_effect";
-	BodyRenderer->CreateAnimation(DashEffect, DashEffect, 0, 5, DashFrameTime, false);
-
-	std::string DashEffect2 = "Dash_effect2";
-	BodyRenderer->CreateAnimation(DashEffect2, DashEffect2, 0, 7, DashFrameTime2, false);
 
 
 	BodyRenderer->ChangeAnimation(FocusEffect);

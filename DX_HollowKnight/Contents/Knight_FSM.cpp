@@ -4,13 +4,13 @@
 #include "KnightSkill.h"
 #include "Effect.h"
 
-
 void AKnight::SetIdle(float _DeltaTime)
 {
 	ActiveGravity();
 	Move(_DeltaTime);
 	bCanRotation = true;
 	bIsFireballEffect = false;
+	bIsStunEffect = false;
 
 	if (UEngineInput::IsPress(VK_LEFT) || UEngineInput::IsPress(VK_RIGHT))
 	{
@@ -125,6 +125,7 @@ void AKnight::SetAirborn(float _DeltaTime)
 	bCanRotation = true;
 	bIsDashing = false;
 	bIsFireballEffect = false;
+	bIsStunEffect = false;
 
 	ChangeDash(); // 대시
 	CastFireball();
@@ -164,7 +165,6 @@ void AKnight::SetDash(float _DeltaTime)
 
 	if (true == IsOnGround())
 	{
-	
 		ChangeNextAnimation(EKnightState::RUN_TO_IDLE);
 		return;
 	}
@@ -307,8 +307,13 @@ void AKnight::SetLookUpLoop(float _DeltaTime)
 	}
 }
 
-void AKnight::SetDamage(float _DeltaTime)
+void AKnight::SetStun(float _DeltaTime)
 {
+	// 뒤로 밀려나고
+
+	// 이펙트 출력
+	CreateStunEffect();
+
 	if (true == bIsOnGround)
 	{
 		ChangeNextAnimation(EKnightState::IDLE);
@@ -317,9 +322,6 @@ void AKnight::SetDamage(float _DeltaTime)
 	{
 		ChangeNextAnimation(EKnightState::AIRBORN);
 	}
-
-	// 뒤로 밀려나고
-	// 이펙트 출력
 }
 
 void AKnight::SetDeathDamage(float _DeltaTime)
@@ -372,7 +374,7 @@ void AKnight::SetFSM()
 	CreateState(EKnightState::FIREBALL_CAST, &AKnight::SetFireballCast, "FireballCast");
 
 	// 피격
-	CreateState(EKnightState::DAMAGED, &AKnight::SetDamage, "Damage");
+	CreateState(EKnightState::STUN, &AKnight::SetStun, "Stun");
 
 	// 사망
 	CreateState(EKnightState::DEATH, &AKnight::SetDeath, "Death");

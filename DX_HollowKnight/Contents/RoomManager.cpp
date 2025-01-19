@@ -66,7 +66,8 @@ void URoomManager::CreateRoom(AGameMode* _GameMode)
 	//SetInitCurRoom(Crossroads1.get());
 
 	// 6. 몬스터 생성
-	Dirtmouth->CreateMonster<AMonster>(InitPos::Dirtmouth_well);
+	Dirtmouth->CreateMonster<AMonster>({ 1300, -3000 });
+
 	//Crossroads1->CreateObject<APlatform>({10250, -5680}, {150, 40});
 }
 

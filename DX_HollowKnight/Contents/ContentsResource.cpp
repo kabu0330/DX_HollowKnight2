@@ -75,7 +75,7 @@ void UContentsResource::LoadResourceDirectory()
 	LoadContentsResource("Image/Knight/SlashAlt");
 	LoadContentsResource("Image/Knight/UpSlash");
 	LoadContentsResource("Image/Knight/DownSlash");
-	LoadContentsResource("Image/Knight/Damage");
+	LoadContentsResource("Image/Knight/Stun");
 	LoadContentsResource("Image/Knight/Death");
 	LoadContentsResource("Image/Knight/DeathDamage");
 	LoadContentsResource("Image/Knight/DeathHead");
@@ -104,6 +104,9 @@ void UContentsResource::LoadResourceDirectory()
 	LoadContentsResource("Image/Effect/Knight/Dash_effect2");
 	LoadContentsResource("Image/Effect/Knight/Fireball");
 	LoadContentsResource("Image/Effect/Knight/FireballImpact");
+	LoadContentsResource("Image/Effect/Knight/StunEffect01");
+	LoadContentsResource("Image/Effect/Knight/StunEffect02");
+	LoadContentsResource("Image/Effect/Knight/StunEffect03");
 
 	// Monster
 	LoadContentsResource("Image/Monster/HuskBully");

@@ -2,7 +2,29 @@
 
 struct FStatData
 {
+	// 이동속도 관련
+	float Velocity = 100.0f;
+	float InitVelocity = 0.0f;
+	float DashSpeed = 0.0f;
 
+	// 체력관련
+	int MaxHP = 5;
+	int HP = 5;
+
+	// 마나 관련
+	int MaxMP = 99;
+	int MP = 0;
+
+	// 공격범위 관련
+	int Att = 1;
+	int SpellAtt = 1;
+
+	// 피격 관련
+	bool bIsKnockbackable = true;
+	float knockbackDistance = 50.0f;
+
+	// 재화
+	int Geo = 0;
 };
 
 // 설명 : 플레이어와 몬스터의 스텟을 설정하고 관리
@@ -37,13 +59,14 @@ private:
 	int MaxMP = 99;
 	int MP = 0;
 
-	// 공격범위 관련
-	int Attack = 1;
-	int SpellAttack = 1;
+	// 공격력 
+	int Att = 1;
+	int SpellAtt = 1;
 
-	// 피격 관련
+	// 피격 : 넉백
 	bool bIsKnockbackable = true;
 	float knockbackDistance = 50.0f;
+	
 	
 	// 재화
 	int Geo = 0;

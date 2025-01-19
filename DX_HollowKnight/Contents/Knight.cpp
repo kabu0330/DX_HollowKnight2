@@ -23,6 +23,8 @@ AKnight::AKnight()
 	SetName("AKnight");
 	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
 	RootComponent = Default;
+	TimeEventor = CreateDefaultSubObject<UTimeEventComponent>().get();
+
 	CreateRenderer();
 	CreateCollision();
 
@@ -35,9 +37,10 @@ AKnight::AKnight()
 	bCanRotation = true;
 
 	//SetActorLocation({ 1100.0f, -3000.0f });
-	SetActorLocation(InitPos::Dirtmouth_well);
+	//SetActorLocation(InitPos::Dirtmouth_well);
 	//SetActorLocation(InitPos::CrossroadsEntrance);
 	//SetActorLocation({9911, -5500});
+	SetActorLocation({1200, -2970});
 
 	// Debug
 	BodyRenderer->BillboardOn();
@@ -146,7 +149,7 @@ void AKnight::SetCameraPos()
 	std::shared_ptr<ACameraActor> Camera = GetWorld()->GetCamera(0);
 	FVector KnightPos = GetActorLocation();
 	FVector ScreenSize = UEngineCore::GetScreenScale();
-	ScreenRatioY = 0.2f;
+	ScreenRatioY = 0.25f;
 	Camera->SetActorLocation({ KnightPos.X, KnightPos.Y + ScreenSize.Y * ScreenRatioY });
 	FVector Pos = Camera->GetActorLocation();
 }
@@ -168,19 +171,13 @@ void AKnight::CheckCameraPos()
 	float Height = ::abs(KnightPos.Y - (CameraPos.Y - ScreenSize.Y * ScreenRatioY));
 	float KnightPosY = KnightPos.Y - BodyRenderer->GetScale().Y * 0.5f;
 	float Rs = CameraPos.Y - ScreenSize.Y * ScreenRatioY;
-	//if (KnightPosY < CameraPos.Y - ScreenSize.Y * ScreenRatioY)
-	//{
-	//	CameraCurPos = CameraPos;
-	//	CameraTargetPos = { KnightPos.X, KnightPos.Y + ScreenSize.Y * ScreenRatioY };
-	//	bIsCameraMove = true;
-	//}
 
-	if (Distance > 350.0f || Height > 350.0f || Width > 100.0f)
+	if (Height > 200.0f || Width > 100.0f)
 	{
 		CameraCurPos = CameraPos;
 		
 		float TargetY = KnightPos.Y + ScreenSize.Y * ScreenRatioY;
-		float ClampPosY = UEngineMath::Clamp(TargetY, (CameraPos.Y - 100.0f) , (CameraPos.Y + 50.0f));
+		float ClampPosY = UEngineMath::Clamp(TargetY, (CameraPos.Y - 0.0f) , (CameraPos.Y + 0.0f));
 		CameraTargetPos = { KnightPos.X, ClampPosY };
 
 		bIsCameraMove = true;
@@ -195,8 +192,8 @@ void AKnight::SetCameraLerp()
 	}
 
 	std::shared_ptr<ACameraActor> Camera = GetWorld()->GetCamera(0);
-	float MoveDuration = 0.2f;
-	float Alpha = CameraMoveTime / MoveDuration;
+	float CameraMoveDuration = 0.2f;
+	float Alpha = CameraMoveTime / CameraMoveDuration;
 
 	FVector CameraDest = UEngineMath::Lerp(CameraCurPos, CameraTargetPos, Alpha);
 	Camera->SetActorLocation(CameraDest);
@@ -204,7 +201,7 @@ void AKnight::SetCameraLerp()
 
 	float DeltaTime = UEngineCore::GetDeltaTime();
 	CameraMoveTime += DeltaTime;
-	if (MoveDuration <= CameraMoveTime)
+	if (CameraMoveDuration <= CameraMoveTime)
 	{
 		CameraMoveTime = 0.0f;
 		bIsCameraMove = false;
@@ -467,7 +464,7 @@ void AKnight::DebugInput(float _DeltaTime)
 
 	if (UEngineInput::IsPress('V'))
 	{
-		FSM.ChangeState(EKnightState::DEATH_DAMAGE);
+		FSM.ChangeState(EKnightState::STUN);
 	}
 
 	float ZValue = BodyRenderer->GetTransformRef().RelativeLocation.Z;

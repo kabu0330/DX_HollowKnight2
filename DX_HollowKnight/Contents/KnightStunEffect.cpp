@@ -1,0 +1,66 @@
+#include "PreCompile.h"
+#include "KnightStunEffect.h"
+#include <EngineBase/EngineRandom.h>
+
+KnightStunEffect::KnightStunEffect()
+{
+	SetName("Knight Stun Effect");
+
+	float StunInitTime = 0.4f;
+	float StunFrame = 0.05f;
+
+	std::string StunEffect01 = "StunEffect01";
+	BodyRenderer->CreateAnimation(StunEffect01, StunEffect01, { 0, 1, 2, 3 }, { StunInitTime , StunFrame ,StunFrame ,StunFrame }, false);
+
+	SetZSort(static_cast<int>(EZOrder::KNIGHT_STUN_EFFECT));
+	BodyRenderer->ChangeAnimation(StunEffect01);
+
+	TimeEventor = CreateDefaultSubObject<UTimeEventComponent>().get();
+}
+
+KnightStunEffect::~KnightStunEffect()
+{
+}
+
+void KnightStunEffect::BeginPlay()
+{
+	AEffect::BeginPlay();
+}
+
+void KnightStunEffect::Tick(float _DeltaTime)
+{
+	AEffect::Tick(_DeltaTime);
+}
+
+void KnightStunEffect::CreateStunImpactEffect()
+{
+	UEngineDebug::OutPutString("Spawn Stun Impact Effect");
+	UEngineRandom Random;
+	float Degree0 = Random.Randomfloat(0.0f, 360.0f);
+	float Scale0 = Random.Randomfloat(0.8f, 2.0f);
+	FVector Rotation = FVector::ZERO;
+	Rotation.Z = Degree0;
+
+	AKnightEffect* BlackEffect = GetWorld()->SpawnActor<AKnightEffect>().get();
+	BlackEffect->SetName("Stun Black Effect");
+	AKnight* Knight = AKnight::GetPawn();
+	BlackEffect->SetZSort(static_cast<int>(EZOrder::KNIGHT_SKILL_FRONT) - 1);
+	BlackEffect->ChangeAnimation(Knight, "StunEffect02");
+	BlackEffect->SetScale(Scale0);
+	BlackEffect->SetLocation(Knight, FVector::ZERO, Rotation);
+
+
+	Random.SetSeed(reinterpret_cast<long long>(this));
+	float Degree1 = Random.Randomfloat(0.0f, 360.0f);
+	float Scale1 = Random.Randomfloat(0.8f, 2.0f);
+	Rotation.Z = Degree1;
+
+	AKnightEffect* WhiteEffect = GetWorld()->SpawnActor<AKnightEffect>().get();
+	WhiteEffect->SetZSort(static_cast<int>(EZOrder::KNIGHT_SKILL_FRONT) - 2);
+	WhiteEffect->SetName("Stun White Effect");
+	WhiteEffect->ChangeAnimation(Knight, "StunEffect03");
+	WhiteEffect->SetScale(Scale1);
+	WhiteEffect->SetLocation(Knight, FVector::ZERO, Rotation);
+}
+
+

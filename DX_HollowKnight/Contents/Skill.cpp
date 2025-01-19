@@ -9,7 +9,7 @@ ASkill::ASkill()
 	Collision = CreateDefaultSubObject<UCollision>();
 	Collision->SetupAttachment(RootComponent);
 	Collision->SetCollisionProfileName("KnightObject");
-	ZSort = static_cast<float>(EZOrder::SKILL_FRONT);
+	ZSort = static_cast<float>(EZOrder::KNIGHT_SKILL_FRONT);
 	Collision->GetTransformRef().Location.Z = ZSort;
 	//Collision->SetCollisionType(ECollisionType::AABB);
 

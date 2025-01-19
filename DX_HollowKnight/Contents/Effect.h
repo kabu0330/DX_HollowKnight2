@@ -85,8 +85,6 @@ protected:
 	bool bIsLeft = true;
 	bool bIsRotation = true;
 
-	
-
 	float ZSort = 0.0f;
 	std::shared_ptr<class UContentsRenderer> BodyRenderer;
 private:

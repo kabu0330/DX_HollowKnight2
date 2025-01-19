@@ -1,26 +1,44 @@
 #include "PreCompile.h"
 #include "Knight.h"
+#include <EngineBase/EngineRandom.h>
 #include "Effect.h"
 #include "Skill.h"
 #include "KnightSkill.h"
+#include "KnightEffect.h"
 #include "KnightSlash.h"
 #include "KnightFireball.h"
+#include "KnightStunEffect.h"
 
 void AKnight::CreateDashEffect()
 {
-	std::shared_ptr<AEffect> Effect = GetWorld()->SpawnActor<AEffect>();
+	std::shared_ptr<AKnightEffect> Effect = GetWorld()->SpawnActor<AKnightEffect>();
 	Effect->ChangeAnimation(this, "Dash_effect");
 	Effect->SetScale(0.5f);
 	//Effect->Destroy(0.1f);
-	std::shared_ptr<AEffect> Effect2 = GetWorld()->SpawnActor<AEffect>();
+	std::shared_ptr<AKnightEffect> Effect2 = GetWorld()->SpawnActor<AKnightEffect>();
 	Effect2->ChangeAnimation(this, "Dash_effect2");
-	Effect2->SetZSort(static_cast<float>(EZOrder::SKILL_BACK) + 1.0f);
+	Effect2->SetZSort(static_cast<int>(EZOrder::KNIGHT_SKILL_BACK) + 1);
 	Effect2->SetLocation(this, {200.0f, 0.0f, 0.0f}, {0.0f, 180.0f, 0.0f});
-	//Effect2->Destroy(0.1f);
-	//Effect2->SetScale(0.5f);
-	//FVector Offset = FVector{ -100.0f, 0.0f };
-	//Effect->SetLocation(this, Offset);
 }
+
+void AKnight::CreateStunEffect()
+{
+	if (true == bIsStunEffect)
+	{
+		return;
+	}
+	std::shared_ptr<KnightStunEffect> Effect = GetWorld()->SpawnActor<KnightStunEffect>();
+	Effect->ChangeAnimation(this, "StunEffect01");
+	Effect->SetScale(2.0f);
+	FVector Offest = { 0.0f, 0.0f, 0.0f };
+	UEngineRandom Random;
+	float Degree = Random.Randomfloat(0.0f, 30.0f);
+	FVector Rotation = { 0.0f, 0.0f, Degree };
+	Effect->SetLocation(this, Offest, Rotation);
+	TimeEventor->AddEndEvent(0.3f, std::bind(&KnightStunEffect::CreateStunImpactEffect, Effect));
+	bIsStunEffect = true;
+}
+
 
 void AKnight::CreateFocusEffect()
 {
@@ -28,7 +46,7 @@ void AKnight::CreateFocusEffect()
 	{
 		return;
 	}
-	std::shared_ptr<AEffect> FocusEffect = GetWorld()->SpawnActor<AEffect>();
+	std::shared_ptr<AKnightEffect> FocusEffect = GetWorld()->SpawnActor<AKnightEffect>();
 	FocusEffect->ChangeAnimation(this, "FocusEffect");
 	FVector Offest = { 0.0f, 30.0f, 0.0f };
 	FocusEffect->SetLocation(this, Offest);
@@ -43,7 +61,7 @@ void AKnight::CreateFocusEndEffect()
 	{
 		return;
 	}
-	std::shared_ptr<AEffect> FocusEffect = GetWorld()->SpawnActor<AEffect>();
+	std::shared_ptr<AKnightEffect> FocusEffect = GetWorld()->SpawnActor<AKnightEffect>();
 	FocusEffect->ChangeAnimation(this, "FocusEffectEnd");
 	FVector Offest = { 0.0f, 30.0f, 0.0f };
 	FocusEffect->SetLocation(this, Offest);

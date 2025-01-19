@@ -96,8 +96,8 @@ void AKnight::InitAnimation()
 
 
 	// 피격 애니메이션
-	std::string Damage = "Damage";
-	BodyRenderer->CreateAnimation(Damage, Damage, 0, 0, HitStunDuration, false);
+	std::string Stun = "Stun";
+	BodyRenderer->CreateAnimation(Stun, Stun, 0, 0, HitStunDuration, false);
 
 
 	// 사망 애니메이션

@@ -11,19 +11,20 @@ AMonster::AMonster()
 	BodyRenderer = CreateDefaultSubObject<UContentsRenderer>();
 	BodyRenderer->SetupAttachment(RootComponent);
 	BodyRenderer->SetAutoScaleRatio(1.0f);
+	FVector Offset = { 0.0f, -100.0f};
 	float ZSort = static_cast<float>(EZOrder::MONSTER);
-	BodyRenderer->SetWorldLocation({ 0.0f, 0.0f, ZSort });
+	BodyRenderer->SetWorldLocation({ Offset.X, Offset.Y, ZSort });
 	CreateAnimation();
 
 	// Collision
 	BodyCollision = CreateDefaultSubObject<UCollision>();
 	BodyCollision->SetupAttachment(RootComponent);
-	BodyCollision->SetScale3D({150, 150});
-	BodyCollision->SetWorldLocation({ 0.0f, 0.0f, ZSort });
+	BodyCollision->SetScale3D(BodyRenderer->GetScale() / 2.0f);
+	BodyCollision->SetWorldLocation({ Offset.X, Offset.Y /2.0f, ZSort });
 	//BodyCollision->SetActive(false);
 	BodyCollision->SetCollisionProfileName("Monster");
 
-
+	
 }
 
 AMonster::~AMonster()

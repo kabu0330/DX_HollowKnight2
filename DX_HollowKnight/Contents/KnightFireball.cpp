@@ -31,7 +31,7 @@ void AKnightFireball::SetCollisionEvent()
 			UEngineDebug::OutPutString("FireballImpact");
 			AKnightEffect* Effect = GetWorld()->SpawnActor<AKnightEffect>().get();
 			Effect->SetName("FireballImpact");
-			Effect->SetZSort(EZOrder::SKILL_FRONT);
+			Effect->SetZSort(EZOrder::KNIGHT_SKILL_FRONT);
 			AKnight* Knight = AKnight::GetPawn();
 			Effect->ChangeAnimation(Knight, "FireballImpact"); // RootComponent가 없다고 자꾸 터지는데 나이트 넣어주면 된다.
 			Effect->SetScale(1.5f);

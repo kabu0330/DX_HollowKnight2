@@ -25,7 +25,14 @@ AKnightEffect::AKnightEffect()
 	BodyRenderer->CreateAnimation(NailHitEffect, NailHitEffect, 0, 4, FrameTime, false);
 
 	std::string FireballImpact = "FireballImpact";
-	BodyRenderer->CreateAnimation(FireballImpact, FireballImpact, 0, 5, FrameTime);
+	BodyRenderer->CreateAnimation(FireballImpact, FireballImpact, 0, 5, FrameTime, false);
+
+	std::string StunEffect02 = "StunEffect02";
+	BodyRenderer->CreateAnimation(StunEffect02, StunEffect02, 0, 6, FrameTime, false);
+
+	std::string StunEffect03 = "StunEffect03";
+	BodyRenderer->CreateAnimation(StunEffect03, StunEffect03, 0, 7, FrameTime, false);
+
 
 	BodyRenderer->ChangeAnimation(FocusEffect);
 }

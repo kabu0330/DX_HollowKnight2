@@ -88,9 +88,6 @@
     <ClInclude Include="Platform.h">
       <Filter>Play\Map</Filter>
     </ClInclude>
-    <ClInclude Include="KnightEffect.h">
-      <Filter>Global\Knight</Filter>
-    </ClInclude>
     <ClInclude Include="KnightSkill.h">
       <Filter>Global\Knight\Skill</Filter>
     </ClInclude>
@@ -99,6 +96,12 @@
     </ClInclude>
     <ClInclude Include="KnightFireball.h">
       <Filter>Global\Knight\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="KnightEffect.h">
+      <Filter>Global\Knight\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="KnightStunEffect.h">
+      <Filter>Global\Knight\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -195,9 +198,6 @@
     <ClCompile Include="Knight_Animation.cpp">
       <Filter>Global\Knight</Filter>
     </ClCompile>
-    <ClCompile Include="KnightEffect.cpp">
-      <Filter>Global\Knight</Filter>
-    </ClCompile>
     <ClCompile Include="KnightSkill.cpp">
       <Filter>Global\Knight\Skill</Filter>
     </ClCompile>
@@ -206,6 +206,12 @@
     </ClCompile>
     <ClCompile Include="KnightFireball.cpp">
       <Filter>Global\Knight\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="KnightEffect.cpp">
+      <Filter>Global\Knight\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="KnightStunEffect.cpp">
+      <Filter>Global\Knight\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -262,6 +268,9 @@
     </Filter>
     <Filter Include="Global\Knight\Skill">
       <UniqueIdentifier>{b7206834-6b8c-4154-b91a-056981c7e22e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Global\Knight\Effect">
+      <UniqueIdentifier>{6b15a996-4177-4a19-ac56-42a6d3291d1b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
