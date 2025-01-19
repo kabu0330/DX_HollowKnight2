@@ -12,12 +12,8 @@ ARoom::ARoom()
 	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
 	RootComponent = Default;
 
-	std::shared_ptr<ACameraActor> Camera = GetWorld()->GetCamera(0);
-
-
 	BackgroundRenderer = CreateDefaultSubObject<UContentsRenderer>();
 	BackgroundRenderer->SetupAttachment(RootComponent);
-
 }
 
 ARoom::~ARoom()
@@ -103,6 +99,18 @@ FVector ARoom::GetPixelCollisionPoint(AActor* _Actor, UContentsRenderer* _Render
 {
 	float DeltaTime = UEngineCore::GetDeltaTime();
 
+	FVector GravityForce = FVector::ZERO;
+	AKnight* Knight = dynamic_cast<AKnight*>(_Actor);
+	if (nullptr != Knight)
+	{
+		GravityForce = Knight->GetGravityForce();
+	}
+	AMonster* Monster = dynamic_cast<AMonster*>(_Actor);
+	if (nullptr != Monster)
+	{
+		GravityForce = Monster->GetGravityForce();
+	}
+
 	FVector ActorPos = _Actor->GetActorLocation() - LeftTopPos;
 	FVector NextPos = GravityForce * DeltaTime;
 	float HalfRendererHeight = _Renderer->GetScale().Y * 0.5f;
@@ -136,6 +144,18 @@ bool ARoom::IsOnGround(AActor* _Actor, UContentsRenderer* _Renderer, FVector _Po
 {
 	float DeltaTime = UEngineCore::GetDeltaTime();
 
+	FVector GravityForce = FVector::ZERO;
+	AKnight* Knight = dynamic_cast<AKnight*>(_Actor);
+	if (nullptr != Knight)
+	{
+		GravityForce = Knight->GetGravityForce();
+	}
+	AMonster* Monster = dynamic_cast<AMonster*>(_Actor);
+	if (nullptr != Monster)
+	{
+		GravityForce = Monster->GetGravityForce();
+	}
+
 	FVector ActorPos = _Actor->GetActorLocation() - LeftTopPos;
 	FVector NextPos = GravityForce * DeltaTime;
 	float HalfRendererHeight = _Renderer->GetScale().Y * 0.5f;
@@ -165,6 +185,7 @@ void ARoom::Gravity(AActor* _Actor, float _DeltaTime)
 	AKnight* Knight = dynamic_cast<AKnight*>(_Actor);
 	if (nullptr != Knight)
 	{
+		FVector GravityForce = Knight->GetGravityForce();
 		if (false == Knight->IsOnGround())
 		{
 			//float DeltaTime = UEngineCore::GetDeltaTime();
@@ -183,31 +204,33 @@ void ARoom::Gravity(AActor* _Actor, float _DeltaTime)
 			GravityForce = FVector::ZERO;
 		}
 
+		Knight->SetGravityForce(GravityForce);
 		if (1500.0f <= GravityForce.Length())
 		{
 			GravityForce = FVector::DOWN * 1000.0f;
-		}		
+		}
 	}
+	AMonster* Monster = dynamic_cast<AMonster*>(_Actor);
+	if (nullptr != Monster)
+	{
+		FVector GravityForce = Monster->GetGravityForce();
+		if (false == Monster->IsOnGround())
+		{
+			float GravityValue = 2000.0f;
+			GravityForce += FVector::DOWN * GravityValue * _DeltaTime;
+			Monster->AddRelativeLocation(GravityForce * _DeltaTime);
+		}
+		else
+		{
+			GravityForce = FVector::ZERO;
+		}
 
-	//if (true == IsOnGround(FVector{ -Velocity * _DeltaTime, 0.0f, 0.0f }))
-//{
-//	while (true == IsOnGround(GetActorLocation() + {0.0f, -1.0f, 0.0f}))
-//	{
-//		AddRelativeLocation(0.0f, -1.0f, 0.0f);
-
-//		// 
-//		FVector CurPos = GetActorLocation();
-//		CurPos.RoundVector();
-//	}
-
-//	// AddRelativeLocation(FVector{ 0.0f, -Gravity * _DeltaTime, 0.0f });
-//}
-//else 
-//{
-//	AddRelativeLocation(FVector{ 0.0f, -Gravity * _DeltaTime, 0.0f });
-//}
-
-	// 몬스터 로직 추가 필요
+		Monster->SetGravityForce(GravityForce);
+		if (1500.0f <= GravityForce.Length())
+		{
+			GravityForce = FVector::DOWN * 1000.0f;
+		}
+	}
 }
 
 void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Renderer, float _Speed, bool _Left)
@@ -260,11 +283,11 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Rend
 	{
 		if (CollisionColor == UColor::YELLOW)
 		{
-			//Knight->SetWallHere(true);
+			Monster->SetWallHere(true);
 		}
 		else
 		{
-			//Knight->SetWallHere(false);
+			Monster->SetWallHere(false);
 		}
 	}
 }
@@ -308,11 +331,11 @@ void ARoom::CheckPixelCollisionWithCeil(AActor* _Actor, UContentsRenderer* _Rend
 	{
 		if (CollisionColor == UColor::RED)
 		{
-			//Knight->SetWallHere(true);
+			Monster->SetWallHere(true);
 		}
 		else
 		{
-			//Knight->SetWallHere(false);
+			Monster->SetWallHere(false);
 		}
 	}
 }

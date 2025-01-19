@@ -3,6 +3,11 @@
 #include <EngineCore/SpriteRenderer.h>
 #include "ContentsRenderer.h"
 
+class UContentsFunction
+{
+public:
+
+};
 
 enum class EZOrder
 {

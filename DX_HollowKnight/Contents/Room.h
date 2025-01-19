@@ -77,10 +77,6 @@ public:
 		bActiveGravity = _bActiveGravity;
 	}
 
-	FVector GetGravityForce() const
-	{
-		return GravityForce;
-	}
 
 	template<typename MonsterType>
 	AMonster* CreateMonster(FVector _Pos, bool _CanWorldPos = true)
@@ -117,14 +113,13 @@ public:
 		return NewObject;
 	}
 
-
 protected:
 	void Gravity(AActor* _Actor, float _DeltaTime);
 
 private:
 	inline static bool bActiveGravity = false;
 	float GravityValue = 0.0f;
-	FVector GravityForce = FVector::ZERO;
+	//FVector GravityForce = FVector::ZERO;
 
 	inline static ARoom* CurRoom = nullptr;
 	UEngineWinImage PixelCollisionImage;

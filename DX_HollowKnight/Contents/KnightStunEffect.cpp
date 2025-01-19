@@ -37,7 +37,7 @@ void KnightStunEffect::CreateStunImpactEffect()
 	UEngineDebug::OutPutString("Spawn Stun Impact Effect");
 	UEngineRandom Random;
 	float Degree0 = Random.Randomfloat(0.0f, 360.0f);
-	float Scale0 = Random.Randomfloat(0.8f, 2.0f);
+	float Scale0 = Random.Randomfloat(0.9f, 1.5f);
 	FVector Rotation = FVector::ZERO;
 	Rotation.Z = Degree0;
 
@@ -52,7 +52,7 @@ void KnightStunEffect::CreateStunImpactEffect()
 
 	Random.SetSeed(reinterpret_cast<long long>(this));
 	float Degree1 = Random.Randomfloat(0.0f, 360.0f);
-	float Scale1 = Random.Randomfloat(0.8f, 2.0f);
+	float Scale1 = Random.Randomfloat(1.0f, 1.5f);
 	Rotation.Z = Degree1;
 
 	AKnightEffect* WhiteEffect = GetWorld()->SpawnActor<AKnightEffect>().get();

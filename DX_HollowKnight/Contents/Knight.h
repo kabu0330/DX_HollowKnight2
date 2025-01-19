@@ -94,12 +94,21 @@ public:
 		return bIsEnter;
 	}
 
+	FVector GetGravityForce() const
+	{
+		return GravityForce;
+	}
+	void SetGravityForce(FVector _GravityForce)
+	{
+		GravityForce = _GravityForce;
+	}
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
 	void ActiveGravity();
-	void ActiveWallCollsion();
+	void ActivePixelCollsion();
 
 private:
 	// Debug
@@ -139,7 +148,7 @@ private:
 	int NailDamage = 5;
 	int MaxHealth = 5;
 
-
+	FVector GravityForce = FVector::ZERO;
 
 private:
 	void DebugInput(float _DeltaTime);

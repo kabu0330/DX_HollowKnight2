@@ -53,7 +53,7 @@ void ASkill::SetCollisionEvent()
 {
 	Collision->SetCollisionEnter([](UCollision* _This, UCollision* _Other)
 		{
-			UEngineDebug::OutPutString("AKnightSkillEffect");
+			UEngineDebug::OutPutString("나이트의 공격 적중");
 		});
 }
 

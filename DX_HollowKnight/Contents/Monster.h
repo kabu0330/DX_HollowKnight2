@@ -9,7 +9,7 @@ class AMonster : public AActor
 public:
 	// constrcuter destructer
 	AMonster();
-	~AMonster();
+	~AMonster() {};
 
 	// delete Function
 	AMonster(const AMonster& _Other) = delete;
@@ -69,7 +69,16 @@ public:
 	{
 		return ParentRoom;
 	}
+	void SetPause();
 
+	FVector GetGravityForce() const
+	{
+		return GravityForce;
+	}
+	void SetGravityForce(FVector _GravityForce)
+	{
+		GravityForce = _GravityForce;
+	}
 
 protected:
 	void BeginPlay() override;
@@ -91,12 +100,15 @@ protected:
 
 	float HitStunDuration = 1.0f;
 
+	float Velocity = 0.0f;
+	FVector GravityForce = FVector::ZERO;
 
 	// 동작
 	bool bCanJump = false;
 	bool bCanRotation = true; // 지금 방향 전환 가능한 타이밍인가
 
 	class ARoom* ParentRoom = nullptr;
+	class ARoom* CurRoom = nullptr; 
 
 	void CreateAnimation();
 	void CreateCollision();
@@ -105,7 +117,9 @@ protected:
 
 
 protected:
+	bool IsCurRoom();
 	virtual bool CanAction();
+	bool CanJump();
 
 
 	using StateCallback = void(AMonster::*)(float);
@@ -188,6 +202,8 @@ protected:
 	bool bIsLeft = true;
 
 private:
-
+	void CheckCurRoom();
+	void ActivePixelCollision();
+	bool bIsPause = false;
 };
 

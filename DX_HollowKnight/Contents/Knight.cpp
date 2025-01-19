@@ -40,7 +40,7 @@ AKnight::AKnight()
 	//SetActorLocation(InitPos::Dirtmouth_well);
 	//SetActorLocation(InitPos::CrossroadsEntrance);
 	//SetActorLocation({9911, -5500});
-	SetActorLocation({1200, -2970});
+	SetActorLocation({1100, -2980});
 
 	// Debug
 	BodyRenderer->BillboardOn();
@@ -61,7 +61,7 @@ void AKnight::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
 
-	ActiveWallCollsion();
+	ActivePixelCollsion();
 
 	CheckCameraPos();
 	SetCameraLerp();
@@ -93,7 +93,7 @@ void AKnight::ActiveGravity()
 	}
 }
 
-void AKnight::ActiveWallCollsion()
+void AKnight::ActivePixelCollsion()
 {
 	if (true == NoneGravity)
 	{

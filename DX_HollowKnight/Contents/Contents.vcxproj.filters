@@ -213,6 +213,9 @@
     <ClCompile Include="KnightStunEffect.cpp">
       <Filter>Global\Knight\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="Monster_FSM.cpp">
+      <Filter>Play\Monster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">

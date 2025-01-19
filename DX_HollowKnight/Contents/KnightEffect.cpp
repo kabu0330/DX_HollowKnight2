@@ -5,6 +5,7 @@ AKnightEffect::AKnightEffect()
 {
 	SetName("Knight Effect");
 
+	float StunFrame = 0.09f;
 	float FrameTime = 0.06f;
 	float DashFrameTime = 0.03f;
 	float DashFrameTime2 = 0.02f;
@@ -28,7 +29,7 @@ AKnightEffect::AKnightEffect()
 	BodyRenderer->CreateAnimation(FireballImpact, FireballImpact, 0, 5, FrameTime, false);
 
 	std::string StunEffect02 = "StunEffect02";
-	BodyRenderer->CreateAnimation(StunEffect02, StunEffect02, 0, 6, FrameTime, false);
+	BodyRenderer->CreateAnimation(StunEffect02, StunEffect02, 0, 6, StunFrame, false);
 
 	std::string StunEffect03 = "StunEffect03";
 	BodyRenderer->CreateAnimation(StunEffect03, StunEffect03, 0, 7, FrameTime, false);
