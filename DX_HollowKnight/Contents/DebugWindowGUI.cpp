@@ -52,7 +52,7 @@ void UDebugWindowGUI::GetKnightInfo()
 	float ZValue = AKnight::GetPawn()->GetRenderer()->GetTransformRef().RelativeLocation.Z;
 	ImGui::Text("Knight Z Vaule : %.6f", ZValue);
 
-	ImGui::Text("Knight JumpPower : %.2f", Knight->JumpForce);
+	ImGui::Text("Knight JumpPower : %.2f", Knight->GetJumpForce());
 }
 
 void UDebugWindowGUI::GetGravityForce()

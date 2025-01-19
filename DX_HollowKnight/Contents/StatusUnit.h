@@ -8,12 +8,12 @@ struct FStatusData
 	float DashSpeed = 0.0f;
 
 	// 체력관련
-	int MaxHP = 5;
-	int HP = 5;
+	int MaxHp = 5;
+	int Hp = 5;
 
 	// 마나 관련
-	int MaxMP = 99;
-	int MP = 0;
+	int MaxMp = 99;
+	int Mp = 0;
 
 	// 공격범위 관련
 	int Att = 1;
@@ -70,40 +70,54 @@ public:
 		DashSpeed = _DashSpeed;
 	}
 
-	int GetMaxHP()
+	int GetMaxHp()
 	{
-		return MaxHP;
+		return MaxHp;
 	}
-	void SetMaxHP(int _MaxHP)
+	void SetMaxHp(int _MaxHP)
 	{
-		MaxHP = _MaxHP;
-	}
-
-	int GetHP()
-	{
-		return HP;
-	}
-	void AddHP(int _HP)
-	{
-		HP += _HP;
+		MaxHp = _MaxHP;
 	}
 
-	int GetMaxMP()
+	int GetHp()
 	{
-		return MaxMP;
+		return Hp;
 	}
-	void SetMaxMP(int _MaxMP)
+	void AddHp(int _HP)
 	{
-		MaxMP = _MaxMP;
+		if (Hp > MaxHp)
+		{
+			Hp = MaxHp;
+			return;
+		}
+		if (Hp < 0)
+		{
+			Hp = 0;
+		}
+		Hp += _HP;
 	}
 
-	int GetMP()
+	int GetMaxMp()
 	{
-		return MP;
+		return MaxMp;
 	}
-	void AddMP(int _MP)
+	void SetMaxMp(int _MaxMP)
 	{
-		MP += _MP;
+		MaxMp = _MaxMP;
+	}
+
+	int GetMp()
+	{
+		return Mp;
+	}
+	void AddMp(int _MP)
+	{
+		if (Mp > MaxMp)
+		{
+			Mp = MaxMp;
+			return;
+		}
+		Mp += _MP;
 	}
 
 	int GetAtt()
@@ -151,12 +165,12 @@ private:
 	float DashSpeed = 0.0f;
 
 	// 체력관련
-	int MaxHP = 5;
-	int HP = 5;
+	int MaxHp = 5;
+	int Hp = 5;
 
 	// 마나 관련
-	int MaxMP = 99;
-	int MP = 0;
+	int MaxMp = 99;
+	int Mp = 0;
 
 	// 공격력 
 	int Att = 1;

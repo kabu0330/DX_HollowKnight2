@@ -20,7 +20,7 @@ protected:
 
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
-	void SetCollisionEvent() override;
+	void SetCollisionEvent() override {}
 
 private:
 

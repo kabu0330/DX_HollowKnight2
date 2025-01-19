@@ -22,9 +22,6 @@ AEffect::AEffect()
 	std::string FocusEffect = "FocusEffect";
 	BodyRenderer->CreateAnimation(FocusEffect, FocusEffect, 0, 10, FrameTime, false);
 
-
-
-
 	BodyRenderer->ChangeAnimation(FocusEffect);
 }
 

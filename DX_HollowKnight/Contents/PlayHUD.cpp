@@ -45,7 +45,7 @@ void APlayHUD::CreateSkillGaugeFrame()
 
 void APlayHUD::CreateHPFrame()
 {
-	int MaxHp = Knight->GetStatRef().GetMaxHP();
+	int MaxHp = Knight->GetStatRef().GetMaxHp();
 	for (int i = 0; i < MaxHp; i++)
 	{
 		std::shared_ptr<UImageWidget> HpFrame = CreateWidget<UImageWidget>(static_cast<int>(EUIOrder::BACK), "HpFrame");
@@ -57,7 +57,7 @@ void APlayHUD::CreateHPFrame()
 
 void APlayHUD::CreateHpUI()
 {
-	int Hp = Knight->GetStatRef().GetHP();
+	int Hp = Knight->GetStatRef().GetHp();
 	Hps.reserve(Hp);
 
 	for (int i = 0; i < Hp; i++)
@@ -72,7 +72,7 @@ void APlayHUD::CreateHpUI()
 
 void APlayHUD::SetHpUI()
 {
-	int Hp = Knight->GetStatRef().GetHP();
+	int Hp = Knight->GetStatRef().GetHp();
 	int Count = 0;
 	for (int i = 0; i < Hps.size(); i++)
 	{
@@ -82,7 +82,7 @@ void APlayHUD::SetHpUI()
 		}
 	}
 
-	if (Hp == Count)
+	if (Hp == Count || Hp < 0)
 	{
 		return;
 	}

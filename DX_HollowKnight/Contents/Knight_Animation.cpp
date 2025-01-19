@@ -76,11 +76,11 @@ void AKnight::CreateFireballEffect()
 	{
 		return;
 	}
-	std::shared_ptr<AKnightFireball> Effect = GetWorld()->SpawnActor<AKnightFireball>();
-	Effect->ChangeAnimation("Fireball");
+	std::shared_ptr<AKnightFireball> Skill = GetWorld()->SpawnActor<AKnightFireball>();
+	Skill->ChangeAnimation("Fireball");
 	FVector Speed = { 2000.0f, 0.0f,0.0f };
-	Effect->AddLocation(this, Speed);
-	Effect->ToggleFlip(); // ÁÂ¿ì¹ÝÀü
+	Skill->AddLocation(this, Speed);
+	Skill->ToggleFlip(); // ÁÂ¿ì¹ÝÀü
 	bIsFireballEffect = true;
 }
 
@@ -92,8 +92,8 @@ void AKnight::CreateSlashEffect()
 	}
 
 	std::shared_ptr<AKnightSlash> SlashEffect = GetWorld()->SpawnActor<AKnightSlash>();
+	//SlashEffect->GetCollision()->SetupAttachment(BodyCollision);
 	SlashEffect->ChangeAnimation("SlashEffect");
-
 	FVector Offset = FVector{ -100.0f, 0.0f };
 	SlashEffect->SetLocation(this, Offset);
 	bIsShowEffect = true;

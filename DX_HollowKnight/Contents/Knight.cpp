@@ -58,18 +58,13 @@ void AKnight::Tick(float _DeltaTime)
 
 	CheckCameraPos();
 	SetCameraLerp();
+	CheckEnterButton();
 
 	FSM.Update(_DeltaTime);
 
 	TimeElapsed(_DeltaTime);
 
 	DebugInput(_DeltaTime);
-
-	if (UEngineInput::IsUp(VK_UP))
-	{
-		bIsEnter = false;
-	}
-
 }
 
 void AKnight::SetCollisionEvent()
@@ -118,10 +113,10 @@ void AKnight::SetStatus()
 	Data.Velocity = 500.0f;
 	Data.InitVelocity = Data.Velocity;
 	Data.DashSpeed = Data.Velocity * 3.0f;
-	Data.MaxHP = 5;
-	Data.HP = 5;
-	Data.MaxMP = 99;
-	Data.MP = 0;
+	Data.MaxHp = 5;
+	Data.Hp = 5;
+	Data.MaxMp = 99;
+	Data.Mp = 0;
 	Data.Att = 5;
 	Data.SpellAtt = 15;
 	Data.bIsKnockbackable = true;
@@ -270,6 +265,14 @@ void AKnight::TimeElapsed(float _DeltaTime)
 				DashCooldownElapsed = 0.0f;
 			}
 		}
+	}
+}
+
+void AKnight::CheckEnterButton()
+{
+	if (UEngineInput::IsUp(VK_UP))
+	{
+		bIsEnter = false;
 	}
 }
 
@@ -497,12 +500,12 @@ void AKnight::DebugInput(float _DeltaTime)
 	if (UEngineInput::IsDown('V'))
 	{
 		FSM.ChangeState(EKnightState::STUN);
-		Stat.AddHP(-1);
+		Stat.AddHp(-1);
 	}
 
 	if (UEngineInput::IsDown('B'))
 	{
-		Stat.AddHP(1);
+		Stat.AddHp(1);
 	}
 
 	float ZValue = BodyRenderer->GetTransformRef().RelativeLocation.Z;
@@ -564,7 +567,6 @@ void AKnight::CreateCollision()
 	BodyCollision->GetTransformRef().Location.Y += 0.0f;
 	BodyCollision->SetRelativeLocation(BodyRenderer->GetActorLocation());
 	//BodyCollision->SetCollisionType(ECollisionType::AABB);
-
 
 }
 

@@ -14,6 +14,7 @@ public:
 	UFightUnit& operator=(const UFightUnit& _Other) = delete;
 	UFightUnit& operator=(UFightUnit&& _Other) noexcept = delete;
 
+
 protected:
 
 private:

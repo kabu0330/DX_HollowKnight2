@@ -17,12 +17,12 @@ bool UStatusUnit::CreateStatus(FStatusData* _Data)
 	DashSpeed = _Data->DashSpeed;
 
 	// 체력관련
-	MaxHP = _Data->MaxHP;
-	HP = _Data->HP;
+	MaxHp = _Data->MaxHp;
+	Hp = _Data->Hp;
 
 	// 마나 관련
-	MaxMP = _Data->MaxMP;
-	MP = _Data->MP;
+	MaxMp = _Data->MaxMp;
+	Mp = _Data->Mp;
 
 	// 공격범위 관련
 	Att = _Data->Att;
@@ -41,22 +41,22 @@ bool UStatusUnit::CreateStatus(FStatusData* _Data)
 		MSGASSERT("이동속도를 음수로 설정할 수 없습니다. 최소 0 이상으로 설정해주세요.");
 		return false;
 	}
-	if (1 > HP)
+	if (1 > Hp)
 	{
 		MSGASSERT("체력은 최소 1 이상으로 설정해주세요.");
 		return false;
 	}
-	if (HP > MaxHP)
+	if (Hp > MaxHp)
 	{
 		MSGASSERT("최대 체력보다 HP가 더 높게 설정할 수 없습니다.");
 		return false;
 	}
-	if (0 > MP)
+	if (0 > Mp)
 	{
 		MSGASSERT("마나를 음수로 설정할 수 없습니다. 최소 0 이상으로 설정해주세요.");
 		return false;
 	}
-	if (MP > MaxMP)
+	if (Mp > MaxMp)
 	{
 		MSGASSERT("최대 마나보다 MP가 더 높게 설정할 수 없습니다.");
 		return false;

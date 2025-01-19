@@ -21,6 +21,10 @@ protected:
 	void Tick(float _DeltaTime) override;
 	void SetCollisionEvent() override;
 
+	void Collide(class UCollision* _This, class UCollision* _Other);
+	void CreateHitEffect(class UCollision* _This, class UCollision* _Other);
+	void Attack(class UCollision* _This, class UCollision* _Other);
+
 private:
 
 };

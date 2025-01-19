@@ -20,6 +20,27 @@ AMonster::AMonster()
 	BodyCollision->SetupAttachment(RootComponent);
 }
 
+void AMonster::SetStatus()
+{
+	FStatusData Data;
+	Data.Velocity = 500.0f;
+	Data.InitVelocity = Data.Velocity;
+	Data.DashSpeed = Data.Velocity * 3.0f;
+	Data.MaxHp = 5;
+	Data.Hp = 5;
+	Data.MaxMp = 99;
+	Data.Mp = 0;
+	Data.Att = 5;
+	Data.SpellAtt = 15;
+	Data.bIsKnockbackable = true;
+	Data.KnockbackDistance = 50.0f;
+	Data.Geo = 0;
+	Stat.CreateStatus(&Data);
+
+	JumpForce = InitJumpForce;
+	bCanRotation = true;
+}
+
 void AMonster::BeginPlay()
 {
 	AActor::BeginPlay();

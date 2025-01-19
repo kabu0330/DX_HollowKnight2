@@ -23,9 +23,7 @@ void AKnightSkill::Tick(float _DeltaTime)
 	ASkill::Tick(_DeltaTime);
 }
 
-void AKnightSkill::SetCollisionEvent()
-{
-}
+
 
 
 

@@ -19,9 +19,6 @@ public:
 	AKnight& operator=(const AKnight& _Other) = delete;
 	AKnight& operator=(AKnight&& _Other) noexcept = delete;
 
-	void TimeElapsed(float _DeltaTime);
-
-	void CheckEnterDoor(class UCollision* _This, class UCollision* _Target);
 	void SetCameraPos();
 
 	static AKnight* GetPawn()
@@ -42,6 +39,29 @@ public:
 	UCollision* GetCollision()
 	{
 		return BodyCollision.get();
+	}
+
+	bool IsLeft()
+	{
+		return bIsLeft;
+	}
+
+	void CheckEnterDoor(class UCollision* _This, class UCollision* _Target);
+	bool GetEnter()
+	{
+		return bIsEnter;
+	}
+
+	UStatusUnit& GetStatRef()
+	{
+		return Stat;
+	}
+
+public:
+	// 픽셀 충돌 디버그
+	void SwitchActiveGravity()
+	{
+		NoneGravity = !NoneGravity;
 	}
 
 	// 픽셀 충돌
@@ -71,24 +91,6 @@ public:
 	{
 		return bIsCeilHere;
 	}
-	//
-
-	float JumpForce = 0.0f;
-
-	bool IsLeft()
-	{
-		return bIsLeft;
-	}
-
-	void SwitchActiveGravity()
-	{
-		NoneGravity = !NoneGravity;
-	}
-
-	bool GetEnter()
-	{
-		return bIsEnter;
-	}
 
 	FVector GetGravityForce() const
 	{
@@ -99,14 +101,18 @@ public:
 		GravityForce = _GravityForce;
 	}
 
-	UStatusUnit& GetStatRef()
+	float GetJumpForce()
 	{
-		return Stat;
+		return JumpForce;
 	}
 
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
+
+	void TimeElapsed(float _DeltaTime); // 쿨타임 관련
+	void CheckEnterButton();
+
 	void SetCollisionEvent();
 
 	void ActiveGravity();
@@ -117,28 +123,10 @@ private:
 	void SetStatus();
 	UStatusUnit Stat = UStatusUnit();
 
-	// Debug
-	bool NoneGravity = false;
-	static AKnight* MainPawn;
-	FVector CameraPos = { 0.0f, 0.0f, 0.0f };
-
-	UTimeEventComponent* TimeEventor = nullptr;
-
 	bool bIsEnter = false;
 
-
-	// Renderer
-	std::shared_ptr<class UContentsRenderer> BodyRenderer;
-	void CreateRenderer();
-
-	// Collision
-	bool bIsWallHere = false;
-	bool bIsCeilHere = false;
-	std::shared_ptr<class UCollision> BodyCollision;
-	void CreateCollision();
-
-
 	// 공격 또는 피격 동작 중일 때
+	bool CanAction();
 	bool bIsAttacking = false;
 	bool bIsBeingHit = false;
 	bool bIsCastingSpell = false;
@@ -147,30 +135,17 @@ private:
 
 	float HitStunDuration = 1.0f;
 
-	FVector GravityForce = FVector::ZERO;
-
-private:
-	void DebugInput(float _DeltaTime);
-
-	void SetCameraLerp();
-	void CheckCameraPos();
-	bool bIsCameraMove = false;
-	FVector CameraCurPos = FVector::ZERO;
-	FVector CameraTargetPos = FVector::ZERO;
-	float CameraMoveTime = 0.0f;
-	float ScreenRatioY = 0.0f;
-
-	bool CanAction();
-
 	void Move(float _DeltaTime);
+	bool bIsOnGround = false; // 픽셀충돌로 true / false 검사
 
 
 	// Jump : Z키
-	bool bIsOnGround = false; // 픽셀충돌로 true / false 검사
-	bool bCanJump = true;
-	float InitJumpForce = 600.0f;
 	bool CanJump();
 	void Jump(float _DeltaTime);
+	bool bCanJump = true;
+	FVector GravityForce = FVector::ZERO;
+	float JumpForce = 0.0f;
+	float InitJumpForce = 600.0f;
 
 	// Slash : X키
 	bool bIsShowEffect = false;
@@ -178,7 +153,7 @@ private:
 	void CreateSlashEffect();
 	void CreateUpSlashEffect();
 	void CreateDownSlashEffect();
-	
+
 	// Dash : C키
 	bool bIsDashing = false;
 	bool bCanDash = true;
@@ -202,6 +177,34 @@ private:
 	bool bIsStunEffect = false;
 	void CreateStunEffect();
 
+private:
+	// 디버그
+	void DebugInput(float _DeltaTime);
+	bool NoneGravity = false;
+	static AKnight* MainPawn;
+
+	UTimeEventComponent* TimeEventor = nullptr;
+
+	// 카메라
+	void SetCameraLerp();
+	void CheckCameraPos();
+	bool bIsCameraMove = false;
+	FVector CameraPos = { 0.0f, 0.0f, 0.0f };
+	FVector CameraCurPos = FVector::ZERO;
+	FVector CameraTargetPos = FVector::ZERO;
+	float CameraMoveTime = 0.0f;
+	float ScreenRatioY = 0.0f;
+
+
+	// Renderer
+	std::shared_ptr<class UContentsRenderer> BodyRenderer;
+	void CreateRenderer();
+
+	// Collision
+	bool bIsWallHere = false;
+	bool bIsCeilHere = false;
+	std::shared_ptr<class UCollision> BodyCollision;
+	void CreateCollision();
 
 	// Animation
 	void InitAnimation();

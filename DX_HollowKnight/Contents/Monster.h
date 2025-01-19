@@ -28,6 +28,27 @@ public:
 		return BodyCollision.get();
 	}
 
+	bool IsLeft()
+	{
+		return bIsLeft;
+	}
+
+	void SetParentRoom(class ARoom* _ParentRoom)
+	{
+		ParentRoom = _ParentRoom;
+	}
+	class ARoom* GetParentRoom()
+	{
+		return ParentRoom;
+	}
+	void SetPause();
+
+	UStatusUnit& GetStatRef()
+	{
+		return Stat;
+	}
+
+public:
 	// «»ºø √Êµπ
 	void SetOnGround(bool _Value)
 	{
@@ -55,22 +76,6 @@ public:
 	{
 		return bIsCeilHere;
 	}
-	// 
-
-	bool IsLeft()
-	{
-		return bIsLeft;
-	}
-
-	void SetParentRoom(class ARoom* _ParentRoom)
-	{
-		ParentRoom = _ParentRoom;
-	}
-	class ARoom* GetParentRoom()
-	{
-		return ParentRoom;
-	}
-	void SetPause();
 
 	FVector GetGravityForce() const
 	{
@@ -81,12 +86,8 @@ public:
 		GravityForce = _GravityForce;
 	}
 
-	UStatusUnit& GetStatRef()
-	{
-		return Stat;
-	}
-
 protected:
+	virtual void SetStatus();
 	UStatusUnit Stat = UStatusUnit();
 	float Velocity = 0.0f;
 
@@ -109,8 +110,11 @@ protected:
 	bool bIsStun = false;
 	bool bIsDeath = false;
 
+	// ±‚≈∏ Ω∫≈›
 	float HitStunDuration = 1.0f;
 
+	float JumpForce = 0.0f;
+	float InitJumpForce = 600.0f;
 
 	FVector GravityForce = FVector::ZERO;
 
