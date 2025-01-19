@@ -59,6 +59,30 @@ void UContentsResource::LoadFont()
 		std::string FilePath = Dir.GetPathToString();
 		UEngineFont::Load("TrajanPro-Regular", FilePath);
 	}
+	{
+		// 폰트
+		UEngineDirectory Dir;
+		Dir.MoveParentToDirectory("ContentsResources");
+		Dir.Append("Font/NotoSerifCJKsc-Regular.otf");
+		std::string FilePath = Dir.GetPathToString();
+		UEngineFont::Load("NotoSerifCJKsc-Regular", FilePath);
+	}
+	{
+		// 폰트
+		UEngineDirectory Dir;
+		Dir.MoveParentToDirectory("ContentsResources");
+		Dir.Append("Font/Perpetua.ttf");
+		std::string FilePath = Dir.GetPathToString();
+		UEngineFont::Load("Perpetua", FilePath);
+	}
+	{
+		// 폰트
+		UEngineDirectory Dir;
+		Dir.MoveParentToDirectory("ContentsResources");
+		Dir.Append("Font/TrajanPro-Bold.otf");
+		std::string FilePath = Dir.GetPathToString();
+		UEngineFont::Load("TrajanPro-Bold", FilePath);
+	}
 }
 
 void UContentsResource::LoadContentsResource(std::string_view _Path)

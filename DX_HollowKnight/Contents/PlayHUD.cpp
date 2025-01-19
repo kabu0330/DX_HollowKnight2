@@ -21,14 +21,8 @@ void APlayHUD::BeginPlay()
 	CreateSkillGaugeFrame();
 	CreateHPFrame();
 	CreateHpUI();
-
-	{
-		std::shared_ptr<UFontWidget> Widget = CreateWidget<UFontWidget>(1);
-
-		Widget->SetWorldLocation({ 200, 300 });
-		Widget->SetFont("TrajanPro-Regular");
-		Widget->SetText("¾È³çÇÏ¼¼¿ä");
-	}
+	CreateGeo();
+	CreateGeoCount();
 }
 
 void APlayHUD::Tick(float _DeltaTime)
@@ -105,5 +99,25 @@ void APlayHUD::SetHpUI()
 	{
 		Hps[Hp]->SetActive(false);
 	}
+}
+
+void APlayHUD::CreateGeo()
+{
+	std::shared_ptr<UImageWidget> GeoUI = CreateWidget<UImageWidget>(static_cast<int>(EUIOrder::BACK), "GeoUI");
+	float GeoPosX = SkillGaugeFramePosX - 0.04f;
+	float GeoPosY = SkillGaugeFramePosY - 0.07f;
+	GeoUI->SetWorldLocation({ -ScreenSize.X * GeoPosX,  ScreenSize.Y * GeoPosY });
+	GeoUI->SetTexture("012-04-088.png", true, 0.9f);
+}
+
+void APlayHUD::CreateGeoCount()
+{
+	GeoCount = CreateWidget<UFontWidget>(static_cast<int>(EUIOrder::BACK), "GeoCount");
+
+	float GeoPosX = SkillGaugeFramePosX - 0.07f;
+	float GeoPosY = SkillGaugeFramePosY - 0.035f;
+	GeoCount->SetWorldLocation({ -ScreenSize.X * GeoPosX,  ScreenSize.Y * GeoPosY });
+	GeoCount->SetFont("NotoSerifCJKsc-Regular", 40.0f, UColor::WHITE);
+	GeoCount->SetText("95");
 }
 

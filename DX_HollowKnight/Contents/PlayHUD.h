@@ -34,6 +34,9 @@ private:
 	std::vector<std::shared_ptr<class UImageWidget>> Hps;
 	void SetHpUI();
 
+	void CreateGeo();
+	void CreateGeoCount();
+	std::shared_ptr<class UFontWidget> GeoCount = nullptr;
 
 
 	FVector ScreenSize = FVector::ZERO;
