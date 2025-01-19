@@ -9,6 +9,13 @@ public:
 
 };
 
+enum class EUIOrder
+{
+	NONE = -10000,
+	BACK = 9999,
+	MAX = 10000,
+};
+
 enum class EZOrder
 {
 	NONE = 100,

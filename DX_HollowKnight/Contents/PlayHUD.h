@@ -1,5 +1,6 @@
 #pragma once
 #include <EngineCore/HUD.h>
+#include <vector>
 
 // Ό³Έν :
 class APlayHUD : public AHUD
@@ -15,12 +16,28 @@ public:
 	APlayHUD& operator=(const APlayHUD& _Other) = delete;
 	APlayHUD& operator=(APlayHUD&& _Other) noexcept = delete;
 
+protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime)	override;
 
-protected:
-
 private:
+	void CreateSkillGaugeFrame();
+	float SkillGaugeFramePosX = 0.35f;
+	float SkillGaugeFramePosY = 0.37f;
 
+	void CreateHPFrame();
+	float HpFramePosX = 0.31f;
+	float HpFramePosY = 0.39f;
+	float HpFramePosXGap = 0.045f;
+
+	void CreateHpUI();
+	std::vector<std::shared_ptr<class UImageWidget>> Hps;
+	void SetHpUI();
+
+
+
+	FVector ScreenSize = FVector::ZERO;
+	FVector HalfSize = FVector::ZERO;
+	class AKnight* Knight = nullptr;
 };
 

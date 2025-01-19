@@ -494,9 +494,15 @@ void AKnight::DebugInput(float _DeltaTime)
 		}		
 	}
 
-	if (UEngineInput::IsPress('V'))
+	if (UEngineInput::IsDown('V'))
 	{
 		FSM.ChangeState(EKnightState::STUN);
+		Stat.AddHP(-1);
+	}
+
+	if (UEngineInput::IsDown('B'))
+	{
+		Stat.AddHP(1);
 	}
 
 	float ZValue = BodyRenderer->GetTransformRef().RelativeLocation.Z;

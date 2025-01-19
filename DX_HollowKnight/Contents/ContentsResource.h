@@ -24,5 +24,6 @@ protected:
 
 private:
 	static void LoadResource();
+	static void LoadFont();
 };
 

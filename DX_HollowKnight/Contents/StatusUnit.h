@@ -83,9 +83,9 @@ public:
 	{
 		return HP;
 	}
-	void SetHP(int _HP)
+	void AddHP(int _HP)
 	{
-		HP = _HP;
+		HP += _HP;
 	}
 
 	int GetMaxMP()
@@ -101,9 +101,9 @@ public:
 	{
 		return MP;
 	}
-	void SetMP(int _MP)
+	void AddMP(int _MP)
 	{
-		MP = _MP;
+		MP += _MP;
 	}
 
 	int GetAtt()

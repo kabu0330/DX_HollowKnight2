@@ -46,8 +46,11 @@ void UContentsResource::LoadResource()
 			std::string FilePath = ImageFiles[i].GetPathToString();
 			UEngineTexture::Load(FilePath);
 		}
-	}
+	}	
+}
 
+void UContentsResource::LoadFont()
+{
 	{
 		// 폰트
 		UEngineDirectory Dir;
@@ -56,7 +59,6 @@ void UContentsResource::LoadResource()
 		std::string FilePath = Dir.GetPathToString();
 		UEngineFont::Load("TrajanPro-Regular", FilePath);
 	}
-	
 }
 
 void UContentsResource::LoadContentsResource(std::string_view _Path)
@@ -75,6 +77,7 @@ void UContentsResource::LoadContentsResource(std::string_view _Path)
 void UContentsResource::LoadResourceDirectory()
 {
 	LoadResource(); // 최초 1회 리소스 폴더를 로드해야 한다.
+	LoadFont();
 
 	// Knight
 	LoadContentsResource("Image/Knight/Idle");
@@ -166,6 +169,13 @@ void UContentsResource::LoadShaderResource()
 		// 언제나 화면에 나오는 누구도 이녀석의 앞을 가릴수 없어.
 		Mat->SetDepthStencilState("CollisionDebugDepth");
 		Mat->SetRasterizerState("CollisionDebugRas");
+	}
+
+	{
+		std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("WidgetMaterial");
+		Mat->SetVertexShader("EngineSpriteShader.fx");
+		Mat->SetPixelShader("EngineSpriteShader.fx");
+		Mat->SetDepthStencilState("UIDepth");
 	}
 }
 
