@@ -2,6 +2,7 @@
 #include "KnightSlash.h"
 #include "KnightEffect.h"
 #include <EngineBase/EngineRandom.h>
+#include "FightUnit.h"
 
 AKnightSlash::AKnightSlash()
 {
@@ -68,43 +69,22 @@ void AKnightSlash::CreateHitEffect(UCollision* _This, UCollision* _Other)
 
 void AKnightSlash::Attack(UCollision* _This, UCollision* _Other)
 {
-	AKnight* Knight = nullptr;
-	AMonster* Monster = nullptr;
-
-	// 1. _This가 누구인지 다이나믹 캐스팅으로 판별
-	AActor* ThisActor = _This->GetActor();
-	AKnight* KnightActor = dynamic_cast<AKnight*>(ThisActor);
-	if (nullptr != KnightActor)
+	AKnight* Knight = AKnight::GetPawn();
+	if (nullptr == Knight)
 	{
-		Knight = KnightActor;
-	}
-	AMonster* MonsterActor = dynamic_cast<AMonster*>(ThisActor);
-	if (nullptr != MonsterActor)
-	{
-		Monster = MonsterActor;
+		return;
 	}
 
-	// 2. _Other가 누구인지 다이나믹 캐스팅으로 판별
-	AActor* OtherActor = _Other->GetActor();
-	KnightActor = dynamic_cast<AKnight*>(OtherActor);
-	if (nullptr != KnightActor)
+	AMonster* Monster = dynamic_cast<AMonster*>(_Other->GetActor());
+	if (nullptr != Monster)
 	{
-		Knight = KnightActor;
-	}
-	MonsterActor = dynamic_cast<AMonster*>(OtherActor);
-	if (nullptr != MonsterActor)
-	{
-		Monster = MonsterActor;
-	}
-
-	// 3. nullptr 체크
-	if (nullptr != Knight && nullptr != Monster)
-	{
-		// 4. 데미지 계산
 		int KnightAtt = Knight->GetStatRef().GetAtt();
-		Monster->GetStatRef().AddHp(-KnightAtt);
-		//Monster->GetStatRef().GetHp();
-		UEngineDebug::OutPutString("나이트가 몬스터에게 " + std::to_string(KnightAtt) + "만큼 데미지를 주었습니다.");
+		UFightUnit::OnHit(Monster, KnightAtt);
+
+		int MonsterHp = Monster->GetStatRef().GetHp();
+		UEngineDebug::OutPutString("나이트가 몬스터에게 " + std::to_string(KnightAtt) + "만큼 데미지를 주었습니다. 현재 체력 : " + std::to_string(MonsterHp) );
 	}
+
+
 }
 

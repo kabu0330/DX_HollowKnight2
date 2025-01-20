@@ -28,7 +28,7 @@ void AKnightFireball::SetCollisionEvent()
 {
 	Collision->SetCollisionEnter([this](UCollision* _This, UCollision* _Other)
 		{
-			UEngineDebug::OutPutString("FireballImpact");
+			UEngineDebug::OutPutString("Fireball Impact");
 			AKnightEffect* Effect = GetWorld()->SpawnActor<AKnightEffect>().get();
 			Effect->SetName("FireballImpact");
 			Effect->SetZSort(EZOrder::KNIGHT_SKILL_FRONT);

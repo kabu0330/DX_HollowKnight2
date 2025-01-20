@@ -18,6 +18,13 @@ public:
 	AMonster& operator=(const AMonster& _Other) = delete;
 	AMonster& operator=(AMonster&& _Other) noexcept = delete;
 
+	void SetPause();
+
+	bool IsLeft()
+	{
+		return bIsLeft;
+	}
+
 	UContentsRenderer* GetRenderer() const
 	{
 		return BodyRenderer.get();
@@ -28,11 +35,6 @@ public:
 		return BodyCollision.get();
 	}
 
-	bool IsLeft()
-	{
-		return bIsLeft;
-	}
-
 	void SetParentRoom(class ARoom* _ParentRoom)
 	{
 		ParentRoom = _ParentRoom;
@@ -41,68 +43,34 @@ public:
 	{
 		return ParentRoom;
 	}
-	void SetPause();
 
 	UStatusUnit& GetStatRef()
 	{
 		return Stat;
 	}
-
-public:
-	// 픽셀 충돌
-	void SetOnGround(bool _Value)
+	UFSMStateManager& GetFSMRef()
 	{
-		bIsOnGround = _Value;
-	}
-	bool IsOnGround()
-	{
-		return bIsOnGround;
+		return FSM;
 	}
 
-	void SetWallHere(bool _Value)
-	{
-		bIsWallHere = _Value;
-	}
-	bool IsWallHere() const
-	{
-		return bIsWallHere;
-	}
-
-	void SetCeilHere(bool _Value)
-	{
-		bIsCeilHere = _Value;
-	}
-	bool GetCeilHere() const
-	{
-		return bIsCeilHere;
-	}
-
-	FVector GetGravityForce() const
-	{
-		return GravityForce;
-	}
-	void SetGravityForce(FVector _GravityForce)
-	{
-		GravityForce = _GravityForce;
-	}
+	// 몬스터 동작
+	bool IsPlayerNearby();
 
 protected:
 	virtual void SetStatus();
 	UStatusUnit Stat = UStatusUnit();
-	float Velocity = 0.0f;
+	class AKnight* Knight = nullptr;
 
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
+
+	// 충돌관련
 	void SetCollisionEvent();
+	void OnBodyCollision(class UCollision* _This, class UCollision* _Other);
 
 	void Move(float _DeltaTime);
 	void TimeElapsed(float _DeltaTime);
 	void DebugInput(float _DeltaTime);
-
-	// 픽셀 충돌
-	bool bIsOnGround = false;
-	bool bIsWallHere = false;
-	bool bIsCeilHere = false;
 
 	// 공격 또는 피격 동작 중일 때
 	bool bIsAttacking = false;
@@ -116,7 +84,6 @@ protected:
 	float JumpForce = 0.0f;
 	float InitJumpForce = 600.0f;
 
-	FVector GravityForce = FVector::ZERO;
 
 	// 동작
 	bool bCanJump = false;
@@ -127,11 +94,19 @@ protected:
 
 	void CreateAnimation();
 	void CreateCollision();
+	void CreateCenterPoint();
+	void CreateDetectCollision();
+	FVector RendererOffset = FVector::ZERO;
+	FVector BodyCollisionOffset = FVector::ZERO;
+	FVector DetectRange = FVector::ZERO;
+	float ZSort = 0.0f;
 	std::shared_ptr<class UContentsRenderer> BodyRenderer;
 	std::shared_ptr<class UCollision> BodyCollision;
-	FVector Offset = FVector::ZERO;
-	float ZSort = 0.0f;
+	std::shared_ptr<class UCollision> CenterPoint;
+	std::shared_ptr<class UCollision> DetectCollision;
 
+	void ChangeNextAnimation(EMonsterState _NextState);
+	void ChangePrevAnimation();
 
 protected:
 	bool IsCurRoom();
@@ -199,6 +174,7 @@ protected:
 	virtual void SetEvade(float _DeltaTime);
 
 	// 피격
+	virtual void SetHit(float _DeltaTime);
 	virtual void SetStun(float _DeltaTime);
 	virtual void SetStunRoll(float _DeltaTime);
 	virtual void SetStunRollEnd(float _DeltaTime);
@@ -218,7 +194,52 @@ protected:
 	void CheckDirection();
 	bool bIsLeft = true;
 
+public:
+		// 픽셀 충돌
+		void SetOnGround(bool _Value)
+		{
+			bIsOnGround = _Value;
+		}
+		bool IsOnGround()
+		{
+			return bIsOnGround;
+		}
+
+		void SetWallHere(bool _Value)
+		{
+			bIsWallHere = _Value;
+		}
+		bool IsWallHere() const
+		{
+			return bIsWallHere;
+		}
+
+		void SetCeilHere(bool _Value)
+		{
+			bIsCeilHere = _Value;
+		}
+		bool GetCeilHere() const
+		{
+			return bIsCeilHere;
+		}
+
+		FVector GetGravityForce() const
+		{
+			return GravityForce;
+		}
+		void SetGravityForce(FVector _GravityForce)
+		{
+			GravityForce = _GravityForce;
+		}
+
 private:
+	// 픽셀 충돌
+	bool bIsOnGround = false;
+	bool bIsWallHere = false;
+	bool bIsCeilHere = false;
+	FVector GravityForce = FVector::ZERO;
+	FVector GravityPointOffset = FVector::DOWN; // 렌더러와 이미지 위치가 차이가 날 경우
+
 	void CheckCurRoom();
 	void ActivePixelCollision();
 	bool bIsPause = false;

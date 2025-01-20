@@ -156,6 +156,51 @@ public:
 		KnockbackDistance = _KnockbackDistance;
 	}
 
+	bool IsAttacking()
+	{
+		return bIsAttacking;
+	}
+	void SetAttacking(bool _bIsAttacking)
+	{
+		bIsAttacking = _bIsAttacking;
+	}
+
+	bool IsBeingHit()
+	{
+		return bIsBeingHit;
+	}
+	void SetIsBeingHit(bool _bIsBeingHit)
+	{
+		bIsBeingHit = _bIsBeingHit;
+	}
+
+	bool IsCastingSpell()
+	{
+		return bIsCastingSpell;
+	}
+	void SetIsCastingSpell(bool _bIsCastingSpell)
+	{
+		bIsCastingSpell = _bIsCastingSpell;
+	}
+
+	bool IsStun()
+	{
+		return bIsStun;
+	}
+	void SetStun(bool _bIsStun)
+	{
+		bIsStun = _bIsStun;
+	}
+
+	bool IsDeath()
+	{
+		return bIsDeath;
+	}
+	void SetDeath(bool _bIsDeath)
+	{
+		bIsDeath = _bIsDeath;
+	}
+
 protected:
 
 private:
@@ -176,7 +221,12 @@ private:
 	int Att = 1;
 	int SpellAtt = 1;
 
-	// 피격 : 넉백
+	// 피격 
+	bool bIsAttacking = false;
+	bool bIsBeingHit = false;
+	bool bIsCastingSpell = false;
+	bool bIsStun = false;
+	bool bIsDeath = false;
 	bool bIsKnockbackable = true;
 	float KnockbackDistance = 50.0f;
 	

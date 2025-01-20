@@ -1,9 +1,19 @@
 #pragma once
+#include "Knight.h"
+#include "Monster.h"
+#include "StatusUnit.h"
 
 // 설명 : 전투관련 상호작용 함수 집합
 class UFightUnit
 {
 public:
+	static void OnHit(AKnight* _Knight, int _Att);
+	static void OnHit(AMonster* _Monster, int _Att);
+
+
+protected:
+
+private:
 	// constrcuter destructer
 	UFightUnit();
 	~UFightUnit();
@@ -13,11 +23,5 @@ public:
 	UFightUnit(UFightUnit&& _Other) noexcept = delete;
 	UFightUnit& operator=(const UFightUnit& _Other) = delete;
 	UFightUnit& operator=(UFightUnit&& _Other) noexcept = delete;
-
-
-protected:
-
-private:
-
 };
 

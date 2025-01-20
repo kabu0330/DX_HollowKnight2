@@ -15,7 +15,6 @@ AKnightSkill::~AKnightSkill()
 void AKnightSkill::BeginPlay()
 {
 	ASkill::BeginPlay();
-	SetCollisionEvent();
 }
 
 void AKnightSkill::Tick(float _DeltaTime)

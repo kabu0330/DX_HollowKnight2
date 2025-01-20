@@ -35,7 +35,7 @@ AKnight::AKnight()
 	//SetActorLocation(InitPos::Dirtmouth_well);
 	//SetActorLocation(InitPos::CrossroadsEntrance);
 	//SetActorLocation({9911, -5500});
-	SetActorLocation({1100, -2980});
+	SetActorLocation({1100, -2950});
 
 	// Debug
 	BodyRenderer->BillboardOn();
@@ -65,18 +65,20 @@ void AKnight::Tick(float _DeltaTime)
 	TimeElapsed(_DeltaTime);
 
 	DebugInput(_DeltaTime);
+	DebugCamera();
 }
 
 void AKnight::SetCollisionEvent()
 {
-	BodyCollision->SetCollisionEnter([](UCollision* _This, UCollision* _Other)
-		{
-			//_Other->GetActor()->Destroy();
-			// _Other->Destroy();
-			UEngineDebug::OutPutString("Kinigt Collision Event Enter");
-		});
+	BodyCollision->SetCollisionEnter(std::bind(&AKnight::Collide, this, std::placeholders::_1, std::placeholders::_2));
 
 	BodyCollision->SetCollisionStay(std::bind(&AKnight::CheckEnterDoor, this, std::placeholders::_1, std::placeholders::_2));
+}
+
+void AKnight::Collide(UCollision* _This, UCollision* _Other)
+{
+	UEngineDebug::OutPutString("Kinigt Collision Event Enter");
+
 }
 
 void AKnight::ActiveGravity()
@@ -89,7 +91,7 @@ void AKnight::ActiveGravity()
 	ARoom* Room = ARoom::GetCurRoom();
 	if (nullptr != Room)
 	{
-		Room->CheckPixelCollisionWithGravity(this, BodyRenderer.get());
+		Room->CheckPixelCollisionWithGravity(this, BodyRenderer.get(), FVector::DOWN);
 	}
 }
 
@@ -242,12 +244,13 @@ void AKnight::TimeElapsed(float _DeltaTime)
 	}
 	float AttackCooldown = 0.5f;
 
-	if (true == bIsAttacking)
+	if (true == Stat.IsAttacking())
 	{
 		AttackCooldownElapsed += _DeltaTime;
 		if (AttackCooldownElapsed >= AttackCooldown)
 		{
-			bIsAttacking = false;
+			Stat.SetAttacking(false);
+			//bIsAttacking = false;
 			bIsShowEffect = false;
 			AttackCooldownElapsed = 0.0f;
 		}
@@ -293,24 +296,36 @@ void AKnight::CheckEnterDoor(UCollision* _This, UCollision* _Target)
 
 bool AKnight::CanAction()
 {
-	if (true == bIsDeath)
+	if (true == Stat.IsDeath())
 	{
 		return false;
 	}
-	if (true == bIsCastingSpell)
+	if (true == Stat.IsCastingSpell())
 	{
 		return false;
 	}
-	if (true == bIsAttacking)
+	if (true == Stat.IsAttacking())
 	{
 		return false;
 	}
-	if (true == bIsBeingHit)
+	if (true == Stat.IsBeingHit())
 	{
 		return false;
 	}
 
 	return true;
+}
+
+void AKnight::RecoveryIdle()
+{
+	bCanRotation = true;
+	bIsFireballEffect = false;
+	bIsStunEffect = false;
+
+	Stat.SetStun(false);
+	Stat.SetIsBeingHit(false);
+	//bIsStun = false;
+	//bIsBeingHit = false;
 }
 
 void AKnight::ChangeDash()
@@ -494,6 +509,7 @@ void AKnight::DebugInput(float _DeltaTime)
 			Stat.SetInitVelocity(Stat.GetVelocity());
 			Stat.SetDashSpeed(Stat.GetVelocity() * 3.0f);
 			bCanDash = true;
+			SwitchDebugMode();
 		}		
 	}
 
@@ -519,6 +535,14 @@ void AKnight::DebugInput(float _DeltaTime)
 	// Debug Input
 	if (true == ARoom::GetActiveGravity())
 	{
+		if (UEngineInput::IsPress(VK_LEFT))
+		{
+			AddRelativeLocation(FVector{ -Stat.GetVelocity() * _DeltaTime,0.0f, 0.0f });
+		}
+		if (UEngineInput::IsPress(VK_RIGHT))
+		{
+			AddRelativeLocation(FVector{ Stat.GetVelocity() * _DeltaTime,0.0f, 0.0f });
+		}
 		if (UEngineInput::IsPress(VK_UP))
 		{
 			AddRelativeLocation(FVector{ 0.0f, Stat.GetVelocity() * _DeltaTime, 0.0f });
@@ -530,27 +554,40 @@ void AKnight::DebugInput(float _DeltaTime)
 	}
 }
 
+void AKnight::DebugCamera()
+{
+	if (false == bIsDebugMode)
+	{
+		return;
+	}
+	ACameraActor* Camera = GetWorld()->GetMainCamera().get();
+	Camera->SetActorLocation(GetActorLocation());
+}
+
 void AKnight::ChangeAttackAnimation(EKnightState _PrevState)
 {
 	if (true == CanAction())
 	{
 		if (UEngineInput::IsDown('X') && UEngineInput::IsPress(VK_UP))
 		{
-			bIsAttacking = true;
+			Stat.SetAttacking(true);
+			//bIsAttacking = true;
 			NextState = _PrevState;
 			FSM.ChangeState(EKnightState::UP_SLASH);
 			return;
 		}
 		if (UEngineInput::IsDown('X') && UEngineInput::IsPress(VK_DOWN) && false == bIsOnGround)
 		{
-			bIsAttacking = true;
+			Stat.SetAttacking(true);
+			//bIsAttacking = true;
 			NextState = _PrevState;
 			FSM.ChangeState(EKnightState::DOWN_SLASH);
 			return;
 		}
 		if (UEngineInput::IsDown('X'))
 		{
-			bIsAttacking = true;
+			Stat.SetAttacking(true);
+			//bIsAttacking = true;
 			NextState = _PrevState;
 			FSM.ChangeState(EKnightState::SLASH);
 			return;

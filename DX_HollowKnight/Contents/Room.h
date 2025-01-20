@@ -44,7 +44,7 @@ public:
 	class ADoor* CreateDoor(FVector _DoorScale, FVector _InitPos, ARoom* _TargetRoom, FVector _TargetPos, bool _IsDoor = false);
 
 	// 중력과 벽
-	void CheckPixelCollisionWithGravity(AActor* _Actor, class UContentsRenderer* _Renderer);
+	void CheckPixelCollisionWithGravity(AActor* _Actor, class UContentsRenderer* _Renderer, FVector _Offset);
 	void CheckPixelCollisionWithWall(AActor* _Actor, class UContentsRenderer* _Renderer, float _Speed, bool _Left);
 	void CheckPixelCollisionWithCeil(AActor* _Actor, class UContentsRenderer* _Renderer, float _Speed, bool _Left);
 	bool IsOnGround(FVector _Pos);

@@ -49,6 +49,7 @@ void AMonster::SetFSM()
 	CreateState(EMonsterState::EVADE_ANTICIPATE, &AMonster::SetEvadeAnticipate, "EvadeAnticipate");
 	CreateState(EMonsterState::EVADE, &AMonster::SetEvade, "Evade");
 
+	CreateState(EMonsterState::HIT, &AMonster::SetHit, "Hit");
 	CreateState(EMonsterState::STUN, &AMonster::SetStun, "Stun");
 	CreateState(EMonsterState::STUN_ROLL, &AMonster::SetStunRoll, "StunRoll");
 	CreateState(EMonsterState::STUN_ROLL_END, &AMonster::SetStunRollEnd, "StunRollEnd");
@@ -215,6 +216,10 @@ void AMonster::SetEvadeAnticipate(float _DeltaTime)
 }
 
 void AMonster::SetEvade(float _DeltaTime)
+{
+}
+
+void AMonster::SetHit(float _DeltaTime)
 {
 }
 

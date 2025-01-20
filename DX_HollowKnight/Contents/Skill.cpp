@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "Skill.h"
 #include <EnginePlatform/EngineInput.h>
+#include "FightUnit.h"
 
 ASkill::ASkill()
 {
@@ -8,9 +9,9 @@ ASkill::ASkill()
 
 	Collision = CreateDefaultSubObject<UCollision>();
 	Collision->SetupAttachment(RootComponent);
-	Collision->SetCollisionProfileName("KnightObject");
 	ZSort = static_cast<float>(EZOrder::KNIGHT_SKILL_FRONT);
 	Collision->GetTransformRef().Location.Z = ZSort;
+	//Collision->SetCollisionProfileName("KnightObject");
 	//Collision->SetCollisionType(ECollisionType::AABB);
 
 	BodyRenderer->SetWorldLocation({ 0.0f, 0.0f, ZSort });
@@ -53,7 +54,7 @@ void ASkill::SetCollisionEvent()
 {
 	Collision->SetCollisionEnter([](UCollision* _This, UCollision* _Other)
 		{
-			UEngineDebug::OutPutString("나이트의 공격 적중");
+			UEngineDebug::OutPutString("Hit!!!");
 		});
 }
 

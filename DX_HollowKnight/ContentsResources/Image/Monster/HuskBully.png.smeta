@@ -1,0 +1,924 @@
+fileFormatVersion: 2
+guid: 3dd131334e380194984cfd346c17af86
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4783698753534421821
+    second: DashBug_0
+  - first:
+      213: -8734826856232289108
+    second: DashBug_1
+  - first:
+      213: 3456005208026948999
+    second: DashBug_2
+  - first:
+      213: -6758221501470231620
+    second: DashBug_3
+  - first:
+      213: 3917966129005357544
+    second: DashBug_4
+  - first:
+      213: -4899378213231631737
+    second: DashBug_5
+  - first:
+      213: 5495255562788885190
+    second: DashBug_6
+  - first:
+      213: 1736193401181789921
+    second: DashBug_7
+  - first:
+      213: -5771061624442204119
+    second: DashBug_8
+  - first:
+      213: -9188943768378261398
+    second: DashBug_9
+  - first:
+      213: 624827704083395439
+    second: DashBug_10
+  - first:
+      213: -4988858681113162607
+    second: DashBug_11
+  - first:
+      213: -4012300415444421503
+    second: DashBug_12
+  - first:
+      213: 7593567582348557461
+    second: DashBug_13
+  - first:
+      213: 5782264848945161321
+    second: DashBug_14
+  - first:
+      213: 7860814598554576318
+    second: DashBug_15
+  - first:
+      213: 2053479608165353852
+    second: DashBug_16
+  - first:
+      213: 759624984093480606
+    second: DashBug_17
+  - first:
+      213: 8965118670590119203
+    second: DashBug_18
+  - first:
+      213: 3136740328775489245
+    second: DashBug_19
+  - first:
+      213: -9154410664158232525
+    second: DashBug_20
+  - first:
+      213: -8948621003135345712
+    second: DashBug_21
+  - first:
+      213: -3070068469994223865
+    second: DashBug_22
+  - first:
+      213: 4353318587182151061
+    second: DashBug_23
+  - first:
+      213: 8066183110774491081
+    second: DashBug_24
+  - first:
+      213: 1932309686781663403
+    second: DashBug_25
+  - first:
+      213: -6466243232099034151
+    second: DashBug_26
+  - first:
+      213: 6446410388630876275
+    second: DashBug_27
+  - first:
+      213: 9169803713758053916
+    second: DashBug_28
+  - first:
+      213: -9192178157640344629
+    second: DashBug_29
+  - first:
+      213: 282413020761750536
+    second: DashBug_30
+  - first:
+      213: -5173516459467261507
+    second: DashBug_31
+  - first:
+      213: 8691856875045169574
+    second: DashBug_32
+  - first:
+      213: -2801261203129299140
+    second: DashBug_33
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 100
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: DashBug_0
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 1949
+        width: 106
+        height: 127
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c41a1b2453ec9db0800000000000000
+      internalID: -4783698753534421821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_1
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 1950
+        width: 103
+        height: 127
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cac7bbbd049a7c680800000000000000
+      internalID: -8734826856232289108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_2
+      rect:
+        serializedVersion: 2
+        x: 698
+        y: 1950
+        width: 105
+        height: 127
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 785a85e0d6236ff20800000000000000
+      internalID: 3456005208026948999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_3
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 1950
+        width: 101
+        height: 127
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb3b57bd959f532a0800000000000000
+      internalID: -6758221501470231620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_4
+      rect:
+        serializedVersion: 2
+        x: 1298
+        y: 1949
+        width: 105
+        height: 128
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e96061af696f5630800000000000000
+      internalID: 3917966129005357544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_5
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 1649
+        width: 106
+        height: 127
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7826a0c1979e10cb0800000000000000
+      internalID: -4899378213231631737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_6
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 1649
+        width: 108
+        height: 123
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c2550ab1d1134c40800000000000000
+      internalID: 5495255562788885190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_7
+      rect:
+        serializedVersion: 2
+        x: 695
+        y: 1650
+        width: 110
+        height: 124
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ee51da13b2381810800000000000000
+      internalID: 1736193401181789921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_8
+      rect:
+        serializedVersion: 2
+        x: 997
+        y: 1650
+        width: 107
+        height: 127
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 920db3a670219efa0800000000000000
+      internalID: -5771061624442204119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_9
+      rect:
+        serializedVersion: 2
+        x: 1297
+        y: 1650
+        width: 107
+        height: 128
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6046c8e3505a7080800000000000000
+      internalID: -9188943768378261398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_10
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 1350
+        width: 107
+        height: 129
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f63b6b38c75dba800800000000000000
+      internalID: 624827704083395439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_11
+      rect:
+        serializedVersion: 2
+        x: 397
+        y: 1349
+        width: 107
+        height: 128
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19c40ad267304cab0800000000000000
+      internalID: -4988858681113162607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_12
+      rect:
+        serializedVersion: 2
+        x: 695
+        y: 1349
+        width: 110
+        height: 126
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 184784db7027158c0800000000000000
+      internalID: -4012300415444421503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_13
+      rect:
+        serializedVersion: 2
+        x: 1002
+        y: 1349
+        width: 98
+        height: 130
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59cbec3db75c16960800000000000000
+      internalID: 7593567582348557461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_14
+      rect:
+        serializedVersion: 2
+        x: 1304
+        y: 1349
+        width: 91
+        height: 130
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 964aa9e8e3bbe3050800000000000000
+      internalID: 5782264848945161321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_15
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 1050
+        width: 101
+        height: 127
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb5ec00aa39371d60800000000000000
+      internalID: 7860814598554576318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_16
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 1050
+        width: 104
+        height: 128
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c794436e2dc6f7c10800000000000000
+      internalID: 2053479608165353852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_17
+      rect:
+        serializedVersion: 2
+        x: 697
+        y: 1050
+        width: 104
+        height: 130
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e96576bf5eaba8a00800000000000000
+      internalID: 759624984093480606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_18
+      rect:
+        serializedVersion: 2
+        x: 1001
+        y: 1050
+        width: 98
+        height: 136
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32d0fb18eef7a6c70800000000000000
+      internalID: 8965118670590119203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_19
+      rect:
+        serializedVersion: 2
+        x: 1299
+        y: 1049
+        width: 101
+        height: 137
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd61e49b5b0f78b20800000000000000
+      internalID: 3136740328775489245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_20
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 750
+        width: 121
+        height: 117
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3300dcac00005f080800000000000000
+      internalID: -9154410664158232525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_21
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 750
+        width: 120
+        height: 115
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0db94860c9c10d380800000000000000
+      internalID: -8948621003135345712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_22
+      rect:
+        serializedVersion: 2
+        x: 688
+        y: 750
+        width: 124
+        height: 121
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7070ed11efce465d0800000000000000
+      internalID: -3070068469994223865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_23
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 751
+        width: 119
+        height: 115
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 595f81fa0381a6c30800000000000000
+      internalID: 4353318587182151061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_24
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 750
+        width: 107
+        height: 123
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c708f28dc6d0ff60800000000000000
+      internalID: 8066183110774491081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_25
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 450
+        width: 129
+        height: 101
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba8daac1c61f0da10800000000000000
+      internalID: 1932309686781663403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_26
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 450
+        width: 124
+        height: 103
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9db967f3a0a4346a0800000000000000
+      internalID: -6466243232099034151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_27
+      rect:
+        serializedVersion: 2
+        x: 691
+        y: 449
+        width: 118
+        height: 110
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3703bba0810467950800000000000000
+      internalID: 6446410388630876275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_28
+      rect:
+        serializedVersion: 2
+        x: 992
+        y: 449
+        width: 115
+        height: 116
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c164b9ad4efa14f70800000000000000
+      internalID: 9169803713758053916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_29
+      rect:
+        serializedVersion: 2
+        x: 1286
+        y: 449
+        width: 130
+        height: 104
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bcb1eb9faa2de6080800000000000000
+      internalID: -9192178157640344629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_30
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 150
+        width: 117
+        height: 108
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80cf27665255be300800000000000000
+      internalID: 282413020761750536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_31
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 150
+        width: 117
+        height: 115
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db931d9c03af338b0800000000000000
+      internalID: -5173516459467261507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_32
+      rect:
+        serializedVersion: 2
+        x: 691
+        y: 150
+        width: 118
+        height: 107
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a9aa93c6cdaf9870800000000000000
+      internalID: 8691856875045169574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DashBug_33
+      rect:
+        serializedVersion: 2
+        x: 992
+        y: 150
+        width: 116
+        height: 93
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3f056807cbef19d0800000000000000
+      internalID: -2801261203129299140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: dc202702846f3cf4089f8e41fee461d7
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

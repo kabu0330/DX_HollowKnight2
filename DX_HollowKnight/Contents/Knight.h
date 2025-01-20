@@ -56,6 +56,11 @@ public:
 	{
 		return Stat;
 	}
+	UFSMStateManager& GetFSMRef()
+	{
+		return FSM;
+	}
+
 
 public:
 	// 픽셀 충돌 디버그
@@ -113,8 +118,12 @@ protected:
 	void TimeElapsed(float _DeltaTime); // 쿨타임 관련
 	void CheckEnterButton();
 
+	// 충돌관련
 	void SetCollisionEvent();
+	void Collide(class UCollision* _This, class UCollision* _Other);
 
+
+	// 픽셀충돌
 	void ActiveGravity();
 	void ActivePixelCollsion();
 
@@ -127,11 +136,8 @@ private:
 
 	// 공격 또는 피격 동작 중일 때
 	bool CanAction();
-	bool bIsAttacking = false;
-	bool bIsBeingHit = false;
-	bool bIsCastingSpell = false;
-	bool bIsStun = false;
-	bool bIsDeath = false;
+	void RecoveryIdle();
+
 
 	float HitStunDuration = 1.0f;
 
@@ -180,6 +186,12 @@ private:
 private:
 	// 디버그
 	void DebugInput(float _DeltaTime);
+	void DebugCamera();
+	void SwitchDebugMode()
+	{
+		bIsDebugMode = !bIsDebugMode;
+	}
+	bool bIsDebugMode = false;
 	bool NoneGravity = false;
 	static AKnight* MainPawn;
 

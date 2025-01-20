@@ -1,37 +1,40 @@
 #include "PreCompile.h"
 #include "Monster.h"
+#include "FightUnit.h"
 
 AMonster::AMonster()
 {
 	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
 	RootComponent = Default;
 
-
-	Offset = { 0.0f, -100.0f };
 	ZSort = static_cast<float>(EZOrder::MONSTER);
+	RendererOffset = { 5.0f, -65.0f };
+	BodyCollisionOffset = { 0.0f, 0.0f };
+	GravityPointOffset.Y = 90.0f;
+	DetectRange = { 300, 300 };
 
-	// Renderer
-	BodyRenderer = CreateDefaultSubObject<UContentsRenderer>();
-	BodyRenderer->SetupAttachment(RootComponent);
-	BodyRenderer->SetAutoScaleRatio(1.0f);
+	CreateAnimation();
+	CreateCollision();
+	CreateCenterPoint();
+	CreateDetectCollision();
 
-	// Collision
-	BodyCollision = CreateDefaultSubObject<UCollision>();
-	BodyCollision->SetupAttachment(RootComponent);
+	SetCollisionEvent();
+	SetFSM();
+	SetStatus();
 }
 
 void AMonster::SetStatus()
 {
 	FStatusData Data;
-	Data.Velocity = 500.0f;
+	Data.Velocity = 300.0f;
 	Data.InitVelocity = Data.Velocity;
-	Data.DashSpeed = Data.Velocity * 3.0f;
-	Data.MaxHp = 5;
-	Data.Hp = 5;
-	Data.MaxMp = 99;
+	Data.DashSpeed = Data.Velocity * 5.0f;
+	Data.MaxHp = 20;
+	Data.Hp = 20;
+	Data.MaxMp = 0;
 	Data.Mp = 0;
-	Data.Att = 5;
-	Data.SpellAtt = 15;
+	Data.Att = 1;
+	Data.SpellAtt = 2;
 	Data.bIsKnockbackable = true;
 	Data.KnockbackDistance = 50.0f;
 	Data.Geo = 0;
@@ -44,10 +47,7 @@ void AMonster::SetStatus()
 void AMonster::BeginPlay()
 {
 	AActor::BeginPlay();
-	CreateAnimation();
-	CreateCollision();
-	SetCollisionEvent();
-	SetFSM();
+	Knight = AKnight::GetPawn();
 }
 
 void AMonster::Tick(float _DeltaTime)
@@ -57,16 +57,38 @@ void AMonster::Tick(float _DeltaTime)
 	SetPause(); // 나이트가 몬스터가 속한 룸과 일치하지 않으면 bIsPause로 정지
 	ActivePixelCollision();
 
-	FSM.Update(_DeltaTime);
+	Move(_DeltaTime);
+	TimeElapsed(_DeltaTime);
 
+	FSM.Update(_DeltaTime);
+	DebugInput(_DeltaTime);
+
+	IsPlayerNearby();
 }
 
-void AMonster::SetCollisionEvent()
+bool AMonster::IsPlayerNearby()
 {
-	BodyCollision->SetCollisionEnter([](UCollision* _This, UCollision* _Other)
-		{
-			UEngineDebug::OutPutString("Monster Collision Event Enter");
-		});
+	if (false == IsCurRoom()) // 플레이어가 해당 맵에 없다면 리턴
+	{
+		return false;
+	}
+	if (nullptr == DetectCollision) // 탐색 범위가 없으면 리턴
+	{
+		return false;
+	}
+
+	FVector KnightPos = Knight->GetActorLocation();
+	FVector MonsterPos = this->GetActorLocation();
+	FVector Distance = KnightPos - MonsterPos;
+
+	float Length = Distance.Length();
+	float DetectLength = DetectCollision->GetWorldScale3D().Half().Length();
+
+	if (DetectLength >= Length)
+	{
+		return true;
+	}
+	return false;
 }
 
 void AMonster::Move(float _DeltaTime)
@@ -79,37 +101,6 @@ void AMonster::TimeElapsed(float _DeltaTime)
 
 void AMonster::DebugInput(float _DeltaTime)
 {
-}
-
-void AMonster::CreateAnimation()
-{
-	std::string HuskBully = "HuskBully";
-	float FrameTime = 0.2f;
-	BodyRenderer->CreateAnimation("Idle", HuskBully, 0, 5, FrameTime);
-	BodyRenderer->CreateAnimation("Walk", HuskBully, 6, 12, FrameTime);
-	BodyRenderer->CreateAnimation("Turn", HuskBully, 13, 14, FrameTime);
-	BodyRenderer->CreateAnimation("Attack_Anticipate", HuskBully, 15, 18, FrameTime);
-	BodyRenderer->CreateAnimation("Attack_Lunge", HuskBully, 19, 20, FrameTime);
-	BodyRenderer->CreateAnimation("Attack_Cooldown", HuskBully, 21, 21, FrameTime);
-	BodyRenderer->CreateAnimation("Death_Air", HuskBully, 22, 22, FrameTime);
-	BodyRenderer->CreateAnimation("Death_Land", HuskBully, 23, 30, FrameTime);
-
-
-
-	BodyRenderer->ChangeAnimation("Idle");
-	BodyRenderer->SetWorldLocation({ Offset.X, Offset.Y, ZSort });
-
-	std::string Vengefly = "Vengefly";
-	BodyRenderer->CreateAnimation(Vengefly, Vengefly, 0, 2, 0.2f);
-
-}
-
-void AMonster::CreateCollision()
-{
-	BodyCollision->SetScale3D(BodyRenderer->GetScale() / 2.0f);
-	BodyCollision->SetWorldLocation({ Offset.X, Offset.Y / 2.0f, ZSort });
-	//BodyCollision->SetActive(false);
-	BodyCollision->SetCollisionProfileName("Monster");
 }
 
 bool AMonster::IsCurRoom()
@@ -193,15 +184,5 @@ void AMonster::CheckCurRoom()
 {
 	ARoom* MainPawnRoom = ARoom::GetCurRoom();
 	CurRoom = MainPawnRoom;
-}
-
-void AMonster::ActivePixelCollision()
-{
-	if (true == IsCurRoom())
-	{
-		ParentRoom->CheckPixelCollisionWithGravity(this, BodyRenderer.get());
-		ParentRoom->CheckPixelCollisionWithWall(this, BodyRenderer.get(), Velocity, bIsLeft);
-		ParentRoom->CheckPixelCollisionWithCeil(this, BodyRenderer.get(), Velocity, bIsLeft);
-	}
 }
 

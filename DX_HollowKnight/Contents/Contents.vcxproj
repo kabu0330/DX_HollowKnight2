@@ -373,6 +373,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Monster_CollisionAndAnimation.cpp" />
     <ClCompile Include="Monster_FSM.cpp" />
     <ClCompile Include="Platform.cpp">
       <SubType>

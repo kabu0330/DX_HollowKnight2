@@ -18,6 +18,8 @@ void UCollisionManager::CreateCollisionProfile(AGameMode* _GameMode)
 	// 몬스터
 	_GameMode->GetWorld()->CreateCollisionProfile("Monster");
 	_GameMode->GetWorld()->CreateCollisionProfile("MonsterObject");
+	_GameMode->GetWorld()->CreateCollisionProfile("MonsterPoint");
+	_GameMode->GetWorld()->CreateCollisionProfile("MonsterDetect");
 
 	// 기타 오브젝트
 	_GameMode->GetWorld()->CreateCollisionProfile("Object");
@@ -30,7 +32,7 @@ void UCollisionManager::CreateCollisionProfile(AGameMode* _GameMode)
 void UCollisionManager::LinkCollision(AGameMode* _GameMode)
 {
 	// 충돌체크 해야한다.
-	_GameMode->GetWorld()->LinkCollisionProfile("Knight", "Monster"); // 피격
+	//_GameMode->GetWorld()->LinkCollisionProfile("Knight", "Monster"); // 피격
 	_GameMode->GetWorld()->LinkCollisionProfile("Door", "Knight"); // 워프
 	_GameMode->GetWorld()->LinkCollisionProfile("Knight", "Door"); // 워프 키입력
 
@@ -44,5 +46,6 @@ void UCollisionManager::LinkCollision(AGameMode* _GameMode)
 	// 몬스터 공격
 	_GameMode->GetWorld()->LinkCollisionProfile("Monster", "Knight"); 
 	_GameMode->GetWorld()->LinkCollisionProfile("MonsterObject", "Knight");
+	_GameMode->GetWorld()->LinkCollisionProfile("MonsterDetect", "Knight");
 }
 

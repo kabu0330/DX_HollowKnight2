@@ -150,6 +150,7 @@ void UContentsResource::LoadResourceDirectory()
 	LoadContentsResource("Image/Monster/HuskBully");
 	LoadContentsResource("Image/Monster/Vengefly");
 
+
 }
 
 void UContentsResource::LoadFolder()
@@ -162,7 +163,7 @@ void UContentsResource::LoadFolder()
 void UContentsResource::LoadSprite()
 {
 	//UEngineSprite::CreateSpriteToMeta("Knight_Idle.png", ".smeta");
-	//UEngineSprite::CreateSpriteToMeta("HuskBully.png", ".smeta");
+	UEngineSprite::CreateSpriteToMeta("HuskBully.png", ".smeta");
 }
 
 void UContentsResource::LoadShaderResource()

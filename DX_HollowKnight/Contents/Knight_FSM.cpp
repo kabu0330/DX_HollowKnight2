@@ -8,9 +8,7 @@ void AKnight::SetIdle(float _DeltaTime)
 {
 	ActiveGravity();
 	Move(_DeltaTime);
-	bCanRotation = true;
-	bIsFireballEffect = false;
-	bIsStunEffect = false;
+	RecoveryIdle(); // 정상 동작 상태로 전환
 
 	if (UEngineInput::IsPress(VK_LEFT) || UEngineInput::IsPress(VK_RIGHT))
 	{
@@ -122,10 +120,8 @@ void AKnight::SetAirborn(float _DeltaTime)
  	ActiveGravity();
 	Move(_DeltaTime);
 
-	bCanRotation = true;
+	RecoveryIdle(); // 정상 동작 상태로 전환
 	bIsDashing = false;
-	bIsFireballEffect = false;
-	bIsStunEffect = false;
 
 	ChangeDash(); // 대시
 	CastFireball();
@@ -184,6 +180,7 @@ void AKnight::SetSlash(float _DeltaTime)
 	Move(_DeltaTime);
 
 	bCanRotation = true; // 회전 허용
+	bIsShowEffect;
 
 	CreateSlashEffect();
 	ChangePrevAnimation();

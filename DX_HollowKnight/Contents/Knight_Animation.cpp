@@ -90,13 +90,14 @@ void AKnight::CreateSlashEffect()
 	{
 		return;
 	}
+	bIsShowEffect = true;
 
 	std::shared_ptr<AKnightSlash> SlashEffect = GetWorld()->SpawnActor<AKnightSlash>();
 	//SlashEffect->GetCollision()->SetupAttachment(BodyCollision);
 	SlashEffect->ChangeAnimation("SlashEffect");
 	FVector Offset = FVector{ -100.0f, 0.0f };
 	SlashEffect->SetLocation(this, Offset);
-	bIsShowEffect = true;
+
 
 	return;
 }

@@ -123,6 +123,8 @@ enum class EMonsterState
 	SHIELD_FRONT_BUMP,
 	SHIELD_TOP,
 	SHIELD_TOP_BUMP,
+	
+	HIT,
 
 	STUN,
 	STUN_ROLL,

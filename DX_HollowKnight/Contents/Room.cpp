@@ -60,11 +60,11 @@ ADoor* ARoom::CreateDoor(FVector _DoorScale, FVector _InitPos, ARoom* _TargetRoo
 }
 
 // ม฿ทย
-void ARoom::CheckPixelCollisionWithGravity(AActor* _Actor, class UContentsRenderer* _Renderer)
+void ARoom::CheckPixelCollisionWithGravity(AActor* _Actor, class UContentsRenderer* _Renderer, FVector _Offset)
 {
 	float DeltaTime = UEngineCore::GetDeltaTime();
 
-	FVector CollisionPoint = GetPixelCollisionPoint(_Actor, _Renderer, FVector::DOWN);
+	FVector CollisionPoint = GetPixelCollisionPoint(_Actor, _Renderer, _Offset);
 
 	AKnight* Knight = dynamic_cast<AKnight*>(_Actor);
 	if (nullptr != Knight)
