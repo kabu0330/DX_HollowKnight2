@@ -30,6 +30,10 @@ void MapEditorGUI::OnGUI()
 	//ImGui::Text(DeltaTimeText.c_str());
 
 	Sprite = UEngineSprite::Find<UEngineSprite>("MapObjectResources");
+	if (nullptr == Sprite)
+	{
+		return;
+	}
 	Texture = nullptr;
 	TextureSRV = 0;
 	std::shared_ptr<class ACameraActor> Camera = GetWorld()->GetMainCamera();

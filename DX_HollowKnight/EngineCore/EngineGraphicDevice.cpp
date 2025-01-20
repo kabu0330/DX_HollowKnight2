@@ -129,6 +129,7 @@ void UEngineGraphicDevice::CreateDeviceAndContext()
         return;
     }
 
+    // 멀티스레드를 사용하겠다는 것을 미리 선언
     Result = CoInitializeEx(nullptr, COINIT_MULTITHREADED); // 멀티 스레드 환경
 
     if (Result != S_OK)
