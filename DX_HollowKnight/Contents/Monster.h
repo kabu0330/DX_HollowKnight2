@@ -69,6 +69,7 @@ protected:
 	// 충돌관련
 	void SetCollisionEvent();
 	void OnBodyCollision(class UCollision* _This, class UCollision* _Other);
+	void CancleCurAction();
 
 	void Move(float _DeltaTime);
 	void TimeElapsed(float _DeltaTime);

@@ -2,12 +2,15 @@
 #include "PlayHUD.h"
 #include <EngineCore/ImageWidget.h>
 #include <EngineCore/FontWidget.h>
+#include <EngineCore/TimeEventComponent.h>
 
 APlayHUD::APlayHUD()
 {
 	ScreenSize = UEngineCore::GetScreenScale();
 	HalfSize = ScreenSize * 0.5f;
 	Knight = AKnight::GetPawn();
+
+	TimeEventor = CreateDefaultSubObject<UTimeEventComponent>().get();
 }
 
 APlayHUD::~APlayHUD()
@@ -58,46 +61,92 @@ void APlayHUD::CreateHPFrame()
 void APlayHUD::CreateHpUI()
 {
 	int Hp = Knight->GetStatRef().GetHp();
+	PrevHp = Hp - 1;
 	Hps.reserve(Hp);
 
 	for (int i = 0; i < Hp; i++)
 	{
-		std::shared_ptr<UImageWidget> HpUI = CreateWidget<UImageWidget>(static_cast<int>(EUIOrder::BACK), "HpUI");
+		std::shared_ptr<UImageWidget> HpUI = CreateWidget<UImageWidget>(static_cast<int>(EUIOrder::BACK) + 10, "HpUI");
+		std::string HealthRefill = "HealthRefill";
+		std::string HealthIdle = "HealthIdle";
+		std::string HealthAppear = "HealthAppear";
+		std::string HealthBreak = "HealthBreak";
+
+		HpUI->CreateAnimation(HealthRefill, HealthRefill, 0, 6, 0.1f, false);
+		HpUI->CreateAnimation(HealthIdle, HealthIdle, {0, 1, 2, 3, 4}, {3.0f, 0.1f, 0.1f, 0.1f, 0.1f}, true);
+		HpUI->CreateAnimation(HealthAppear, HealthAppear, 0, 5, 0.1f, false);
+		HpUI->CreateAnimation(HealthBreak, HealthBreak, 0, 6, 0.1f, false);
+
+
 
 		HpUI->SetWorldLocation({ -ScreenSize.X * (HpFramePosX - (HpFramePosXGap * i)),  ScreenSize.Y * HpFramePosY });
-		HpUI->SetTexture("002-40-007.png", true, 0.7f);
+		HpUI->SetAutoScale(true);
+		HpUI->SetAutoScaleRatio(0.7f);
+		HpUI->ChangeAnimation(HealthRefill);
+		//HpUI->SetTexture("002-40-007.png", true, 0.7f);
 		Hps.push_back(HpUI);
 	}
+	TimeEventor->AddEndEvent(1.0f, std::bind(&APlayHUD::ChangeHpUI, this));
+}
+
+void APlayHUD::ChangeHpUI()
+{
+	for (int i = 0; i < PrevHp; i++)
+	{
+		Hps[i]->ChangeAnimation("HealthIdle");
+	}
+
+	bIsHpIdle = true;
 }
 
 void APlayHUD::SetHpUI()
 {
-	int Hp = Knight->GetStatRef().GetHp();
-	int Count = 0;
-	for (int i = 0; i < Hps.size(); i++)
-	{
-		if (true == Hps[i]->IsActive())
-		{
-			++Count;
-		}
-	}
-
-	if (Hp == Count || Hp < 0)
+	if (false == bIsHpIdle)
 	{
 		return;
 	}
-	else if (Hp > Count)
+
+	int Hp = Knight->GetStatRef().GetHp();
+	bool HpMinus = false;
+	bool HpPlus = false;
+
+	// 조건식 보강 필요
+	if (Hp == PrevHp + 1)
+	{
+		return; // 체력 변화가 없으므로
+	}
+	else if (Hp <= PrevHp) // 체력이 감소
+	{
+		HpMinus = true;
+	}
+	else if (Hp >= PrevHpMinusOne) // 4 , 2(3)
+	{
+		HpPlus = true;
+	}
+
+	if (true == HpPlus) // 체력 회복
 	{
 		if (Hp == Hps.size() + 1)
 		{
 			MSGASSERT("현재 HP보다 최대 HP가 더 많을 수 없습니다.");
 			return;
 		}
-		Hps[Hp - 1]->SetActive(true);
+		//      4   == 5
+		PrevHpMinusOne = PrevHp - 1;
+		for (PrevHp += 1; PrevHp < Hp; ++PrevHp)
+		{
+			Hps[PrevHp]->ChangeAnimation("HealthAppear");
+		}
+
+		TimeEventor->AddEndEvent(1.0f, std::bind(&APlayHUD::ChangeHpUI, this));
 	}
-	else if (Hp < Count)
+	else if (true == HpMinus) // 체력 감소
 	{
-		Hps[Hp]->SetActive(false);
+		PrevHpMinusOne = PrevHp - 1;
+		for (PrevHp += 1; PrevHp != Hp; --PrevHp)
+		{
+			Hps[PrevHp - 1]->ChangeAnimation("HealthBreak");
+		}
 	}
 }
 

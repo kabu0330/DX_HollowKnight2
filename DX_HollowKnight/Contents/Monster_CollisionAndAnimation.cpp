@@ -68,9 +68,15 @@ void AMonster::OnBodyCollision(UCollision* _This, UCollision* _Other)
 	int Att = Stat.GetAtt();
 
 	UFightUnit::OnHit(OtherKnight, Att);
+	CancleCurAction();
 
 	int KnightCurHp = OtherKnight->GetStatRef().GetHp();
 	UEngineDebug::OutPutString(GetName() + "의 공격으로 나이트가 " + std::to_string(Att) + "의 피해를 입었습니다. 남은 체력 : " + std::to_string(KnightCurHp));
+}
+
+void AMonster::CancleCurAction()
+{
+	bIsBeingHit = true;
 }
 
 void AMonster::CreateCollision()

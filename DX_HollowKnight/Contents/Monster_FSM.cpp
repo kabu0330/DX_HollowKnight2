@@ -68,7 +68,7 @@ void AMonster::SetFSM()
 
 void AMonster::SetIdle(float _DeltaTime)
 {
-	BodyRenderer->ChangeAnimation("Idle");
+	bIsBeingHit = false;
 }
 
 void AMonster::SetWalk(float _DeltaTime)

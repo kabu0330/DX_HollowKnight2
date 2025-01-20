@@ -5,6 +5,7 @@
 
 AMonster::AMonster()
 {
+	SetName("방황하는 껍데기");
 	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
 	RootComponent = Default;
 
@@ -29,7 +30,7 @@ AMonster::AMonster()
 void AMonster::SetStatus()
 {
 	FStatusData Data;
-	Data.Velocity = 300.0f;
+	Data.Velocity = 0.0f;
 	Data.InitVelocity = Data.Velocity;
 	Data.DashSpeed = Data.Velocity * 5.0f;
 	Data.MaxHp = 20;

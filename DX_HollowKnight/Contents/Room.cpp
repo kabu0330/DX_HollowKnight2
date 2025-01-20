@@ -285,7 +285,7 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Rend
 		std::string G = std::to_string(CollisionColor.G);
 		std::string B = std::to_string(CollisionColor.B);
 		std::string Result = "R : " + R + " " + "G : " + G + " " + "B : " + B;
-		UEngineDebug::OutPutString("Monster Pixel Pos : " + CollisionPoint.ToString() + " Pixel Color : " + Result);
+		//UEngineDebug::OutPutString("Monster Pixel Pos : " + CollisionPoint.ToString() + " Pixel Color : " + Result);
 		if (CollisionColor == UColor::YELLOW || CollisionColor == UColor::BLACK || CollisionColor == UColor::RED)
 		{
 			Monster->SetWallHere(true);

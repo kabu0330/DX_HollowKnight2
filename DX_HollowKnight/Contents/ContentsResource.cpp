@@ -146,6 +146,12 @@ void UContentsResource::LoadResourceDirectory()
 	LoadContentsResource("Image/Effect/Knight/StunEffect02");
 	LoadContentsResource("Image/Effect/Knight/StunEffect03");
 
+	// UI
+	LoadContentsResource("Image/UI/HealthIdle");
+	LoadContentsResource("Image/UI/HealthAppear");
+	LoadContentsResource("Image/UI/HealthRefill");
+	LoadContentsResource("Image/UI/HealthBreak");
+
 	// Monster
 
 	// Monster Effect

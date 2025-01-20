@@ -1,0 +1,684 @@
+fileFormatVersion: 2
+guid: 9aed66009d03eed42b9f93b09b902bda
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 789101450624018186
+    second: FlyBug_0
+  - first:
+      213: -5396427527206617600
+    second: FlyBug_1
+  - first:
+      213: 4865336205589121595
+    second: FlyBug_2
+  - first:
+      213: 6240581225401385393
+    second: FlyBug_3
+  - first:
+      213: 1777393426612093460
+    second: FlyBug_4
+  - first:
+      213: 619383241010616994
+    second: FlyBug_5
+  - first:
+      213: 861116227820209115
+    second: FlyBug_6
+  - first:
+      213: 1994594111063005025
+    second: FlyBug_7
+  - first:
+      213: 7528101050247766058
+    second: FlyBug_8
+  - first:
+      213: 1049267783405813442
+    second: FlyBug_9
+  - first:
+      213: -5540379029639074678
+    second: FlyBug_10
+  - first:
+      213: 6577201277097045576
+    second: FlyBug_11
+  - first:
+      213: -3042864549001223324
+    second: FlyBug_12
+  - first:
+      213: -2573870625782995511
+    second: FlyBug_13
+  - first:
+      213: 941466732948884389
+    second: FlyBug_14
+  - first:
+      213: 5825112576789330914
+    second: FlyBug_15
+  - first:
+      213: 7110250509745400106
+    second: FlyBug_16
+  - first:
+      213: -2599648372245176545
+    second: FlyBug_17
+  - first:
+      213: 1066727030898867650
+    second: FlyBug_18
+  - first:
+      213: -8777920828074371327
+    second: FlyBug_19
+  - first:
+      213: 4539559348868960934
+    second: FlyBug_20
+  - first:
+      213: 2204046434529408035
+    second: FlyBug_21
+  - first:
+      213: -4947293832308051047
+    second: FlyBug_22
+  - first:
+      213: -5785966989988088027
+    second: FlyBug_23
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: FlyBug_0
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 1350
+        width: 111
+        height: 103
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a07a038a69373fa00800000000000000
+      internalID: 789101450624018186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyBug_1
+      rect:
+        serializedVersion: 2
+        x: 403
+        y: 1350
+        width: 95
+        height: 133
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00eb5b861c90c15b0800000000000000
+      internalID: -5396427527206617600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyBug_2
+      rect:
+        serializedVersion: 2
+        x: 696
+        y: 1350
+        width: 108
+        height: 136
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3a8cf65085258340800000000000000
+      internalID: 4865336205589121595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyBug_3
+      rect:
+        serializedVersion: 2
+        x: 994
+        y: 1350
+        width: 112
+        height: 85
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b1850c7f8ffa9650800000000000000
+      internalID: 6240581225401385393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyBug_4
+      rect:
+        serializedVersion: 2
+        x: 1301
+        y: 1351
+        width: 97
+        height: 93
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 412045b87e19aa810800000000000000
+      internalID: 1777393426612093460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyBug_5
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 1050
+        width: 112
+        height: 85
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2aa944ca6cd789800800000000000000
+      internalID: 619383241010616994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyBug_6
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 1050
+        width: 108
+        height: 136
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd34c8595ac43fb00800000000000000
+      internalID: 861116227820209115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyBug_7
+      rect:
+        serializedVersion: 2
+        x: 703
+        y: 1050
+        width: 95
+        height: 133
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1671ff4b6c83eab10800000000000000
+      internalID: 1994594111063005025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyBug_8
+      rect:
+        serializedVersion: 2
+        x: 1007
+        y: 1050
+        width: 86
+        height: 140
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2063450500397860800000000000000
+      internalID: 7528101050247766058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyBug_9
+      rect:
+        serializedVersion: 2
+        x: 1308
+        y: 1050
+        width: 84
+        height: 131
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ce3a206d7fbf8e00800000000000000
+      internalID: 1049267783405813442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyBug_10
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 750
+        width: 72
+        height: 136
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8ce65170ae9c13b0800000000000000
+      internalID: -5540379029639074678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyBug_11
+      rect:
+        serializedVersion: 2
+        x: 383
+        y: 750
+        width: 135
+        height: 108
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84e6d99c6b9e64b50800000000000000
+      internalID: 6577201277097045576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyBug_12
+      rect:
+        serializedVersion: 2
+        x: 678
+        y: 750
+        width: 145
+        height: 105
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 463272180d295c5d0800000000000000
+      internalID: -3042864549001223324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyBug_13
+      rect:
+        serializedVersion: 2
+        x: 999
+        y: 750
+        width: 102
+        height: 119
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c564648d46c74cd0800000000000000
+      internalID: -2573870625782995511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyBug_14
+      rect:
+        serializedVersion: 2
+        x: 1289
+        y: 750
+        width: 123
+        height: 131
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ab04496103c01d00800000000000000
+      internalID: 941466732948884389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyBug_15
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 450
+        width: 140
+        height: 119
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2eb303c9605f6d050800000000000000
+      internalID: 5825112576789330914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyBug_16
+      rect:
+        serializedVersion: 2
+        x: 383
+        y: 450
+        width: 135
+        height: 87
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a292a69ba2faca260800000000000000
+      internalID: 7110250509745400106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyBug_17
+      rect:
+        serializedVersion: 2
+        x: 695
+        y: 450
+        width: 111
+        height: 76
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1f576734913cebd0800000000000000
+      internalID: -2599648372245176545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyBug_18
+      rect:
+        serializedVersion: 2
+        x: 983
+        y: 450
+        width: 135
+        height: 87
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2cdb8053596cdce00800000000000000
+      internalID: 1066727030898867650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyBug_19
+      rect:
+        serializedVersion: 2
+        x: 1282
+        y: 450
+        width: 137
+        height: 119
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 107df18a38f8e2680800000000000000
+      internalID: -8777920828074371327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyBug_20
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 150
+        width: 123
+        height: 131
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a2532a1d21cffe30800000000000000
+      internalID: 4539559348868960934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyBug_21
+      rect:
+        serializedVersion: 2
+        x: 381
+        y: 150
+        width: 139
+        height: 92
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 324779efd88569e10800000000000000
+      internalID: 2204046434529408035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyBug_22
+      rect:
+        serializedVersion: 2
+        x: 706
+        y: 150
+        width: 88
+        height: 106
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9933ccda87ea75bb0800000000000000
+      internalID: -4947293832308051047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FlyBug_23
+      rect:
+        serializedVersion: 2
+        x: 1013
+        y: 150
+        width: 74
+        height: 77
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 527bf9f8dad14bfa0800000000000000
+      internalID: -5785966989988088027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: d1fff9f4acc58af4c852ec526f5eaddd
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
