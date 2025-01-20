@@ -9,10 +9,10 @@ AMonster::AMonster()
 	RootComponent = Default;
 
 	ZSort = static_cast<float>(EZOrder::MONSTER);
-	RendererOffset = { 5.0f, -65.0f };
+	RendererOffset = { 0.0f, .0f };
 	BodyCollisionOffset = { 0.0f, 0.0f };
-	GravityPointOffset.Y = 90.0f;
-	WallPointOffest = { 0.0f, 300.0f };
+	GravityPointOffset.Y = 1973.0f / 2.0f; // (이미지 크기 - 1프레임 크기) / 2.0f
+	WallPointOffest = { -1394.0f / 2.0f, GravityPointOffset.Y }; // 
 
 	DetectRange = { 300, 300 };
 
@@ -60,7 +60,7 @@ void AMonster::Tick(float _DeltaTime)
 	SetPause(); // 나이트가 몬스터가 속한 룸과 일치하지 않으면 bIsPause로 정지
 	ActivePixelCollision();
 
-	//Move(_DeltaTime);
+	Move(_DeltaTime);
 	TimeElapsed(_DeltaTime);
 
 	FSM.Update(_DeltaTime);
@@ -182,8 +182,6 @@ void AMonster::Move(float _DeltaTime)
 	FinalVelocity *= Direction;
 
 	AddActorLocation(FinalVelocity);
-
-
 }
 
 void AMonster::TimeElapsed(float _DeltaTime)

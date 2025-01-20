@@ -40,7 +40,7 @@ void UContentsCore::EngineStart(UEngineInitData& _Data)
 
 void UContentsCore::SetWindowSize(UEngineInitData& _Data)
 {
-	_Data.WindowPos = { 400, 50 };
+	_Data.WindowPos = { 200, 50 };
 	_Data.WindowSize = { 1280, 720 };
 }
 

@@ -23,8 +23,6 @@ void AMonster::CreateAnimation()
 
 	BodyRenderer->ChangeAnimation("Idle");
 
-	std::string Vengefly = "Vengefly";
-	BodyRenderer->CreateAnimation(Vengefly, Vengefly, 0, 2, 0.2f);
 
 }
 
@@ -80,7 +78,7 @@ void AMonster::CreateCollision()
 	// Collision
 	BodyCollision = CreateDefaultSubObject<UCollision>();
 	BodyCollision->SetupAttachment(RootComponent);
-	BodyCollision->SetScale3D({ 100, 130 });
+	BodyCollision->SetScale3D({ 106, 127 });
 	BodyCollision->SetWorldLocation({ BodyCollisionOffset.X, BodyCollisionOffset.Y, ZSort });
 	BodyCollision->SetCollisionProfileName("Monster");
 }

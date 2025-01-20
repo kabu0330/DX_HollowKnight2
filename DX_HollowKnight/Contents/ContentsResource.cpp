@@ -147,9 +147,8 @@ void UContentsResource::LoadResourceDirectory()
 	LoadContentsResource("Image/Effect/Knight/StunEffect03");
 
 	// Monster
-	LoadContentsResource("Image/Monster/HuskBully");
-	LoadContentsResource("Image/Monster/Vengefly");
 
+	// Monster Effect
 
 }
 
