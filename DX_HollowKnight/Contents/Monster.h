@@ -55,6 +55,8 @@ public:
 
 	// 몬스터 동작
 	bool IsPlayerNearby();
+	FVector GetDirectionToPlayer();
+	//FVector GetRandomDir();
 
 protected:
 	virtual void SetStatus();

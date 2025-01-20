@@ -19,6 +19,10 @@ public:
 	{
 		return Collision.get();
 	}
+	void SetCollisionScale(FVector _Scale)
+	{
+		CollisionScale = _Scale;
+	}
 
 protected:
 	void BeginPlay() override;

@@ -63,7 +63,10 @@ void AMonster::Tick(float _DeltaTime)
 	FSM.Update(_DeltaTime);
 	DebugInput(_DeltaTime);
 
+	// Test
 	IsPlayerNearby();
+	GetDirectionToPlayer();
+	CheckDirection();
 }
 
 bool AMonster::IsPlayerNearby()
@@ -91,8 +94,45 @@ bool AMonster::IsPlayerNearby()
 	return false;
 }
 
+FVector AMonster::GetDirectionToPlayer()
+{
+	if (false == IsCurRoom()) // 플레이어가 해당 맵에 없다면 리턴
+	{
+		return FVector::ZERO;
+	}
+	if (nullptr == Knight)
+	{
+		return FVector::ZERO;
+	}
+	FVector KnightPos = Knight->GetActorLocation();
+	FVector MonsterPos = this->GetActorLocation();
+	FVector Distance = KnightPos - MonsterPos;
+
+	Distance.Normalize();
+
+	if (Distance.X <= 0)
+	{
+		bIsLeft = true;
+	}
+	else if (Distance.X > 0)
+	{
+		bIsLeft = false;
+	}
+
+	return Distance;
+}
+
 void AMonster::Move(float _DeltaTime)
 {
+	if (true == bIsLeft)
+	{
+		AddActorLocation({ -50.0f * _DeltaTime, 0.0f });
+	}
+	else
+	{
+		AddActorLocation({  50.0f * _DeltaTime, 0.0f });
+	}
+
 }
 
 void AMonster::TimeElapsed(float _DeltaTime)
@@ -158,11 +198,11 @@ void AMonster::CheckDirection()
 	{
 		return;
 	}
-	if (bIsLeft = true)
+	if (bIsLeft == true)
 	{
 		SetActorRelativeScale3D({ 1.0f, 1.0f, 1.0f });
 	}
-	if (bIsLeft = false)
+	if (bIsLeft == false)
 	{
 		SetActorRelativeScale3D({ -1.0f, 1.0f, 1.0f });
 	}
