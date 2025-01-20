@@ -106,7 +106,7 @@ void AMonster::ActivePixelCollision()
 	if (true == IsCurRoom())
 	{
 		ParentRoom->CheckPixelCollisionWithGravity(this, BodyRenderer.get(), GravityPointOffset);
-		ParentRoom->CheckPixelCollisionWithWall(this, BodyRenderer.get(), Stat.GetVelocity(), bIsLeft, WallPointOffest);
-		ParentRoom->CheckPixelCollisionWithCeil(this, BodyRenderer.get(), Stat.GetVelocity(), bIsLeft, CeilPointOffset);
+		   ParentRoom->CheckPixelCollisionWithWall(this, BodyRenderer.get(), Stat.GetVelocity(), bIsLeft, WallPointOffest);
+		   ParentRoom->CheckPixelCollisionWithCeil(this, BodyRenderer.get(), Stat.GetVelocity(), bIsLeft, CeilPointOffset);
 	}
 }

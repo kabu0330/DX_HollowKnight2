@@ -26,10 +26,10 @@
       <Filter>Global\Knight</Filter>
     </ClInclude>
     <ClInclude Include="StatusUnit.h">
-      <Filter>Global\Unit</Filter>
+      <Filter>Play\Unit</Filter>
     </ClInclude>
     <ClInclude Include="FightUnit.h">
-      <Filter>Global\Unit</Filter>
+      <Filter>Play\Unit</Filter>
     </ClInclude>
     <ClInclude Include="ContentsEditorGUI.h">
       <Filter>ContentsSetting\GUI</Filter>
@@ -136,10 +136,10 @@
       <Filter>Global\Knight</Filter>
     </ClCompile>
     <ClCompile Include="FightUnit.cpp">
-      <Filter>Global\Unit</Filter>
+      <Filter>Play\Unit</Filter>
     </ClCompile>
     <ClCompile Include="StatusUnit.cpp">
-      <Filter>Global\Unit</Filter>
+      <Filter>Play\Unit</Filter>
     </ClCompile>
     <ClCompile Include="ContentsEditorGUI.cpp">
       <Filter>ContentsSetting\GUI</Filter>
@@ -245,9 +245,6 @@
     <Filter Include="Global\Knight">
       <UniqueIdentifier>{67f0f42c-79c4-49df-862a-fa3d6732c0ab}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Global\Unit">
-      <UniqueIdentifier>{d5827386-64e6-4cdb-98a2-7aeab606afa1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Title">
       <UniqueIdentifier>{3800a162-1370-4574-8d59-4350535b3ba0}</UniqueIdentifier>
     </Filter>
@@ -292,6 +289,9 @@
     </Filter>
     <Filter Include="Play\UI">
       <UniqueIdentifier>{cb882d1b-00c5-45a1-8db7-be1bee71d584}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Play\Unit">
+      <UniqueIdentifier>{d5827386-64e6-4cdb-98a2-7aeab606afa1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

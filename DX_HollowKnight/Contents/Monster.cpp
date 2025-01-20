@@ -56,6 +56,7 @@ void AMonster::BeginPlay()
 void AMonster::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
+
 	CheckCurRoom(); // 현재 나이트가 속한 룸 위치를 계속 체크
 	SetPause(); // 나이트가 몬스터가 속한 룸과 일치하지 않으면 bIsPause로 정지
 	ActivePixelCollision();
@@ -173,7 +174,10 @@ FVector AMonster::GetRandomDirection()
 
 void AMonster::Move(float _DeltaTime)
 {
-	UEngineDebug::OutPutString("몬스터 벽충돌 여부 : " + std::to_string(bIsWallHere));
+	if (false == IsCurRoom())
+	{
+		return;
+	}
 	if (true == bIsWallHere)
 	{
 		return;

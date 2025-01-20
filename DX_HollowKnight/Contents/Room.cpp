@@ -340,11 +340,11 @@ void ARoom::CheckPixelCollisionWithCeil(AActor* _Actor, UContentsRenderer* _Rend
 	{
 		if (CollisionColor == UColor::RED)
 		{
-			Monster->SetWallHere(true);
+			Monster->SetCeilHere(true);
 		}
 		else
 		{
-			Monster->SetWallHere(false);
+			Monster->SetCeilHere(false);
 		}
 	}
 }
