@@ -10,7 +10,7 @@ void AMonster::CreateAnimation()
 	BodyRenderer->SetAutoScaleRatio(1.0f);
 	BodyRenderer->SetWorldLocation({ RendererOffset.X, RendererOffset.Y, ZSort });
 
-	std::string HuskBully = "HuskBully";
+	std::string HuskBully = "HuskBully.png";
 	float FrameTime = 0.2f;
 	BodyRenderer->CreateAnimation("Idle", HuskBully, 0, 5, FrameTime);
 	BodyRenderer->CreateAnimation("Walk", HuskBully, 6, 12, FrameTime);
@@ -108,7 +108,7 @@ void AMonster::ActivePixelCollision()
 	if (true == IsCurRoom())
 	{
 		ParentRoom->CheckPixelCollisionWithGravity(this, BodyRenderer.get(), GravityPointOffset);
-		ParentRoom->CheckPixelCollisionWithWall(this, BodyRenderer.get(), Stat.GetVelocity(), bIsLeft);
-		ParentRoom->CheckPixelCollisionWithCeil(this, BodyRenderer.get(), Stat.GetVelocity(), bIsLeft);
+		ParentRoom->CheckPixelCollisionWithWall(this, BodyRenderer.get(), Stat.GetVelocity(), bIsLeft, WallPointOffest);
+		ParentRoom->CheckPixelCollisionWithCeil(this, BodyRenderer.get(), Stat.GetVelocity(), bIsLeft, CeilPointOffset);
 	}
 }

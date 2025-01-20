@@ -56,7 +56,7 @@ public:
 	// 몬스터 동작
 	bool IsPlayerNearby();
 	FVector GetDirectionToPlayer();
-	//FVector GetRandomDir();
+	FVector GetRandomDirection();
 
 protected:
 	virtual void SetStatus();
@@ -195,6 +195,8 @@ protected:
 
 	void CheckDirection();
 	bool bIsLeft = true;
+	FVector Direction = FVector::LEFT;
+	bool bCanFly = false;
 
 public:
 		// 픽셀 충돌
@@ -241,6 +243,8 @@ private:
 	bool bIsCeilHere = false;
 	FVector GravityForce = FVector::ZERO;
 	FVector GravityPointOffset = FVector::DOWN; // 렌더러와 이미지 위치가 차이가 날 경우
+	FVector WallPointOffest = FVector::ZERO;
+	FVector CeilPointOffset = FVector::ZERO;	
 
 	void CheckCurRoom();
 	void ActivePixelCollision();

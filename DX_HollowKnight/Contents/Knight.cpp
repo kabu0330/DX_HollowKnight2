@@ -104,8 +104,8 @@ void AKnight::ActivePixelCollsion()
 	ARoom* Room = ARoom::GetCurRoom();
 	if (nullptr != Room)
 	{
-		Room->CheckPixelCollisionWithWall(this, BodyRenderer.get(), Stat.GetVelocity(), bIsLeft);
-		Room->CheckPixelCollisionWithCeil(this, BodyRenderer.get(), Stat.GetVelocity(), bIsLeft);
+		Room->CheckPixelCollisionWithWall(this, BodyRenderer.get(), Stat.GetVelocity(), bIsLeft, FVector::ZERO);
+		Room->CheckPixelCollisionWithCeil(this, BodyRenderer.get(), Stat.GetVelocity(), bIsLeft, FVector::ZERO);
 	}
 }
 

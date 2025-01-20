@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "Monster.h"
 #include "FightUnit.h"
+#include <EngineBase/EngineRandom.h>
 
 AMonster::AMonster()
 {
@@ -11,6 +12,8 @@ AMonster::AMonster()
 	RendererOffset = { 5.0f, -65.0f };
 	BodyCollisionOffset = { 0.0f, 0.0f };
 	GravityPointOffset.Y = 90.0f;
+	WallPointOffest = { 0.0f, 300.0f };
+
 	DetectRange = { 300, 300 };
 
 	CreateAnimation();
@@ -57,15 +60,15 @@ void AMonster::Tick(float _DeltaTime)
 	SetPause(); // 나이트가 몬스터가 속한 룸과 일치하지 않으면 bIsPause로 정지
 	ActivePixelCollision();
 
-	Move(_DeltaTime);
+	//Move(_DeltaTime);
 	TimeElapsed(_DeltaTime);
 
 	FSM.Update(_DeltaTime);
 	DebugInput(_DeltaTime);
 
 	// Test
-	IsPlayerNearby();
-	GetDirectionToPlayer();
+	//IsPlayerNearby();
+	//GetDirectionToPlayer();
 	CheckDirection();
 }
 
@@ -122,16 +125,64 @@ FVector AMonster::GetDirectionToPlayer()
 	return Distance;
 }
 
+FVector AMonster::GetRandomDirection()
+{
+	FVector LeftTop = FVector::LEFT + FVector::UP;
+	LeftTop.Normalize();
+
+	FVector LeftBot = FVector::LEFT + FVector::DOWN;
+	LeftBot.Normalize();
+
+	FVector RightTop = FVector::RIGHT + FVector::UP;
+	RightTop.Normalize();
+
+	FVector RightBot = FVector::RIGHT + FVector::DOWN;
+	RightBot.Normalize();
+
+	UEngineRandom Random;
+	int Result = -1;
+	if (false == bCanFly) // 날 수 없는 애는 좌우 이동만
+	{
+		Result = Random.RandomInt(0, 1);
+	}
+	else // 날 수 있으면 8방향
+	{
+		Result = Random.RandomInt(0, 7);
+	}
+
+	switch (Result)
+	{
+	case 0:
+	{
+		Direction = FVector::LEFT;
+		break;
+	}
+	case 1:
+	{
+		Direction = FVector::RIGHT;
+		break;
+	}
+	default:
+		break;
+	}
+	
+
+
+	return Direction;
+}
+
 void AMonster::Move(float _DeltaTime)
 {
-	if (true == bIsLeft)
+	UEngineDebug::OutPutString("몬스터 벽충돌 여부 : " + std::to_string(bIsWallHere));
+	if (true == bIsWallHere)
 	{
-		AddActorLocation({ -50.0f * _DeltaTime, 0.0f });
+		return;
 	}
-	else
-	{
-		AddActorLocation({  50.0f * _DeltaTime, 0.0f });
-	}
+	FVector FinalVelocity = FVector(Stat.GetVelocity() * _DeltaTime, 0.0f);
+	FinalVelocity *= Direction;
+
+	AddActorLocation(FinalVelocity);
+
 
 }
 

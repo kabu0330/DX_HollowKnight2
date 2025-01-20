@@ -1,109 +1,109 @@
 fileFormatVersion: 2
-guid: 3dd131334e380194984cfd346c17af86
+guid: 0443e0c6acd4ddb47a03ddf11821c655
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4783698753534421821
-    second: DashBug_0
+      213: -4487959953002987510
+    second: HuskBully_0
   - first:
-      213: -8734826856232289108
-    second: DashBug_1
+      213: 5612781849253047301
+    second: HuskBully_1
   - first:
-      213: 3456005208026948999
-    second: DashBug_2
+      213: 4955445927242563858
+    second: HuskBully_2
   - first:
-      213: -6758221501470231620
-    second: DashBug_3
+      213: 6629301896153858725
+    second: HuskBully_3
   - first:
-      213: 3917966129005357544
-    second: DashBug_4
+      213: -1552116001447467709
+    second: HuskBully_4
   - first:
-      213: -4899378213231631737
-    second: DashBug_5
+      213: 2798961689428393545
+    second: HuskBully_5
   - first:
-      213: 5495255562788885190
-    second: DashBug_6
+      213: -1189065504578775793
+    second: HuskBully_6
   - first:
-      213: 1736193401181789921
-    second: DashBug_7
+      213: -9161557750476696291
+    second: HuskBully_7
   - first:
-      213: -5771061624442204119
-    second: DashBug_8
+      213: 855587650722923635
+    second: HuskBully_8
   - first:
-      213: -9188943768378261398
-    second: DashBug_9
+      213: 5733568660066817787
+    second: HuskBully_9
   - first:
-      213: 624827704083395439
-    second: DashBug_10
+      213: 2948834540656243604
+    second: HuskBully_10
   - first:
-      213: -4988858681113162607
-    second: DashBug_11
+      213: -8038620721867427252
+    second: HuskBully_11
   - first:
-      213: -4012300415444421503
-    second: DashBug_12
+      213: -1000502334943779104
+    second: HuskBully_12
   - first:
-      213: 7593567582348557461
-    second: DashBug_13
+      213: 9172448905887888706
+    second: HuskBully_13
   - first:
-      213: 5782264848945161321
-    second: DashBug_14
+      213: 1604546340861551738
+    second: HuskBully_14
   - first:
-      213: 7860814598554576318
-    second: DashBug_15
+      213: -8254158087919797132
+    second: HuskBully_15
   - first:
-      213: 2053479608165353852
-    second: DashBug_16
+      213: 2305199987177921487
+    second: HuskBully_16
   - first:
-      213: 759624984093480606
-    second: DashBug_17
+      213: 9099322296882907679
+    second: HuskBully_17
   - first:
-      213: 8965118670590119203
-    second: DashBug_18
+      213: 2879984262007225035
+    second: HuskBully_18
   - first:
-      213: 3136740328775489245
-    second: DashBug_19
+      213: 7496689195550669269
+    second: HuskBully_19
   - first:
-      213: -9154410664158232525
-    second: DashBug_20
+      213: -701497884312233824
+    second: HuskBully_20
   - first:
-      213: -8948621003135345712
-    second: DashBug_21
+      213: -8408963775029787874
+    second: HuskBully_21
   - first:
-      213: -3070068469994223865
-    second: DashBug_22
+      213: -8954169809757799878
+    second: HuskBully_22
   - first:
-      213: 4353318587182151061
-    second: DashBug_23
+      213: -4671603912039045551
+    second: HuskBully_23
   - first:
-      213: 8066183110774491081
-    second: DashBug_24
+      213: -5228151050281748353
+    second: HuskBully_24
   - first:
-      213: 1932309686781663403
-    second: DashBug_25
+      213: -3742852495609317138
+    second: HuskBully_25
   - first:
-      213: -6466243232099034151
-    second: DashBug_26
+      213: -8834635845365785909
+    second: HuskBully_26
   - first:
-      213: 6446410388630876275
-    second: DashBug_27
+      213: -3308008352901167382
+    second: HuskBully_27
   - first:
-      213: 9169803713758053916
-    second: DashBug_28
+      213: -1109931414677089553
+    second: HuskBully_28
   - first:
-      213: -9192178157640344629
-    second: DashBug_29
+      213: 2996055888129831472
+    second: HuskBully_29
   - first:
-      213: 282413020761750536
-    second: DashBug_30
+      213: 1177452196801237762
+    second: HuskBully_30
   - first:
-      213: -5173516459467261507
-    second: DashBug_31
+      213: -5666886386066306060
+    second: HuskBully_31
   - first:
-      213: 8691856875045169574
-    second: DashBug_32
+      213: -8200331642984012604
+    second: HuskBully_32
   - first:
-      213: -2801261203129299140
-    second: DashBug_33
+      213: -335705759162684256
+    second: HuskBully_33
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -122,7 +122,7 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
-  isReadable: 1
+  isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -139,7 +139,7 @@ TextureImporter:
     mipBias: -100
     wrapU: 1
     wrapV: 1
-    wrapW: 1
+    wrapW: -1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -167,11 +167,11 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 8192
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 2
-    compressionQuality: 100
+    textureCompression: 1
+    compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
@@ -193,7 +193,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DashBug_0
+      name: HuskBully_0
       rect:
         serializedVersion: 2
         x: 97
@@ -207,14 +207,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3c41a1b2453ec9db0800000000000000
-      internalID: -4783698753534421821
+      spriteID: a000413733097b1c0800000000000000
+      internalID: -4487959953002987510
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_1
+      name: HuskBully_1
       rect:
         serializedVersion: 2
         x: 399
@@ -228,14 +228,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cac7bbbd049a7c680800000000000000
-      internalID: -8734826856232289108
+      spriteID: 50cec76aa5b94ed40800000000000000
+      internalID: 5612781849253047301
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_2
+      name: HuskBully_2
       rect:
         serializedVersion: 2
         x: 698
@@ -249,14 +249,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 785a85e0d6236ff20800000000000000
-      internalID: 3456005208026948999
+      spriteID: 21103f4d0d745c440800000000000000
+      internalID: 4955445927242563858
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_3
+      name: HuskBully_3
       rect:
         serializedVersion: 2
         x: 1000
@@ -270,14 +270,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cb3b57bd959f532a0800000000000000
-      internalID: -6758221501470231620
+      spriteID: 5a2031573f2000c50800000000000000
+      internalID: 6629301896153858725
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_4
+      name: HuskBully_4
       rect:
         serializedVersion: 2
         x: 1298
@@ -291,14 +291,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8e96061af696f5630800000000000000
-      internalID: 3917966129005357544
+      spriteID: 345268b58b6c57ae0800000000000000
+      internalID: -1552116001447467709
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_5
+      name: HuskBully_5
       rect:
         serializedVersion: 2
         x: 97
@@ -312,14 +312,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7826a0c1979e10cb0800000000000000
-      internalID: -4899378213231631737
+      spriteID: 94e7e46b3d8e7d620800000000000000
+      internalID: 2798961689428393545
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_6
+      name: HuskBully_6
       rect:
         serializedVersion: 2
         x: 396
@@ -333,14 +333,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6c2550ab1d1134c40800000000000000
-      internalID: 5495255562788885190
+      spriteID: f0559e839379f7fe0800000000000000
+      internalID: -1189065504578775793
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_7
+      name: HuskBully_7
       rect:
         serializedVersion: 2
         x: 695
@@ -354,14 +354,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1ee51da13b2381810800000000000000
-      internalID: 1736193401181789921
+      spriteID: d151c9514cb9bd080800000000000000
+      internalID: -9161557750476696291
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_8
+      name: HuskBully_8
       rect:
         serializedVersion: 2
         x: 997
@@ -375,14 +375,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 920db3a670219efa0800000000000000
-      internalID: -5771061624442204119
+      spriteID: 3740d8b6f68afdb00800000000000000
+      internalID: 855587650722923635
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_9
+      name: HuskBully_9
       rect:
         serializedVersion: 2
         x: 1297
@@ -396,14 +396,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a6046c8e3505a7080800000000000000
-      internalID: -9188943768378261398
+      spriteID: bf6589e815ab19f40800000000000000
+      internalID: 5733568660066817787
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_10
+      name: HuskBully_10
       rect:
         serializedVersion: 2
         x: 97
@@ -417,14 +417,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f63b6b38c75dba800800000000000000
-      internalID: 624827704083395439
+      spriteID: 493b731246d5ce820800000000000000
+      internalID: 2948834540656243604
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_11
+      name: HuskBully_11
       rect:
         serializedVersion: 2
         x: 397
@@ -438,14 +438,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 19c40ad267304cab0800000000000000
-      internalID: -4988858681113162607
+      spriteID: c427ffc3b05117090800000000000000
+      internalID: -8038620721867427252
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_12
+      name: HuskBully_12
       rect:
         serializedVersion: 2
         x: 695
@@ -459,14 +459,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 184784db7027158c0800000000000000
-      internalID: -4012300415444421503
+      spriteID: 0e62ab06d608d12f0800000000000000
+      internalID: -1000502334943779104
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_13
+      name: HuskBully_13
       rect:
         serializedVersion: 2
         x: 1002
@@ -480,14 +480,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 59cbec3db75c16960800000000000000
-      internalID: 7593567582348557461
+      spriteID: 2453ed3aea51b4f70800000000000000
+      internalID: 9172448905887888706
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_14
+      name: HuskBully_14
       rect:
         serializedVersion: 2
         x: 1304
@@ -501,14 +501,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 964aa9e8e3bbe3050800000000000000
-      internalID: 5782264848945161321
+      spriteID: a74a4b0556e744610800000000000000
+      internalID: 1604546340861551738
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_15
+      name: HuskBully_15
       rect:
         serializedVersion: 2
         x: 99
@@ -522,14 +522,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eb5ec00aa39371d60800000000000000
-      internalID: 7860814598554576318
+      spriteID: 47c7f9193f6537d80800000000000000
+      internalID: -8254158087919797132
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_16
+      name: HuskBully_16
       rect:
         serializedVersion: 2
         x: 398
@@ -543,14 +543,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c794436e2dc6f7c10800000000000000
-      internalID: 2053479608165353852
+      spriteID: fcb99f3cc27bdff10800000000000000
+      internalID: 2305199987177921487
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_17
+      name: HuskBully_17
       rect:
         serializedVersion: 2
         x: 697
@@ -564,14 +564,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e96576bf5eaba8a00800000000000000
-      internalID: 759624984093480606
+      spriteID: f1a4f723b69474e70800000000000000
+      internalID: 9099322296882907679
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_18
+      name: HuskBully_18
       rect:
         serializedVersion: 2
         x: 1001
@@ -585,14 +585,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 32d0fb18eef7a6c70800000000000000
-      internalID: 8965118670590119203
+      spriteID: bcaf7af6d62c7f720800000000000000
+      internalID: 2879984262007225035
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_19
+      name: HuskBully_19
       rect:
         serializedVersion: 2
         x: 1299
@@ -606,14 +606,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dd61e49b5b0f78b20800000000000000
-      internalID: 3136740328775489245
+      spriteID: 5d97e4caa17990860800000000000000
+      internalID: 7496689195550669269
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_20
+      name: HuskBully_20
       rect:
         serializedVersion: 2
         x: 89
@@ -627,14 +627,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3300dcac00005f080800000000000000
-      internalID: -9154410664158232525
+      spriteID: 0a891e21467c346f0800000000000000
+      internalID: -701497884312233824
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_21
+      name: HuskBully_21
       rect:
         serializedVersion: 2
         x: 391
@@ -648,14 +648,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0db94860c9c10d380800000000000000
-      internalID: -8948621003135345712
+      spriteID: e13c83ccffb5d4b80800000000000000
+      internalID: -8408963775029787874
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_22
+      name: HuskBully_22
       rect:
         serializedVersion: 2
         x: 688
@@ -669,14 +669,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7070ed11efce465d0800000000000000
-      internalID: -3070068469994223865
+      spriteID: a3afbdecff56cb380800000000000000
+      internalID: -8954169809757799878
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_23
+      name: HuskBully_23
       rect:
         serializedVersion: 2
         x: 990
@@ -690,14 +690,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 595f81fa0381a6c30800000000000000
-      internalID: 4353318587182151061
+      spriteID: 15666934ef02b2fb0800000000000000
+      internalID: -4671603912039045551
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_24
+      name: HuskBully_24
       rect:
         serializedVersion: 2
         x: 1296
@@ -711,14 +711,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9c708f28dc6d0ff60800000000000000
-      internalID: 8066183110774491081
+      spriteID: f78fed7d150e177b0800000000000000
+      internalID: -5228151050281748353
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_25
+      name: HuskBully_25
       rect:
         serializedVersion: 2
         x: 85
@@ -732,14 +732,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ba8daac1c61f0da10800000000000000
-      internalID: 1932309686781663403
+      spriteID: ee8b5885c77be0cc0800000000000000
+      internalID: -3742852495609317138
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_26
+      name: HuskBully_26
       rect:
         serializedVersion: 2
         x: 389
@@ -753,14 +753,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9db967f3a0a4346a0800000000000000
-      internalID: -6466243232099034151
+      spriteID: bca1a0da181156580800000000000000
+      internalID: -8834635845365785909
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_27
+      name: HuskBully_27
       rect:
         serializedVersion: 2
         x: 691
@@ -774,14 +774,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3703bba0810467950800000000000000
-      internalID: 6446410388630876275
+      spriteID: ae60d4bfde79712d0800000000000000
+      internalID: -3308008352901167382
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_28
+      name: HuskBully_28
       rect:
         serializedVersion: 2
         x: 992
@@ -795,14 +795,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c164b9ad4efa14f70800000000000000
-      internalID: 9169803713758053916
+      spriteID: fe2102f424bb890f0800000000000000
+      internalID: -1109931414677089553
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_29
+      name: HuskBully_29
       rect:
         serializedVersion: 2
         x: 1286
@@ -816,14 +816,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bcb1eb9faa2de6080800000000000000
-      internalID: -9192178157640344629
+      spriteID: 032323bd4f0249920800000000000000
+      internalID: 2996055888129831472
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_30
+      name: HuskBully_30
       rect:
         serializedVersion: 2
         x: 92
@@ -837,14 +837,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 80cf27665255be300800000000000000
-      internalID: 282413020761750536
+      spriteID: 203575ad886275010800000000000000
+      internalID: 1177452196801237762
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_31
+      name: HuskBully_31
       rect:
         serializedVersion: 2
         x: 392
@@ -858,14 +858,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db931d9c03af338b0800000000000000
-      internalID: -5173516459467261507
+      spriteID: 4fb45083bdc2b51b0800000000000000
+      internalID: -5666886386066306060
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_32
+      name: HuskBully_32
       rect:
         serializedVersion: 2
         x: 691
@@ -879,14 +879,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6a9aa93c6cdaf9870800000000000000
-      internalID: 8691856875045169574
+      spriteID: 4c4ea8361d1923e80800000000000000
+      internalID: -8200331642984012604
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DashBug_33
+      name: HuskBully_33
       rect:
         serializedVersion: 2
         x: 992
@@ -900,8 +900,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c3f056807cbef19d0800000000000000
-      internalID: -2801261203129299140
+      spriteID: 0ac2e040465575bf0800000000000000
+      internalID: -335705759162684256
       vertices: []
       indices: 
       edges: []
@@ -909,7 +909,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: dc202702846f3cf4089f8e41fee461d7
+    spriteID: 4b63a5b9f2f362c418c442fec642ff90
     internalID: 0
     vertices: []
     indices: 

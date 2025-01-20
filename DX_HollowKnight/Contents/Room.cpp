@@ -233,7 +233,7 @@ void ARoom::Gravity(AActor* _Actor, float _DeltaTime)
 	}
 }
 
-void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Renderer, float _Speed, bool _Left)
+void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Renderer, float _Speed, bool _Left, FVector _Offset)
 {
 	if (true == bActiveGravity)
 	{
@@ -244,8 +244,8 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Rend
 
 	float NextPos = _Speed * DeltaTime;
 	FVector ActorPos = _Actor->GetActorLocation() - LeftTopPos;
-	float HalfRendererWidth = _Renderer->GetScale().X * 0.5f;
-	float HalfRendererHeight = _Renderer->GetScale().Y * 0.4f;
+	float HalfRendererWidth = _Renderer->GetScale().X * 0.5f + _Offset.X;
+	float HalfRendererHeight = _Renderer->GetScale().Y * 0.4f - _Offset.Y;
 
 	FVector CollisionPoint = { ActorPos.X + NextPos , ActorPos.Y - HalfRendererHeight };
 
@@ -281,7 +281,12 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Rend
 	AMonster* Monster = dynamic_cast<AMonster*>(_Actor);
 	if (nullptr != Monster)
 	{
-		if (CollisionColor == UColor::YELLOW)
+		std::string R = std::to_string(CollisionColor.R);
+		std::string G = std::to_string(CollisionColor.G);
+		std::string B = std::to_string(CollisionColor.B);
+		std::string Result = "R : " + R + " " + "G : " + G + " " + "B : " + B;
+		UEngineDebug::OutPutString("Monster Pixel Pos : " + CollisionPoint.ToString() + " Pixel Color : " + Result);
+		if (CollisionColor == UColor::YELLOW || CollisionColor == UColor::RED)
 		{
 			Monster->SetWallHere(true);
 		}
@@ -292,7 +297,7 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Rend
 	}
 }
 
-void ARoom::CheckPixelCollisionWithCeil(AActor* _Actor, UContentsRenderer* _Renderer, float _Speed, bool _Left)
+void ARoom::CheckPixelCollisionWithCeil(AActor* _Actor, UContentsRenderer* _Renderer, float _Speed, bool _Left, FVector _Offset)
 {
 	if (true == bActiveGravity)
 	{
@@ -303,7 +308,7 @@ void ARoom::CheckPixelCollisionWithCeil(AActor* _Actor, UContentsRenderer* _Rend
 
 	float NextPos = _Speed * DeltaTime;
 	FVector ActorPos = _Actor->GetActorLocation() - LeftTopPos;
-	float HalfRendererHeight = _Renderer->GetScale().Y * 0.5f;
+	float HalfRendererHeight = _Renderer->GetScale().Y * 0.5f + _Offset.Y;
 
 	FVector CollisionPoint = { ActorPos.X + NextPos , ActorPos.Y + HalfRendererHeight };
 
