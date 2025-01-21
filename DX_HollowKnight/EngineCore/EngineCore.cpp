@@ -2,6 +2,7 @@
 #include "EngineCore.h"
 #include <EngineBase/EngineDebug.h>
 #include <EnginePlatform/EngineWindow.h>
+#include <EnginePlatform/EngineSound.h>
 #include <EnginePlatform/EngineInput.h>
 #include "IContentsCore.h"
 #include "EngineResources.h"
@@ -44,19 +45,6 @@ UEngineWorkThreadPool& UEngineCore::GetThreadPool()
 }
 
 UEngineCore* GEngine = nullptr;
-
-//UEngineGraphicDevice UEngineCore::Device; // UEngineGraphicDevice EngienCore.dll::UEngineCore::Device;
-//
-//UEngineWindow UEngineCore::MainWindow;
-//HMODULE UEngineCore::ContentsDLL = nullptr;
-//std::shared_ptr<IContentsCore> UEngineCore::Core;
-//UEngineInitData UEngineCore::Data;
-//UEngineTimer UEngineCore::Timer;
-//
-//std::shared_ptr<class ULevel> UEngineCore::NextLevel;
-//std::shared_ptr<class ULevel> UEngineCore::CurLevel = nullptr;
-//
-//std::map<std::string, std::shared_ptr<class ULevel>> UEngineCore::LevelMap;
 
 FVector UEngineCore::GetScreenScale()
 {
@@ -137,6 +125,7 @@ void UEngineCore::EngineStart(HINSTANCE _Instance, std::string_view _DllName)
 	UEngineWindow::WindowMessageLoop(
 		[]()
 		{
+			UEngineSound::Init();
 			// UEngineDebug::StartConsole();
 			
 			// 1. 그래픽카드 정보를 가져와서 Device와 Context를 생성하고
@@ -232,6 +221,9 @@ void UEngineCore::EngineFrame()
 	else {
 		UEngineInput::KeyReset();
 	}
+
+	UEngineSound::Update();
+
 	// Core에서 Level이 관리하는 Actor, Renderer, Collision를 'Windows메시지루프'에서 돌려준다.
 	GEngine->CurLevel->Tick(DeltaTime);
 	GEngine->CurLevel->Render(DeltaTime);
@@ -249,6 +241,7 @@ void UEngineCore::EngineEnd()
 
 	UEngineResources::Release();
 	UEngineConstantBuffer::Release();
+	UEngineSound::Release();
 
 	GEngine->CurLevel = nullptr;
 	GEngine->NextLevel = nullptr;

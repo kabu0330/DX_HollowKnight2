@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "ContentsResource.h"
+#include <EnginePlatform/EngineSound.h>
 #include <EngineCore/EngineFont.h>
 
 void UContentsResource::LoadResource()
@@ -47,6 +48,24 @@ void UContentsResource::LoadResource()
 			UEngineTexture::Load(FilePath);
 		}
 	}	
+
+	{	// 사운드 로드
+		UEngineDirectory Dir;
+		if (false == Dir.MoveParentToDirectory("ContentsResources"))
+		{
+			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
+			return;
+		}
+		Dir.Append("Sound");
+		// 로딩바 만들고 싶으면  100개면 10 10 10 10 10 10
+		std::vector<UEngineFile> ImageFiles = Dir.GetAllFile(true, { ".wav", ".mp3" });
+
+		for (size_t i = 0; i < ImageFiles.size(); i++)
+		{
+			std::string FilePath = ImageFiles[i].GetPathToString();
+			UEngineSound::Load(FilePath);
+		}
+	}
 }
 
 void UContentsResource::LoadFont()

@@ -54,6 +54,8 @@ public:
 		return LoopActive;
 	}
 
+	ENGINEAPI static int GetWheelDir();
+
 
 	ENGINEAPI HWND GetWindowHandle() const
 	{
