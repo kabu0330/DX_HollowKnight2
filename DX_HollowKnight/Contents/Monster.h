@@ -65,6 +65,14 @@ public:
 	FVector GetRandomDirection();
 
 protected:
+	// 이동
+	void Move(float _DeltaTime);
+	bool bChooseDirection = false;
+	bool bCanMove = true;
+	float MoveDuration = 1.0f;
+	float MoveElapsed = 0.0f;
+
+
 	virtual void SetStatus();
 	UStatusUnit Stat = UStatusUnit();
 	UTimeEventComponent* TimeEventor = nullptr;
@@ -96,12 +104,6 @@ protected:
 
 	// 쿨타임
 	void TimeElapsed(float _DeltaTime);
-
-	// 이동
-	void Move(float _DeltaTime);
-	bool bCanMove = true;
-	float MoveDuration = 2.0f;
-	float MoveElapsed = 0.0f;
 
 	// 동작
 	bool bCanJump = false;

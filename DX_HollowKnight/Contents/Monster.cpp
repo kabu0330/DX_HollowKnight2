@@ -66,6 +66,9 @@ void AMonster::Tick(float _DeltaTime)
 	SetPause(); // 나이트가 몬스터가 속한 룸과 일치하지 않으면 bIsPause로 정지
 	ActivePixelCollision();
 
+	GetRandomDirection();
+	CheckDirection();
+
 	Move(_DeltaTime);
 	TimeElapsed(_DeltaTime);
 
@@ -74,8 +77,7 @@ void AMonster::Tick(float _DeltaTime)
 
 	// Test
 	//IsPlayerNearby();
-	GetDirectionToPlayer();
-	CheckDirection();
+	//GetDirectionToPlayer();
 }
 
 bool AMonster::IsPlayerNearby()
@@ -135,11 +137,11 @@ FVector AMonster::GetRandomDirection()
 {
 	if (false == IsCurRoom())
 	{
-		return;
+		return FVector::ZERO;
 	}
-	if (true)
+	if (true == bChooseDirection)
 	{
-
+		return FVector::ZERO; // 다음 이동까지 방향 결정하지마.
 	}
 	FVector LeftTop = FVector::LEFT + FVector::UP;
 	LeftTop.Normalize();
@@ -168,20 +170,22 @@ FVector AMonster::GetRandomDirection()
 	{
 	case 0:
 	{
+		UEngineDebug::OutPutString("왼쪽 이동");
 		Direction = FVector::LEFT;
+		bIsLeft = true;
 		break;
 	}
 	case 1:
 	{
+		UEngineDebug::OutPutString("오른쪽 이동");
 		Direction = FVector::RIGHT;
+		bIsLeft = false;
 		break;
 	}
 	default:
 		break;
 	}
 	
-
-
 	return Direction;
 }
 
@@ -200,6 +204,7 @@ void AMonster::Move(float _DeltaTime)
 		return;
 	}
 
+	bChooseDirection = true; // true면 방향 그만 바꿔
 	FVector FinalVelocity = FVector(Stat.GetVelocity() * _DeltaTime, 0.0f);
 	FinalVelocity *= Direction;
 
@@ -221,10 +226,11 @@ void AMonster::TimeElapsed(float _DeltaTime)
 			bCanMove = false;
 			MoveElapsed = 0.0f;
 
-			float MoveCooldown = 2.0f;
+			float MoveCooldown = 1.0f;
 			TimeEventor->AddEndEvent(MoveCooldown, [this]()
 				{
 					bCanMove = true;
+					bChooseDirection = false; // 방향 랜덤 결정
 				});
 		}
 	}
@@ -251,17 +257,17 @@ bool AMonster::IsPause()
 {
 	if (false == IsCurRoom()) // 플레이어가 다른 맵에 있으면 행동불가
 	{
-		return false;
+		return true;
 	}
 	if (true == bIsPause) // 정지상태면 
 	{
-		return false;
+		return true;
 	}
 	if (true == bIsDebugPause)
 	{
-		return false;
+		return true;
 	}
-	return true;
+	return false;
 }
 
 bool AMonster::CanAction()
