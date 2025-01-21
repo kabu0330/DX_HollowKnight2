@@ -68,6 +68,8 @@ void AMonster::SetFSM()
 
 void AMonster::SetIdle(float _DeltaTime)
 {
+	UEngineDebug::OutPutString("FSM : Idle");
+
 	Stat.SetBeingHit(false);
 	bCanRotation = true;
 
@@ -77,6 +79,8 @@ void AMonster::SetIdle(float _DeltaTime)
 
 void AMonster::SetWalk(float _DeltaTime)
 {
+	UEngineDebug::OutPutString("FSM : Walk");
+
 	GetDirectionToPlayer();
 }
 

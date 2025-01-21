@@ -126,6 +126,7 @@ void AMonster::Attack()
 	{
 		return;
 	}
+
 	GetDirectionToPlayer();
 	Stat.SetAttacking(true);
 	FSM.ChangeState(EMonsterState::ATTACK_ANTICIPATE);
@@ -173,7 +174,7 @@ FVector AMonster::GetDirectionToPlayer()
 
 FVector AMonster::GetRandomDirection()
 {
-	if (true == CanAction())
+	if (false == CanAction())
 	{
 		return FVector::ZERO;
 	}
@@ -267,8 +268,9 @@ void AMonster::Move(float _DeltaTime)
 		return;
 	}
 	CheckDirection();
-	FSM.ChangeState(EMonsterState::WALK);
 	bChooseDirection = true; // true면 방향 그만 바꿔
+
+	FSM.ChangeState(EMonsterState::WALK);
 	FVector FinalVelocity = FVector(Stat.GetVelocity() * _DeltaTime, 0.0f);
 	FinalVelocity *= Direction;
 
@@ -290,7 +292,7 @@ void AMonster::TimeElapsed(float _DeltaTime)
 			bCanMove = false;
 			MoveElapsed = 0.0f;
 
-			float MoveCooldown = 1.0f;
+			float MoveCooldown = 2.0f;
 			TimeEventor->AddEndEvent(MoveCooldown, [this]()
 				{
 					bCanMove = true;

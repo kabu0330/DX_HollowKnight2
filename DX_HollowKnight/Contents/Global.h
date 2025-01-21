@@ -12,13 +12,14 @@ public:
 enum class EUIOrder
 {
 	NONE = -10000,
+	FADE = 1,
 	BACK = 9999,
 	MAX = 10000,
 };
 
 enum class EZOrder
 {
-	NONE = 100,
+	NONE = 1,
 	KNIGHT_SKILL_FRONT = 800,
 	MONSTER_SKILL_FRONT = 850,
 	PLAYER = 900,
