@@ -11,43 +11,34 @@ void AMonster::CreateAnimation()
 	BodyRenderer->SetWorldLocation({ RendererOffset.X, RendererOffset.Y, ZSort });
 
 	std::string HuskBully = "HuskBully.png";
-	float FrameTime = 0.2f;
+	float IdleTime = 0.2f;
+	float TurnTime = 0.2f;
 	float RunnigTime = 0.1f;
-	BodyRenderer->CreateAnimation("Idle", HuskBully, 0, 5, FrameTime);
+	float AttackAnticipateTime = 0.15f;
+	float AttackTime = 0.12f;
+	float RecoveryTime = 0.1f;
+	float DeathAirTime = 0.2f;
+	float DeathTime = 0.15f;
+	BodyRenderer->CreateAnimation("Idle", HuskBully, 0, 5, IdleTime);
 	BodyRenderer->CreateAnimation("Walk", HuskBully, 6, 12, RunnigTime);
-	BodyRenderer->CreateAnimation("Turn", HuskBully, 13, 14, FrameTime);
-	BodyRenderer->CreateAnimation("AttackAnticipate", HuskBully, 15, 18, FrameTime);
-	BodyRenderer->CreateAnimation("Attack", HuskBully, 19, 20, FrameTime);
-	BodyRenderer->CreateAnimation("AttackRecovery", HuskBully, 21, 21, FrameTime);
-	BodyRenderer->CreateAnimation("DeathAir", HuskBully, 22, 22, FrameTime);
-	BodyRenderer->CreateAnimation("DeathLand", HuskBully, 23, 30, FrameTime);
+	BodyRenderer->CreateAnimation("Turn", HuskBully, 13, 14, TurnTime);
+	BodyRenderer->CreateAnimation("AttackAnticipate", HuskBully, 15, 19, AttackAnticipateTime);
+	BodyRenderer->CreateAnimation("Attack", HuskBully, 20, 23, AttackTime);
+	BodyRenderer->CreateAnimation("AttackRecovery", HuskBully, 24, 24, RecoveryTime);
+	BodyRenderer->CreateAnimation("DeathAir", HuskBully, 25, 25, DeathAirTime);
+	BodyRenderer->CreateAnimation("DeathLand", HuskBully, 26, 33, DeathTime, false);
 
 	BodyRenderer->ChangeAnimation("Idle");
-}
-
-void AMonster::ChangeNextAnimation(EMonsterState _NextState)
-{
-	if (true == BodyRenderer->IsCurAnimationEnd())
-	{
-		FSM.ChangeState(_NextState);
-		return;
-	}
-}
-
-void AMonster::ChangePrevAnimation()
-{
-	if (true == BodyRenderer->IsCurAnimationEnd())
-	{
-		FSM.ChangeState(NextState);
-		return;
-	}
 }
 
 void AMonster::SetCollisionEvent()
 {
 	BodyCollision->SetCollisionEnter(std::bind(&AMonster::OnBodyCollision, this, std::placeholders::_1, std::placeholders::_2));
-	DetectCollision->SetCollisionStay([](UCollision* _This, UCollision* _Other) {
-		//UEngineDebug::OutPutString("몬스터 탐색 범위 진입");
+	DetectCollision->SetCollisionStay([this](UCollision* _This, UCollision* _Other) {
+		bIsChasing = true;
+		});
+	DetectCollision->SetCollisionEnd([this](UCollision* _This, UCollision* _Other) {
+		bIsChasing = false;
 		});
 }
 
@@ -55,7 +46,6 @@ void AMonster::OnBodyCollision(UCollision* _This, UCollision* _Other)
 {
 	// Debug
 	return;
-
 
 	AActor* Other = _Other->GetActor();
 	AActor* Actor = dynamic_cast<AActor*>(Other);
@@ -114,8 +104,15 @@ void AMonster::ActivePixelCollision()
 {
 	if (true == IsCurRoom())
 	{
+		ParentRoom->CheckPixelCollisionWithWall(this, BodyRenderer.get(), Stat.GetVelocity(), bIsLeft, WallPointOffest);
+		ParentRoom->CheckPixelCollisionWithCeil(this, BodyRenderer.get(), Stat.GetVelocity(), bIsLeft, CeilPointOffset);
+	}
+}
+
+void AMonster::ActiveGravity()
+{
+	if (true == IsCurRoom())
+	{
 		ParentRoom->CheckPixelCollisionWithGravity(this, BodyRenderer.get(), GravityPointOffset);
-		   ParentRoom->CheckPixelCollisionWithWall(this, BodyRenderer.get(), Stat.GetVelocity(), bIsLeft, WallPointOffest);
-		   ParentRoom->CheckPixelCollisionWithCeil(this, BodyRenderer.get(), Stat.GetVelocity(), bIsLeft, CeilPointOffset);
 	}
 }

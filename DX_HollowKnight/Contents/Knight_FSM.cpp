@@ -64,7 +64,7 @@ void AKnight::SetIdleToRun(float _DeltaTime)
 
 	CastFireball(); 
 
-	ChangeNextAnimation(EKnightState::RUN);
+	ChangeNextState(EKnightState::RUN);
 	ChangeAttackAnimation(EKnightState::RUN); // 지상 공격
 }
 
@@ -77,7 +77,7 @@ void AKnight::SetRunToIdle(float _DeltaTime)
 	bIsDashing = false; // 이 동작으로 돌아와야만 대시 상태가 해제된 것으로 판단
 	Stat.SetBeingHit(false);
 
-	ChangeNextAnimation(EKnightState::IDLE);
+	ChangeNextState(EKnightState::IDLE);
 
 	if (UEngineInput::IsPress(VK_LEFT) || UEngineInput::IsPress(VK_RIGHT))
 	{
@@ -110,11 +110,11 @@ void AKnight::SetJump(float _DeltaTime)
 
 	if (true == bIsOnGround)
 	{
-		ChangeNextAnimation(EKnightState::LAND);
+		ChangeNextState(EKnightState::LAND);
 	}
 	else
 	{
-		ChangeNextAnimation(EKnightState::AIRBORN);
+		ChangeNextState(EKnightState::AIRBORN);
 		ChangeAttackAnimation(EKnightState::AIRBORN);
 	}
 }
@@ -148,7 +148,7 @@ void AKnight::SetLand(float _DeltaTime)
 	JumpForce = InitJumpForce;
 	ChangeAttackAnimation(EKnightState::IDLE); // 공중 공격
 
-	ChangeNextAnimation(EKnightState::IDLE);
+	ChangeNextState(EKnightState::IDLE);
 }
 
 void AKnight::SetHardLand(float _DeltaTime)
@@ -157,7 +157,7 @@ void AKnight::SetHardLand(float _DeltaTime)
 	float InitJumpForce = 600.0f;
 	JumpForce = InitJumpForce;
 
-	ChangeNextAnimation(EKnightState::IDLE);
+	ChangeNextState(EKnightState::IDLE);
 }
 
 void AKnight::SetDash(float _DeltaTime)
@@ -166,12 +166,12 @@ void AKnight::SetDash(float _DeltaTime)
 
 	if (true == IsOnGround())
 	{
-		ChangeNextAnimation(EKnightState::RUN_TO_IDLE);
+		ChangeNextState(EKnightState::RUN_TO_IDLE);
 		return;
 	}
 	else
 	{
-		ChangeNextAnimation(EKnightState::AIRBORN);
+		ChangeNextState(EKnightState::AIRBORN);
 		return;
 	}
 
@@ -188,7 +188,7 @@ void AKnight::SetSlash(float _DeltaTime)
 	bIsShowEffect;
 
 	CreateSlashEffect();
-	ChangePrevAnimation();
+	ChangePrevState();
 }
 
 void AKnight::SetUpSlash(float _DeltaTime)
@@ -197,7 +197,7 @@ void AKnight::SetUpSlash(float _DeltaTime)
 	Move(_DeltaTime);
 
 	CreateUpSlashEffect();
-	ChangePrevAnimation();
+	ChangePrevState();
 }
 
 void AKnight::SetDownSlash(float _DeltaTime)
@@ -206,7 +206,7 @@ void AKnight::SetDownSlash(float _DeltaTime)
 	Move(_DeltaTime);
 
 	CreateDownSlashEffect();
-	ChangePrevAnimation();
+	ChangePrevState();
 }
 
 void AKnight::SetFocus(float _DeltaTime)
@@ -216,11 +216,11 @@ void AKnight::SetFocus(float _DeltaTime)
 
 	if (UEngineInput::IsUp('A'))
 	{
-		ChangeNextAnimation(EKnightState::IDLE);
+		ChangeNextState(EKnightState::IDLE);
 		return;
 	}
 
-	ChangeNextAnimation(EKnightState::FOCUS_GET);
+	ChangeNextState(EKnightState::FOCUS_GET);
 }
 
 void AKnight::SetFocusGet(float _DeltaTime)
@@ -229,11 +229,11 @@ void AKnight::SetFocusGet(float _DeltaTime)
 
 	if (UEngineInput::IsUp('A'))
 	{
-		ChangeNextAnimation(EKnightState::IDLE);
+		ChangeNextState(EKnightState::IDLE);
 		return;
 	}
 
-	ChangeNextAnimation(EKnightState::FOCUS_END);
+	ChangeNextState(EKnightState::FOCUS_END);
 }
 
 void AKnight::SetFocusEnd(float _DeltaTime)
@@ -248,13 +248,13 @@ void AKnight::SetFocusEnd(float _DeltaTime)
 	}
 	else // 스킬 시전 종료
 	{
-		ChangeNextAnimation(EKnightState::IDLE);
+		ChangeNextState(EKnightState::IDLE);
 	}
 }
 
 void AKnight::SetFireballAntic(float _DeltaTime)
 {
-	ChangeNextAnimation(EKnightState::FIREBALL_CAST);
+	ChangeNextState(EKnightState::FIREBALL_CAST);
 }
 
 void AKnight::SetFireballCast(float _DeltaTime)
@@ -263,17 +263,17 @@ void AKnight::SetFireballCast(float _DeltaTime)
 
 	if (true == bIsOnGround)
 	{
-		ChangeNextAnimation(EKnightState::IDLE);
+		ChangeNextState(EKnightState::IDLE);
 	}
 	else
 	{
-		ChangeNextAnimation(EKnightState::AIRBORN);
+		ChangeNextState(EKnightState::AIRBORN);
 	}
 }
 
 void AKnight::SetLookDown(float _DeltaTime)
 {
-	ChangeNextAnimation(EKnightState::LOOK_DOWN_LOOP);
+	ChangeNextState(EKnightState::LOOK_DOWN_LOOP);
 	if (UEngineInput::IsFree(VK_DOWN))
 	{
 		FSM.ChangeState(EKnightState::IDLE);
@@ -292,7 +292,7 @@ void AKnight::SetLookDownLoop(float _DeltaTime)
 
 void AKnight::SetLookUp(float _DeltaTime)
 {
-	ChangeNextAnimation(EKnightState::LOOK_UP_LOOP);
+	ChangeNextState(EKnightState::LOOK_UP_LOOP);
 	if (UEngineInput::IsFree(VK_UP))
 	{
 		FSM.ChangeState(EKnightState::IDLE);
@@ -318,28 +318,28 @@ void AKnight::SetStun(float _DeltaTime)
 
 	if (true == bIsOnGround)
 	{
-		ChangeNextAnimation(EKnightState::IDLE);
+		ChangeNextState(EKnightState::IDLE);
 	}
 	else
 	{
-		ChangeNextAnimation(EKnightState::AIRBORN);
+		ChangeNextState(EKnightState::AIRBORN);
 	}
 }
 
 void AKnight::SetDeathDamage(float _DeltaTime)
 {
-	ChangeNextAnimation(EKnightState::DEATH);
+	ChangeNextState(EKnightState::DEATH);
 }
 
 void AKnight::SetDeath(float _DeltaTime)
 {
-	ChangeNextAnimation(EKnightState::DEATH_HEAD);
+	ChangeNextState(EKnightState::DEATH_HEAD);
 
 }
 
 void AKnight::SetDeathHead(float _DeltaTime)
 {
-	ChangeNextAnimation(EKnightState::IDLE);
+	ChangeNextState(EKnightState::IDLE);
 }
 
 void AKnight::SetFSM()

@@ -279,7 +279,6 @@ void AKnight::TimeElapsed(float _DeltaTime)
 		if (AttackCooldownElapsed >= AttackCooldown)
 		{
 			Stat.SetAttacking(false);
-			//bIsAttacking = false;
 			bIsShowEffect = false;
 			AttackCooldownElapsed = 0.0f;
 		}
@@ -334,10 +333,6 @@ bool AKnight::CanAction()
 		return false;
 	}
 	if (true == Stat.IsAttacking())
-	{
-		return false;
-	}
-	if (true == Stat.IsBeingHit())
 	{
 		return false;
 	}

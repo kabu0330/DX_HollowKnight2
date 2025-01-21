@@ -15,12 +15,14 @@ void AMonster::SetFSM()
 	CreateState(EMonsterState::LAND, &AMonster::SetLand, "Land");
 	CreateState(EMonsterState::HARD_LAND, &AMonster::SetHardLand, "HardLand");
 
+	// 공격스킬에 해당
 	CreateState(EMonsterState::DASH_ARRIVE, &AMonster::SetDashArrive, "DashArrive");
 	CreateState(EMonsterState::DASH_ANTICIPATE, &AMonster::SetDashAnticipate, "DashAnticipate");
 	CreateState(EMonsterState::DASH, &AMonster::SetDash, "Dash");
 	CreateState(EMonsterState::DASH_ATTACK, &AMonster::SetDashAttack, "DashAttack");
 	CreateState(EMonsterState::DASH_RECOVERY, &AMonster::SetDashRecovery, "DashRecovery");
 
+	// 공격
 	CreateState(EMonsterState::ATTACK_ANTICIPATE, &AMonster::SetAttackAnticipate, "AttackAnticipate");
 	CreateState(EMonsterState::ATTACK, &AMonster::SetAttack, "Attack");
 	CreateState(EMonsterState::ATTACK_RECOVERY, &AMonster::SetAttackRecovery, "AttackRecovery");
@@ -70,28 +72,154 @@ void AMonster::SetIdle(float _DeltaTime)
 {
 	UEngineDebug::OutPutString("FSM : Idle");
 
-	Stat.SetBeingHit(false);
-	bCanRotation = true;
+	ActiveGravity();
+	CheckDeath();
 
-	GetRandomDirection();
-	CheckDirection();
+	Stat.SetBeingHit(false);
+	Stat.SetAttacking(false);
+
+	bChooseDirection = false; // 이동할 방향 결정 허용
+	bCanRotation = true; // 방향전환 허용
+	CheckDirection(); // 좌우 반전 적용
+
+
+
+	if (false == bIsOnGround)
+	{
+		return;
+	}
+	if (true == IsPlayerNearby() && false == Stat.IsAttacking() && true == bCanAttack) // 플레이어 조우
+	{
+		FSM.ChangeState(EMonsterState::ATTACK_ANTICIPATE);
+	}
+	else if (true == IsPlayerNearby() || true == bCanMove)
+	{
+		FSM.ChangeState(EMonsterState::TURN);
+	}
 }
 
 void AMonster::SetWalk(float _DeltaTime)
 {
 	UEngineDebug::OutPutString("FSM : Walk");
 
-	GetDirectionToPlayer();
+	CheckDeath();
+	ActiveGravity();
+
+	if (false == bIsOnGround)
+	{
+		return;
+	}
+
+	if (false == bIsChasing) // 추적중
+	{
+		GetRandomDirection(); // 랜덤 이동 
+	}
+	else
+	{
+		GetDirectionToPlayer();
+	}
+
+	CheckDirection(); // 좌우 반전 적용
+	Move(_DeltaTime); // 이동 및 방향전환 금지
+	bIsTurn = false;
+
+	if (true == Stat.IsBeingHit())
+	{
+		FSM.ChangeState(EMonsterState::IDLE);
+	}
+	else if (true == IsPlayerNearby() && false == Stat.IsAttacking() && true == bCanAttack) // 플레이어 조우
+	{
+		FSM.ChangeState(EMonsterState::ATTACK_ANTICIPATE);
+	}
+	else if (false == bCanMove)
+	{
+		FSM.ChangeState(EMonsterState::IDLE);
+	}
 }
 
 void AMonster::SetRun(float _DeltaTime)
 {
-	GetDirectionToPlayer();
+	ActiveGravity();
 }
 
 void AMonster::SetTurn(float _DeltaTime)
 {
-	ChangeNextAnimation(EMonsterState::WALK);
+	CheckDeath();
+	ActiveGravity();
+
+	CheckDirection(); // 좌우 반전 적용
+	if (true == bIsTurn)
+	{
+		ChangeNextState(EMonsterState::WALK);
+	}
+	else
+	{
+		FSM.ChangeState(EMonsterState::WALK);
+	}
+
+}
+
+void AMonster::SetAttackAnticipate(float _DeltaTime)
+{
+	CheckDeath();
+	ActiveGravity();
+
+	UEngineDebug::OutPutString("몬스터 공격 준비");
+
+	Stat.SetAttacking(true);
+	bCanAttack = false;
+	bCanRotation = false;
+	ChangeNextState(EMonsterState::ATTACK);
+}
+
+void AMonster::SetAttack(float _DeltaTime)
+{
+	CheckDeath();
+	ActiveGravity();
+
+	UEngineDebug::OutPutString("몬스터 공격~~~~~~~~~");
+	Dash();
+
+	if (true == Stat.IsBeingHit())
+	{
+		FSM.ChangeState(EMonsterState::IDLE);
+	}
+	else
+	{
+		TimeEventor->AddEndEvent(0.3f, [this]()
+			{
+				FSM.ChangeState(EMonsterState::ATTACK_RECOVERY);
+			});
+	}
+}
+
+void AMonster::SetAttackRecovery(float _DeltaTime)
+{
+	CheckDeath();
+	ActiveGravity();
+
+	UEngineDebug::OutPutString("FSM : Attack Recovery");
+	ChangeNextState(EMonsterState::IDLE);
+}
+
+void AMonster::SetHit(float _DeltaTime)
+{
+	CheckDeath();
+	ActiveGravity();
+}
+
+void AMonster::SetDeathAir(float _DeltaTime)
+{
+	ActiveGravity();
+	BodyCollision->Destroy();
+	ChangeNextState(EMonsterState::DEATH_LAND);
+}
+
+void AMonster::SetDeathLand(float _DeltaTime)
+{
+	ActiveGravity();
+
+	Stat.SetDeath(true);
 }
 
 void AMonster::SetJumpAnticipate(float _DeltaTime)
@@ -136,26 +264,6 @@ void AMonster::SetDashAttack(float _DeltaTime)
 
 void AMonster::SetDashRecovery(float _DeltaTime)
 {
-}
-
-void AMonster::SetAttackAnticipate(float _DeltaTime)
-{
-	UEngineDebug::OutPutString("몬스터 공격 준비");
-	bCanRotation = false;
-	ChangeNextAnimation(EMonsterState::ATTACK);
-}
-
-void AMonster::SetAttack(float _DeltaTime)
-{
-	UEngineDebug::OutPutString("몬스터 공격~~~~");
-	Dash();
-	ChangeNextAnimation(EMonsterState::ATTACK_RECOVERY);
-}
-
-void AMonster::SetAttackRecovery(float _DeltaTime)
-{
-	UEngineDebug::OutPutString("몬스터 공격후딜");
-	ChangeNextAnimation(EMonsterState::IDLE);
 }
 
 void AMonster::SetThrowAnticipate(float _DeltaTime)
@@ -238,10 +346,6 @@ void AMonster::SetEvade(float _DeltaTime)
 {
 }
 
-void AMonster::SetHit(float _DeltaTime)
-{
-}
-
 void AMonster::SetStun(float _DeltaTime)
 {
 }
@@ -262,14 +366,6 @@ void AMonster::SetStunHit(float _DeltaTime)
 {
 }
 
-void AMonster::SetDeathAir(float _DeltaTime)
-{
-}
-
-void AMonster::SetDeathLand(float _DeltaTime)
-{
-}
-
 void AMonster::SetFly(float _DeltaTime)
 {
 }
@@ -280,6 +376,24 @@ void AMonster::SetFire(float _DeltaTime)
 
 void AMonster::SetBurst(float _DeltaTime)
 {
+}
+
+void AMonster::ChangeNextState(EMonsterState _NextState)
+{
+	if (true == BodyRenderer->IsCurAnimationEnd())
+	{
+		FSM.ChangeState(_NextState);
+		return;
+	}
+}
+
+void AMonster::ChangePrevState()
+{
+	if (true == BodyRenderer->IsCurAnimationEnd())
+	{
+		FSM.ChangePrevState();
+		return;
+	}
 }
 
 void AMonster::CreateState(EMonsterState _State, StateCallback _Callback, std::string_view _AnimationName)

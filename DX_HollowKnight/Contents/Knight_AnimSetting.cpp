@@ -114,7 +114,7 @@ void AKnight::InitAnimation()
 }
 
 // 다음 애니메이션으로 변경
-void AKnight::ChangeNextAnimation(EKnightState _NextState)
+void AKnight::ChangeNextState(EKnightState _NextState)
 {
 	if (true == BodyRenderer->IsCurAnimationEnd())
 	{
@@ -124,7 +124,7 @@ void AKnight::ChangeNextAnimation(EKnightState _NextState)
 }
 
 // 이전 애니메이션으로 변경
-void AKnight::ChangePrevAnimation()
+void AKnight::ChangePrevState()
 {
 	if (true == BodyRenderer->IsCurAnimationEnd())
 	{

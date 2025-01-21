@@ -225,8 +225,8 @@ private:
 
 	// Animation
 	void InitAnimation();
-	void ChangeNextAnimation(EKnightState _NextState);
-	void ChangePrevAnimation();
+	void ChangeNextState(EKnightState _NextState);
+	void ChangePrevState();
 
 	void ChangeAttackAnimation(EKnightState _PrevState);
 	void ChangeJumpAnimation();

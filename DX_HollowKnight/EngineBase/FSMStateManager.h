@@ -67,8 +67,16 @@ public:
 			MSGASSERT("만든적이 없는 스테이트로 체인지 하려고 했습니다.");
 			return;
 		}
-
+		PrevState = CurState;
 		CurState = &States[_Key];
+		if (nullptr != CurState->StartFunction)
+		{
+			CurState->StartFunction();
+		}
+	}
+	void ChangePrevState()
+	{
+		CurState = PrevState;
 		if (nullptr != CurState->StartFunction)
 		{
 			CurState->StartFunction();
@@ -76,12 +84,10 @@ public:
 	}
 
 protected:
-	// ChangeState("Idle")
-	// ChangeState(EPlayerState::Idle)
-	// Idle 스테이트로 이동해줘
 
 private:
 	FSMState* CurState = nullptr;
+	FSMState* PrevState = nullptr;
 	std::map<int, FSMState> States;
 };
 

@@ -15,7 +15,7 @@ AMonster::AMonster()
 	ZSort = static_cast<float>(EZOrder::MONSTER);
 	RendererOffset = { 0.0f, 0.0f };
 	BodyCollisionOffset = { 0.0f, 0.0f };
-	GravityPointOffset.Y = 1973.0f / 2.0f; // (이미지 크기 - 1프레임 크기) / 2.0f
+	GravityPointOffset.Y = 1973.0f / 2.0f - 5.f; // (이미지 크기 - 1프레임 크기) / 2.0f
 	WallPointOffest = { -1394.0f / 2.0f, GravityPointOffset.Y }; // 
 
 	DetectRange = { 500, 300 };
@@ -35,7 +35,7 @@ void AMonster::SetStatus()
 	FStatusData Data;
 	Data.Velocity = 150.0f;
 	Data.InitVelocity = Data.Velocity;
-	Data.RunSpeed = Data.Velocity * 1.5f;
+	Data.RunSpeed = Data.Velocity * 8.0f;
 	Data.DashSpeed = Data.Velocity * 3.0f;
 	Data.MaxHp = 20;
 	Data.Hp = 20;
@@ -49,7 +49,10 @@ void AMonster::SetStatus()
 	Stat.CreateStatus(&Data);
 
 	JumpForce = InitJumpForce;
-	bCanRotation = true;
+	bCanRotation = true; // 기본 회전 가능
+	bCanJump = false; // 점프하는 몬스터만 true
+	bIsAggressive = true; // 호전적이면 true
+
 }
 
 void AMonster::BeginPlay()
@@ -64,26 +67,22 @@ void AMonster::Tick(float _DeltaTime)
 
 	CheckCurRoom(); // 현재 나이트가 속한 룸 위치를 계속 체크
 	SetPause(); // 나이트가 몬스터가 속한 룸과 일치하지 않으면 bIsPause로 정지
-	ActivePixelCollision();
+	ActivePixelCollision(); // 픽셀 충돌
 
-	EnterCombatMode();
-
-	Idle();
-	Move(_DeltaTime);
-
-	TimeElapsed(_DeltaTime);
+	TimeElapsed(_DeltaTime); // 쿨타임 계산
 
 	FSM.Update(_DeltaTime);
 
 	DebugInput(_DeltaTime);
-
-	// Test
-
 }
 
 bool AMonster::IsPlayerNearby()
 {
 	if (true == IsPause()) 
+	{
+		return false;
+	}
+	if (false == bIsAggressive)
 	{
 		return false;
 	}
@@ -106,31 +105,6 @@ bool AMonster::IsPlayerNearby()
 	return false;
 }
 
-void AMonster::EnterCombatMode()
-{
-	if (true == IsPause())
-	{
-		return;
-	}
-	if (false == IsPlayerNearby())
-	{
-		return;
-	}
-
-	Attack();
-}
-
-void AMonster::Attack()
-{
-	if (true == Stat.IsAttacking())
-	{
-		return;
-	}
-
-	GetDirectionToPlayer();
-	Stat.SetAttacking(true);
-	FSM.ChangeState(EMonsterState::ATTACK_ANTICIPATE);
-}
 
 void AMonster::Dash()
 {
@@ -140,7 +114,7 @@ void AMonster::Dash()
 
 FVector AMonster::GetDirectionToPlayer()
 {
-	if (true == CanAction())
+	if (true == IsPause())
 	{
 		return FVector::ZERO;
 	}
@@ -167,16 +141,14 @@ FVector AMonster::GetDirectionToPlayer()
 		bIsLeft = false;
 	}
 
-	CheckDirection();
-
 	return Direction;
 }
 
 FVector AMonster::GetRandomDirection()
 {
-	if (false == CanAction())
+	if (true == IsPause())
 	{
-		return FVector::ZERO;
+		true;
 	}
 	if (true == bChooseDirection)
 	{
@@ -232,26 +204,21 @@ FVector AMonster::GetRandomDirection()
 	return Direction;
 }
 
-void AMonster::Idle()
+void AMonster::CheckDeath()
 {
 	if (true == IsPause())
 	{
 		return;
 	}
-	if (true == bCanMove)
+	if (0 >= Stat.GetHp())
 	{
-		return;
+		FSM.ChangeState(EMonsterState::DEATH_AIR);
 	}
-	if (true == Stat.IsAttacking())
-	{
-		return;
-	}
-	FSM.ChangeState(EMonsterState::IDLE);
 }
 
 void AMonster::Move(float _DeltaTime)
 {
-	if (false == CanAction())
+	if (true == IsPause())
 	{
 		return;
 	}
@@ -259,18 +226,16 @@ void AMonster::Move(float _DeltaTime)
 	{
 		return;
 	}
-	if (false == bCanMove)
-	{
-		return;
-	}
 	if (true == Stat.IsAttacking())
 	{
 		return;
 	}
-	CheckDirection();
+	//if (true == Stat.IsBeingHit()) // 몬스터마다 다름
+	//{
+	//	return;
+	//}
 	bChooseDirection = true; // true면 방향 그만 바꿔
 
-	FSM.ChangeState(EMonsterState::WALK);
 	FVector FinalVelocity = FVector(Stat.GetVelocity() * _DeltaTime, 0.0f);
 	FinalVelocity *= Direction;
 
@@ -286,33 +251,32 @@ void AMonster::TimeElapsed(float _DeltaTime)
 
 	if (true == bCanMove)
 	{
-		MoveElapsed += _DeltaTime;
-		if (MoveElapsed >= MoveDuration)
+		if (false == bIsChasing)
 		{
-			bCanMove = false;
-			MoveElapsed = 0.0f;
+			MoveElapsed += _DeltaTime;
+			if (MoveElapsed >= MoveDuration)
+			{
+				bCanMove = false;
+				MoveElapsed = 0.0f;
 
-			float MoveCooldown = 2.0f;
-			TimeEventor->AddEndEvent(MoveCooldown, [this]()
-				{
-					bCanMove = true;
-					bChooseDirection = false; // 방향 랜덤 결정
-				});
+				float MoveCooldown = 2.0f;
+				TimeEventor->AddEndEvent(MoveCooldown, [this]()
+					{
+						bCanMove = true;
+						bChooseDirection = false; // 방향 랜덤 결정
+					});
+			}
 		}
+
 	}
 
-	if (true == Stat.IsAttacking())
+	if (false == bCanAttack)
 	{
 		AttackElapsed += _DeltaTime;
 		if (AttackElapsed >= AttackDuation)
 		{
 			AttackElapsed = 0.0f;
-
-			float Cooldown = 2.0f;
-			TimeEventor->AddEndEvent(Cooldown, [this]()
-				{
-					Stat.SetAttacking(false);
-				});
+			bCanAttack = true;
 		}
 	}
 }
@@ -356,6 +320,7 @@ bool AMonster::IsPause()
 	return false;
 }
 
+// 일시정지거나, 죽었거나, 공격 중이거나, 스턴 상태면 true
 bool AMonster::CanAction()
 {
 	if (true == IsPause()) // 현재 몬스터가 정지 상태면
@@ -394,14 +359,16 @@ bool AMonster::CanJump()
 
 void AMonster::CheckDirection()
 {
-	if (false == CanAction())
-	{
-		return;
-	}
 	if (false == bCanRotation)
 	{
 		return;
 	}
+	if (bIsPrevLeft != bIsLeft)
+	{
+		bIsPrevLeft = bIsLeft;
+		bIsTurn = true;
+	}
+
 	if (bIsLeft == true)
 	{
 		SetActorRelativeScale3D({ 1.0f, 1.0f, 1.0f });

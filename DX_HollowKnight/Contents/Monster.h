@@ -65,11 +65,11 @@ public:
 	FVector GetRandomDirection();
 
 protected:
-	void Idle();
+	void CheckDeath();
 
 	// 이동
 	void Move(float _DeltaTime);
-	bool bChooseDirection = false;
+	bool bChooseDirection = false; // 이동할 방향을 결심했으면 이동하면서 방향전환 하지마.
 	bool bCanMove = true;
 	float MoveDuration = 1.0f;
 	float MoveElapsed = 0.0f;
@@ -78,15 +78,16 @@ protected:
 	void TimeElapsed(float _DeltaTime);
 
 	// 동작
+	bool bIsAggressive = true; // 플레이어 탐색하냐
 	bool bCanJump = false;
 	bool bCanRotation = true; // 지금 방향 전환 가능한 타이밍인가
-	bool bIsPrevDir = false;
+	bool bIsPrevLeft = true;
 	bool bIsTurn = false;
+	bool bIsChasing = false;
 
 	// 전투
-	void EnterCombatMode();
-	void Attack();
 	void Dash();
+	bool bCanAttack = true;
 	float AttackDuation = 2.0f;
 	float AttackElapsed = 0.0f;
 
@@ -107,10 +108,7 @@ protected:
 	void DebugInput(float _DeltaTime);
 
 	// 공격 또는 피격 동작 중일 때
-	//bool bIsAttacking = false;
-	//bool bIsBeingHit = false;
-	//bool bIsStun = false;
-	//bool bIsDeath = false;
+
 
 	bool bIsPause = false; // 나이트가 몬스터가 존재하는 위치와 다르면
 	bool bIsDebugPause = false;
@@ -136,8 +134,8 @@ protected:
 	std::shared_ptr<class UCollision> CenterPoint;
 	std::shared_ptr<class UCollision> DetectCollision;
 
-	void ChangeNextAnimation(EMonsterState _NextState);
-	void ChangePrevAnimation();
+	void ChangeNextState(EMonsterState _NextState);
+	void ChangePrevState();
 
 protected:
 	bool IsCurRoom();
@@ -277,6 +275,7 @@ private:
 
 	void CheckCurRoom();
 	void ActivePixelCollision();
+	void ActiveGravity();
 
 };
 
