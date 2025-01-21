@@ -115,7 +115,7 @@ void AKnight::ActivePixelCollsion()
 void AKnight::SetStatus()
 {
 	FStatusData Data;
-	Data.Velocity = 500.0f;
+	Data.Velocity = 400.0f;
 	Data.InitVelocity = Data.Velocity;
 	Data.DashSpeed = Data.Velocity * 3.0f;
 	Data.MaxHp = 5;
@@ -125,7 +125,7 @@ void AKnight::SetStatus()
 	Data.Att = 5;
 	Data.SpellAtt = 15;
 	Data.bIsKnockbackable = true;
-	Data.KnockbackDistance = 100.0f;
+	Data.KnockbackDistance = 200.0f;
 	Data.Geo = 0;
 	Stat.CreateStatus(&Data);
 
@@ -135,7 +135,6 @@ void AKnight::SetStatus()
 
 void AKnight::Move(float _DeltaTime)
 {
-
 	if (false == bIsDashing)
 	{
 		Stat.SetVelocity(Stat.GetInitVelocity());
@@ -146,7 +145,8 @@ void AKnight::Move(float _DeltaTime)
 		Stat.SetVelocity(Stat.GetDashSpeed());
 		//Velocity = DashSpeed;
 	}
-	if (true == bIsDashing)
+
+	if (false == CanMove())
 	{
 		return;
 	}
@@ -182,11 +182,11 @@ void AKnight::ReverseForce(float _DeltaTime)
 	FVector Reverse = -Stat.GetKnockbackForce();
 	Reverse.Normalize();
 
-	Stat.AddKnockbackForce(Reverse * _DeltaTime * 200.0f);
+	Stat.AddKnockbackForce(Reverse * _DeltaTime * 500.0f);
 
 	if (50.0f >= Stat.GetKnockbackForce().Length())
 	{
-		Stat.SetKnockbackForce(FVector::ZERO);
+		Stat.SetKnockbackDir(FVector::ZERO);
 	}
 }
 
@@ -345,6 +345,28 @@ bool AKnight::CanAction()
 	return true;
 }
 
+bool AKnight::CanMove()
+{
+	if (true == Stat.IsDeath())
+	{
+		return false;
+	}
+	if (true == Stat.IsCastingSpell())
+	{
+		return false;
+	}
+	if (true == Stat.IsBeingHit())
+	{
+		return false;
+	}
+	if (true == bIsDashing)
+	{
+		return false;
+	}
+
+	return true;
+}
+
 void AKnight::RecoveryIdle()
 {
 	bCanRotation = true;
@@ -352,9 +374,7 @@ void AKnight::RecoveryIdle()
 	bIsStunEffect = false;
 
 	Stat.SetStun(false);
-	Stat.SetIsBeingHit(false);
 	//bIsStun = false;
-	//bIsBeingHit = false;
 }
 
 void AKnight::ChangeDash()

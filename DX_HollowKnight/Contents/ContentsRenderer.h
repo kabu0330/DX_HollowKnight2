@@ -117,6 +117,10 @@ public:
 	{
 		return CurAnimation->Sprite->GetTexture()->GetTextureSize();
 	}
+	FVector GetRealScale()
+	{
+		return Sprite->GetSpriteScaleToReal(CurIndex);
+	}
 
 	FVector GetActorLocation() 
 	{

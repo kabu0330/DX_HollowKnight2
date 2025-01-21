@@ -109,6 +109,9 @@
     <ClInclude Include="TitleHUD.h">
       <Filter>Play\UI</Filter>
     </ClInclude>
+    <ClInclude Include="FogEffect.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -230,6 +233,9 @@
     </ClCompile>
     <ClCompile Include="Monster_CollisionAndAnimation.cpp">
       <Filter>Play\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="FogEffect.cpp">
+      <Filter>Global</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -111,6 +111,10 @@ void APlayHUD::SetHpUI()
 	bool HpPlus = false;
 
 	// 조건식 보강 필요
+	if (0 == Hp)
+	{
+		return;
+	}
 	if (Hp == PrevHp + 1)
 	{
 		return; // 체력 변화가 없으므로

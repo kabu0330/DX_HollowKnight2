@@ -57,8 +57,25 @@ void AKnightSlash::CreateHitEffect(UCollision* _This, UCollision* _Other)
 	Effect->SetZSort(EZOrder::KNIGHT_SKILL_FRONT);
 	Effect->ChangeAnimation(Knight, "NailHitEffect"); // RootComponent가 없다고 자꾸 터지는데 나이트 넣어주면 된다.
 	Effect->SetScale(1.5f);
-	AActor* Target = _Other->GetActor();
-	Effect->SetLocation(Target);
+	AActor* Target = _Other->GetActor(); // Monster
+
+	FVector KnightPos = { Knight->GetActorLocation().X, Knight->GetActorLocation().Y };
+	FVector MonsterPos = { Target->GetActorLocation().X, Target->GetActorLocation().Y };
+	FVector Direction = KnightPos - MonsterPos;
+
+	Direction.Normalize();
+	float Dir = Direction.Length();
+	AMonster* Monster = dynamic_cast<AMonster*>(Target);
+	if (nullptr == Monster)
+	{
+		return;
+	}
+	FVector Offset = Monster->GetRenderer()->GetRealScale().Half();
+	if (UEngineString::ToUpper("SlashEffect") == BodyRenderer->GetCurSpriteName())
+	{
+		Offset.Y = 0.0f;
+	}
+	Effect->SetLocation(Target, Offset * Dir);
 
 	UEngineRandom Random;
 	float Degree = Random.Randomfloat(0.0f, 360.0f);
@@ -92,6 +109,7 @@ void AKnightSlash::Knockback(UCollision* _This, UCollision* _Other)
 	FVector KnightPos = { Knight->GetActorLocation().X, Knight->GetActorLocation().Y };
 	FVector KnockbackDirection = KnightPos - TargetPos;
 	KnockbackDirection.Normalize();
-	Knight->GetStatRef().SetKnockbackForce(KnockbackDirection);
+	Knight->GetStatRef().SetKnockbackDir(KnockbackDirection);
+	Knight->GetStatRef().SetBeingHit(true);
 }
 

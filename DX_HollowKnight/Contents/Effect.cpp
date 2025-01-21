@@ -14,11 +14,9 @@ AEffect::AEffect()
 	ZSort = static_cast<float>(EZOrder::KNIGHT_SKILL_BACK);
 	BodyRenderer->SetWorldLocation({ 0.0f, 0.0f, ZSort });
 
-
+	
+	// 가져가서 만들 부분
 	float FrameTime = 0.06f;
-	float DashFrameTime = 0.03f;
-	float DashFrameTime2 = 0.02f;
-
 	std::string FocusEffect = "FocusEffect";
 	BodyRenderer->CreateAnimation(FocusEffect, FocusEffect, 0, 10, FrameTime, false);
 

@@ -4,6 +4,7 @@ struct FStatusData
 {
 	// 이동속도 관련
 	float Velocity = 100.0f;
+	float RunSpeed = 0.0f; // 몬스터만
 	float InitVelocity = 0.0f;
 	float DashSpeed = 0.0f;
 
@@ -59,6 +60,15 @@ public:
 	void SetInitVelocity(float _InitVelocity)
 	{
 		InitVelocity = _InitVelocity;
+	}
+
+	float GetRunSpeed()
+	{
+		return RunSpeed;
+	}
+	void SetRunSpeed(float _RunSpeed)
+	{
+		RunSpeed = _RunSpeed;
 	}
 
 	float GetDashSpeed()
@@ -169,7 +179,7 @@ public:
 	{
 		return bIsBeingHit;
 	}
-	void SetIsBeingHit(bool _bIsBeingHit)
+	void SetBeingHit(bool _bIsBeingHit)
 	{
 		bIsBeingHit = _bIsBeingHit;
 	}
@@ -205,7 +215,7 @@ public:
 	{
 		return KnockbackForce;
 	}
-	void SetKnockbackForce(FVector _KnockbackDir)
+	void SetKnockbackDir(FVector _KnockbackDir)
 	{
 		KnockbackForce = _KnockbackDir * KnockbackDistance;
 	}
@@ -221,6 +231,7 @@ private:
 	// 이동속도 관련
 	float Velocity = 100.0f;
 	float InitVelocity = 0.0f;
+	float RunSpeed = 0.0f;
 	float DashSpeed = 0.0f;
 
 	// 체력관련

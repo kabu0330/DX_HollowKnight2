@@ -3,6 +3,7 @@
 #include <EngineCore/Actor.h>
 #include "Global.h"
 #include "StatusUnit.h"
+#include <EngineCore/TimeEventComponent.h>
 
 // 설명 :
 class AMonster : public AActor
@@ -61,6 +62,7 @@ public:
 protected:
 	virtual void SetStatus();
 	UStatusUnit Stat = UStatusUnit();
+	UTimeEventComponent* TimeEventor = nullptr;
 	class AKnight* Knight = nullptr;
 
 	void BeginPlay() override;
@@ -71,8 +73,6 @@ protected:
 	void OnBodyCollision(class UCollision* _This, class UCollision* _Other);
 	void CancleCurAction();
 
-	void Move(float _DeltaTime);
-	void TimeElapsed(float _DeltaTime);
 	void DebugInput(float _DeltaTime);
 
 	// 공격 또는 피격 동작 중일 때
@@ -83,10 +83,17 @@ protected:
 
 	// 기타 스텟
 	float HitStunDuration = 1.0f;
-
 	float JumpForce = 0.0f;
 	float InitJumpForce = 600.0f;
 
+	// 쿨타임
+	void TimeElapsed(float _DeltaTime);
+
+	// 이동
+	void Move(float _DeltaTime);
+	bool bCanMove = true;
+	float MoveDuration = 2.0f;
+	float MoveElapsed = 0.0f;
 
 	// 동작
 	bool bCanJump = false;

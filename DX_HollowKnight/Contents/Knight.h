@@ -136,15 +136,18 @@ private:
 
 	// 공격 또는 피격 동작 중일 때
 	bool CanAction();
+	bool CanMove();
 	void RecoveryIdle();
 
 
 	float HitStunDuration = 1.0f;
 
-	void Move(float _DeltaTime);
 	void ReverseForce(float _DeltaTime);
 	void Knockback(float _DeltaTime);
 	bool bIsOnGround = false; // 픽셀충돌로 true / false 검사
+
+	// Move
+	void Move(float _DeltaTime);
 
 
 	// Jump : Z키

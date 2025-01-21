@@ -54,6 +54,10 @@ void AMonster::SetCollisionEvent()
 
 void AMonster::OnBodyCollision(UCollision* _This, UCollision* _Other)
 {
+	// Debug
+	return;
+
+
 	AActor* Other = _Other->GetActor();
 	AActor* Actor = dynamic_cast<AActor*>(Other);
 	if (nullptr == Actor)

@@ -9,8 +9,10 @@ AMonster::AMonster()
 	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
 	RootComponent = Default;
 
+	TimeEventor = CreateDefaultSubObject<UTimeEventComponent>().get();
+
 	ZSort = static_cast<float>(EZOrder::MONSTER);
-	RendererOffset = { 0.0f, .0f };
+	RendererOffset = { 0.0f, 0.0f };
 	BodyCollisionOffset = { 0.0f, 0.0f };
 	GravityPointOffset.Y = 1973.0f / 2.0f; // (이미지 크기 - 1프레임 크기) / 2.0f
 	WallPointOffest = { -1394.0f / 2.0f, GravityPointOffset.Y }; // 
@@ -30,9 +32,10 @@ AMonster::AMonster()
 void AMonster::SetStatus()
 {
 	FStatusData Data;
-	Data.Velocity = 0.0f;
+	Data.Velocity = 50.0f;
 	Data.InitVelocity = Data.Velocity;
-	Data.DashSpeed = Data.Velocity * 5.0f;
+	Data.RunSpeed = Data.Velocity * 1.3f;
+	Data.DashSpeed = Data.Velocity * 3.0f;
 	Data.MaxHp = 20;
 	Data.Hp = 20;
 	Data.MaxMp = 0;
@@ -183,6 +186,11 @@ void AMonster::Move(float _DeltaTime)
 	{
 		return;
 	}
+	if (false == bCanMove)
+	{
+		return;
+	}
+
 	FVector FinalVelocity = FVector(Stat.GetVelocity() * _DeltaTime, 0.0f);
 	FinalVelocity *= Direction;
 
@@ -191,6 +199,26 @@ void AMonster::Move(float _DeltaTime)
 
 void AMonster::TimeElapsed(float _DeltaTime)
 {
+	if (false == IsCurRoom())
+	{
+		return;
+	}
+
+	if (true == bCanMove)
+	{
+		MoveElapsed += _DeltaTime;
+		if (MoveElapsed >= MoveDuration)
+		{
+			bCanMove = false;
+			MoveElapsed = 0.0f;
+
+			float MoveCooldown = 2.0f;
+			TimeEventor->AddEndEvent(MoveCooldown, [this]()
+				{
+					bCanMove = true;
+				});
+		}
+	}
 }
 
 void AMonster::DebugInput(float _DeltaTime)

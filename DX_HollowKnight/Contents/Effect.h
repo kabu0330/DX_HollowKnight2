@@ -1,5 +1,7 @@
 #pragma once
 #include <EngineCore/Actor.h>
+#include "Global.h"
+#include "ContentsRenderer.h"
 
 // Ό³Έν :
 class AEffect : public AActor
@@ -86,7 +88,7 @@ protected:
 	bool bIsRotation = true;
 
 	float ZSort = 0.0f;
-	std::shared_ptr<class UContentsRenderer> BodyRenderer;
+	std::shared_ptr<UContentsRenderer> BodyRenderer;
 private:
 };
 

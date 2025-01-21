@@ -17,7 +17,7 @@ void UFightUnit::OnHit(AKnight* _Knight, int _Att)
 
 	// 스턴 상태
 	Stat.SetStun(true);
-	Stat.SetIsBeingHit(true);
+	Stat.SetBeingHit(true);
 	_Knight->GetFSMRef().ChangeState(EKnightState::STUN);
 }
 
@@ -27,7 +27,7 @@ void UFightUnit::OnHit(AMonster* _Monster, int _Att)
 	Stat.AddHp(-_Att);
 
 	Stat.SetStun(true);
-	Stat.SetIsBeingHit(true);
+	Stat.SetBeingHit(true);
 	//_Monster->GetFSMRef().ChangeState(EMonsterState::HIT);
 }
 

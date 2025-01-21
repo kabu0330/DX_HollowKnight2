@@ -10,6 +10,8 @@ void AKnight::SetIdle(float _DeltaTime)
 	Move(_DeltaTime);
 	RecoveryIdle(); // 정상 동작 상태로 전환
 
+	Stat.SetBeingHit(false);
+
 	if (UEngineInput::IsPress(VK_LEFT) || UEngineInput::IsPress(VK_RIGHT))
 	{
 		FSM.ChangeState(EKnightState::IDLE_TO_RUN);
@@ -33,6 +35,7 @@ void AKnight::SetRun(float _DeltaTime)
 	Move(_DeltaTime);
 
 	bCanRotation = true;
+	Stat.SetBeingHit(false);
 
 	if (UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT))
 	{
@@ -54,6 +57,7 @@ void AKnight::SetIdleToRun(float _DeltaTime)
 	Move(_DeltaTime);
 
 	bCanRotation = true;
+	Stat.SetBeingHit(false);
 
 	ChangeJumpAnimation();
 	ChangeDash(); // 대시
@@ -71,6 +75,7 @@ void AKnight::SetRunToIdle(float _DeltaTime)
 
 	bCanRotation = true;
 	bIsDashing = false; // 이 동작으로 돌아와야만 대시 상태가 해제된 것으로 판단
+	Stat.SetBeingHit(false);
 
 	ChangeNextAnimation(EKnightState::IDLE);
 
@@ -94,7 +99,6 @@ void AKnight::SetJump(float _DeltaTime)
 	Jump(_DeltaTime);
 
 	Move(_DeltaTime);
-
 
 	bCanRotation = true;
 
@@ -138,6 +142,7 @@ void AKnight::SetLand(float _DeltaTime)
 {
 	ActiveGravity();
 	Move(_DeltaTime);
+	Stat.SetBeingHit(false);
 
 	float InitJumpForce = 600.0f;
 	JumpForce = InitJumpForce;
