@@ -15,6 +15,7 @@ AKnightSkill::~AKnightSkill()
 void AKnightSkill::BeginPlay()
 {
 	ASkill::BeginPlay();
+	Knight = AKnight::GetPawn();
 }
 
 void AKnightSkill::Tick(float _DeltaTime)

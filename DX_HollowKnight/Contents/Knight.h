@@ -142,6 +142,8 @@ private:
 	float HitStunDuration = 1.0f;
 
 	void Move(float _DeltaTime);
+	void ReverseForce(float _DeltaTime);
+	void Knockback(float _DeltaTime);
 	bool bIsOnGround = false; // 픽셀충돌로 true / false 검사
 
 

@@ -64,6 +64,9 @@ void AKnight::Tick(float _DeltaTime)
 
 	TimeElapsed(_DeltaTime);
 
+	ReverseForce(_DeltaTime);
+	Knockback(_DeltaTime);
+
 	DebugInput(_DeltaTime);
 	DebugCamera();
 }
@@ -122,7 +125,7 @@ void AKnight::SetStatus()
 	Data.Att = 5;
 	Data.SpellAtt = 15;
 	Data.bIsKnockbackable = true;
-	Data.KnockbackDistance = 50.0f;
+	Data.KnockbackDistance = 100.0f;
 	Data.Geo = 0;
 	Stat.CreateStatus(&Data);
 
@@ -166,6 +169,32 @@ void AKnight::Move(float _DeltaTime)
 			//AddRelativeLocation(FVector{ Velocity * _DeltaTime, 0.0f, 0.0f });
 			AddRelativeLocation(FVector{ Stat.GetVelocity() * _DeltaTime, 0.0f, 0.0f });
 		}
+	}
+}
+
+void AKnight::ReverseForce(float _DeltaTime)
+{
+	if (FVector::ZERO == Stat.GetKnockbackForce())
+	{
+		return;
+	}
+
+	FVector Reverse = -Stat.GetKnockbackForce();
+	Reverse.Normalize();
+
+	Stat.AddKnockbackForce(Reverse * _DeltaTime * 200.0f);
+
+	if (50.0f >= Stat.GetKnockbackForce().Length())
+	{
+		Stat.SetKnockbackForce(FVector::ZERO);
+	}
+}
+
+void AKnight::Knockback(float _DeltaTime)
+{
+	if (FVector::ZERO != Stat.GetKnockbackForce())
+	{
+		AddActorLocation(Stat.GetKnockbackForce() * _DeltaTime);
 	}
 }
 

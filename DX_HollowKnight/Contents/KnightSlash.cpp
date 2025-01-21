@@ -55,7 +55,6 @@ void AKnightSlash::CreateHitEffect(UCollision* _This, UCollision* _Other)
 	AKnightEffect* Effect = GetWorld()->SpawnActor<AKnightEffect>().get();
 	Effect->SetName("SlashAttack");
 	Effect->SetZSort(EZOrder::KNIGHT_SKILL_FRONT);
-	AKnight* Knight = AKnight::GetPawn();
 	Effect->ChangeAnimation(Knight, "NailHitEffect"); // RootComponent가 없다고 자꾸 터지는데 나이트 넣어주면 된다.
 	Effect->SetScale(1.5f);
 	AActor* Target = _Other->GetActor();
@@ -69,7 +68,6 @@ void AKnightSlash::CreateHitEffect(UCollision* _This, UCollision* _Other)
 
 void AKnightSlash::Attack(UCollision* _This, UCollision* _Other)
 {
-	AKnight* Knight = AKnight::GetPawn();
 	if (nullptr == Knight)
 	{
 		return;
@@ -83,8 +81,17 @@ void AKnightSlash::Attack(UCollision* _This, UCollision* _Other)
 
 		int MonsterHp = Monster->GetStatRef().GetHp();
 		UEngineDebug::OutPutString("나이트가 몬스터에게 " + std::to_string(KnightAtt) + "만큼 데미지를 주었습니다. 현재 체력 : " + std::to_string(MonsterHp) );
+
+		Knockback(_This, _Other);
 	}
+}
 
-
+void AKnightSlash::Knockback(UCollision* _This, UCollision* _Other)
+{
+	FVector TargetPos = { _Other->GetWorldLocation().X, _Other->GetWorldLocation().Y };
+	FVector KnightPos = { Knight->GetActorLocation().X, Knight->GetActorLocation().Y };
+	FVector KnockbackDirection = KnightPos - TargetPos;
+	KnockbackDirection.Normalize();
+	Knight->GetStatRef().SetKnockbackForce(KnockbackDirection);
 }
 

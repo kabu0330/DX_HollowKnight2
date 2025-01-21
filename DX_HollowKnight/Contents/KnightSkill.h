@@ -17,13 +17,12 @@ public:
 	AKnightSkill& operator=(AKnightSkill&& _Other) noexcept = delete;
 
 protected:
-
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 	void SetCollisionEvent() override {}
+	AKnight* Knight = nullptr;
 
 private:
-
 	FVector KnightPos = { 0.0f, 0.0f, 0.0f };
 };
 

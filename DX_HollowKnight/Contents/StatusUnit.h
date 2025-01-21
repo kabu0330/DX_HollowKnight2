@@ -201,6 +201,20 @@ public:
 		bIsDeath = _bIsDeath;
 	}
 
+	FVector GetKnockbackForce()
+	{
+		return KnockbackForce;
+	}
+	void SetKnockbackForce(FVector _KnockbackDir)
+	{
+		KnockbackForce = _KnockbackDir * KnockbackDistance;
+	}
+	void AddKnockbackForce(FVector _KnockbackForce)
+	{
+		KnockbackForce += _KnockbackForce;
+	}
+	
+
 protected:
 
 private:
@@ -228,7 +242,8 @@ private:
 	bool bIsStun = false;
 	bool bIsDeath = false;
 	bool bIsKnockbackable = true;
-	float KnockbackDistance = 50.0f;
+	float KnockbackDistance = 100.0f;
+	FVector KnockbackForce = FVector::ZERO;
 	
 	// ¿Á»≠
 	int Geo = 0;
