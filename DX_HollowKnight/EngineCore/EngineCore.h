@@ -29,12 +29,32 @@ public:
 
 		NewLevel->InitLevel(GameMode.get(), Pawn.get(), HUD.get());
 
-
 		return NewLevel;
 	}
 
-	ENGINEAPI static void OpenLevel(std::string_view _Name);
+	template<typename GameModeType, typename MainPawnType, typename HUDType>
+	static void ResetLevel(std::string_view _LevelName)
+	{
+		std::string UpperName = UEngineString::ToUpper(_LevelName);
 
+		if (false == IsCurLevel(_LevelName)) // 현재 동작 중인 레벨이 아니라면
+		{
+			CreateLevel<GameModeType, MainPawnType, HUDType>(UpperName); // 다시 시작
+		}
+		else // 현재 동작 중인 레벨을 지워야 한다면,
+		{
+			std::shared_ptr<class ULevel> NextFrameLevel = ReadyToNextLevel(_LevelName);
+			NextFrameLevel = CreateLevel<GameModeType, MainPawnType, HUDType>(UpperName); // 똑같은 이름으로 다시 만들고
+			SetNextLevel(NextFrameLevel); // 다음 프레임에 실행될 레벨 세팅
+		}
+	}
+
+	ENGINEAPI static bool IsCurLevel(std::string_view _LevelName);
+	ENGINEAPI static std::shared_ptr<class ULevel> ReadyToNextLevel(std::string_view _LevelName);
+	ENGINEAPI static void SetNextLevel(std::shared_ptr<class ULevel> _NextLevel);
+	static void DestroyLevel(std::string_view _LevelName);
+
+	ENGINEAPI static void OpenLevel(std::string_view _Name);
 
 	ENGINEAPI static FVector GetScreenScale();
 
@@ -84,6 +104,9 @@ private:
 	std::map<std::string, std::shared_ptr<class ULevel>> LevelMap;
 	std::shared_ptr<class ULevel> CurLevel;
 	std::shared_ptr<class ULevel> NextLevel;
+	
+	// 레벨 리셋 기능
+	bool IsCurLevelReset = false;
 
 	ENGINEAPI static void SetGameInstance(std::shared_ptr<UGameInstance> _Inst);
 

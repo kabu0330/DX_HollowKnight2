@@ -65,12 +65,30 @@ public:
 	FVector GetRandomDirection();
 
 protected:
+	void Idle();
+
 	// 이동
 	void Move(float _DeltaTime);
 	bool bChooseDirection = false;
 	bool bCanMove = true;
 	float MoveDuration = 1.0f;
 	float MoveElapsed = 0.0f;
+
+	// 쿨타임
+	void TimeElapsed(float _DeltaTime);
+
+	// 동작
+	bool bCanJump = false;
+	bool bCanRotation = true; // 지금 방향 전환 가능한 타이밍인가
+	bool bIsPrevDir = false;
+	bool bIsTurn = false;
+
+	// 전투
+	void EnterCombatMode();
+	void Attack();
+	void Dash();
+	float AttackDuation = 2.0f;
+	float AttackElapsed = 0.0f;
 
 
 	virtual void SetStatus();
@@ -89,10 +107,10 @@ protected:
 	void DebugInput(float _DeltaTime);
 
 	// 공격 또는 피격 동작 중일 때
-	bool bIsAttacking = false;
-	bool bIsBeingHit = false;
-	bool bIsStun = false;
-	bool bIsDeath = false;
+	//bool bIsAttacking = false;
+	//bool bIsBeingHit = false;
+	//bool bIsStun = false;
+	//bool bIsDeath = false;
 
 	bool bIsPause = false; // 나이트가 몬스터가 존재하는 위치와 다르면
 	bool bIsDebugPause = false;
@@ -101,13 +119,6 @@ protected:
 	float HitStunDuration = 1.0f;
 	float JumpForce = 0.0f;
 	float InitJumpForce = 600.0f;
-
-	// 쿨타임
-	void TimeElapsed(float _DeltaTime);
-
-	// 동작
-	bool bCanJump = false;
-	bool bCanRotation = true; // 지금 방향 전환 가능한 타이밍인가
 
 	class ARoom* ParentRoom = nullptr;
 	class ARoom* CurRoom = nullptr; 
@@ -133,13 +144,13 @@ protected:
 	virtual bool CanAction();
 	bool CanJump();
 
-
 	using StateCallback = void(AMonster::*)(float);
 	void CreateState(EMonsterState _State, StateCallback _Callback, std::string_view _AnimationName);
 	
 	void SetFSM();
 	UFSMStateManager FSM;
 	EMonsterState NextState = EMonsterState::IDLE;
+
 	// 이동
 	virtual void SetIdle(float _DeltaTime);
 	virtual void SetWalk(float _DeltaTime);

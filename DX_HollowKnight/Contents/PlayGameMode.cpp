@@ -7,10 +7,12 @@
 #include <EngineCore/EngineGUIWindow.h>
 #include <EngineCore/EngineGUI.h>
 #include <EngineCore/imgui.h>
+#include <EngineCore/EngineCore.h>
 #include "Room.h"
 #include "CollisionManager.h"
 #include "RoomManager.h"
 #include "DebugWindowGUI.h"
+#include "PlayHUD.h"
 
 FVector APlayGameMode::MousePos = { 0.0f, 0.0f, 0.0f };
 FVector APlayGameMode::KnightPos = { 0.0f, 0.0f, 0.0f };
@@ -54,6 +56,10 @@ void APlayGameMode::CheckDebugInput()
 	if (UEngineInput::IsDown('P'))
 	{
 		GetWorld()->GetMainCamera()->FreeCameraSwitch();
+	}
+	if (UEngineInput::IsDown(VK_F4))
+	{
+		UEngineCore::ResetLevel<APlayGameMode, AKnight, APlayHUD>("Play");
 	}
 }
 

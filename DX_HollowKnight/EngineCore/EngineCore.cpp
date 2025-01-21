@@ -200,6 +200,14 @@ void UEngineCore::OpenLevel(std::string_view _Name)
 
 void UEngineCore::EngineFrame()
 {
+	// 현재 레벨을 리셋할거야?
+	if (true == GEngine->IsCurLevelReset)
+	{
+		GEngine->CurLevel = nullptr;
+		GEngine->IsCurLevelReset = false;
+		// 이제 리셋한 정보를 담은 NextLevel이 아래 과정을 거쳐 CurLevel이 된다.
+	}
+
 	if (nullptr != GEngine->NextLevel) // 레벨체인지할 Level이 존재하면
 	{
 		if (nullptr != GEngine->CurLevel) // 현재 레벨이 종료되면서 할 일이 있으면 마무리 하고
@@ -252,4 +260,51 @@ void UEngineCore::EngineEnd()
 void UEngineCore::SetGameInstance(std::shared_ptr<UGameInstance> _Inst)
 {
 	GEngine->GameInstance = _Inst;
+}
+
+bool UEngineCore::IsCurLevel(std::string_view _LevelName)
+{
+	std::string UpperName = UEngineString::ToUpper(_LevelName);
+
+	if (GEngine->CurLevel->GetName() != UpperName) 
+	{
+		DestroyLevel(_LevelName); // 지우고
+		return false;
+	}
+	return true;
+}
+
+std::shared_ptr<ULevel> UEngineCore::ReadyToNextLevel(std::string_view _LevelName)
+{
+	std::string UpperName = UEngineString::ToUpper(_LevelName);
+
+	std::map<std::string, std::shared_ptr<ULevel>>::iterator FindIter = GEngine->LevelMap.find(UpperName);
+	GEngine->LevelMap.erase(FindIter); // 현재 레벨을 Level 관리구조에서 제외시키고
+	GEngine->IsCurLevelReset = true; // 다음 프레임까지 현재 레벨을 살려둔다.
+
+	return 	GEngine->NextLevel;
+}
+
+void UEngineCore::SetNextLevel(std::shared_ptr<class ULevel> _NextLevel)
+{
+	GEngine->NextLevel = _NextLevel;
+}
+
+void UEngineCore::DestroyLevel(std::string_view _LevelName)
+{
+	std::string UpperName = UEngineString::ToUpper(_LevelName);
+
+	if (false == GEngine->LevelMap.contains(UpperName))
+	{
+		return;
+	}
+
+	std::map<std::string, std::shared_ptr<class ULevel>>::iterator FindIter = GEngine->LevelMap.find(UpperName);
+
+	if (nullptr != FindIter->second)
+	{
+		FindIter->second = nullptr;
+	}
+
+	GEngine->LevelMap.erase(FindIter);
 }

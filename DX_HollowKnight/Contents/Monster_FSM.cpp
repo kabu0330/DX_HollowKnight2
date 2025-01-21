@@ -68,19 +68,26 @@ void AMonster::SetFSM()
 
 void AMonster::SetIdle(float _DeltaTime)
 {
-	bIsBeingHit = false;
+	Stat.SetBeingHit(false);
+	bCanRotation = true;
+
+	GetRandomDirection();
+	CheckDirection();
 }
 
 void AMonster::SetWalk(float _DeltaTime)
 {
+	GetDirectionToPlayer();
 }
 
 void AMonster::SetRun(float _DeltaTime)
 {
+	GetDirectionToPlayer();
 }
 
 void AMonster::SetTurn(float _DeltaTime)
 {
+	ChangeNextAnimation(EMonsterState::WALK);
 }
 
 void AMonster::SetJumpAnticipate(float _DeltaTime)
@@ -129,14 +136,22 @@ void AMonster::SetDashRecovery(float _DeltaTime)
 
 void AMonster::SetAttackAnticipate(float _DeltaTime)
 {
+	UEngineDebug::OutPutString("몬스터 공격 준비");
+	bCanRotation = false;
+	ChangeNextAnimation(EMonsterState::ATTACK);
 }
 
 void AMonster::SetAttack(float _DeltaTime)
 {
+	UEngineDebug::OutPutString("몬스터 공격~~~~");
+	Dash();
+	ChangeNextAnimation(EMonsterState::ATTACK_RECOVERY);
 }
 
 void AMonster::SetAttackRecovery(float _DeltaTime)
 {
+	UEngineDebug::OutPutString("몬스터 공격후딜");
+	ChangeNextAnimation(EMonsterState::IDLE);
 }
 
 void AMonster::SetThrowAnticipate(float _DeltaTime)

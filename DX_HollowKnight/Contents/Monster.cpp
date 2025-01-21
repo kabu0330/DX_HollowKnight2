@@ -18,7 +18,7 @@ AMonster::AMonster()
 	GravityPointOffset.Y = 1973.0f / 2.0f; // (이미지 크기 - 1프레임 크기) / 2.0f
 	WallPointOffest = { -1394.0f / 2.0f, GravityPointOffset.Y }; // 
 
-	DetectRange = { 300, 300 };
+	DetectRange = { 500, 300 };
 
 	CreateAnimation();
 	CreateCollision();
@@ -33,9 +33,9 @@ AMonster::AMonster()
 void AMonster::SetStatus()
 {
 	FStatusData Data;
-	Data.Velocity = 50.0f;
+	Data.Velocity = 150.0f;
 	Data.InitVelocity = Data.Velocity;
-	Data.RunSpeed = Data.Velocity * 1.3f;
+	Data.RunSpeed = Data.Velocity * 1.5f;
 	Data.DashSpeed = Data.Velocity * 3.0f;
 	Data.MaxHp = 20;
 	Data.Hp = 20;
@@ -66,23 +66,24 @@ void AMonster::Tick(float _DeltaTime)
 	SetPause(); // 나이트가 몬스터가 속한 룸과 일치하지 않으면 bIsPause로 정지
 	ActivePixelCollision();
 
-	GetRandomDirection();
-	CheckDirection();
+	EnterCombatMode();
 
+	Idle();
 	Move(_DeltaTime);
+
 	TimeElapsed(_DeltaTime);
 
 	FSM.Update(_DeltaTime);
+
 	DebugInput(_DeltaTime);
 
 	// Test
-	//IsPlayerNearby();
-	//GetDirectionToPlayer();
+
 }
 
 bool AMonster::IsPlayerNearby()
 {
-	if (false == IsCurRoom()) // 플레이어가 해당 맵에 없다면 리턴
+	if (true == IsPause()) 
 	{
 		return false;
 	}
@@ -105,43 +106,84 @@ bool AMonster::IsPlayerNearby()
 	return false;
 }
 
+void AMonster::EnterCombatMode()
+{
+	if (true == IsPause())
+	{
+		return;
+	}
+	if (false == IsPlayerNearby())
+	{
+		return;
+	}
+
+	Attack();
+}
+
+void AMonster::Attack()
+{
+	if (true == Stat.IsAttacking())
+	{
+		return;
+	}
+	GetDirectionToPlayer();
+	Stat.SetAttacking(true);
+	FSM.ChangeState(EMonsterState::ATTACK_ANTICIPATE);
+}
+
+void AMonster::Dash()
+{
+	float DeltaTime = UEngineCore::GetDeltaTime();
+	AddActorLocation(Direction * Stat.GetRunSpeed() * DeltaTime);
+}
+
 FVector AMonster::GetDirectionToPlayer()
 {
-	if (false == IsCurRoom()) // 플레이어가 해당 맵에 없다면 리턴
-	{
-		return FVector::ZERO;
-	}
-	if (nullptr == Knight)
+	if (true == CanAction())
 	{
 		return FVector::ZERO;
 	}
 	FVector KnightPos = Knight->GetActorLocation();
 	FVector MonsterPos = this->GetActorLocation();
+
 	FVector Distance = KnightPos - MonsterPos;
+	Distance.Z = 0.0f;
+	if (false == bCanFly)
+	{
+		Distance.Y = 0.0f;
 
+	}
 	Distance.Normalize();
+	Direction = Distance;
 
-	if (Distance.X <= 0)
+
+	if (Direction.X <= 0)
 	{
 		bIsLeft = true;
 	}
-	else if (Distance.X > 0)
+	else if (Direction.X > 0)
 	{
 		bIsLeft = false;
 	}
 
-	return Distance;
+	CheckDirection();
+
+	return Direction;
 }
 
 FVector AMonster::GetRandomDirection()
 {
-	if (false == IsCurRoom())
+	if (true == CanAction())
 	{
 		return FVector::ZERO;
 	}
 	if (true == bChooseDirection)
 	{
 		return FVector::ZERO; // 다음 이동까지 방향 결정하지마.
+	}
+	if (true == IsPlayerNearby()) // 플레이어가 근처에 있으면 랜덤 방향 결정하지마.
+	{
+		return FVector::ZERO;
 	}
 	FVector LeftTop = FVector::LEFT + FVector::UP;
 	LeftTop.Normalize();
@@ -170,14 +212,14 @@ FVector AMonster::GetRandomDirection()
 	{
 	case 0:
 	{
-		UEngineDebug::OutPutString("왼쪽 이동");
+		UEngineDebug::OutPutString("GetRandomDirection() : 왼쪽 이동");
 		Direction = FVector::LEFT;
 		bIsLeft = true;
 		break;
 	}
 	case 1:
 	{
-		UEngineDebug::OutPutString("오른쪽 이동");
+		UEngineDebug::OutPutString("GetRandomDirection() : 오른쪽 이동");
 		Direction = FVector::RIGHT;
 		bIsLeft = false;
 		break;
@@ -187,6 +229,23 @@ FVector AMonster::GetRandomDirection()
 	}
 	
 	return Direction;
+}
+
+void AMonster::Idle()
+{
+	if (true == IsPause())
+	{
+		return;
+	}
+	if (true == bCanMove)
+	{
+		return;
+	}
+	if (true == Stat.IsAttacking())
+	{
+		return;
+	}
+	FSM.ChangeState(EMonsterState::IDLE);
 }
 
 void AMonster::Move(float _DeltaTime)
@@ -203,7 +262,12 @@ void AMonster::Move(float _DeltaTime)
 	{
 		return;
 	}
-
+	if (true == Stat.IsAttacking())
+	{
+		return;
+	}
+	CheckDirection();
+	FSM.ChangeState(EMonsterState::WALK);
 	bChooseDirection = true; // true면 방향 그만 바꿔
 	FVector FinalVelocity = FVector(Stat.GetVelocity() * _DeltaTime, 0.0f);
 	FinalVelocity *= Direction;
@@ -231,6 +295,21 @@ void AMonster::TimeElapsed(float _DeltaTime)
 				{
 					bCanMove = true;
 					bChooseDirection = false; // 방향 랜덤 결정
+				});
+		}
+	}
+
+	if (true == Stat.IsAttacking())
+	{
+		AttackElapsed += _DeltaTime;
+		if (AttackElapsed >= AttackDuation)
+		{
+			AttackElapsed = 0.0f;
+
+			float Cooldown = 2.0f;
+			TimeEventor->AddEndEvent(Cooldown, [this]()
+				{
+					Stat.SetAttacking(false);
 				});
 		}
 	}
@@ -267,6 +346,11 @@ bool AMonster::IsPause()
 	{
 		return true;
 	}
+	if (nullptr == Knight)
+	{
+		UEngineDebug::OutPutString("심각 : Moster 객체가 나이트를 인식하지 못함");
+		return true;
+	}
 	return false;
 }
 
@@ -276,15 +360,15 @@ bool AMonster::CanAction()
 	{
 		return false;
 	}
-	if (true == bIsDeath) // 죽었으면
+	if (true == Stat.IsDeath()) // 죽었으면
 	{
 		return false;
 	}
-	if (true == bIsAttacking) // 공격중이면
+	if (true == Stat.IsAttacking()) // 공격중이면
 	{
 		return false;
 	}
-	if (true == bIsStun)
+	if (true == Stat.IsStun())
 	{
 		return false;
 	}

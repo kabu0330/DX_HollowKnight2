@@ -12,18 +12,17 @@ void AMonster::CreateAnimation()
 
 	std::string HuskBully = "HuskBully.png";
 	float FrameTime = 0.2f;
+	float RunnigTime = 0.1f;
 	BodyRenderer->CreateAnimation("Idle", HuskBully, 0, 5, FrameTime);
-	BodyRenderer->CreateAnimation("Walk", HuskBully, 6, 12, FrameTime);
+	BodyRenderer->CreateAnimation("Walk", HuskBully, 6, 12, RunnigTime);
 	BodyRenderer->CreateAnimation("Turn", HuskBully, 13, 14, FrameTime);
-	BodyRenderer->CreateAnimation("Attack_Anticipate", HuskBully, 15, 18, FrameTime);
-	BodyRenderer->CreateAnimation("Attack_Lunge", HuskBully, 19, 20, FrameTime);
-	BodyRenderer->CreateAnimation("Attack_Cooldown", HuskBully, 21, 21, FrameTime);
-	BodyRenderer->CreateAnimation("Death_Air", HuskBully, 22, 22, FrameTime);
-	BodyRenderer->CreateAnimation("Death_Land", HuskBully, 23, 30, FrameTime);
+	BodyRenderer->CreateAnimation("AttackAnticipate", HuskBully, 15, 18, FrameTime);
+	BodyRenderer->CreateAnimation("Attack", HuskBully, 19, 20, FrameTime);
+	BodyRenderer->CreateAnimation("AttackRecovery", HuskBully, 21, 21, FrameTime);
+	BodyRenderer->CreateAnimation("DeathAir", HuskBully, 22, 22, FrameTime);
+	BodyRenderer->CreateAnimation("DeathLand", HuskBully, 23, 30, FrameTime);
 
 	BodyRenderer->ChangeAnimation("Idle");
-
-
 }
 
 void AMonster::ChangeNextAnimation(EMonsterState _NextState)
@@ -80,7 +79,7 @@ void AMonster::OnBodyCollision(UCollision* _This, UCollision* _Other)
 
 void AMonster::CancleCurAction()
 {
-	bIsBeingHit = true;
+	Stat.SetBeingHit(true);
 }
 
 void AMonster::CreateCollision()

@@ -15,6 +15,7 @@ bool UStatusUnit::CreateStatus(FStatusData* _Data)
 	Velocity = _Data->Velocity;
 	InitVelocity = _Data->InitVelocity;
 	DashSpeed = _Data->DashSpeed;
+	RunSpeed = _Data->RunSpeed;
 
 	// 체력관련
 	MaxHp = _Data->MaxHp;
