@@ -35,7 +35,7 @@ void AMonster::SetStatus()
 	FStatusData Data;
 	Data.Velocity = 150.0f;
 	Data.InitVelocity = Data.Velocity;
-	Data.RunSpeed = Data.Velocity * 8.0f;
+	Data.RunSpeed = Data.Velocity * 2.5f;
 	Data.DashSpeed = Data.Velocity * 3.0f;
 	Data.MaxHp = 20;
 	Data.Hp = 20;
@@ -68,6 +68,9 @@ void AMonster::Tick(float _DeltaTime)
 	CheckCurRoom(); // 현재 나이트가 속한 룸 위치를 계속 체크
 	SetPause(); // 나이트가 몬스터가 속한 룸과 일치하지 않으면 bIsPause로 정지
 	ActivePixelCollision(); // 픽셀 충돌
+
+	ReverseForce(_DeltaTime);
+	Knockback(_DeltaTime);
 
 	TimeElapsed(_DeltaTime); // 쿨타임 계산
 
@@ -118,6 +121,10 @@ FVector AMonster::GetDirectionToPlayer()
 	{
 		return FVector::ZERO;
 	}
+	if (false == bIsChasing)
+	{
+		return FVector::ZERO;
+	}
 	FVector KnightPos = Knight->GetActorLocation();
 	FVector MonsterPos = this->GetActorLocation();
 
@@ -148,7 +155,11 @@ FVector AMonster::GetRandomDirection()
 {
 	if (true == IsPause())
 	{
-		true;
+		return FVector::ZERO;
+	}
+	if (true == bIsChasing)
+	{
+		return FVector::ZERO;
 	}
 	if (true == bChooseDirection)
 	{
@@ -216,6 +227,40 @@ void AMonster::CheckDeath()
 	}
 }
 
+void AMonster::ReverseForce(float _DeltaTime)
+{
+	if (FVector::ZERO == Stat.GetKnockbackForce())
+	{
+		return;
+	}
+
+	FVector Reverse = -Stat.GetKnockbackForce();
+	Reverse.Normalize();
+
+	Stat.AddKnockbackForce(Reverse * _DeltaTime * 500.0f);
+
+	if (50.0f >= Stat.GetKnockbackForce().Length())
+	{
+		Stat.SetKnockbackDir(FVector::ZERO);
+	}
+}
+
+void AMonster::Knockback(float _DeltaTime)
+{
+	if (FVector::ZERO != Stat.GetKnockbackForce())
+	{
+		AddActorLocation(Stat.GetKnockbackForce() * _DeltaTime);
+	}
+}
+
+void AMonster::DeathAir(float _DeltaTime)
+{
+}
+
+void AMonster::Death(float _DeltaTime)
+{
+}
+
 void AMonster::Move(float _DeltaTime)
 {
 	if (true == IsPause())
@@ -230,12 +275,6 @@ void AMonster::Move(float _DeltaTime)
 	{
 		return;
 	}
-	//if (true == Stat.IsBeingHit()) // 몬스터마다 다름
-	//{
-	//	return;
-	//}
-	bChooseDirection = true; // true면 방향 그만 바꿔
-
 	FVector FinalVelocity = FVector(Stat.GetVelocity() * _DeltaTime, 0.0f);
 	FinalVelocity *= Direction;
 
@@ -251,15 +290,16 @@ void AMonster::TimeElapsed(float _DeltaTime)
 
 	if (true == bCanMove)
 	{
-		if (false == bIsChasing)
+		if (false == bIsChasing) // 플레이어 추적 상태가 아닐 때만 이동 쿨타임 적용
 		{
+			bChooseDirection = true; // true면 방향 그만 바꿔
 			MoveElapsed += _DeltaTime;
 			if (MoveElapsed >= MoveDuration)
 			{
 				bCanMove = false;
 				MoveElapsed = 0.0f;
 
-				float MoveCooldown = 2.0f;
+				float MoveCooldown = 3.0f;
 				TimeEventor->AddEndEvent(MoveCooldown, [this]()
 					{
 						bCanMove = true;
@@ -267,7 +307,6 @@ void AMonster::TimeElapsed(float _DeltaTime)
 					});
 			}
 		}
-
 	}
 
 	if (false == bCanAttack)

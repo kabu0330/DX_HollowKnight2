@@ -66,12 +66,16 @@ public:
 
 protected:
 	void CheckDeath();
+	void ReverseForce(float _DeltaTime);
+	void Knockback(float _DeltaTime);
+	void DeathAir(float _DeltaTime);
+	void Death(float _DeltaTime);
 
 	// 이동
 	void Move(float _DeltaTime);
 	bool bChooseDirection = false; // 이동할 방향을 결심했으면 이동하면서 방향전환 하지마.
 	bool bCanMove = true;
-	float MoveDuration = 1.0f;
+	float MoveDuration = 2.0f;
 	float MoveElapsed = 0.0f;
 
 	// 쿨타임
@@ -88,7 +92,7 @@ protected:
 	// 전투
 	void Dash();
 	bool bCanAttack = true;
-	float AttackDuation = 2.0f;
+	float AttackDuation = 5.0f;
 	float AttackElapsed = 0.0f;
 
 

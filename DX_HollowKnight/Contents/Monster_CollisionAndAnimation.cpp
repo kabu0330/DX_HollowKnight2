@@ -12,7 +12,7 @@ void AMonster::CreateAnimation()
 
 	std::string HuskBully = "HuskBully.png";
 	float IdleTime = 0.2f;
-	float TurnTime = 0.2f;
+	float TurnTime = 0.3f;
 	float RunnigTime = 0.1f;
 	float AttackAnticipateTime = 0.15f;
 	float AttackTime = 0.12f;

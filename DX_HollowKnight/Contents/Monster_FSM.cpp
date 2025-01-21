@@ -82,7 +82,8 @@ void AMonster::SetIdle(float _DeltaTime)
 	bCanRotation = true; // 방향전환 허용
 	CheckDirection(); // 좌우 반전 적용
 
-
+	GetRandomDirection(); // chasing이 false라면 랜덤이동
+	GetDirectionToPlayer(); // chasing이 true라면 추적
 
 	if (false == bIsOnGround)
 	{
@@ -110,14 +111,8 @@ void AMonster::SetWalk(float _DeltaTime)
 		return;
 	}
 
-	if (false == bIsChasing) // 추적중
-	{
-		GetRandomDirection(); // 랜덤 이동 
-	}
-	else
-	{
-		GetDirectionToPlayer();
-	}
+	//GetRandomDirection(); // chasing이 false라면 랜덤이동
+	GetDirectionToPlayer(); // chasing이 true라면 추적
 
 	CheckDirection(); // 좌우 반전 적용
 	Move(_DeltaTime); // 이동 및 방향전환 금지
@@ -147,7 +142,18 @@ void AMonster::SetTurn(float _DeltaTime)
 	CheckDeath();
 	ActiveGravity();
 
-	CheckDirection(); // 좌우 반전 적용
+	//CheckDirection(); // 좌우 반전 적용
+
+	// 좌우 반전
+	if (bIsLeft == false)
+	{
+		SetActorRelativeScale3D({ 1.0f, 1.0f, 1.0f });
+	}
+	if (bIsLeft == true)
+	{
+		SetActorRelativeScale3D({ -1.0f, 1.0f, 1.0f });
+	}
+
 	if (true == bIsTurn)
 	{
 		ChangeNextState(EMonsterState::WALK);
@@ -156,7 +162,6 @@ void AMonster::SetTurn(float _DeltaTime)
 	{
 		FSM.ChangeState(EMonsterState::WALK);
 	}
-
 }
 
 void AMonster::SetAttackAnticipate(float _DeltaTime)
@@ -186,7 +191,7 @@ void AMonster::SetAttack(float _DeltaTime)
 	}
 	else
 	{
-		TimeEventor->AddEndEvent(0.3f, [this]()
+		TimeEventor->AddEndEvent(1.0f, [this]()
 			{
 				FSM.ChangeState(EMonsterState::ATTACK_RECOVERY);
 			});
