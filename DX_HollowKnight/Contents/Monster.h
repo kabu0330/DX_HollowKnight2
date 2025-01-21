@@ -19,7 +19,12 @@ public:
 	AMonster& operator=(const AMonster& _Other) = delete;
 	AMonster& operator=(AMonster&& _Other) noexcept = delete;
 
+	bool IsPause();
 	void SetPause();
+	void SwitchDebugPause()
+	{
+		bIsDebugPause = !bIsDebugPause;
+	}
 
 	bool IsLeft()
 	{
@@ -80,6 +85,9 @@ protected:
 	bool bIsBeingHit = false;
 	bool bIsStun = false;
 	bool bIsDeath = false;
+
+	bool bIsPause = false; // 나이트가 몬스터가 존재하는 위치와 다르면
+	bool bIsDebugPause = false;
 
 	// 기타 스텟
 	float HitStunDuration = 1.0f;
@@ -256,6 +264,6 @@ private:
 
 	void CheckCurRoom();
 	void ActivePixelCollision();
-	bool bIsPause = false;
+
 };
 

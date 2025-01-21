@@ -2,6 +2,7 @@
 #include "Monster.h"
 #include "FightUnit.h"
 #include <EngineBase/EngineRandom.h>
+#include <EnginePlatform/EngineInput.h>
 
 AMonster::AMonster()
 {
@@ -73,7 +74,7 @@ void AMonster::Tick(float _DeltaTime)
 
 	// Test
 	//IsPlayerNearby();
-	//GetDirectionToPlayer();
+	GetDirectionToPlayer();
 	CheckDirection();
 }
 
@@ -132,6 +133,14 @@ FVector AMonster::GetDirectionToPlayer()
 
 FVector AMonster::GetRandomDirection()
 {
+	if (false == IsCurRoom())
+	{
+		return;
+	}
+	if (true)
+	{
+
+	}
 	FVector LeftTop = FVector::LEFT + FVector::UP;
 	LeftTop.Normalize();
 
@@ -178,7 +187,7 @@ FVector AMonster::GetRandomDirection()
 
 void AMonster::Move(float _DeltaTime)
 {
-	if (false == IsCurRoom())
+	if (false == CanAction())
 	{
 		return;
 	}
@@ -199,7 +208,7 @@ void AMonster::Move(float _DeltaTime)
 
 void AMonster::TimeElapsed(float _DeltaTime)
 {
-	if (false == IsCurRoom())
+	if (true == IsPause())
 	{
 		return;
 	}
@@ -223,6 +232,10 @@ void AMonster::TimeElapsed(float _DeltaTime)
 
 void AMonster::DebugInput(float _DeltaTime)
 {
+	if (UEngineInput::IsDown('R'))
+	{
+		SwitchDebugPause();
+	}
 }
 
 bool AMonster::IsCurRoom()
@@ -234,17 +247,34 @@ bool AMonster::IsCurRoom()
 	return false;
 }
 
+bool AMonster::IsPause()
+{
+	if (false == IsCurRoom()) // 플레이어가 다른 맵에 있으면 행동불가
+	{
+		return false;
+	}
+	if (true == bIsPause) // 정지상태면 
+	{
+		return false;
+	}
+	if (true == bIsDebugPause)
+	{
+		return false;
+	}
+	return true;
+}
+
 bool AMonster::CanAction()
 {
-	if (true == bIsPause)
+	if (true == IsPause()) // 현재 몬스터가 정지 상태면
 	{
 		return false;
 	}
-	if (true == bIsDeath)
+	if (true == bIsDeath) // 죽었으면
 	{
 		return false;
 	}
-	if (true == bIsAttacking)
+	if (true == bIsAttacking) // 공격중이면
 	{
 		return false;
 	}
