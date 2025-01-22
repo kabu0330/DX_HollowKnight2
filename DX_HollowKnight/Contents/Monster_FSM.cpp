@@ -216,14 +216,15 @@ void AMonster::SetHit(float _DeltaTime)
 void AMonster::SetDeathAir(float _DeltaTime)
 {
 	ActiveGravity();
+	DeathAir(_DeltaTime);
 	BodyCollision->Destroy();
+	DetectCollision->Destroy();
 	ChangeNextState(EMonsterState::DEATH_LAND);
 }
 
 void AMonster::SetDeathLand(float _DeltaTime)
 {
 	ActiveGravity();
-
 	Stat.SetDeath(true);
 }
 

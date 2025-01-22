@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "PlayHUD.h"
+#include <EnginePlatform/EngineInput.h>
 #include <EngineCore/ImageWidget.h>
 #include <EngineCore/FontWidget.h>
 #include <EngineCore/TimeEventComponent.h>
@@ -26,12 +27,18 @@ void APlayHUD::BeginPlay()
 	CreateHpUI();
 	CreateGeo();
 	CreateGeoCount();
+
+	//CreateFade();
 }
 
 void APlayHUD::Tick(float _DeltaTime)
 {
 	AHUD::Tick(_DeltaTime);
 	SetHpUI(); // 실시간 HP 개수 반영
+	if (UEngineInput::IsDown('F'))
+	{
+		FadeOut();
+	}
 }
 
 void APlayHUD::CreateSkillGaugeFrame()
@@ -172,5 +179,42 @@ void APlayHUD::CreateGeoCount()
 	GeoCount->SetWorldLocation({ -ScreenSize.X * GeoPosX,  ScreenSize.Y * GeoPosY });
 	GeoCount->SetFont("NotoSerifCJKsc-Regular", 40.0f, UColor::WHITE);
 	GeoCount->SetText("95");
+}
+
+void APlayHUD::CreateFade()
+{
+	Fade = CreateWidget<UImageWidget>(static_cast<int>(EUIOrder::FADE), "Fade");
+	Fade->SetTexture("Fade.bmp", true, 1.0f);
+}
+
+void APlayHUD::FadeOut()
+{
+	UEngineDebug::OutPutString("Fade Out~~~~~");
+	//Fade->ColorData.PlusColor = FVector::UNIT;
+	//FadeValue =  FVector::UNIT;
+	FadeDir   = -FVector::UNIT;
+	FadeDir.W   = -1.0f;
+	TimeEventor->AddUpdateEvent(10.0f, std::bind(&APlayHUD::FadeChange, this));
+}
+
+void APlayHUD::FadeIn()
+{
+	//Fade->ColorData.PlusColor = FVector::UNIT;
+	FadeValue = FVector::ZERO;
+	  FadeDir = FVector::UNIT;
+	TimeEventor->AddUpdateEvent(2.0f, std::bind(&APlayHUD::FadeChange, this));
+}
+
+void APlayHUD::FadeChange()
+{
+	UEngineDebug::OutPutString("Fade Change : " + Fade->ColorData.MulColor.ToString());
+
+	float DeltaTime = UEngineCore::GetDeltaTime();
+	float Ratio = 0.1f;
+	FadeValue += FadeDir * DeltaTime * Ratio;
+	FadeValue.W += FadeDir.W * DeltaTime * Ratio;
+
+	//Fade->ColorData.PlusColor = FadeValue;
+	Fade->ColorData.MulColor = FadeValue;
 }
 

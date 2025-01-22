@@ -2,7 +2,6 @@
 #include <EngineCore/HUD.h>
 #include <vector>
 
-
 // Ό³Έν :
 class APlayHUD : public AHUD
 {
@@ -22,6 +21,9 @@ protected:
 	void Tick(float _DeltaTime)	override;
 
 private:
+	FVector ScreenSize = FVector::ZERO;
+	FVector HalfSize = FVector::ZERO;
+	class AKnight* Knight = nullptr;
 	UTimeEventComponent* TimeEventor = nullptr;
 
 	void CreateSkillGaugeFrame();
@@ -46,8 +48,12 @@ private:
 	std::shared_ptr<class UFontWidget> GeoCount = nullptr;
 
 
-	FVector ScreenSize = FVector::ZERO;
-	FVector HalfSize = FVector::ZERO;
-	class AKnight* Knight = nullptr;
+	void CreateFade();
+	void FadeOut();
+	void FadeIn();
+	void FadeChange();
+	std::shared_ptr<class UImageWidget> Fade;
+	float4 FadeValue = FVector::ZERO;
+	float4 FadeDir = FVector::UNIT; // {1, 1, 1, 1}
 };
 

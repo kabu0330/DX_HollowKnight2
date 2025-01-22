@@ -15,7 +15,7 @@ AMonster::AMonster()
 	ZSort = static_cast<float>(EZOrder::MONSTER);
 	RendererOffset = { 0.0f, 0.0f };
 	BodyCollisionOffset = { 0.0f, 0.0f };
-	GravityPointOffset.Y = 1973.0f / 2.0f - 5.f; // (이미지 크기 - 1프레임 크기) / 2.0f
+	GravityPointOffset.Y = 1973.0f / 2.0f; // (이미지 크기 - 1프레임 크기) / 2.0f
 	WallPointOffest = { -1394.0f / 2.0f, GravityPointOffset.Y }; // 
 
 	DetectRange = { 500, 300 };
@@ -38,7 +38,7 @@ void AMonster::SetStatus()
 	Data.RunSpeed = Data.Velocity * 2.5f;
 	Data.DashSpeed = Data.Velocity * 3.0f;
 	Data.MaxHp = 20;
-	Data.Hp = 20;
+	Data.Hp = 5;
 	Data.MaxMp = 0;
 	Data.Mp = 0;
 	Data.Att = 1;
@@ -255,6 +255,16 @@ void AMonster::Knockback(float _DeltaTime)
 
 void AMonster::DeathAir(float _DeltaTime)
 {
+	FVector KnightPos = Knight->GetActorLocation();
+	FVector MonsterPos = GetActorLocation();
+	FVector Direction = MonsterPos - KnightPos;
+	Direction.Normalize();
+	Direction += FVector::UP;
+	Direction.Normalize();
+	Stat.SetKnockbackDir(Direction);
+	Stat.SetKnockbackDistance(400.0f);
+
+
 }
 
 void AMonster::Death(float _DeltaTime)
