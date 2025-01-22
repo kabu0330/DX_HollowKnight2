@@ -68,6 +68,19 @@ void AMonster::SetFSM()
 	FSM.ChangeState(EMonsterState::IDLE);
 }
 
+void AMonster::UpdateFSM(float _DeltaTime)
+{
+	if (true == IsPause())
+	{
+		return;
+	}
+	if (false == IsCurRoom())
+	{
+		return;
+	}
+	FSM.Update(_DeltaTime);
+}
+
 void AMonster::SetIdle(float _DeltaTime)
 {
 	UEngineDebug::OutPutString("Monster FSM : Idle");

@@ -162,6 +162,7 @@ protected:
 	EMonsterState NextState = EMonsterState::IDLE;
 
 	// ¿Ãµø
+	void UpdateFSM(float _DeltaTime);
 	virtual void SetIdle(float _DeltaTime);
 	virtual void SetWalk(float _DeltaTime);
 	virtual void SetRun(float _DeltaTime);

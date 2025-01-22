@@ -74,7 +74,7 @@ void AMonster::Tick(float _DeltaTime)
 
 	TimeElapsed(_DeltaTime); // ÄðÅ¸ÀÓ °è»ê
 
-	FSM.Update(_DeltaTime);
+	UpdateFSM(_DeltaTime);
 
 	DebugInput(_DeltaTime);
 }
@@ -256,8 +256,6 @@ void AMonster::ReverseForce(float _DeltaTime)
 	}
 
 	Stat.AddKnockbackForce(Reverse * _DeltaTime * 500.0f);
-
-
 }
 
 void AMonster::Knockback(float _DeltaTime)
@@ -349,7 +347,7 @@ void AMonster::TimeElapsed(float _DeltaTime)
 
 void AMonster::DebugInput(float _DeltaTime)
 {
-	if (UEngineInput::IsDown('R'))
+	if (UEngineInput::IsDown(VK_F1))
 	{
 		SwitchDebugPause();
 	}
