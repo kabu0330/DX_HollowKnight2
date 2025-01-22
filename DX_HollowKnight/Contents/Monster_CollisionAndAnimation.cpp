@@ -10,7 +10,7 @@ void AMonster::CreateAnimation()
 	BodyRenderer->SetAutoScaleRatio(1.0f);
 	BodyRenderer->SetWorldLocation({ RendererOffset.X, RendererOffset.Y, ZSort });
 
-	std::string HuskBully = "HuskBully.png";
+	std::string WanderingHusk = "WanderingHusk.png";
 	float IdleTime = 0.2f;
 	float TurnTime = 0.3f;
 	float RunnigTime = 0.1f;
@@ -19,14 +19,14 @@ void AMonster::CreateAnimation()
 	float RecoveryTime = 0.1f;
 	float DeathAirTime = 0.2f;
 	float DeathTime = 0.15f;
-	BodyRenderer->CreateAnimation("Idle", HuskBully, 0, 5, IdleTime);
-	BodyRenderer->CreateAnimation("Walk", HuskBully, 6, 12, RunnigTime);
-	BodyRenderer->CreateAnimation("Turn", HuskBully, 13, 14, TurnTime);
-	BodyRenderer->CreateAnimation("AttackAnticipate", HuskBully, 15, 19, AttackAnticipateTime);
-	BodyRenderer->CreateAnimation("Attack", HuskBully, 20, 23, AttackTime);
-	BodyRenderer->CreateAnimation("AttackRecovery", HuskBully, 24, 24, RecoveryTime, false);
-	BodyRenderer->CreateAnimation("DeathAir", HuskBully, 25, 25, DeathAirTime);
-	BodyRenderer->CreateAnimation("DeathLand", HuskBully, 26, 33, DeathTime, false);
+	BodyRenderer->CreateAnimation("Idle", WanderingHusk, 0, 5, IdleTime);
+	BodyRenderer->CreateAnimation("Walk", WanderingHusk, 6, 12, RunnigTime);
+	BodyRenderer->CreateAnimation("Turn", WanderingHusk, 13, 14, TurnTime);
+	BodyRenderer->CreateAnimation("AttackAnticipate", WanderingHusk, 15, 19, AttackAnticipateTime);
+	BodyRenderer->CreateAnimation("Attack", WanderingHusk, 20, 23, AttackTime);
+	BodyRenderer->CreateAnimation("AttackRecovery", WanderingHusk, 24, 24, RecoveryTime, false);
+	BodyRenderer->CreateAnimation("DeathAir", WanderingHusk, 25, 25, DeathAirTime);
+	BodyRenderer->CreateAnimation("DeathLand", WanderingHusk, 26, 33, DeathTime, false);
 
 	BodyRenderer->ChangeAnimation("Idle");
 }

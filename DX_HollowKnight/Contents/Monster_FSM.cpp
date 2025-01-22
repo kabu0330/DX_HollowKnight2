@@ -225,6 +225,8 @@ void AMonster::SetDeathAir(float _DeltaTime)
 	DeathAir(_DeltaTime);
 	BodyCollision->Destroy();
 	DetectCollision->Destroy();
+
+	ParentRoom->CheckPixelCollisionWithWall(this, BodyRenderer.get(), Stat.GetVelocity(), !bIsLeft, WallPointOffest);
 	ChangeNextState(EMonsterState::DEATH_LAND);
 }
 
@@ -236,6 +238,8 @@ void AMonster::SetDeathLand(float _DeltaTime)
 
 	Stat.SetDeath(true);
 
+
+	ParentRoom->CheckPixelCollisionWithWall(this, BodyRenderer.get(), Stat.GetVelocity(), !bIsLeft, WallPointOffest);
 	// 렌더러 위치 조정
 	FVector SpritePos = BodyRenderer->GetRelativeLocation();
 	BodyRenderer->SetRelativeLocation({ SpritePos.X, DeathSpriteOffset });

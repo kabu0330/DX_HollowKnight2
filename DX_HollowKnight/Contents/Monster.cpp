@@ -16,9 +16,9 @@ AMonster::AMonster()
 	RendererOffset = { 0.0f, 0.0f };
 	BodyCollisionOffset = { 0.0f, 0.0f };
 	GravityPointOffset.Y = 1973.0f / 2.0f; // (이미지 크기 - 1프레임 크기) / 2.0f
-	WallPointOffest = { -1394.0f / 2.0f, GravityPointOffset.Y }; // 
+	WallPointOffest = { -1394.0f / 2.0f, GravityPointOffset.Y - 130.0f }; // 
 
-	DetectRange = { 500, 300 };
+	DetectRange = { 700, 50 };
 
 	CreateAnimation();
 	CreateCollision();
@@ -107,7 +107,6 @@ bool AMonster::IsPlayerNearby()
 	}
 	return false;
 }
-
 
 void AMonster::Dash()
 {
@@ -246,16 +245,27 @@ void AMonster::ReverseForce(float _DeltaTime)
 	FVector Reverse = -Stat.GetKnockbackForce();
 	Reverse.Normalize();
 
-	Stat.AddKnockbackForce(Reverse * _DeltaTime * 500.0f);
-
 	if (50.0f >= Stat.GetKnockbackForce().Length())
 	{
 		Stat.SetKnockbackDir(FVector::ZERO);
 	}
+
+	if (true == bIsWallHere)
+	{
+		return;
+	}
+
+	Stat.AddKnockbackForce(Reverse * _DeltaTime * 500.0f);
+
+
 }
 
 void AMonster::Knockback(float _DeltaTime)
 {
+	if (true == bIsWallHere)
+	{
+		return;
+	}
 	if (FVector::ZERO != Stat.GetKnockbackForce())
 	{
 		AddActorLocation(Stat.GetKnockbackForce() * _DeltaTime);
