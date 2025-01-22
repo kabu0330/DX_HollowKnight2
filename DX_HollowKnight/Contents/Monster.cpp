@@ -153,6 +153,10 @@ FVector AMonster::GetDirectionToPlayer()
 
 FVector AMonster::GetRandomDirection()
 {
+	if (false == bIsFirstIdle)
+	{
+		return FVector::ZERO;
+	}
 	if (true == IsPause())
 	{
 		return FVector::ZERO;
@@ -211,7 +215,7 @@ FVector AMonster::GetRandomDirection()
 	default:
 		break;
 	}
-	
+	bIsFirstIdle = false;
 	return Direction;
 }
 
@@ -263,8 +267,6 @@ void AMonster::DeathAir(float _DeltaTime)
 	Direction.Normalize();
 	Stat.SetKnockbackDir(Direction);
 	Stat.SetKnockbackDistance(400.0f);
-
-
 }
 
 void AMonster::Death(float _DeltaTime)

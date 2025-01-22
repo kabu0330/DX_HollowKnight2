@@ -196,7 +196,7 @@ void UEngineGraphicDevice::BlendInit()
 	Desc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;			// 소스 알파값 사용
 	Desc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;		// 대상 알파값 반전 사용 (1 - 소스 알파값) = 대상 알파값
 
-	Desc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_MAX;			// 알파 연산
+	Desc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;			// 알파 연산
 	Desc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;			// 알파 소스 값
 	Desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;			// 알파 대상 값
 

@@ -70,7 +70,6 @@ void AMonster::SetFSM()
 
 void AMonster::SetIdle(float _DeltaTime)
 {
-	UEngineDebug::OutPutString("FSM : Idle");
 
 	ActiveGravity();
 	CheckDeath();
@@ -101,8 +100,6 @@ void AMonster::SetIdle(float _DeltaTime)
 
 void AMonster::SetWalk(float _DeltaTime)
 {
-	UEngineDebug::OutPutString("FSM : Walk");
-
 	CheckDeath();
 	ActiveGravity();
 
@@ -120,6 +117,7 @@ void AMonster::SetWalk(float _DeltaTime)
 
 	if (true == Stat.IsBeingHit())
 	{
+		bIsFirstIdle = true; // Idle로 돌아갈때 반드시, 최초 1회 랜덤 방향 설정
 		FSM.ChangeState(EMonsterState::IDLE);
 	}
 	else if (true == IsPlayerNearby() && false == Stat.IsAttacking() && true == bCanAttack) // 플레이어 조우
@@ -128,6 +126,7 @@ void AMonster::SetWalk(float _DeltaTime)
 	}
 	else if (false == bCanMove)
 	{
+		bIsFirstIdle = true; // Idle로 돌아갈때 반드시 넣어주기
 		FSM.ChangeState(EMonsterState::IDLE);
 	}
 }
@@ -139,6 +138,7 @@ void AMonster::SetRun(float _DeltaTime)
 
 void AMonster::SetTurn(float _DeltaTime)
 {
+
 	CheckDeath();
 	ActiveGravity();
 
@@ -169,7 +169,6 @@ void AMonster::SetAttackAnticipate(float _DeltaTime)
 	CheckDeath();
 	ActiveGravity();
 
-	UEngineDebug::OutPutString("몬스터 공격 준비");
 
 	Stat.SetAttacking(true);
 	bCanAttack = false;
@@ -182,11 +181,11 @@ void AMonster::SetAttack(float _DeltaTime)
 	CheckDeath();
 	ActiveGravity();
 
-	UEngineDebug::OutPutString("몬스터 공격~~~~~~~~~");
 	Dash();
 
 	if (true == Stat.IsBeingHit())
 	{
+		bIsFirstIdle = true; // Idle로 돌아갈때 반드시 넣어주기
 		FSM.ChangeState(EMonsterState::IDLE);
 	}
 	else
@@ -203,7 +202,9 @@ void AMonster::SetAttackRecovery(float _DeltaTime)
 	CheckDeath();
 	ActiveGravity();
 
-	UEngineDebug::OutPutString("FSM : Attack Recovery");
+	//UEngineDebug::OutPutString("FSM : Attack Recovery");
+
+	bIsFirstIdle = true; // Idle로 돌아갈때 반드시 넣어주기
 	ChangeNextState(EMonsterState::IDLE);
 }
 

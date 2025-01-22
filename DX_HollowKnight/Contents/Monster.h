@@ -71,6 +71,9 @@ protected:
 	void DeathAir(float _DeltaTime);
 	void Death(float _DeltaTime);
 
+	// Idle
+	bool bIsFirstIdle = true;
+
 	// 이동
 	void Move(float _DeltaTime);
 	bool bChooseDirection = false; // 이동할 방향을 결심했으면 이동하면서 방향전환 하지마.

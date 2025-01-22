@@ -34,8 +34,8 @@ AKnight::AKnight()
 	//SetActorLocation({ 1100.0f, -3000.0f });
 	//SetActorLocation(InitPos::Dirtmouth_well);
 	//SetActorLocation(InitPos::CrossroadsEntrance);
-	//SetActorLocation({9911, -5500});
-	SetActorLocation({1100, -2950});
+	SetActorLocation({9911, -5500});
+	//SetActorLocation({1100, -2950});
 
 	// Debug
 	BodyRenderer->BillboardOn();

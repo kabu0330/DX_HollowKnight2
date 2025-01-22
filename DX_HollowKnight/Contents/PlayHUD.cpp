@@ -28,7 +28,7 @@ void APlayHUD::BeginPlay()
 	CreateGeo();
 	CreateGeoCount();
 
-	//CreateFade();
+	CreateFade();
 }
 
 void APlayHUD::Tick(float _DeltaTime)
@@ -184,7 +184,7 @@ void APlayHUD::CreateGeoCount()
 void APlayHUD::CreateFade()
 {
 	Fade = CreateWidget<UImageWidget>(static_cast<int>(EUIOrder::FADE), "Fade");
-	Fade->SetTexture("Fade.bmp", true, 1.0f);
+	Fade->SetTexture("Fade.png", true, 1.0f);
 }
 
 void APlayHUD::FadeOut()
@@ -194,7 +194,9 @@ void APlayHUD::FadeOut()
 	//FadeValue =  FVector::UNIT;
 	FadeDir   = -FVector::UNIT;
 	FadeDir.W   = -1.0f;
-	TimeEventor->AddUpdateEvent(10.0f, std::bind(&APlayHUD::FadeChange, this));
+
+	Fade->ColorData.MulColor = FVector(0.0f, 0.0f, 0.0f, 0.1f);
+	// TimeEventor->AddUpdateEvent(10.0f, std::bind(&APlayHUD::FadeChange, this));
 }
 
 void APlayHUD::FadeIn()
@@ -202,7 +204,8 @@ void APlayHUD::FadeIn()
 	//Fade->ColorData.PlusColor = FVector::UNIT;
 	FadeValue = FVector::ZERO;
 	  FadeDir = FVector::UNIT;
-	TimeEventor->AddUpdateEvent(2.0f, std::bind(&APlayHUD::FadeChange, this));
+	// TimeEventor->AddUpdateEvent(2.0f, std::bind(&APlayHUD::FadeChange, this));
+	  Fade->ColorData.MulColor = FVector(0.0f, 0.0f,0.0f, 0.0f);
 }
 
 void APlayHUD::FadeChange()
@@ -211,7 +214,7 @@ void APlayHUD::FadeChange()
 
 	float DeltaTime = UEngineCore::GetDeltaTime();
 	float Ratio = 0.1f;
-	FadeValue += FadeDir * DeltaTime * Ratio;
+	// FadeValue += FadeDir * DeltaTime * Ratio;
 	FadeValue.W += FadeDir.W * DeltaTime * Ratio;
 
 	//Fade->ColorData.PlusColor = FadeValue;
