@@ -111,6 +111,11 @@ bool AMonster::IsPlayerNearby()
 
 void AMonster::Dash()
 {
+	if (true == bIsWallHere)
+	{
+		return;
+	}		
+	CheckDirection(); // 좌우 반전 적용
 	float DeltaTime = UEngineCore::GetDeltaTime();
 	AddActorLocation(Direction * Stat.GetRunSpeed() * DeltaTime);
 }

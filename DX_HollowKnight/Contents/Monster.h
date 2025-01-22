@@ -98,6 +98,9 @@ protected:
 	float AttackDuation = 5.0f;
 	float AttackElapsed = 0.0f;
 
+	// »ç¸Á
+	float DeathSpriteOffset = -20.0f;
+
 
 	virtual void SetStatus();
 	UStatusUnit Stat = UStatusUnit();

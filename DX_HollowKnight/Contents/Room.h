@@ -63,6 +63,10 @@ public:
 	{
 		LeftTopPos = _LeftTopPos;
 	}
+	FVector GetLeftTopPos()
+	{
+		return LeftTopPos;
+	}
 
 	static void SwitchDebugActiveGravity()
 	{

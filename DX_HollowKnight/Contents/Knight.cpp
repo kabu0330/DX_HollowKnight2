@@ -47,7 +47,7 @@ void AKnight::BeginPlay()
 	AActor::BeginPlay();
 	SetFSM();
 	SetCollisionEvent();
-	SetCameraPos();
+	//SetCameraPos();
 }
 
 void AKnight::Tick(float _DeltaTime)
@@ -56,8 +56,9 @@ void AKnight::Tick(float _DeltaTime)
 
 	ActivePixelCollsion();
 
-	CheckCameraPos();
-	SetCameraLerp();
+	SetCameraPos();
+	//CheckCameraPos();
+	//SetCameraLerp();
 	CheckEnterButton();
 
 	FSM.Update(_DeltaTime);

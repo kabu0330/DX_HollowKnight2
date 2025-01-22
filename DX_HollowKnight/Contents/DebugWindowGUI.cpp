@@ -31,6 +31,9 @@ void UDebugWindowGUI::GetMousePos()
 {
 	FVector MousePos = APlayGameMode::MousePos;
 	ImGui::Text("Mouse Pos X : %.0f, Y : %.0f", MousePos.X, MousePos.Y);
+
+	FVector MapPos = ARoom::GetCurRoom()->GetLeftTopPos();
+	ImGui::Text("Mouse Pos X : %.0f, Y : %.0f", MousePos.X - MapPos.X, MousePos.Y - MapPos.Y);
 }
 
 void UDebugWindowGUI::GetCurRoom()

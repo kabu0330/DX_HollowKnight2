@@ -70,6 +70,7 @@ void AMonster::SetFSM()
 
 void AMonster::SetIdle(float _DeltaTime)
 {
+	UEngineDebug::OutPutString("Monster FSM : Idle");
 
 	ActiveGravity();
 	CheckDeath();
@@ -100,6 +101,7 @@ void AMonster::SetIdle(float _DeltaTime)
 
 void AMonster::SetWalk(float _DeltaTime)
 {
+	UEngineDebug::OutPutString("Monster FSM : Walk");
 	CheckDeath();
 	ActiveGravity();
 
@@ -138,7 +140,7 @@ void AMonster::SetRun(float _DeltaTime)
 
 void AMonster::SetTurn(float _DeltaTime)
 {
-
+	UEngineDebug::OutPutString("Monster FSM : Turn");
 	CheckDeath();
 	ActiveGravity();
 
@@ -217,6 +219,9 @@ void AMonster::SetHit(float _DeltaTime)
 void AMonster::SetDeathAir(float _DeltaTime)
 {
 	ActiveGravity();
+
+	CheckDirection(); // 좌우 반전 적용
+
 	DeathAir(_DeltaTime);
 	BodyCollision->Destroy();
 	DetectCollision->Destroy();
@@ -226,7 +231,14 @@ void AMonster::SetDeathAir(float _DeltaTime)
 void AMonster::SetDeathLand(float _DeltaTime)
 {
 	ActiveGravity();
+
+	CheckDirection(); // 좌우 반전 적용
+
 	Stat.SetDeath(true);
+
+	// 렌더러 위치 조정
+	FVector SpritePos = BodyRenderer->GetRelativeLocation();
+	BodyRenderer->SetRelativeLocation({ SpritePos.X, DeathSpriteOffset });
 }
 
 void AMonster::SetJumpAnticipate(float _DeltaTime)

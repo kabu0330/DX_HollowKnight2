@@ -24,7 +24,7 @@ void AMonster::CreateAnimation()
 	BodyRenderer->CreateAnimation("Turn", HuskBully, 13, 14, TurnTime);
 	BodyRenderer->CreateAnimation("AttackAnticipate", HuskBully, 15, 19, AttackAnticipateTime);
 	BodyRenderer->CreateAnimation("Attack", HuskBully, 20, 23, AttackTime);
-	BodyRenderer->CreateAnimation("AttackRecovery", HuskBully, 24, 24, RecoveryTime);
+	BodyRenderer->CreateAnimation("AttackRecovery", HuskBully, 24, 24, RecoveryTime, false);
 	BodyRenderer->CreateAnimation("DeathAir", HuskBully, 25, 25, DeathAirTime);
 	BodyRenderer->CreateAnimation("DeathLand", HuskBully, 26, 33, DeathTime, false);
 
