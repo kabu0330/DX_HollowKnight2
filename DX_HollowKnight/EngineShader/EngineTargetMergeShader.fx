@@ -38,7 +38,7 @@ float4 TargetMerge_PS(VertexShaderOutPut _Vertex) : SV_Target0
     }
 
 	
-	Color.a = max(Color.a, 1.0f);
+	//Color.a = max(Color.a, 1.0f);
 	
 	return Color;
 };

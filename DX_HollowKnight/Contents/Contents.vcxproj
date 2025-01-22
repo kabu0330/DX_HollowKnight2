@@ -201,10 +201,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Fade.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="FightUnit.h">
       <SubType>
       </SubType>
@@ -327,10 +323,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Effect.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Fade.cpp">
       <SubType>
       </SubType>
     </ClCompile>

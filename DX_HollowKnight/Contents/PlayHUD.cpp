@@ -37,7 +37,8 @@ void APlayHUD::Tick(float _DeltaTime)
 	SetHpUI(); // 실시간 HP 개수 반영
 	if (UEngineInput::IsDown('F'))
 	{
-		FadeOut();
+		//FadeOut();
+		FadeIn();
 	}
 }
 
@@ -183,41 +184,58 @@ void APlayHUD::CreateGeoCount()
 
 void APlayHUD::CreateFade()
 {
-	Fade = CreateWidget<UImageWidget>(static_cast<int>(EUIOrder::FADE), "Fade");
+	Fade = CreateWidget<UImageWidget>(static_cast<int>(100000000), "Fade");
 	Fade->SetTexture("Fade.png", true, 1.0f);
+	Fade->SetActive(false);
 }
 
 void APlayHUD::FadeOut()
 {
-	UEngineDebug::OutPutString("Fade Out~~~~~");
-	//Fade->ColorData.PlusColor = FVector::UNIT;
-	//FadeValue =  FVector::UNIT;
+	Fade->SetActive(true);
+	FadeValue = FVector::ZERO;
 	FadeDir   = -FVector::UNIT;
-	FadeDir.W   = -1.0f;
+	FadeDir.W = -1.0f;
 
-	Fade->ColorData.MulColor = FVector(0.0f, 0.0f, 0.0f, 0.1f);
-	// TimeEventor->AddUpdateEvent(10.0f, std::bind(&APlayHUD::FadeChange, this));
+	// 2초간 FadeChange 함수 호출하고, 끝나면 Fade Active 끄고 MulColor도 원상복구한다.
+	// UI가 다 MulColor 값을 공유하는듯 하다. -2.0f 넘어가면 다른 UI도 지워진다.
+	TimeEventor->AddEvent(1.0f, std::bind(&APlayHUD::FadeChange, this), [this]()
+		{
+			Fade->SetActive(false);
+			Fade->ColorData.MulColor = { 1.0f, 1.0f, 1.0f, 1.0f };
+		});
 }
 
 void APlayHUD::FadeIn()
 {
-	//Fade->ColorData.PlusColor = FVector::UNIT;
-	FadeValue = FVector::ZERO;
-	  FadeDir = FVector::UNIT;
-	// TimeEventor->AddUpdateEvent(2.0f, std::bind(&APlayHUD::FadeChange, this));
-	  Fade->ColorData.MulColor = FVector(0.0f, 0.0f,0.0f, 0.0f);
+	Fade->SetActive(true);
+	FadeValue = FVector::NONE;
+	  FadeDir = FVector::ZERO;
+	FadeDir.W = 2.0f;
+	Fade->ColorData.MulColor.W = 0.0f;
+	TimeEventor->AddEvent(1.0f, std::bind(&APlayHUD::FadeChange, this), [this]()
+		{
+			Fade->ColorData.MulColor = { 1.0f, 1.0f, 1.0f, 1.0f };
+			FadeOut();
+		});
 }
 
 void APlayHUD::FadeChange()
 {
-	UEngineDebug::OutPutString("Fade Change : " + Fade->ColorData.MulColor.ToString());
+	UEngineDebug::OutPutString("Fade Change Mul : " + Fade->ColorData.MulColor.ToString());
 
 	float DeltaTime = UEngineCore::GetDeltaTime();
-	float Ratio = 0.1f;
-	// FadeValue += FadeDir * DeltaTime * Ratio;
+	float Ratio = 0.9f;
+	FVector FadeValueTest = FadeValue;
 	FadeValue.W += FadeDir.W * DeltaTime * Ratio;
 
-	//Fade->ColorData.PlusColor = FadeValue;
 	Fade->ColorData.MulColor = FadeValue;
+	//Fade->ColorData.PlusColor = FadeValue;
+
+	if (0.0f >= Fade->ColorData.MulColor.W)
+	{
+		Fade->ColorData.MulColor.W = 0.0f;
+		return;
+	}
+
 }
 

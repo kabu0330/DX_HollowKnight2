@@ -132,6 +132,7 @@ protected:
 	void CreateCollision();
 	void CreateCenterPoint();
 	void CreateDetectCollision();
+	void CreatePixelCollision();
 	FVector RendererOffset = FVector::ZERO;
 	FVector BodyCollisionOffset = FVector::ZERO;
 	FVector DetectRange = FVector::ZERO;
@@ -139,6 +140,7 @@ protected:
 	std::shared_ptr<class UContentsRenderer> BodyRenderer;
 	std::shared_ptr<class UCollision> BodyCollision;
 	std::shared_ptr<class UCollision> CenterPoint;
+	std::shared_ptr<class UCollision> PixelBot;
 	std::shared_ptr<class UCollision> DetectCollision;
 
 	void ChangeNextState(EMonsterState _NextState);

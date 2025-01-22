@@ -112,9 +112,6 @@
     <ClInclude Include="FogEffect.h">
       <Filter>Global</Filter>
     </ClInclude>
-    <ClInclude Include="Fade.h">
-      <Filter>Play\UI</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -239,9 +236,6 @@
     </ClCompile>
     <ClCompile Include="FogEffect.cpp">
       <Filter>Global</Filter>
-    </ClCompile>
-    <ClCompile Include="Fade.cpp">
-      <Filter>Play\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
