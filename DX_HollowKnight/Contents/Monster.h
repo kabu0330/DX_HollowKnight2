@@ -65,6 +65,17 @@ public:
 	FVector GetRandomDirection();
 
 protected:
+	// 반드시 자식 클래스가 재정의 해야하는 가상함수
+	void BeginPlay() override;
+	void Tick(float _DeltaTime) override;
+	virtual void SetStatus();
+	virtual void SetOffset();
+	virtual void CreateAnimation();
+	virtual void CreateCollision();
+	virtual void CreateCenterPoint();
+
+	void CreatePixelCollision();
+
 	void CheckDeath();
 	void ReverseForce(float _DeltaTime);
 	void Knockback(float _DeltaTime);
@@ -101,14 +112,9 @@ protected:
 	// 사망
 	float DeathSpriteOffset = -20.0f;
 
-
-	virtual void SetStatus();
 	UStatusUnit Stat = UStatusUnit();
 	UTimeEventComponent* TimeEventor = nullptr;
 	class AKnight* Knight = nullptr;
-
-	void BeginPlay() override;
-	void Tick(float _DeltaTime) override;
 
 	// 충돌관련
 	void SetCollisionEvent();
@@ -131,11 +137,8 @@ protected:
 	class ARoom* ParentRoom = nullptr;
 	class ARoom* CurRoom = nullptr; 
 
-	void CreateAnimation();
-	void CreateCollision();
-	void CreateCenterPoint();
+
 	void CreateDetectCollision();
-	void CreatePixelCollision();
 	FVector RendererOffset = FVector::ZERO;
 	FVector BodyCollisionOffset = FVector::ZERO;
 	FVector DetectRange = FVector::ZERO;
@@ -276,7 +279,7 @@ public:
 			GravityForce = _GravityForce;
 		}
 
-private:
+protected:
 	// 픽셀 충돌
 	bool bIsOnGround = false;
 	bool bIsWallHere = false;

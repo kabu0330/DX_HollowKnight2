@@ -4,31 +4,26 @@
 
 void AMonster::CreateAnimation()
 {
-	// Renderer
-	BodyRenderer = CreateDefaultSubObject<UContentsRenderer>();
-	BodyRenderer->SetupAttachment(RootComponent);
-	BodyRenderer->SetAutoScaleRatio(1.0f);
-	BodyRenderer->SetWorldLocation({ RendererOffset.X, RendererOffset.Y, ZSort });
+	//SetName("Monster");
+	//std::string AWanderingHusk = "WanderingHusk.png";
+	//float IdleTime = 0.2f;
+	//float TurnTime = 0.3f;
+	//float RunnigTime = 0.1f;
+	//float AttackAnticipateTime = 0.15f;
+	//float AttackTime = 0.12f;
+	//float RecoveryTime = 0.1f;
+	//float DeathAirTime = 0.2f;
+	//float DeathTime = 0.15f;
+	//BodyRenderer->CreateAnimation("Idle", AWanderingHusk, 0, 5, IdleTime);
+	//BodyRenderer->CreateAnimation("Walk", AWanderingHusk, 6, 12, RunnigTime);
+	//BodyRenderer->CreateAnimation("Turn", AWanderingHusk, 13, 14, TurnTime);
+	//BodyRenderer->CreateAnimation("AttackAnticipate", AWanderingHusk, 15, 19, AttackAnticipateTime);
+	//BodyRenderer->CreateAnimation("Attack", AWanderingHusk, 20, 23, AttackTime);
+	//BodyRenderer->CreateAnimation("AttackRecovery", AWanderingHusk, 24, 24, RecoveryTime, false);
+	//BodyRenderer->CreateAnimation("DeathAir", AWanderingHusk, 25, 25, DeathAirTime);
+	//BodyRenderer->CreateAnimation("DeathLand", AWanderingHusk, 26, 33, DeathTime, false);
 
-	std::string WanderingHusk = "WanderingHusk.png";
-	float IdleTime = 0.2f;
-	float TurnTime = 0.3f;
-	float RunnigTime = 0.1f;
-	float AttackAnticipateTime = 0.15f;
-	float AttackTime = 0.12f;
-	float RecoveryTime = 0.1f;
-	float DeathAirTime = 0.2f;
-	float DeathTime = 0.15f;
-	BodyRenderer->CreateAnimation("Idle", WanderingHusk, 0, 5, IdleTime);
-	BodyRenderer->CreateAnimation("Walk", WanderingHusk, 6, 12, RunnigTime);
-	BodyRenderer->CreateAnimation("Turn", WanderingHusk, 13, 14, TurnTime);
-	BodyRenderer->CreateAnimation("AttackAnticipate", WanderingHusk, 15, 19, AttackAnticipateTime);
-	BodyRenderer->CreateAnimation("Attack", WanderingHusk, 20, 23, AttackTime);
-	BodyRenderer->CreateAnimation("AttackRecovery", WanderingHusk, 24, 24, RecoveryTime, false);
-	BodyRenderer->CreateAnimation("DeathAir", WanderingHusk, 25, 25, DeathAirTime);
-	BodyRenderer->CreateAnimation("DeathLand", WanderingHusk, 26, 33, DeathTime, false);
-
-	BodyRenderer->ChangeAnimation("Idle");
+	//BodyRenderer->ChangeAnimation("Idle");
 }
 
 void AMonster::SetCollisionEvent()
@@ -75,38 +70,39 @@ void AMonster::CancleCurAction()
 void AMonster::CreateCollision()
 {
 	// Collision
-	BodyCollision = CreateDefaultSubObject<UCollision>();
-	BodyCollision->SetupAttachment(RootComponent);
-	BodyCollision->SetScale3D({ 106, 127 });
-	BodyCollision->SetWorldLocation({ BodyCollisionOffset.X, BodyCollisionOffset.Y, ZSort });
-	BodyCollision->SetCollisionProfileName("Monster");
+	//BodyCollision = CreateDefaultSubObject<UCollision>();
+	//BodyCollision->SetupAttachment(RootComponent);
+	//BodyCollision->SetScale3D({ 106, 127 });
+	//BodyCollision->SetWorldLocation({ BodyCollisionOffset.X, BodyCollisionOffset.Y, ZSort });
+	//BodyCollision->SetCollisionProfileName("Monster");
 }
 
 void AMonster::CreateDetectCollision()
 {
-	DetectCollision = CreateDefaultSubObject<UCollision>();
-	DetectCollision->SetupAttachment(RootComponent);
-	DetectCollision->SetScale3D(DetectRange);
-	DetectCollision->SetCollisionProfileName("MonsterDetect");
-	DetectCollision->SetDebugColor({ 1.0f, 1.0f, 0.0f });
+	//DetectCollision = CreateDefaultSubObject<UCollision>();
+	//DetectCollision->SetupAttachment(RootComponent);
+	//DetectCollision->SetScale3D(DetectRange);
+	//DetectCollision->SetCollisionProfileName("MonsterDetect");
+	//DetectCollision->SetDebugColor({ 1.0f, 1.0f, 0.0f });
 }
 
 void AMonster::CreateCenterPoint()
 {
-	CenterPoint = CreateDefaultSubObject<UCollision>();
-	CenterPoint->SetupAttachment(RootComponent);
-	CenterPoint->SetScale3D({ 10, 10 });
-	CenterPoint->SetCollisionProfileName("MonsterPoint");
-	CenterPoint->SetDebugColor({ 1.0f, 0.0f, 0.0f });
+	//CenterPoint = CreateDefaultSubObject<UCollision>();
+	//CenterPoint->SetupAttachment(RootComponent);
+	//CenterPoint->SetScale3D({ 10, 10 });
+	//CenterPoint->SetCollisionProfileName("MonsterPoint");
+	//CenterPoint->SetDebugColor({ 1.0f, 0.0f, 0.0f });
 }
 
 void AMonster::CreatePixelCollision()
 {
-	PixelBot = CreateDefaultSubObject<UCollision>();
-	PixelBot->SetupAttachment(RootComponent);
-	PixelBot->SetScale3D({ 2, 2 });
-	PixelBot->SetCollisionProfileName("MonsterPoint");
-	PixelBot->SetDebugColor({ 1.0f, 0.0f, 0.5f });
+	//PixelBot = CreateDefaultSubObject<UCollision>();
+	//PixelBot->SetupAttachment(RootComponent);
+	//PixelBot->SetScale3D({ 100, 5 });
+	//PixelBot->SetCollisionProfileName("MonsterPoint");
+	//PixelBot->SetWorldLocation()
+	//PixelBot->SetDebugColor({ 1.0f, 0.0f, 0.1f });
 }
 
 void AMonster::ActivePixelCollision()

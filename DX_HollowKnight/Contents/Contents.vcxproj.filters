@@ -112,6 +112,9 @@
     <ClInclude Include="FogEffect.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="WanderingHusk.h">
+      <Filter>Play\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -236,6 +239,9 @@
     </ClCompile>
     <ClCompile Include="FogEffect.cpp">
       <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="WanderingHusk.cpp">
+      <Filter>Play\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

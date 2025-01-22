@@ -6,28 +6,19 @@
 
 AMonster::AMonster()
 {
-	SetName("방황하는 껍데기");
+	SetName("Monster");
 	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
 	RootComponent = Default;
+
+	// Renderer
+	BodyRenderer = CreateDefaultSubObject<UContentsRenderer>();
+	BodyRenderer->SetupAttachment(RootComponent);
+	BodyRenderer->SetAutoScaleRatio(1.0f);
+	BodyRenderer->SetWorldLocation({ RendererOffset.X, RendererOffset.Y, ZSort });
 
 	TimeEventor = CreateDefaultSubObject<UTimeEventComponent>().get();
 
 	ZSort = static_cast<float>(EZOrder::MONSTER);
-	RendererOffset = { 0.0f, 0.0f };
-	BodyCollisionOffset = { 0.0f, 0.0f };
-	GravityPointOffset.Y = 1973.0f / 2.0f; // (이미지 크기 - 1프레임 크기) / 2.0f
-	WallPointOffest = { -1394.0f / 2.0f, GravityPointOffset.Y - 130.0f }; // 
-
-	DetectRange = { 700, 50 };
-
-	CreateAnimation();
-	CreateCollision();
-	CreateCenterPoint();
-	CreateDetectCollision();
-
-	SetCollisionEvent();
-	SetFSM();
-	SetStatus();
 }
 
 void AMonster::SetStatus()
@@ -55,10 +46,29 @@ void AMonster::SetStatus()
 
 }
 
+void AMonster::SetOffset()
+{
+	RendererOffset = { 0.0f, 0.0f };
+	BodyCollisionOffset = { 0.0f, 0.0f };
+	GravityPointOffset.Y = 1973.0f / 2.0f; // (이미지 크기 - 1프레임 크기) / 2.0f
+	WallPointOffest = { -1394.0f / 2.0f, GravityPointOffset.Y - 130.0f };
+
+	DetectRange = { 700, 50 };
+}
+
 void AMonster::BeginPlay()
 {
 	AActor::BeginPlay();
 	Knight = AKnight::GetPawn();
+
+	CreateAnimation();
+	CreateCollision();
+	CreateCenterPoint();
+	CreateDetectCollision();
+	SetOffset();
+	SetStatus();
+	SetCollisionEvent();
+	SetFSM();
 }
 
 void AMonster::Tick(float _DeltaTime)
