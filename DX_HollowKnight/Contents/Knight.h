@@ -105,6 +105,10 @@ public:
 	{
 		GravityForce = _GravityForce;
 	}
+	UCollision* GetPixelCollision()
+	{
+		return PixelCollision.get();
+	}
 
 	float GetJumpForce()
 	{
@@ -217,7 +221,7 @@ private:
 	bool bIsWallHere = false;
 	bool bIsCeilHere = false;
 	std::shared_ptr<class UCollision> BodyCollision;
-	std::shared_ptr<class UCollision> PixelBot;
+	std::shared_ptr<class UCollision> PixelCollision;
 	void CreateCollision();
 	void CreatePixelCollision();
 

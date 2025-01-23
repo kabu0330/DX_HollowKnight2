@@ -101,22 +101,24 @@ FVector ARoom::GetPixelCollisionPoint(AActor* _Actor, UContentsRenderer* _Render
 	float DeltaTime = UEngineCore::GetDeltaTime();
 
 	FVector GravityForce = FVector::ZERO;
+	FVector CollisionPos = FVector::ZERO;
 	AKnight* Knight = dynamic_cast<AKnight*>(_Actor);
 	if (nullptr != Knight)
 	{
+		CollisionPos = Knight->GetPixelCollision()->GetWorldLocation();
 		GravityForce = Knight->GetGravityForce();
 	}
 	AMonster* Monster = dynamic_cast<AMonster*>(_Actor);
 	if (nullptr != Monster)
 	{
+		CollisionPos = Monster->GetPixelCollision()->GetWorldLocation();
 		GravityForce = Monster->GetGravityForce();
 	}
 
-	FVector ActorPos = _Actor->GetActorLocation() - LeftTopPos;
+	CollisionPos -= LeftTopPos;
 	FVector NextPos = GravityForce * DeltaTime;
-	float HalfRendererHeight = _Renderer->GetScale().Y * 0.5f;
 
-	FVector CollisionPoint = { ActorPos.X + NextPos.X + _Offset.X, ActorPos.Y + NextPos.Y - HalfRendererHeight + _Offset.Y }; // 1픽셀 보정
+	FVector CollisionPoint = { CollisionPos.X + NextPos.X + _Offset.X, CollisionPos.Y + NextPos.Y + _Offset.Y };
 
 	CollisionPoint.RoundVector();
 
@@ -132,42 +134,6 @@ bool ARoom::IsOnGround(FVector _Pos)
 	UColor CollisionColor = PixelCollisionImage.GetColor({ CollisionPoint.X, -CollisionPoint.Y }); // y축 반전
 
 	if (CollisionColor == UColor::BLACK || CollisionColor == UColor(0, 0, 0, 0))
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-
-bool ARoom::IsOnGround(AActor* _Actor, UContentsRenderer* _Renderer, FVector _Pos)
-{
-	float DeltaTime = UEngineCore::GetDeltaTime();
-
-	FVector GravityForce = FVector::ZERO;
-	AKnight* Knight = dynamic_cast<AKnight*>(_Actor);
-	if (nullptr != Knight)
-	{
-		GravityForce = Knight->GetGravityForce();
-	}
-	AMonster* Monster = dynamic_cast<AMonster*>(_Actor);
-	if (nullptr != Monster)
-	{
-		GravityForce = Monster->GetGravityForce();
-	}
-
-	FVector ActorPos = _Actor->GetActorLocation() - LeftTopPos;
-	FVector NextPos = GravityForce * DeltaTime;
-	float HalfRendererHeight = _Renderer->GetScale().Y * 0.5f;
-
-	FVector CollisionPoint = { ActorPos.X + NextPos.X, ActorPos.Y + NextPos.Y - HalfRendererHeight /*- 1.0f*/ }; // 1픽셀 보정
-	CollisionPoint += _Pos;
-	CollisionPoint.RoundVector();
-
-	UColor CollisionColor = PixelCollisionImage.GetColor({ CollisionPoint.X, -CollisionPoint.Y }); // y축 반전
-
-	if (CollisionColor == UColor::BLACK)
 	{
 		return true;
 	}
@@ -234,27 +200,6 @@ void ARoom::Gravity(AActor* _Actor, float _DeltaTime)
 	}
 }
 
-void ARoom::EnforceGravity(AActor* _Actor, float _DeltaTime)
-{
-	AMonster* Monster = dynamic_cast<AMonster*>(_Actor);
-	if (nullptr == Monster)
-	{
-		return;
-	}
-	FVector GravityForce = Monster->GetGravityForce();
-
-	float GravityValue = 2000.0f;
-	GravityForce += FVector::DOWN * GravityValue * _DeltaTime;
-	Monster->AddRelativeLocation(GravityForce * _DeltaTime);
-
-	Monster->SetGravityForce(GravityForce);
-
-	if (1500.0f <= GravityForce.Length())
-	{
-		GravityForce = FVector::DOWN * 1000.0f;
-	}
-}
-
 void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Renderer, float _Speed, bool _Left, FVector _Offset)
 {
 	if (true == bActiveGravity)
@@ -262,23 +207,38 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Rend
 		return;
 	}
 
+	FVector CollisionPos = FVector::ZERO;
+	FVector CollisionHalfScale = FVector::ZERO;
+
+	AKnight* Knight = dynamic_cast<AKnight*>(_Actor);
+	if (nullptr != Knight)
+	{
+		CollisionPos = Knight->GetPixelCollision()->GetWorldLocation();
+		CollisionHalfScale = Knight->GetPixelCollision()->GetWorldScale3D().Half();
+	}
+
+	AMonster* Monster = dynamic_cast<AMonster*>(_Actor);
+	if (nullptr != Monster)
+	{
+		CollisionPos = Monster->GetPixelCollision()->GetWorldLocation();
+		CollisionHalfScale = Monster->GetPixelCollision()->GetWorldScale3D().Half();
+	}
+
 	float DeltaTime = UEngineCore::GetDeltaTime();
 
 	float NextPos = _Speed * DeltaTime;
-	FVector ActorPos = _Actor->GetActorLocation() - LeftTopPos;
-	float HalfRendererWidth = _Renderer->GetScale().X * 0.5f + _Offset.X;
-	float HalfRendererHeight = _Renderer->GetScale().Y * 0.4f - _Offset.Y;
+	CollisionPos -= LeftTopPos;
 
-	FVector CollisionPoint = { ActorPos.X + NextPos , ActorPos.Y - HalfRendererHeight };
+	FVector CollisionPoint = { CollisionPos.X + NextPos , CollisionPos.Y + 20.0f};
 
 	// 왼쪽, 오른쪽 방향 구분
 	if (true == _Left)
 	{
-		CollisionPoint.X -= HalfRendererWidth - 1.0f;
+		CollisionPoint.X -= CollisionHalfScale.X;
 	}
 	else
 	{
-		CollisionPoint.X += HalfRendererWidth + 1.0f;
+		CollisionPoint.X += CollisionHalfScale.X;
 	}
 
 	// 실수오차 문제 때문에
@@ -291,7 +251,6 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Rend
 	std::string B = std::to_string(CollisionColor.B);
 	std::string Result = "R : " + R + " " + "G : " + G + " " + "B : " + B;
 
-	AKnight* Knight = dynamic_cast<AKnight*>(_Actor);
 	if (nullptr != Knight)
 	{
 		//UEngineDebug::OutPutString("나이트 Pixel Pos : " + CollisionPoint.ToString() + " Pixel Color : " + Result);
@@ -305,7 +264,6 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Rend
 		}
 	}
 
-	AMonster* Monster = dynamic_cast<AMonster*>(_Actor);
 	if (nullptr != Monster)
 	{
 		//UEngineDebug::OutPutString("몬스터 벽 Pixel Pos : " + CollisionPoint.ToString() + " Pixel Color : " + Result);

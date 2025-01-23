@@ -119,13 +119,13 @@ void AKnight::ActivePixelCollsion()
 
 void AKnight::CreatePixelCollision()
 {
-	PixelBot = CreateDefaultSubObject<UCollision>();
+	PixelCollision = CreateDefaultSubObject<UCollision>();
 	//std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
-	PixelBot->SetupAttachment(RootComponent);
-	PixelBot->SetScale3D({ 100, 5 });
-	PixelBot->SetRelativeLocation({0.0f, -BodyRenderer->GetScale().Y * 0.5f});
-	PixelBot->SetCollisionProfileName("MonsterPoint");
-	PixelBot->SetDebugColor({ 1.0f, 1.0f, 1.0f });
+	PixelCollision->SetupAttachment(RootComponent);
+	PixelCollision->SetScale3D({ 70, 5 });
+	PixelCollision->SetRelativeLocation({0.0f, -BodyRenderer->GetScale().Y * 0.5f, });
+	PixelCollision->SetCollisionProfileName("MonsterPoint");
+	PixelCollision->SetDebugColor({ 1.0f, 1.0f, 1.0f });
 }
 
 void AKnight::SetStatus()
@@ -669,7 +669,6 @@ void AKnight::CreateCollision()
 	BodyCollision->SetupAttachment(RootComponent);
 	BodyCollision->SetCollisionProfileName("Knight");
 	BodyCollision->SetScale3D({ 100.0f, 130.0f });
-	BodyCollision->GetTransformRef().Location.Y += 0.0f;
 	BodyCollision->SetRelativeLocation(BodyRenderer->GetActorLocation());
 	//BodyCollision->SetCollisionType(ECollisionType::AABB);
 

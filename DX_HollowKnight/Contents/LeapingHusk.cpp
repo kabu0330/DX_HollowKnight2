@@ -38,7 +38,7 @@ void ALeapingHusk::SetStatus()
 	Stat.CreateStatus(&Data);
 
 	JumpForce = 0.0f;
-	InitJumpForce = 500.0f;
+	InitJumpForce = 100.0f;
 	bCanRotation = true; // 기본 회전 가능
 	bCanJump = false; // 점프하는 몬스터만 true
 	bIsAggressive = true; // 호전적이면 true
@@ -57,7 +57,7 @@ void ALeapingHusk::SetOffset()
 	
 	RendererOffset = { 0.0f, 0.0f };
 	BodyCollisionOffset = { 0.0f, 0.0f };
-	GravityPointOffset.Y = (ImageSize.Y - SpriteSize.Y) / 2.0f; // (이미지 크기 - 1프레임 크기) / 2.0f
+	//GravityPointOffset.Y = (ImageSize.Y - SpriteSize.Y) / 2.0f; // (이미지 크기 - 1프레임 크기) / 2.0f
 	WallPointOffest = { -((ImageSize.X / 2.0f) - SpriteSize.X * 1.5f), (ImageSize.Y  / 2.0f) - SpriteSize.Y * 2.4f}; // 이미지마다 다 값이 다른듯
 
 	CollisionScale = { 100, 200 };
@@ -105,8 +105,7 @@ void ALeapingHusk::SetAttack(float _DeltaTime)
 {
 	//UEngineDebug::OutPutString("Monster FSM : Attack");
 	CheckDeath();
-	//ActiveGravity();
-	EnforceGravity(_DeltaTime);
+	ActiveGravity();
 
 	Dash();
 	Jump(_DeltaTime);

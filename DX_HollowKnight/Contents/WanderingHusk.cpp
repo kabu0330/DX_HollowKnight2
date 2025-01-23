@@ -50,7 +50,7 @@ void AWanderingHusk::SetOffset()
 {
 	RendererOffset = { 0.0f, 0.0f };
 	BodyCollisionOffset = { 0.0f, 0.0f };
-	GravityPointOffset.Y = 1973.0f / 2.0f; // (이미지 크기 - 1프레임 크기) / 2.0f
+	//GravityPointOffset.Y = 1973.0f / 2.0f; // (이미지 크기 - 1프레임 크기) / 2.0f
 	WallPointOffest = { -1394.0f / 2.0f, GravityPointOffset.Y - 130.0f };
 
 	DetectRange = { 700, 50 };

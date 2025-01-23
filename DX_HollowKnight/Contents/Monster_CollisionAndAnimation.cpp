@@ -99,14 +99,13 @@ void AMonster::CreateCenterPoint()
 
 void AMonster::CreatePixelCollision()
 {
-	PixelBot = CreateDefaultSubObject<UCollision>();
-	PixelBot->SetupAttachment(RootComponent);
-	PixelBot->SetScale3D({ 100, 100 });
-	PixelBot->SetCollisionProfileName("MonsterPoint");
-
-	FVector Pos = ParentRoom->GetPixelCollisionPoint(this, BodyRenderer.get(), GravityPointOffset);
-	PixelBot->SetWorldLocation({Pos.X, Pos.Y, ZSort});
-	PixelBot->SetDebugColor({ 1.0f, 1.0f, 1.0f });
+	PixelCollision = CreateDefaultSubObject<UCollision>();
+	PixelCollision->SetupAttachment(RootComponent);
+	PixelCollision->SetCollisionProfileName("MonsterPoint");
+	PixelCollision->SetScale3D({ 100, 5 });
+	float Offset = BodyCollision->GetWorldScale3D().Half().Y;
+	PixelCollision->SetRelativeLocation({ 0.0f, Offset });
+	PixelCollision->SetDebugColor({ 1.0f, 1.0f, 1.0f });
 }
 
 void AMonster::ActivePixelCollision()
@@ -126,10 +125,3 @@ void AMonster::ActiveGravity()
 	}
 }
 
-void AMonster::EnforceGravity(float _DeltaTime)
-{
-	if (true == IsCurRoom())
-	{
-		ParentRoom->EnforceGravity(this, _DeltaTime);
-	}
-}

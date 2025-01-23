@@ -68,8 +68,8 @@ void URoomManager::CreateRoom(AGameMode* _GameMode)
 	SetInitCurRoom(Crossroads1.get());
 
 	// 6. 몬스터 생성
-	//Crossroads1->CreateMonster<AWanderingHusk>({ 11100, -5800 });
-	//Crossroads1->CreateMonster<ALeapingHusk>({ 9611, -5400 });
+	Crossroads1->CreateMonster<AWanderingHusk>({ 11100, -5800 });
+	Crossroads1->CreateMonster<ALeapingHusk>({ 9611, -5400 });
 
 	//Crossroads1->CreateObject<APlatform>({10250, -5680}, {150, 40});
 }

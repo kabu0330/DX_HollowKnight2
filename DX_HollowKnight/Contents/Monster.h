@@ -41,6 +41,11 @@ public:
 		return BodyCollision.get();
 	}
 
+	UCollision* GetPixelCollision()
+	{
+		return PixelCollision.get();
+	}
+
 	void SetParentRoom(class ARoom* _ParentRoom)
 	{
 		ParentRoom = _ParentRoom;
@@ -159,7 +164,7 @@ protected:
 	std::shared_ptr<class UContentsRenderer> BodyRenderer;
 	std::shared_ptr<class UCollision> BodyCollision;
 	std::shared_ptr<class UCollision> CenterPoint;
-	std::shared_ptr<class UCollision> PixelBot;
+	std::shared_ptr<class UCollision> PixelCollision;
 	std::shared_ptr<class UCollision> DetectCollision;
 
 	void ChangeNextState(EMonsterState _NextState);
@@ -305,7 +310,6 @@ protected:
 	void CheckCurRoom();
 	void ActivePixelCollision();
 	void ActiveGravity();
-	void EnforceGravity(float _DeltaTime);
 
 
 };
