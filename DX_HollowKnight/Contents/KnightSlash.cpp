@@ -108,6 +108,7 @@ void AKnightSlash::Knockback(UCollision* _This, UCollision* _Other)
 	FVector TargetPos = { _Other->GetWorldLocation().X, _Other->GetWorldLocation().Y };
 	FVector KnightPos = { Knight->GetActorLocation().X, Knight->GetActorLocation().Y };
 	FVector KnockbackDirection = KnightPos - TargetPos;
+	KnockbackDirection.Y = 0.0f;
 	KnockbackDirection.Normalize();
 	Knight->GetStatRef().SetKnockbackDir(KnockbackDirection);
 

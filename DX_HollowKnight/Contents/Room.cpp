@@ -84,6 +84,7 @@ void ARoom::CheckPixelCollisionWithGravity(AActor* _Actor, class UContentsRender
 	{
 		if (true == IsOnGround(CollisionPoint))
 		{
+			UEngineDebug::OutPutString("몬스터 중력 Pos : " + CollisionPoint.ToString());
 			Monster->SetOnGround(true);
 		}
 		else
@@ -233,6 +234,27 @@ void ARoom::Gravity(AActor* _Actor, float _DeltaTime)
 	}
 }
 
+void ARoom::EnforceGravity(AActor* _Actor, float _DeltaTime)
+{
+	AMonster* Monster = dynamic_cast<AMonster*>(_Actor);
+	if (nullptr == Monster)
+	{
+		return;
+	}
+	FVector GravityForce = Monster->GetGravityForce();
+
+	float GravityValue = 2000.0f;
+	GravityForce += FVector::DOWN * GravityValue * _DeltaTime;
+	Monster->AddRelativeLocation(GravityForce * _DeltaTime);
+
+	Monster->SetGravityForce(GravityForce);
+
+	if (1500.0f <= GravityForce.Length())
+	{
+		GravityForce = FVector::DOWN * 1000.0f;
+	}
+}
+
 void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Renderer, float _Speed, bool _Left, FVector _Offset)
 {
 	if (true == bActiveGravity)
@@ -272,7 +294,7 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Rend
 	AKnight* Knight = dynamic_cast<AKnight*>(_Actor);
 	if (nullptr != Knight)
 	{
-		UEngineDebug::OutPutString("나이트 Pixel Pos : " + CollisionPoint.ToString() + " Pixel Color : " + Result);
+		//UEngineDebug::OutPutString("나이트 Pixel Pos : " + CollisionPoint.ToString() + " Pixel Color : " + Result);
 		if (CollisionColor == UColor::YELLOW || CollisionColor == UColor::BLACK || CollisionColor == UColor::RED)
 		{
 			Knight->SetWallHere(true);
@@ -286,7 +308,7 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Rend
 	AMonster* Monster = dynamic_cast<AMonster*>(_Actor);
 	if (nullptr != Monster)
 	{
-		UEngineDebug::OutPutString("몬스터 Pixel Pos : " + CollisionPoint.ToString() + " Pixel Color : " + Result);
+		//UEngineDebug::OutPutString("몬스터 벽 Pixel Pos : " + CollisionPoint.ToString() + " Pixel Color : " + Result);
 		if (CollisionColor == UColor::YELLOW || CollisionColor == UColor::BLACK || CollisionColor == UColor::RED)
 		{
 			Monster->SetWallHere(true);

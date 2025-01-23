@@ -41,7 +41,7 @@ void AMonster::SetStatus()
 
 	JumpForce = InitJumpForce;
 	bCanRotation = true; // 기본 회전 가능
-	bCanJump = false; // 점프하는 몬스터만 true
+	bCanJump = true; // 점프하는 몬스터만 true
 	bIsAggressive = true; // 호전적이면 true
 
 }
@@ -67,6 +67,7 @@ void AMonster::BeginPlay()
 	CreateCollision();
 	CreateCenterPoint();
 	CreateDetectCollision();
+	CreatePixelCollision();
 	SetCollisionEvent(); 
 	SetFSM();
 }
@@ -79,8 +80,8 @@ void AMonster::Tick(float _DeltaTime)
 	SetPause(); // 나이트가 몬스터가 속한 룸과 일치하지 않으면 bIsPause로 정지
 	ActivePixelCollision(); // 픽셀 충돌
 
-	ReverseForce(_DeltaTime);
 	Knockback(_DeltaTime);
+	ReverseForce(_DeltaTime);
 
 	TimeElapsed(_DeltaTime); // 쿨타임 계산
 
@@ -180,6 +181,27 @@ void AMonster::Dash()
 	CheckDirection(); // 좌우 반전 적용
 	float DeltaTime = UEngineCore::GetDeltaTime();
 	AddActorLocation(Direction * Stat.GetRunSpeed() * DeltaTime);
+}
+
+void AMonster::Jump(float _DeltaTime)
+{
+	if (true == bIsCeilHere)
+	{
+		return;
+	}
+
+	CheckDirection(); // 좌우 반전 적용
+	JumpForce += InitJumpForce * _DeltaTime;
+	float JumpForceMax = 1000.0f;
+	if (JumpForce >= JumpForceMax)
+	{
+		JumpForce = JumpForceMax;
+	}
+	AddActorLocation({ 0.0f, JumpForce });
+	TimeEventor->AddEndEvent(2.0f, [this]()
+		{
+			JumpForce = 0.0f;
+		});
 }
 
 FVector AMonster::GetDirectionToPlayer()
@@ -331,6 +353,14 @@ void AMonster::ReverseForce(float _DeltaTime)
 
 void AMonster::Knockback(float _DeltaTime)
 {
+	if (true == IsPause())
+	{
+		return;
+	}
+	if (true == Stat.IsDeath())
+	{
+		return;
+	}
 	if (true == bIsWallHere)
 	{
 		return;
@@ -338,6 +368,8 @@ void AMonster::Knockback(float _DeltaTime)
 	if (FVector::ZERO != Stat.GetKnockbackForce())
 	{
 		AddActorLocation(Stat.GetKnockbackForce() * _DeltaTime);
+		FVector Result = Stat.GetKnockbackForce() * _DeltaTime;
+		int a = 0;
 	}
 }
 
@@ -380,7 +412,7 @@ void AMonster::Move(float _DeltaTime)
 
 void AMonster::DebugInput(float _DeltaTime)
 {
-	if (UEngineInput::IsDown(VK_F1))
+	if (UEngineInput::IsDown(VK_F3))
 	{
 		SwitchDebugPause();
 	}

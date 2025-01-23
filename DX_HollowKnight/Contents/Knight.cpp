@@ -34,7 +34,7 @@ AKnight::AKnight()
 	//SetActorLocation({ 1100.0f, -3000.0f });
 	//SetActorLocation(InitPos::Dirtmouth_well);
 	//SetActorLocation(InitPos::CrossroadsEntrance);
-	SetActorLocation({9911, -5500});
+	SetActorLocation({9911, -5450});
 	//SetActorLocation({1100, -2950});
 
 	// Debug
@@ -47,6 +47,7 @@ void AKnight::BeginPlay()
 	AActor::BeginPlay();
 	SetFSM();
 	SetCollisionEvent();
+	CreatePixelCollision();
 	//SetCameraPos();
 }
 
@@ -70,6 +71,9 @@ void AKnight::Tick(float _DeltaTime)
 
 	DebugInput(_DeltaTime);
 	DebugCamera();
+
+
+
 }
 
 void AKnight::SetCollisionEvent()
@@ -111,6 +115,17 @@ void AKnight::ActivePixelCollsion()
 		Room->CheckPixelCollisionWithWall(this, BodyRenderer.get(), Stat.GetVelocity(), bIsLeft, FVector::ZERO);
 		Room->CheckPixelCollisionWithCeil(this, BodyRenderer.get(), Stat.GetVelocity(), bIsLeft, FVector::ZERO);
 	}
+}
+
+void AKnight::CreatePixelCollision()
+{
+	PixelBot = CreateDefaultSubObject<UCollision>();
+	//std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
+	PixelBot->SetupAttachment(RootComponent);
+	PixelBot->SetScale3D({ 100, 5 });
+	PixelBot->SetRelativeLocation({0.0f, -BodyRenderer->GetScale().Y * 0.5f});
+	PixelBot->SetCollisionProfileName("MonsterPoint");
+	PixelBot->SetDebugColor({ 1.0f, 1.0f, 1.0f });
 }
 
 void AKnight::SetStatus()

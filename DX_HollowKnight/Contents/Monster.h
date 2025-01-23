@@ -112,10 +112,16 @@ protected:
 
 	// 전투
 	void Dash();
+	void Jump(float _DeltaTime);
 	bool bCanAttack = true;
 	float AttackDuration = 0.2f; // 공격 지속시간.
 	float AttackCooldown = 2.0f;
 	float AttackElapsed = 0.0f;
+
+	// 기타 스텟
+	float HitStunDuration = 1.0f;
+	float JumpForce = 1000.0f;
+	float InitJumpForce = 600.0f;
 
 	// 사망
 	float DeathSpriteOffset = -20.0f;
@@ -137,10 +143,7 @@ protected:
 	bool bIsPause = false; // 나이트가 몬스터가 존재하는 위치와 다르면
 	bool bIsDebugPause = false;
 
-	// 기타 스텟
-	float HitStunDuration = 1.0f;
-	float JumpForce = 1000.0f;
-	float InitJumpForce = 600.0f;
+
 
 	class ARoom* ParentRoom = nullptr;
 	class ARoom* CurRoom = nullptr; 
@@ -150,6 +153,8 @@ protected:
 	FVector RendererOffset = FVector::ZERO;
 	FVector BodyCollisionOffset = FVector::ZERO;
 	FVector DetectRange = FVector::ZERO;
+	FVector CollisionScale = FVector::ZERO;
+	float DeathRotation = 0.0f;
 	float ZSort = 0.0f;
 	std::shared_ptr<class UContentsRenderer> BodyRenderer;
 	std::shared_ptr<class UCollision> BodyCollision;
@@ -300,6 +305,8 @@ protected:
 	void CheckCurRoom();
 	void ActivePixelCollision();
 	void ActiveGravity();
+	void EnforceGravity(float _DeltaTime);
+
 
 };
 

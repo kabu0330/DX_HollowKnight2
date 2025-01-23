@@ -33,11 +33,12 @@ void ALeapingHusk::SetStatus()
 	Data.Att = 1;
 	Data.SpellAtt = 2;
 	Data.bIsKnockbackable = true;
-	Data.KnockbackDistance = Data.Velocity * 2.0f;
+	Data.KnockbackDistance = Data.Velocity * 1.5f;
 	Data.Geo = 0;
 	Stat.CreateStatus(&Data);
 
-	JumpForce = InitJumpForce;
+	JumpForce = 0.0f;
+	InitJumpForce = 500.0f;
 	bCanRotation = true; // 기본 회전 가능
 	bCanJump = false; // 점프하는 몬스터만 true
 	bIsAggressive = true; // 호전적이면 true
@@ -57,9 +58,13 @@ void ALeapingHusk::SetOffset()
 	RendererOffset = { 0.0f, 0.0f };
 	BodyCollisionOffset = { 0.0f, 0.0f };
 	GravityPointOffset.Y = (ImageSize.Y - SpriteSize.Y) / 2.0f; // (이미지 크기 - 1프레임 크기) / 2.0f
-	WallPointOffest = { -((ImageSize.X / 2.0f) - SpriteSize.X * 1.5f), (ImageSize.Y  / 2.0f) - SpriteSize.Y * 2.4f};
+	WallPointOffest = { -((ImageSize.X / 2.0f) - SpriteSize.X * 1.5f), (ImageSize.Y  / 2.0f) - SpriteSize.Y * 2.4f}; // 이미지마다 다 값이 다른듯
 
+	CollisionScale = { 100, 200 };
 	DetectRange = { 700, 50 };
+
+	DeathSpriteOffset = -70.0f;
+	DeathRotation = 1.0f;
 }
 
 void ALeapingHusk::CreateAnimation()
@@ -78,7 +83,7 @@ void ALeapingHusk::CreateAnimation()
 	BodyRenderer->CreateAnimation("Walk", ALeapingHusk, 6, 12, RunnigTime);
 	BodyRenderer->CreateAnimation("Turn", ALeapingHusk, 13, 14, TurnTime);
 	BodyRenderer->CreateAnimation("AttackAnticipate", ALeapingHusk, 15, 17, AttackAnticipateTime);
-	BodyRenderer->CreateAnimation("Attack", ALeapingHusk, 20, 25, AttackTime);
+	BodyRenderer->CreateAnimation("Attack", ALeapingHusk, 20, 25, AttackTime, false);
 	BodyRenderer->CreateAnimation("AttackRecovery", ALeapingHusk, 26, 27, RecoveryTime, false);
 	BodyRenderer->CreateAnimation("DeathAir", ALeapingHusk, 28, 28, DeathAirTime);
 	BodyRenderer->CreateAnimation("DeathLand", ALeapingHusk, 29, 36, DeathTime, false);
@@ -91,8 +96,34 @@ void ALeapingHusk::CreateCollision()
 	// Collision
 	BodyCollision = CreateDefaultSubObject<UCollision>();
 	BodyCollision->SetupAttachment(RootComponent);
-	BodyCollision->SetScale3D({ 106, 127 });
+	BodyCollision->SetScale3D(CollisionScale);
 	BodyCollision->SetWorldLocation({ BodyCollisionOffset.X, BodyCollisionOffset.Y, ZSort });
 	BodyCollision->SetCollisionProfileName("Monster");
+}
+
+void ALeapingHusk::SetAttack(float _DeltaTime)
+{
+	//UEngineDebug::OutPutString("Monster FSM : Attack");
+	CheckDeath();
+	//ActiveGravity();
+	EnforceGravity(_DeltaTime);
+
+	Dash();
+	Jump(_DeltaTime);
+
+	//   피격시                        넉백이 적용되는 친구들은 모두 스킬 캔슬
+	if (true == Stat.IsBeingHit() && true == Stat.IsKnockbackable())
+	{
+		bIsFirstIdle = true; // Idle로 돌아갈때 반드시 넣어주기
+		FSM.ChangeState(EMonsterState::IDLE);
+	}
+	else
+	{
+		TimeEventor->AddEndEvent(AttackDuration, [this]()
+			{
+				
+				FSM.ChangeState(EMonsterState::ATTACK_RECOVERY);
+			});
+	}
 }
 

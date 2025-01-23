@@ -116,6 +116,7 @@ public:
 
 		return NewObject;
 	}
+	void EnforceGravity(AActor* _Actor, float _DeltaTime);
 
 protected:
 	void Gravity(AActor* _Actor, float _DeltaTime);

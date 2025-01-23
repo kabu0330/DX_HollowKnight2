@@ -83,7 +83,7 @@ void AMonster::UpdateFSM(float _DeltaTime)
 
 void AMonster::SetIdle(float _DeltaTime)
 {
-	UEngineDebug::OutPutString("Monster FSM : Idle");
+	//UEngineDebug::OutPutString("Monster FSM : Idle");
 
 	ActiveGravity();
 	CheckDeath();
@@ -120,7 +120,7 @@ void AMonster::SetIdle(float _DeltaTime)
 
 void AMonster::SetWalk(float _DeltaTime)
 {
-	UEngineDebug::OutPutString("Monster FSM : Walk");
+	//UEngineDebug::OutPutString("Monster FSM : Walk");
 	CheckDeath();
 	ActiveGravity();
 
@@ -159,7 +159,7 @@ void AMonster::SetRun(float _DeltaTime)
 
 void AMonster::SetTurn(float _DeltaTime)
 {
-	UEngineDebug::OutPutString("Monster FSM : Turn");
+	//UEngineDebug::OutPutString("Monster FSM : Turn");
 	CheckDeath();
 	ActiveGravity();
 
@@ -180,7 +180,7 @@ void AMonster::SetTurn(float _DeltaTime)
 
 void AMonster::SetAttackAnticipate(float _DeltaTime)
 {
-	UEngineDebug::OutPutString("Monster FSM : AttackAnticipate");
+	//UEngineDebug::OutPutString("Monster FSM : AttackAnticipate");
 	CheckDeath();
 	ActiveGravity();
 
@@ -193,7 +193,7 @@ void AMonster::SetAttackAnticipate(float _DeltaTime)
 
 void AMonster::SetAttack(float _DeltaTime)
 {
-	UEngineDebug::OutPutString("Monster FSM : Attack");
+	//UEngineDebug::OutPutString("Monster FSM : Attack");
 	CheckDeath();
 	ActiveGravity();
 
@@ -216,7 +216,7 @@ void AMonster::SetAttack(float _DeltaTime)
 
 void AMonster::SetAttackRecovery(float _DeltaTime)
 {
-	UEngineDebug::OutPutString("Monster FSM : Attack Recovery");
+	//UEngineDebug::OutPutString("Monster FSM : Attack Recovery");
 
 	//   피격시                        넉백이 적용되는 친구들은 모두 스킬 캔슬
 	if (true == Stat.IsBeingHit() && true == Stat.IsKnockbackable())
@@ -241,7 +241,8 @@ void AMonster::SetHit(float _DeltaTime)
 
 void AMonster::SetDeathAir(float _DeltaTime)
 {
-	UEngineDebug::OutPutString("Monster FSM : Death Air");
+	//UEngineDebug::OutPutString("Monster FSM : Death Air");
+	Stat.SetKnockbackDir(FVector::ZERO);
 	ActiveGravity();
 
 	CheckDirection(); // 좌우 반전 적용
@@ -253,11 +254,20 @@ void AMonster::SetDeathAir(float _DeltaTime)
 
 	ParentRoom->CheckPixelCollisionWithWall(this, BodyRenderer.get(), Stat.GetVelocity(), !bIsLeft, WallPointOffest);
 	ChangeNextState(EMonsterState::DEATH_LAND);
+
+	TimeEventor->AddEvent(0.5f, [this](float _DeltaTime, float _Blank)
+		{
+			BodyRenderer->AddLocalRotation({ 0.0f, 0.0f, -DeathRotation * _DeltaTime });
+		},
+		[this]()
+		{
+
+		});
 }
 
 void AMonster::SetDeathLand(float _DeltaTime)
 {
-	UEngineDebug::OutPutString("Monster FSM : Death");
+	//UEngineDebug::OutPutString("Monster FSM : Death");
 	ActiveGravity();
 
 	CheckDirection(); // 좌우 반전 적용

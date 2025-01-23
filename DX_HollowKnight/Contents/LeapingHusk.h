@@ -24,6 +24,6 @@ protected:
 	void CreateCollision() override;
 
 private:
-
+	void SetAttack(float _DeltaTime) override;
 };
 

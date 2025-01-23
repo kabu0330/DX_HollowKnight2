@@ -123,10 +123,6 @@ protected:
 	void Collide(class UCollision* _This, class UCollision* _Other);
 
 
-	// ÇÈ¼¿Ãæµ¹
-	void ActiveGravity();
-	void ActivePixelCollsion();
-
 private:
 	// Stat
 	void SetStatus();
@@ -221,7 +217,9 @@ private:
 	bool bIsWallHere = false;
 	bool bIsCeilHere = false;
 	std::shared_ptr<class UCollision> BodyCollision;
+	std::shared_ptr<class UCollision> PixelBot;
 	void CreateCollision();
+	void CreatePixelCollision();
 
 	// Animation
 	void InitAnimation();
@@ -274,5 +272,10 @@ private:
 
 	void CheckDirection();
 	bool bIsLeft = true;
+
+
+	// ÇÈ¼¿Ãæµ¹
+	void ActiveGravity();
+	void ActivePixelCollsion();
 };
 
