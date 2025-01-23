@@ -4,6 +4,7 @@
 #include <EngineCore/ImageWidget.h>
 #include <EngineCore/FontWidget.h>
 #include <EngineCore/TimeEventComponent.h>
+#include "Door.h"
 
 APlayHUD::APlayHUD()
 {
@@ -35,6 +36,10 @@ void APlayHUD::Tick(float _DeltaTime)
 {
 	AHUD::Tick(_DeltaTime);
 	SetHpUI(); // 실시간 HP 개수 반영
+	if (true == ADoor::IsDoorEnter())
+	{
+		FadeIn();
+	}
 	if (UEngineInput::IsDown('F'))
 	{
 		//FadeOut();
@@ -198,7 +203,7 @@ void APlayHUD::FadeOut()
 
 	// 2초간 FadeChange 함수 호출하고, 끝나면 Fade Active 끄고 MulColor도 원상복구한다.
 	// UI가 다 MulColor 값을 공유하는듯 하다. -2.0f 넘어가면 다른 UI도 지워진다.
-	TimeEventor->AddEvent(1.0f, std::bind(&APlayHUD::FadeChange, this), [this]()
+	TimeEventor->AddEvent(0.6f, std::bind(&APlayHUD::FadeChange, this), [this]()
 		{
 			Fade->SetActive(false);
 			Fade->ColorData.MulColor = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -212,7 +217,7 @@ void APlayHUD::FadeIn()
 	  FadeDir = FVector::ZERO;
 	FadeDir.W = 2.0f;
 	Fade->ColorData.MulColor.W = 0.0f;
-	TimeEventor->AddEvent(1.0f, std::bind(&APlayHUD::FadeChange, this), [this]()
+	TimeEventor->AddEvent(0.6f, std::bind(&APlayHUD::FadeChange, this), [this]()
 		{
 			Fade->ColorData.MulColor = { 1.0f, 1.0f, 1.0f, 1.0f };
 			FadeOut();
@@ -224,7 +229,7 @@ void APlayHUD::FadeChange()
 	UEngineDebug::OutPutString("Fade Change Mul : " + Fade->ColorData.MulColor.ToString());
 
 	float DeltaTime = UEngineCore::GetDeltaTime();
-	float Ratio = 0.9f;
+	float Ratio = 1.5f;
 	FVector FadeValueTest = FadeValue;
 	FadeValue.W += FadeDir.W * DeltaTime * Ratio;
 

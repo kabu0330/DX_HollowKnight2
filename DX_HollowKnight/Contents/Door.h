@@ -26,9 +26,20 @@ public:
 		return BodyCollision.get();
 	}
 
+	static bool IsDoorEnter()
+	{
+		return bIsDoorEnter;
+	}
+	static void SetDoorEnter(bool _Value)
+	{
+		bIsDoorEnter = _Value;
+	}
+
 protected:
 	void ActiveKnightCollision();
+
 private:
+	inline static bool bIsDoorEnter = false;
 	std::shared_ptr<class UCollision> BodyCollision;
 	std::shared_ptr<class UTimeEventComponent> TimeEventor;
 	FVector Scale;

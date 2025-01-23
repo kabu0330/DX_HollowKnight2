@@ -60,16 +60,29 @@ void ADoor::Warp(UCollision* _Actor1, UCollision* _Actor2)
 			return;
 		}
 	}
-	UEngineDebug::OutPutString("Enter");
-	Knight->SetActorLocation(TargetPos); 
-	ARoom::SetCurRoom(TargetRoom); // ÇÈ¼¿Ãæµ¹ ±âÁØ ¸ÊÀ» ¹Ù²Û´Ù.
+
 	Knight->GetCollision()->SetActive(false);
-	Knight->SetCameraPos();
-	TimeEventor->AddEndEvent(2.0f, std::bind(&ADoor::ActiveKnightCollision, this));
+	bIsDoorEnter = true;
+	TimeEventor->AddEndEvent(0.05f, [this]()
+		{
+			bIsDoorEnter = false;
+		});
+	TimeEventor->AddEndEvent(0.3f, [this]()
+		{
+			UEngineDebug::OutPutString("Enter");
+
+			Knight->SetActorLocation(TargetPos);
+			ARoom::SetCurRoom(TargetRoom); // ÇÈ¼¿Ãæµ¹ ±âÁØ ¸ÊÀ» ¹Ù²Û´Ù.
+			Knight->SetCameraPos();
+		});
+
+	TimeEventor->AddEndEvent(1.5f, std::bind(&ADoor::ActiveKnightCollision, this));
 }
 
 void ADoor::ActiveKnightCollision()
 {
+
+
 	Knight->GetCollision()->SetActive(true);
 }
 
