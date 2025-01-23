@@ -106,7 +106,6 @@ void AMonster::TimeElapsed(float _DeltaTime)
 				bCanMove = false;
 				MoveElapsed = 0.0f;
 
-				float MoveCooldown = 3.0f;
 				TimeEventor->AddEndEvent(MoveCooldown, [this]()
 					{
 						bCanMove = true;

@@ -237,6 +237,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="LeapingHusk.h" />
     <ClInclude Include="MapEditorGameMode.h">
       <SubType>
       </SubType>
@@ -369,6 +370,7 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Knight_FSM.cpp" />
+    <ClCompile Include="LeapingHusk.cpp" />
     <ClCompile Include="MapEditorGameMode.cpp">
       <SubType>
       </SubType>

@@ -91,6 +91,7 @@ protected:
 	bool bChooseDirection = false; // 이동할 방향을 결심했으면 이동하면서 방향전환 하지마.
 	bool bCanMove = true;
 	float MoveDuration = 2.0f;
+	float MoveCooldown = 3.0f;
 	float MoveElapsed = 0.0f;
 
 	// 쿨타임
@@ -138,7 +139,7 @@ protected:
 
 	// 기타 스텟
 	float HitStunDuration = 1.0f;
-	float JumpForce = 0.0f;
+	float JumpForce = 1000.0f;
 	float InitJumpForce = 600.0f;
 
 	class ARoom* ParentRoom = nullptr;

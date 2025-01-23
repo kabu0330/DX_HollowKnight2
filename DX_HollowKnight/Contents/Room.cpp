@@ -264,10 +264,15 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Rend
 	CollisionPoint.Y = ::roundf(CollisionPoint.Y);
 
 	UColor CollisionColor = PixelCollisionImage.GetColor({ CollisionPoint.X, -CollisionPoint.Y }); // y축 반전
+	std::string R = std::to_string(CollisionColor.R);
+	std::string G = std::to_string(CollisionColor.G);
+	std::string B = std::to_string(CollisionColor.B);
+	std::string Result = "R : " + R + " " + "G : " + G + " " + "B : " + B;
 
 	AKnight* Knight = dynamic_cast<AKnight*>(_Actor);
 	if (nullptr != Knight)
 	{
+		UEngineDebug::OutPutString("나이트 Pixel Pos : " + CollisionPoint.ToString() + " Pixel Color : " + Result);
 		if (CollisionColor == UColor::YELLOW || CollisionColor == UColor::BLACK || CollisionColor == UColor::RED)
 		{
 			Knight->SetWallHere(true);
@@ -281,11 +286,7 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Rend
 	AMonster* Monster = dynamic_cast<AMonster*>(_Actor);
 	if (nullptr != Monster)
 	{
-		std::string R = std::to_string(CollisionColor.R);
-		std::string G = std::to_string(CollisionColor.G);
-		std::string B = std::to_string(CollisionColor.B);
-		std::string Result = "R : " + R + " " + "G : " + G + " " + "B : " + B;
-		//UEngineDebug::OutPutString("Monster Pixel Pos : " + CollisionPoint.ToString() + " Pixel Color : " + Result);
+		UEngineDebug::OutPutString("몬스터 Pixel Pos : " + CollisionPoint.ToString() + " Pixel Color : " + Result);
 		if (CollisionColor == UColor::YELLOW || CollisionColor == UColor::BLACK || CollisionColor == UColor::RED)
 		{
 			Monster->SetWallHere(true);

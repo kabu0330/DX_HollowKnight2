@@ -70,9 +70,6 @@
     <ClInclude Include="ContentsConst.h">
       <Filter>Global</Filter>
     </ClInclude>
-    <ClInclude Include="Monster.h">
-      <Filter>Play\Monster</Filter>
-    </ClInclude>
     <ClInclude Include="Room.h">
       <Filter>Play\Map</Filter>
     </ClInclude>
@@ -112,8 +109,14 @@
     <ClInclude Include="FogEffect.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Play\Monster\Base</Filter>
+    </ClInclude>
     <ClInclude Include="WanderingHusk.h">
-      <Filter>Play\Monster</Filter>
+      <Filter>Play\Monster\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="LeapingHusk.h">
+      <Filter>Play\Monster\Normal</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -189,9 +192,6 @@
     <ClCompile Include="Effect.cpp">
       <Filter>Global</Filter>
     </ClCompile>
-    <ClCompile Include="Monster.cpp">
-      <Filter>Play\Monster</Filter>
-    </ClCompile>
     <ClCompile Include="Room.cpp">
       <Filter>Play\Map</Filter>
     </ClCompile>
@@ -225,23 +225,29 @@
     <ClCompile Include="KnightStunEffect.cpp">
       <Filter>Global\Knight\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="Monster_FSM.cpp">
-      <Filter>Play\Monster</Filter>
-    </ClCompile>
     <ClCompile Include="PlayHUD.cpp">
       <Filter>Play\UI</Filter>
     </ClCompile>
     <ClCompile Include="TitleHUD.cpp">
       <Filter>Play\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Monster_CollisionAndAnimation.cpp">
-      <Filter>Play\Monster</Filter>
-    </ClCompile>
     <ClCompile Include="FogEffect.cpp">
       <Filter>Global</Filter>
     </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Play\Monster\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster_CollisionAndAnimation.cpp">
+      <Filter>Play\Monster\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster_FSM.cpp">
+      <Filter>Play\Monster\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="LeapingHusk.cpp">
+      <Filter>Play\Monster\Normal</Filter>
+    </ClCompile>
     <ClCompile Include="WanderingHusk.cpp">
-      <Filter>Play\Monster</Filter>
+      <Filter>Play\Monster\Normal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -304,6 +310,21 @@
     </Filter>
     <Filter Include="Play\Unit">
       <UniqueIdentifier>{d5827386-64e6-4cdb-98a2-7aeab606afa1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Play\Monster\Base">
+      <UniqueIdentifier>{a467d1f8-ce1e-4492-9161-22b222de1a59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Play\Monster\Normal">
+      <UniqueIdentifier>{f3236117-d2f1-4164-9124-405de932a732}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Play\Monster\Fly">
+      <UniqueIdentifier>{150e15ca-dee4-46a1-9a1a-b38245f1ac73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Play\Monster\Boss">
+      <UniqueIdentifier>{c0fd44bc-9723-4188-92b7-ece9aa8c76cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Play\Monster\Named">
+      <UniqueIdentifier>{ef684bd6-9b6f-429a-b256-790a158d14d4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
