@@ -11,6 +11,7 @@ AMonster::AMonster()
 	RootComponent = Default;
 
 	// Renderer
+	ZSort = static_cast<float>(EZOrder::MONSTER);
 	BodyRenderer = CreateDefaultSubObject<UContentsRenderer>();
 	BodyRenderer->SetupAttachment(RootComponent);
 	BodyRenderer->SetAutoScaleRatio(1.0f);
@@ -18,7 +19,6 @@ AMonster::AMonster()
 
 	TimeEventor = CreateDefaultSubObject<UTimeEventComponent>().get();
 
-	ZSort = static_cast<float>(EZOrder::MONSTER);
 }
 
 void AMonster::SetStatus()
@@ -35,7 +35,7 @@ void AMonster::SetStatus()
 	Data.Att = 1;
 	Data.SpellAtt = 2;
 	Data.bIsKnockbackable = true;
-	Data.KnockbackDistance = 50.0f;
+	Data.KnockbackDistance = 200.0f;
 	Data.Geo = 0;
 	Stat.CreateStatus(&Data);
 
@@ -61,13 +61,13 @@ void AMonster::BeginPlay()
 	AActor::BeginPlay();
 	Knight = AKnight::GetPawn();
 
+	SetOffset();
+	SetStatus();
 	CreateAnimation();
 	CreateCollision();
 	CreateCenterPoint();
 	CreateDetectCollision();
-	SetOffset();
-	SetStatus();
-	SetCollisionEvent();
+	SetCollisionEvent(); 
 	SetFSM();
 }
 
@@ -87,6 +87,60 @@ void AMonster::Tick(float _DeltaTime)
 	UpdateFSM(_DeltaTime);
 
 	DebugInput(_DeltaTime);
+}
+
+void AMonster::TimeElapsed(float _DeltaTime)
+{
+	if (true == IsPause())
+	{
+		return;
+	}
+
+	if (true == bCanMove) // 이동 쿨타임
+	{
+		if (false == bIsChasing) // 플레이어 추적 상태가 아닐 때만 이동 쿨타임 적용
+		{
+			MoveElapsed += _DeltaTime;
+			if (MoveElapsed >= MoveDuration)
+			{
+				bCanMove = false;
+				MoveElapsed = 0.0f;
+
+				float MoveCooldown = 3.0f;
+				TimeEventor->AddEndEvent(MoveCooldown, [this]()
+					{
+						bCanMove = true;
+						bChooseDirection = false; // 방향 랜덤 결정
+					});
+			}
+		}
+	}
+
+	if (true == bIsChasing) // 추적 방향 무한 좌우반전 제한
+	{
+		if (true == bIsChangeChasingDir)
+		{
+			ChasingDirectionElapsed += _DeltaTime;
+			if (ChasingDirectionElapsed >= ChasingDirectonCooldown)
+			{
+				ChasingDirectionElapsed = 0.0f;
+				bIsChangeChasingDir = false;
+			}
+		}
+	}
+
+	if (false == bCanAttack) // 공격 쿨타임 적용
+	{
+		AttackElapsed += _DeltaTime;
+		if (AttackElapsed >= AttackCooldown)
+		{
+			AttackElapsed = 0.0f;
+			bCanAttack = true;
+		}
+	}
+
+
+
 }
 
 bool AMonster::IsPlayerNearby()
@@ -139,6 +193,14 @@ FVector AMonster::GetDirectionToPlayer()
 	{
 		return FVector::ZERO;
 	}
+	if (true == bIsChangeChasingDir)
+	{
+		return FVector::ZERO;
+	}
+	UEngineDebug::OutPutString("플레이어 추적");
+
+	bIsChangeChasingDir = true; // 일정 주기마다 들어오도록 방어
+
 	FVector KnightPos = Knight->GetActorLocation();
 	FVector MonsterPos = this->GetActorLocation();
 
@@ -310,49 +372,11 @@ void AMonster::Move(float _DeltaTime)
 	{
 		return;
 	}
+	bChooseDirection = true; // true면 방향 그만 바꿔
 	FVector FinalVelocity = FVector(Stat.GetVelocity() * _DeltaTime, 0.0f);
 	FinalVelocity *= Direction;
 
 	AddActorLocation(FinalVelocity);
-}
-
-void AMonster::TimeElapsed(float _DeltaTime)
-{
-	if (true == IsPause())
-	{
-		return;
-	}
-
-	if (true == bCanMove)
-	{
-		if (false == bIsChasing) // 플레이어 추적 상태가 아닐 때만 이동 쿨타임 적용
-		{
-			bChooseDirection = true; // true면 방향 그만 바꿔
-			MoveElapsed += _DeltaTime;
-			if (MoveElapsed >= MoveDuration)
-			{
-				bCanMove = false;
-				MoveElapsed = 0.0f;
-
-				float MoveCooldown = 3.0f;
-				TimeEventor->AddEndEvent(MoveCooldown, [this]()
-					{
-						bCanMove = true;
-						bChooseDirection = false; // 방향 랜덤 결정
-					});
-			}
-		}
-	}
-
-	if (false == bCanAttack)
-	{
-		AttackElapsed += _DeltaTime;
-		if (AttackElapsed >= AttackDuation)
-		{
-			AttackElapsed = 0.0f;
-			bCanAttack = true;
-		}
-	}
 }
 
 void AMonster::DebugInput(float _DeltaTime)

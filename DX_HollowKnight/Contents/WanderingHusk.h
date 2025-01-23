@@ -22,7 +22,6 @@ protected:
 	void SetOffset() override;
 	void CreateAnimation() override;
 	void CreateCollision() override;
-	void CreateCenterPoint() override;
 
 private:
 

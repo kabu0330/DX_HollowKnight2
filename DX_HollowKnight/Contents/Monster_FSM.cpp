@@ -91,7 +91,6 @@ void AMonster::SetIdle(float _DeltaTime)
 	Stat.SetBeingHit(false);
 	Stat.SetAttacking(false);
 
-	bChooseDirection = false; // 이동할 방향 결정 허용
 	bCanRotation = true; // 방향전환 허용
 	CheckDirection(); // 좌우 반전 적용
 
@@ -108,7 +107,14 @@ void AMonster::SetIdle(float _DeltaTime)
 	}
 	else if (true == IsPlayerNearby() || true == bCanMove)
 	{
-		FSM.ChangeState(EMonsterState::TURN);
+		if (true == bIsTurn)
+		{
+			FSM.ChangeState(EMonsterState::TURN);
+		}
+		else
+		{
+			FSM.ChangeState(EMonsterState::WALK);
+		}	
 	}
 }
 
@@ -169,18 +175,12 @@ void AMonster::SetTurn(float _DeltaTime)
 		SetActorRelativeScale3D({ -1.0f, 1.0f, 1.0f });
 	}
 
-	if (true == bIsTurn)
-	{
-		ChangeNextState(EMonsterState::WALK);
-	}
-	else
-	{
-		FSM.ChangeState(EMonsterState::WALK);
-	}
+	ChangeNextState(EMonsterState::WALK);
 }
 
 void AMonster::SetAttackAnticipate(float _DeltaTime)
 {
+	UEngineDebug::OutPutString("Monster FSM : AttackAnticipate");
 	CheckDeath();
 	ActiveGravity();
 
@@ -193,19 +193,21 @@ void AMonster::SetAttackAnticipate(float _DeltaTime)
 
 void AMonster::SetAttack(float _DeltaTime)
 {
+	UEngineDebug::OutPutString("Monster FSM : Attack");
 	CheckDeath();
 	ActiveGravity();
 
 	Dash();
 
-	if (true == Stat.IsBeingHit())
+	//   피격시                        넉백이 적용되는 친구들은 모두 스킬 캔슬
+	if (true == Stat.IsBeingHit() && true == Stat.IsKnockbackable()) 
 	{
 		bIsFirstIdle = true; // Idle로 돌아갈때 반드시 넣어주기
 		FSM.ChangeState(EMonsterState::IDLE);
 	}
 	else
 	{
-		TimeEventor->AddEndEvent(1.0f, [this]()
+		TimeEventor->AddEndEvent(AttackDuration, [this]()
 			{
 				FSM.ChangeState(EMonsterState::ATTACK_RECOVERY);
 			});
@@ -214,10 +216,18 @@ void AMonster::SetAttack(float _DeltaTime)
 
 void AMonster::SetAttackRecovery(float _DeltaTime)
 {
+	UEngineDebug::OutPutString("Monster FSM : Attack Recovery");
+
+	//   피격시                        넉백이 적용되는 친구들은 모두 스킬 캔슬
+	if (true == Stat.IsBeingHit() && true == Stat.IsKnockbackable())
+	{
+		bIsFirstIdle = true; // Idle로 돌아갈때 반드시 넣어주기
+		FSM.ChangeState(EMonsterState::IDLE);
+	}
+
 	CheckDeath();
 	ActiveGravity();
 
-	//UEngineDebug::OutPutString("FSM : Attack Recovery");
 
 	bIsFirstIdle = true; // Idle로 돌아갈때 반드시 넣어주기
 	ChangeNextState(EMonsterState::IDLE);
@@ -231,11 +241,13 @@ void AMonster::SetHit(float _DeltaTime)
 
 void AMonster::SetDeathAir(float _DeltaTime)
 {
+	UEngineDebug::OutPutString("Monster FSM : Death Air");
 	ActiveGravity();
 
 	CheckDirection(); // 좌우 반전 적용
 
 	DeathAir(_DeltaTime);
+	BodyCollision->SetActive(false);
 	BodyCollision->Destroy();
 	DetectCollision->Destroy();
 
@@ -245,13 +257,17 @@ void AMonster::SetDeathAir(float _DeltaTime)
 
 void AMonster::SetDeathLand(float _DeltaTime)
 {
+	UEngineDebug::OutPutString("Monster FSM : Death");
 	ActiveGravity();
 
 	CheckDirection(); // 좌우 반전 적용
 
 	Stat.SetDeath(true);
 
-
+	if (nullptr != BodyCollision)
+	{
+		BodyCollision->Destroy();
+	}
 	ParentRoom->CheckPixelCollisionWithWall(this, BodyRenderer.get(), Stat.GetVelocity(), !bIsLeft, WallPointOffest);
 	// 렌더러 위치 조정
 	FVector SpritePos = BodyRenderer->GetRelativeLocation();

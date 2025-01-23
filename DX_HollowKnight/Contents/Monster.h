@@ -72,7 +72,8 @@ protected:
 	virtual void SetOffset();
 	virtual void CreateAnimation();
 	virtual void CreateCollision();
-	virtual void CreateCenterPoint();
+
+	void CreateCenterPoint();
 
 	void CreatePixelCollision();
 
@@ -101,12 +102,18 @@ protected:
 	bool bCanRotation = true; // 지금 방향 전환 가능한 타이밍인가
 	bool bIsPrevLeft = true;
 	bool bIsTurn = false;
-	bool bIsChasing = false;
+	bool bIsChasing = false; // 탐색 충돌체로 true/false 결정
+
+	// 추적
+	bool bIsChangeChasingDir = false;
+	float ChasingDirectonCooldown = 0.5f;
+	float ChasingDirectionElapsed = 0.0f;
 
 	// 전투
 	void Dash();
 	bool bCanAttack = true;
-	float AttackDuation = 5.0f;
+	float AttackDuration = 0.2f; // 공격 지속시간.
+	float AttackCooldown = 2.0f;
 	float AttackElapsed = 0.0f;
 
 	// 사망

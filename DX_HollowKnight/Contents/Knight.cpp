@@ -175,6 +175,10 @@ void AKnight::Move(float _DeltaTime)
 
 void AKnight::ReverseForce(float _DeltaTime)
 {
+	if (false == Stat.IsKnockbackable())
+	{
+		return;
+	}
 	if (FVector::ZERO == Stat.GetKnockbackForce())
 	{
 		return;
@@ -193,6 +197,10 @@ void AKnight::ReverseForce(float _DeltaTime)
 
 void AKnight::Knockback(float _DeltaTime)
 {
+	if (false == Stat.IsKnockbackable())
+	{
+		return;
+	}
 	if (FVector::ZERO != Stat.GetKnockbackForce())
 	{
 		AddActorLocation(Stat.GetKnockbackForce() * _DeltaTime);

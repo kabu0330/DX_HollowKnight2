@@ -79,20 +79,22 @@ void AMonster::CreateCollision()
 
 void AMonster::CreateDetectCollision()
 {
-	//DetectCollision = CreateDefaultSubObject<UCollision>();
-	//DetectCollision->SetupAttachment(RootComponent);
-	//DetectCollision->SetScale3D(DetectRange);
-	//DetectCollision->SetCollisionProfileName("MonsterDetect");
-	//DetectCollision->SetDebugColor({ 1.0f, 1.0f, 0.0f });
+	DetectCollision = CreateDefaultSubObject<UCollision>();
+	DetectCollision->SetupAttachment(RootComponent);
+	DetectCollision->SetScale3D(DetectRange);
+	DetectCollision->SetWorldLocation({ BodyCollisionOffset.X, BodyCollisionOffset.Y, ZSort });
+	DetectCollision->SetCollisionProfileName("MonsterDetect");
+	DetectCollision->SetDebugColor({ 1.0f, 1.0f, 0.0f });
 }
 
 void AMonster::CreateCenterPoint()
 {
-	//CenterPoint = CreateDefaultSubObject<UCollision>();
-	//CenterPoint->SetupAttachment(RootComponent);
-	//CenterPoint->SetScale3D({ 10, 10 });
-	//CenterPoint->SetCollisionProfileName("MonsterPoint");
-	//CenterPoint->SetDebugColor({ 1.0f, 0.0f, 0.0f });
+	CenterPoint = CreateDefaultSubObject<UCollision>();
+	CenterPoint->SetupAttachment(RootComponent);
+	CenterPoint->SetScale3D({ 10, 10 });
+	CenterPoint->SetWorldLocation({ BodyCollisionOffset.X, BodyCollisionOffset.Y, ZSort });
+	CenterPoint->SetCollisionProfileName("MonsterPoint");
+	CenterPoint->SetDebugColor({ 1.0f, 0.0f, 0.0f });
 }
 
 void AMonster::CreatePixelCollision()

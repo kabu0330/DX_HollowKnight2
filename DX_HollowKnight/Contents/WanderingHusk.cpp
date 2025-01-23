@@ -3,12 +3,6 @@
 
 AWanderingHusk::AWanderingHusk()
 {
-	CreateAnimation();
-	CreateCollision();
-	CreateCenterPoint();
-	CreateDetectCollision();
-	SetStatus();
-	SetOffset();
 }
 
 AWanderingHusk::~AWanderingHusk()
@@ -39,7 +33,7 @@ void AWanderingHusk::SetStatus()
 	Data.Att = 1;
 	Data.SpellAtt = 2;
 	Data.bIsKnockbackable = true;
-	Data.KnockbackDistance = 50.0f;
+	Data.KnockbackDistance = Data.Velocity * 2.0f;
 	Data.Geo = 0;
 	Stat.CreateStatus(&Data);
 
@@ -47,6 +41,9 @@ void AWanderingHusk::SetStatus()
 	bCanRotation = true; // 기본 회전 가능
 	bCanJump = false; // 점프하는 몬스터만 true
 	bIsAggressive = true; // 호전적이면 true
+
+	AttackDuration = 1.0f;
+	AttackCooldown = 5.0f;
 }
 
 void AWanderingHusk::SetOffset()
@@ -68,7 +65,7 @@ void AWanderingHusk::CreateAnimation()
 	float RunnigTime = 0.1f;
 	float AttackAnticipateTime = 0.15f;
 	float AttackTime = 0.12f;
-	float RecoveryTime = 0.1f;
+	float RecoveryTime = 1.5f;
 	float DeathAirTime = 0.2f;
 	float DeathTime = 0.15f;
 	BodyRenderer->CreateAnimation("Idle", AWanderingHusk, 0, 5, IdleTime);
@@ -91,14 +88,5 @@ void AWanderingHusk::CreateCollision()
 	BodyCollision->SetScale3D({ 106, 127 });
 	BodyCollision->SetWorldLocation({ BodyCollisionOffset.X, BodyCollisionOffset.Y, ZSort });
 	BodyCollision->SetCollisionProfileName("Monster");
-}
-
-void AWanderingHusk::CreateCenterPoint()
-{
-	DetectCollision = CreateDefaultSubObject<UCollision>();
-	DetectCollision->SetupAttachment(RootComponent);
-	DetectCollision->SetScale3D(DetectRange);
-	DetectCollision->SetCollisionProfileName("MonsterDetect");
-	DetectCollision->SetDebugColor({ 1.0f, 1.0f, 0.0f });
 }
 
