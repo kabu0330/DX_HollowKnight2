@@ -65,6 +65,7 @@ void ARoom::CheckPixelCollisionWithGravity(AActor* _Actor, class UContentsRender
 	float DeltaTime = UEngineCore::GetDeltaTime();
 
 	FVector CollisionPoint = GetPixelCollisionPoint(_Actor, _Renderer, _Offset);
+	FVector CollisionPoint1PixelUp = GetPixelCollisionPoint(_Actor, _Renderer, _Offset + FVector::UP);
 
 	AKnight* Knight = dynamic_cast<AKnight*>(_Actor);
 	if (nullptr != Knight)
@@ -72,6 +73,12 @@ void ARoom::CheckPixelCollisionWithGravity(AActor* _Actor, class UContentsRender
 		if (true == IsOnGround(CollisionPoint))
 		{
 			Knight->SetOnGround(true);
+
+			while (true == IsOnGround(CollisionPoint1PixelUp))
+			{
+				Knight->AddRelativeLocation(FVector::UP);
+				CollisionPoint1PixelUp = GetPixelCollisionPoint(_Actor, _Renderer, _Offset + FVector::UP);
+			}
 		}
 		else
 		{
@@ -84,8 +91,12 @@ void ARoom::CheckPixelCollisionWithGravity(AActor* _Actor, class UContentsRender
 	{
 		if (true == IsOnGround(CollisionPoint))
 		{
-			UEngineDebug::OutPutString("몬스터 중력 Pos : " + CollisionPoint.ToString());
 			Monster->SetOnGround(true);
+	/*		while (true == IsOnGround(CollisionPoint1PixelUp))
+			{
+				Monster->AddRelativeLocation(FVector::UP);
+				CollisionPoint1PixelUp = GetPixelCollisionPoint(_Actor, _Renderer, _Offset + FVector::UP);
+			}*/
 		}
 		else
 		{
@@ -149,54 +160,53 @@ void ARoom::Gravity(AActor* _Actor, float _DeltaTime)
 	{
 		return;
 	}
+	float GravityValue = 1200.0f;
+	float GravityForceMax = 2000.0f;
+
 	AKnight* Knight = dynamic_cast<AKnight*>(_Actor);
 	if (nullptr != Knight)
 	{
 		FVector GravityForce = Knight->GetGravityForce();
 		if (false == Knight->IsOnGround())
 		{
-			//float DeltaTime = UEngineCore::GetDeltaTime();
-			//FVector NextPos = GravityForce * DeltaTime;
-			//FVector Pos = Knight->GetActorLocation() + Knight->GetRenderer()->GetScale() * 0.5f - LeftTopPos + NextPos + FVector(0.0f, -1.0f, 0.0f);
-			//while (true == IsOnGround(Pos))
-			//{
-			//	Knight->AddRelativeLocation(FVector::UP);
-			//}
-			float GravityValue = 2000.0f;
 			GravityForce += FVector::DOWN * GravityValue * _DeltaTime;
-			Knight->AddRelativeLocation(GravityForce * _DeltaTime);
 		}
 		else
 		{
 			GravityForce = FVector::ZERO;
 		}
 
-		Knight->SetGravityForce(GravityForce);
-		if (1500.0f <= GravityForce.Length())
+		if (GravityForceMax <= GravityForce.Length())
 		{
-			GravityForce = FVector::DOWN * 1000.0f;
+			GravityForce = FVector::DOWN * GravityForceMax * _DeltaTime;
 		}
+
+		Knight->SetGravityForce(GravityForce);
+		Knight->AddRelativeLocation(GravityForce * _DeltaTime);
 	}
+
 	AMonster* Monster = dynamic_cast<AMonster*>(_Actor);
 	if (nullptr != Monster)
 	{
 		FVector GravityForce = Monster->GetGravityForce();
 		if (false == Monster->IsOnGround())
 		{
-			float GravityValue = 2000.0f;
 			GravityForce += FVector::DOWN * GravityValue * _DeltaTime;
-			Monster->AddRelativeLocation(GravityForce * _DeltaTime);
+
+			UEngineDebug::OutPutString("몬스터 체공 상태 Y : " + std::to_string(GravityForce.Y));
 		}
 		else
 		{
 			GravityForce = FVector::ZERO;
 		}
 
-		Monster->SetGravityForce(GravityForce);
-		if (1500.0f <= GravityForce.Length())
+		if (GravityValue <= GravityForce.Length())
 		{
-			GravityForce = FVector::DOWN * 1000.0f;
+			GravityForce = FVector::DOWN * GravityForceMax * _DeltaTime;
 		}
+
+		Monster->SetGravityForce(GravityForce);
+		Monster->AddRelativeLocation(GravityForce * _DeltaTime);
 	}
 }
 

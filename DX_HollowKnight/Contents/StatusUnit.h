@@ -223,6 +223,10 @@ public:
 	{
 		KnockbackForce += _KnockbackForce;
 	}
+	void SetKnockbackForce(FVector _KnockbackForce)
+	{
+		KnockbackForce = _KnockbackForce;
+	}
 	
 
 protected:

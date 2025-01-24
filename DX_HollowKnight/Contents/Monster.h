@@ -130,6 +130,7 @@ protected:
 
 	// »ç¸Á
 	float DeathSpriteOffset = -20.0f;
+	float DeathAirDistance = 400.0f;
 
 	UStatusUnit Stat = UStatusUnit();
 	UTimeEventComponent* TimeEventor = nullptr;

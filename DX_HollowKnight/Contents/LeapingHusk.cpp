@@ -27,7 +27,7 @@ void ALeapingHusk::SetStatus()
 	Data.RunSpeed = Data.Velocity * 2.5f;
 	Data.DashSpeed = Data.Velocity * 3.0f;
 	Data.MaxHp = 15;
-	Data.Hp = 15;
+	Data.Hp = 5;
 	Data.MaxMp = 0;
 	Data.Mp = 0;
 	Data.Att = 1;
@@ -38,7 +38,7 @@ void ALeapingHusk::SetStatus()
 	Stat.CreateStatus(&Data);
 
 	JumpForce = 0.0f;
-	InitJumpForce = 100.0f;
+	InitJumpForce = 400.0f;
 	bCanRotation = true; // 기본 회전 가능
 	bCanJump = false; // 점프하는 몬스터만 true
 	bIsAggressive = true; // 호전적이면 true
@@ -46,7 +46,6 @@ void ALeapingHusk::SetStatus()
 	MoveDuration = 2.0f;
 	MoveCooldown = 5.0f;
 
-	AttackDuration = 1.0f;
 	AttackCooldown = 5.0f;
 }
 
@@ -64,7 +63,8 @@ void ALeapingHusk::SetOffset()
 	DetectRange = { 700, 50 };
 
 	DeathSpriteOffset = -70.0f;
-	DeathRotation = 1.0f;
+	DeathAirDistance = 300.0f;
+	//DeathRotation = 1.0f;
 }
 
 void ALeapingHusk::CreateAnimation()
@@ -74,11 +74,11 @@ void ALeapingHusk::CreateAnimation()
 	float IdleTime = 0.2f;
 	float TurnTime = 0.3f;
 	float RunnigTime = 0.1f;
-	float AttackAnticipateTime = 0.15f;
-	float AttackTime = 0.12f;
-	float RecoveryTime = 0.2f;
-	float DeathAirTime = 0.2f;
-	float DeathTime = 0.15f;
+	float AttackAnticipateTime = 0.1f;
+	float AttackTime = 0.08f;
+	float RecoveryTime = 0.1f;
+	float DeathAirTime = 0.5f;
+	float DeathTime = 0.08f;
 	BodyRenderer->CreateAnimation("Idle", ALeapingHusk, 0, 5, IdleTime);
 	BodyRenderer->CreateAnimation("Walk", ALeapingHusk, 6, 12, RunnigTime);
 	BodyRenderer->CreateAnimation("Turn", ALeapingHusk, 13, 14, TurnTime);
@@ -88,6 +88,8 @@ void ALeapingHusk::CreateAnimation()
 	BodyRenderer->CreateAnimation("DeathAir", ALeapingHusk, 28, 28, DeathAirTime);
 	BodyRenderer->CreateAnimation("DeathLand", ALeapingHusk, 29, 36, DeathTime, false);
 
+
+	AttackDuration = AttackTime * 6.0f;
 	BodyRenderer->ChangeAnimation("Idle");
 }
 

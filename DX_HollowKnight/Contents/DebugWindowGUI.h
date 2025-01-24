@@ -19,6 +19,7 @@ public:
 	void GetCurRoom();
 	void GetKnightInfo();
 	void GetGravityForce();
+	void GetFrame();
 
 
 protected:

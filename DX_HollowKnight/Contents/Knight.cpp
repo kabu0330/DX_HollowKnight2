@@ -500,12 +500,6 @@ void AKnight::Jump(float _DeltaTime)
 			if (JumpAccTime >= JumpKeyDuration)
 			{
 				JumpForce = 1200.0f;
-
-				float JumpForceMax = 1800.0f;
-				if (JumpForce >= JumpForceMax)
-				{
-					JumpForce = JumpForceMax;
-				}
 			}
 	
 			AddRelativeLocation(FVector{ 0.0f, JumpForce * _DeltaTime, 0.0f });	

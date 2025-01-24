@@ -21,6 +21,7 @@ void UDebugWindowGUI::OnGUI()
 
 	}
 
+	GetFrame();
 	GetCurRoom();
 	GetMousePos();
 	GetKnightInfo();
@@ -72,4 +73,11 @@ void UDebugWindowGUI::GetGravityForce()
 		ResultString = "true";
 	}
 	ImGui::Text("Knight IsOnGround : %s", ResultString.data());
+}
+
+void UDebugWindowGUI::GetFrame()
+{
+	float DeltaTime = UEngineCore::GetDeltaTime();
+	int Result = static_cast<int>(1.0f / DeltaTime);
+	ImGui::Text("Frame : %d", Result);
 }

@@ -70,6 +70,7 @@ void AMonster::BeginPlay()
 	CreatePixelCollision();
 	SetCollisionEvent(); 
 	SetFSM();
+
 }
 
 void AMonster::Tick(float _DeltaTime)
@@ -191,14 +192,15 @@ void AMonster::Jump(float _DeltaTime)
 	}
 
 	CheckDirection(); // 좌우 반전 적용
-	JumpForce += InitJumpForce * _DeltaTime;
-	float JumpForceMax = 1000.0f;
+	JumpForce = InitJumpForce;
+	float JumpForceMax = 1800.0f;
 	if (JumpForce >= JumpForceMax)
 	{
 		JumpForce = JumpForceMax;
 	}
-	AddActorLocation({ 0.0f, JumpForce });
-	TimeEventor->AddEndEvent(2.0f, [this]()
+	AddActorLocation({ 0.0f, JumpForce * _DeltaTime});
+	UEngineDebug::OutPutString("몬스터 점프 포스 : " + std::to_string(JumpForce));
+	TimeEventor->AddEndEvent(3.0f, [this]()
 		{
 			JumpForce = 0.0f;
 		});
@@ -375,14 +377,47 @@ void AMonster::Knockback(float _DeltaTime)
 
 void AMonster::DeathAir(float _DeltaTime)
 {
+	// 1. 밀려날 방향
 	FVector KnightPos = Knight->GetActorLocation();
 	FVector MonsterPos = GetActorLocation();
 	FVector Direction = MonsterPos - KnightPos;
 	Direction.Normalize();
+
+	// 2. 포물선으로 날아가도록 로직 추가 
 	Direction += FVector::UP;
 	Direction.Normalize();
+
+	// 3. 넉백 값 입력
 	Stat.SetKnockbackDir(Direction);
-	Stat.SetKnockbackDistance(400.0f);
+	Stat.SetKnockbackDistance(DeathAirDistance);
+
+	// 4. 중력 및 튕김 로직 추가
+	if (false == bIsOnGround)
+	{
+		// 중력이 적용된 넉백
+		FVector CurrentForce = Stat.GetKnockbackForce();
+		CurrentForce += GravityForce;
+
+		// 최대 힘 제한
+		if (CurrentForce.Y < -3000.0f) // 중력에 의한 속도 제한
+		{
+			CurrentForce.Y = -3000.0f;
+		}
+		Stat.SetKnockbackForce(CurrentForce);
+		AddActorLocation(CurrentForce * _DeltaTime);
+	}
+	//else
+	//{
+	//	// 땅에 닿으면 튕김 처리
+	//	FVector CurrentForce = Stat.GetKnockbackForce();
+	//	CurrentForce.Y *= -0.5f; // 반발 계수 (튕김 강도)
+	//	if (::abs(CurrentForce.Y) < 200.0f) // 일정 속도 이하로 느려지면 멈춤
+	//	{
+	//		CurrentForce.Y = 0.0f;
+	//	}
+	//	Stat.SetKnockbackForce(CurrentForce);
+	//	AddActorLocation(CurrentForce * _DeltaTime);
+	//}
 }
 
 void AMonster::Death(float _DeltaTime)

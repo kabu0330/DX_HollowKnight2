@@ -42,8 +42,8 @@ void AWanderingHusk::SetStatus()
 	bCanJump = false; // 점프하는 몬스터만 true
 	bIsAggressive = true; // 호전적이면 true
 
-	AttackDuration = 1.0f;
 	AttackCooldown = 5.0f;
+	DeathAirDistance = 200.0f;
 }
 
 void AWanderingHusk::SetOffset()
@@ -64,9 +64,9 @@ void AWanderingHusk::CreateAnimation()
 	float TurnTime = 0.3f;
 	float RunnigTime = 0.1f;
 	float AttackAnticipateTime = 0.15f;
-	float AttackTime = 0.12f;
+	float AttackTime = 0.15f;
 	float RecoveryTime = 1.5f;
-	float DeathAirTime = 0.2f;
+	float DeathAirTime = 0.5f;
 	float DeathTime = 0.15f;
 	BodyRenderer->CreateAnimation("Idle", AWanderingHusk, 0, 5, IdleTime);
 	BodyRenderer->CreateAnimation("Walk", AWanderingHusk, 6, 12, RunnigTime);
@@ -77,6 +77,7 @@ void AWanderingHusk::CreateAnimation()
 	BodyRenderer->CreateAnimation("DeathAir", AWanderingHusk, 25, 25, DeathAirTime);
 	BodyRenderer->CreateAnimation("DeathLand", AWanderingHusk, 26, 33, DeathTime, false);
 
+	AttackDuration = AttackTime * 4.0f;
 	BodyRenderer->ChangeAnimation("Idle");
 }
 
