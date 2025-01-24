@@ -24,7 +24,7 @@ public:
 	static FVector MousePos;
 	static FVector KnightPos;
 	ACameraActor* Camera = nullptr;
-	bool& GetPauseRef()
+	static bool& GetPauseRef()
 	{
 		return Pause;
 	}

@@ -4,26 +4,7 @@
 
 void AMonster::CreateAnimation()
 {
-	//SetName("Monster");
-	//std::string AWanderingHusk = "WanderingHusk.png";
-	//float IdleTime = 0.2f;
-	//float TurnTime = 0.3f;
-	//float RunnigTime = 0.1f;
-	//float AttackAnticipateTime = 0.15f;
-	//float AttackTime = 0.12f;
-	//float RecoveryTime = 0.1f;
-	//float DeathAirTime = 0.2f;
-	//float DeathTime = 0.15f;
-	//BodyRenderer->CreateAnimation("Idle", AWanderingHusk, 0, 5, IdleTime);
-	//BodyRenderer->CreateAnimation("Walk", AWanderingHusk, 6, 12, RunnigTime);
-	//BodyRenderer->CreateAnimation("Turn", AWanderingHusk, 13, 14, TurnTime);
-	//BodyRenderer->CreateAnimation("AttackAnticipate", AWanderingHusk, 15, 19, AttackAnticipateTime);
-	//BodyRenderer->CreateAnimation("Attack", AWanderingHusk, 20, 23, AttackTime);
-	//BodyRenderer->CreateAnimation("AttackRecovery", AWanderingHusk, 24, 24, RecoveryTime, false);
-	//BodyRenderer->CreateAnimation("DeathAir", AWanderingHusk, 25, 25, DeathAirTime);
-	//BodyRenderer->CreateAnimation("DeathLand", AWanderingHusk, 26, 33, DeathTime, false);
-
-	//BodyRenderer->ChangeAnimation("Idle");
+	// 재정의하여 사용
 }
 
 void AMonster::SetCollisionEvent()
@@ -69,12 +50,11 @@ void AMonster::CancleCurAction()
 
 void AMonster::CreateCollision()
 {
-	// Collision
-	//BodyCollision = CreateDefaultSubObject<UCollision>();
-	//BodyCollision->SetupAttachment(RootComponent);
-	//BodyCollision->SetScale3D({ 106, 127 });
-	//BodyCollision->SetWorldLocation({ BodyCollisionOffset.X, BodyCollisionOffset.Y, ZSort });
-	//BodyCollision->SetCollisionProfileName("Monster");
+	// 재정의하여 사용
+}
+
+void AMonster::CreateAttackEffect()
+{
 }
 
 void AMonster::CreateDetectCollision()

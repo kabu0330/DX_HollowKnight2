@@ -2,7 +2,7 @@
 #include "Skill.h"
 #include "KnightEffect.h"
 
-// 설명 :
+// 설명 : 충돌체 + 이펙트
 class AKnightSkill : public ASkill
 {
 public:
@@ -20,7 +20,6 @@ protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 	void SetCollisionEvent() override {}
-	AKnight* Knight = nullptr;
 
 private:
 	FVector KnightPos = { 0.0f, 0.0f, 0.0f };

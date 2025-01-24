@@ -4,6 +4,8 @@
 #include "Global.h"
 #include "StatusUnit.h"
 #include <EngineCore/TimeEventComponent.h>
+#include "MonsterSkill.h"
+#include "MonsterEffect.h"
 
 // Ό³Έν :
 class AMonster : public AActor
@@ -77,6 +79,9 @@ protected:
 	virtual void SetOffset();
 	virtual void CreateAnimation();
 	virtual void CreateCollision();
+
+	virtual void CreateAttackEffect();
+	bool bIsShowEffect = false;
 
 	void CreateCenterPoint();
 

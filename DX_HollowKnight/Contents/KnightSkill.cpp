@@ -5,7 +5,7 @@
 AKnightSkill::AKnightSkill()
 {
 	SetName("AKnightSkill");
-	//Collision->SetCollisionProfileName("KnightObject");
+	Collision->SetCollisionProfileName("KnightObject");
 }
 
 AKnightSkill::~AKnightSkill()
@@ -15,7 +15,6 @@ AKnightSkill::~AKnightSkill()
 void AKnightSkill::BeginPlay()
 {
 	ASkill::BeginPlay();
-	Knight = AKnight::GetPawn();
 }
 
 void AKnightSkill::Tick(float _DeltaTime)

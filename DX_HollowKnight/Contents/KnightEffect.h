@@ -1,7 +1,7 @@
 #pragma once
 #include "Effect.h"
 
-// 설명 :
+// 설명 : 충돌체 없이 이펙트만 생성
 class AKnightEffect : public AEffect
 {
 public:

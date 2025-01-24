@@ -140,7 +140,7 @@ private:
 	void RecoveryIdle();
 
 
-	float HitStunDuration = 1.0f;
+	float HitStunDuration = 0.5f;
 
 	void ReverseForce(float _DeltaTime);
 	void Knockback(float _DeltaTime);

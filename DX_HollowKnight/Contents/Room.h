@@ -32,10 +32,6 @@ public:
 	{
 		CurRoom = _Room;
 	}
-	
-	//bool IsLinking(ARoom* _Room);
-	//bool InterLinkRoom(ARoom* _Room, FVector _OffsetPos);
-	//ARoom* LinkRoom(ARoom* _Room);
 
 	// 초기 세팅
 	void CreateTexture(std::string_view _FileName, float _ScaleRatio);

@@ -65,6 +65,7 @@ void AEffect::SetZSort(int _Value)
 void AEffect::BeginPlay()
 {
 	AActor::BeginPlay();
+	Knight = AKnight::GetPawn();
 }
 
 void AEffect::Tick(float _DeltaTime)

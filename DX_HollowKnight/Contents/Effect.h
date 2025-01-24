@@ -70,6 +70,7 @@ public:
 	}
 
 protected:
+	AKnight* Knight = nullptr;
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 	void SetPosition();

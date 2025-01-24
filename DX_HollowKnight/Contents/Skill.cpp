@@ -22,7 +22,11 @@ void ASkill::BeginPlay()
 	AEffect::BeginPlay();
 	SetCollisionEvent();
 
-	CollisionScale = BodyRenderer->GetScale();
+	if (nullptr != BodyRenderer)
+	{
+		CollisionScale = BodyRenderer->GetScale();
+		Collision->SetScale3D(CollisionScale);
+	}
 	Collision->SetScale3D(CollisionScale);
 }
 

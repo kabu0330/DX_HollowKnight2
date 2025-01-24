@@ -112,19 +112,49 @@ void ALeapingHusk::SetAttack(float _DeltaTime)
 	Dash();
 	Jump(_DeltaTime);
 
+	CreateAttackEffect();
+
 	//   피격시                        넉백이 적용되는 친구들은 모두 스킬 캔슬
 	if (true == Stat.IsBeingHit() && true == Stat.IsKnockbackable())
 	{
 		bIsFirstIdle = true; // Idle로 돌아갈때 반드시 넣어주기
+		bIsShowEffect = false;
 		FSM.ChangeState(EMonsterState::IDLE);
 	}
 	else
 	{
 		TimeEventor->AddEndEvent(AttackDuration, [this]()
 			{
-				
+				bIsShowEffect = false; 
 				FSM.ChangeState(EMonsterState::ATTACK_RECOVERY);
 			});
 	}
+}
+
+void ALeapingHusk::CreateAttackEffect()
+{
+	if (true == bIsShowEffect)
+	{
+		return;
+	}
+	bIsShowEffect = true; 
+
+	std::shared_ptr<AMonsterSkill> Skill = GetWorld()->SpawnActor<AMonsterSkill>();
+	//SlashEffect->ChangeAnimation("SlashEffect");
+
+	Skill->SetCollisionTime(AttackDuration);
+
+	FVector CollisionScale = FVector(100, 100);
+	Skill->SetCollisionScale(CollisionScale);
+	FVector Offset = FVector{ -50.0f, 0.0f };
+	if (true == bIsLeft)
+	{
+		Skill->SetLocation(this, Offset);
+	}
+	else
+	{
+		Skill->SetLocation(this, -Offset);
+	}
+
 }
 

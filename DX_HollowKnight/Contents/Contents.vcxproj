@@ -254,6 +254,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="MonsterEffect.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="MonsterSkill.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Platform.h">
       <SubType>
       </SubType>
@@ -384,6 +392,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Monster.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="MonsterEffect.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="MonsterSkill.cpp">
       <SubType>
       </SubType>
     </ClCompile>

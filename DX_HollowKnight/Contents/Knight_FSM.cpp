@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "Knight.h"
 #include <EnginePlatform/EngineInput.h>
+#include "PlayGameMode.h"
 #include "KnightSkill.h"
 #include "Effect.h"
 
@@ -315,6 +316,12 @@ void AKnight::SetStun(float _DeltaTime)
 
 	// ÀÌÆåÆ® Ãâ·Â
 	CreateStunEffect();
+	APlayGameMode::GetPauseRef() = true;
+
+	TimeEventor->AddEndEvent(0.3f, []()
+		{
+			APlayGameMode::GetPauseRef() = false;
+		});
 
 	if (true == bIsOnGround)
 	{

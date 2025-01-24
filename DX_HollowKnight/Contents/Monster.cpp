@@ -3,6 +3,7 @@
 #include "FightUnit.h"
 #include <EngineBase/EngineRandom.h>
 #include <EnginePlatform/EngineInput.h>
+#include "PlayGameMode.h"
 
 AMonster::AMonster()
 {
@@ -139,8 +140,6 @@ void AMonster::TimeElapsed(float _DeltaTime)
 			bCanAttack = true;
 		}
 	}
-
-
 
 }
 
@@ -406,18 +405,6 @@ void AMonster::DeathAir(float _DeltaTime)
 		Stat.SetKnockbackForce(CurrentForce);
 		AddActorLocation(CurrentForce * _DeltaTime);
 	}
-	//else
-	//{
-	//	// ¶¥¿¡ ´êÀ¸¸é Æ¨±è Ã³¸®
-	//	FVector CurrentForce = Stat.GetKnockbackForce();
-	//	CurrentForce.Y *= -0.5f; // ¹Ý¹ß °è¼ö (Æ¨±è °­µµ)
-	//	if (::abs(CurrentForce.Y) < 200.0f) // ÀÏÁ¤ ¼Óµµ ÀÌÇÏ·Î ´À·ÁÁö¸é ¸ØÃã
-	//	{
-	//		CurrentForce.Y = 0.0f;
-	//	}
-	//	Stat.SetKnockbackForce(CurrentForce);
-	//	AddActorLocation(CurrentForce * _DeltaTime);
-	//}
 }
 
 void AMonster::Death(float _DeltaTime)
@@ -468,7 +455,11 @@ bool AMonster::IsPause()
 	{
 		return true;
 	}
-	if (true == bIsPause) // Á¤Áö»óÅÂ¸é 
+	if (true == APlayGameMode::GetPauseRef()) // Á¤Áö»óÅÂ¸é 
+	{
+		return true;
+	}
+	if (true == bIsPause)
 	{
 		return true;
 	}
