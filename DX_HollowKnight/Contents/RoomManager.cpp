@@ -5,6 +5,7 @@
 #include "Platform.h"
 #include "WanderingHusk.h"
 #include "LeapingHusk.h"
+#include "HuskHornhead.h"
 
 URoomManager::URoomManager()
 	: Rooms()
@@ -69,7 +70,8 @@ void URoomManager::CreateRoom(AGameMode* _GameMode)
 
 	// 6. 몬스터 생성
 	Crossroads1->CreateMonster<AWanderingHusk>({ 11100, -5800 });
-	Crossroads1->CreateMonster<ALeapingHusk>({ 9611, -5400 });
+	Crossroads1->CreateMonster<AHuskHornhead>({ 9511, -5400 });
+	//Crossroads1->CreateMonster<ALeapingHusk>({ 9611, -5400 });
 
 	//Crossroads1->CreateObject<APlatform>({10250, -5680}, {150, 40});
 }

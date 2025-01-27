@@ -124,6 +124,9 @@
     <ClInclude Include="MonsterEffect.h">
       <Filter>Play\Monster\Base</Filter>
     </ClInclude>
+    <ClInclude Include="HuskHornhead.h">
+      <Filter>Play\Monster\Normal</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -260,6 +263,9 @@
     </ClCompile>
     <ClCompile Include="MonsterEffect.cpp">
       <Filter>Play\Monster\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="HuskHornhead.cpp">
+      <Filter>Play\Monster\Normal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
