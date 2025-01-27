@@ -83,6 +83,14 @@ protected:
 	virtual void CreateAttackEffect();
 	bool bIsShowEffect = false;
 
+	void ResetRendererOffest();
+
+	void SetWalkRendererOffset();
+	FVector WalkRendererOffset = FVector::ZERO;
+
+	void SetAttackRendererOffset();
+	FVector AttackRendererOffset = FVector::ZERO;
+
 	void CreateCenterPoint();
 
 	void CreatePixelCollision();
@@ -127,6 +135,7 @@ protected:
 	float AttackDuration = 0.2f; // 공격 지속시간.
 	float AttackCooldown = 2.0f;
 	float AttackElapsed = 0.0f;
+	float AttackFrameElapsed = 0.0f;
 
 	// 기타 스텟
 	float HitStunDuration = 1.0f;
@@ -259,6 +268,8 @@ protected:
 	virtual void SetFire(float _DeltaTime);
 	virtual void SetBurst(float _DeltaTime);
 
+	float AttackFrame = 0.1f;
+	float AttackRecoveryFrame = 0.1f;
 
 	void CheckDirection();
 	bool bIsLeft = true;

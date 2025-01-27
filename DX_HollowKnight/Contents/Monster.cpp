@@ -16,7 +16,6 @@ AMonster::AMonster()
 	BodyRenderer = CreateDefaultSubObject<UContentsRenderer>();
 	BodyRenderer->SetupAttachment(RootComponent);
 	BodyRenderer->SetAutoScaleRatio(1.0f);
-	BodyRenderer->SetWorldLocation({ RendererOffset.X, RendererOffset.Y, ZSort });
 
 	TimeEventor = CreateDefaultSubObject<UTimeEventComponent>().get();
 
@@ -72,6 +71,7 @@ void AMonster::BeginPlay()
 	SetCollisionEvent(); 
 	SetFSM();
 
+	BodyRenderer->SetRelativeLocation({ RendererOffset.X, RendererOffset.Y, ZSort });
 }
 
 void AMonster::Tick(float _DeltaTime)

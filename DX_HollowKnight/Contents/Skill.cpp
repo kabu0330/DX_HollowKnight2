@@ -24,8 +24,11 @@ void ASkill::BeginPlay()
 
 	if (nullptr != BodyRenderer)
 	{
-		CollisionScale = BodyRenderer->GetScale();
-		Collision->SetScale3D(CollisionScale);
+		if (FVector::ZERO == CollisionScale)
+		{
+			CollisionScale = BodyRenderer->GetScale();
+			Collision->SetScale3D(CollisionScale);
+		}
 	}
 	Collision->SetScale3D(CollisionScale);
 }
@@ -33,6 +36,7 @@ void ASkill::BeginPlay()
 void ASkill::Tick(float _DeltaTime)
 {
 	AEffect::Tick(_DeltaTime);
+
 	Release();
 }
 

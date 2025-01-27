@@ -85,6 +85,8 @@ void AMonster::SetIdle(float _DeltaTime)
 {
 	//UEngineDebug::OutPutString("Monster FSM : Idle");
 
+	ResetRendererOffest();
+
 	ActiveGravity();
 	CheckDeath();
 
@@ -121,6 +123,8 @@ void AMonster::SetIdle(float _DeltaTime)
 void AMonster::SetWalk(float _DeltaTime)
 {
 	//UEngineDebug::OutPutString("Monster FSM : Walk");
+	SetWalkRendererOffset();
+
 	CheckDeath();
 	ActiveGravity();
 
@@ -181,6 +185,7 @@ void AMonster::SetTurn(float _DeltaTime)
 void AMonster::SetAttackAnticipate(float _DeltaTime)
 {
 	//UEngineDebug::OutPutString("Monster FSM : AttackAnticipate");
+	//SetAttackRendererOffset();
 	CheckDeath();
 	ActiveGravity();
 
@@ -194,29 +199,33 @@ void AMonster::SetAttackAnticipate(float _DeltaTime)
 void AMonster::SetAttack(float _DeltaTime)
 {
 	//UEngineDebug::OutPutString("Monster FSM : Attack");
+	SetAttackRendererOffset();
 	CheckDeath();
 	ActiveGravity();
 
 	Dash();
 
+	// 가상함수
+	CreateAttackEffect();
+
+	AttackFrameElapsed += _DeltaTime;
 	//   피격시                        넉백이 적용되는 친구들은 모두 스킬 캔슬
 	if (true == Stat.IsBeingHit() && true == Stat.IsKnockbackable()) 
 	{
 		bIsFirstIdle = true; // Idle로 돌아갈때 반드시 넣어주기
 		FSM.ChangeState(EMonsterState::IDLE);
 	}
-	else
+	else if (AttackFrameElapsed >= AttackDuration)
 	{
-		TimeEventor->AddEndEvent(AttackDuration, [this]()
-			{
-				FSM.ChangeState(EMonsterState::ATTACK_RECOVERY);
-			});
+		AttackFrameElapsed = 0.0f;
+		FSM.ChangeState(EMonsterState::ATTACK_RECOVERY);
 	}
 }
 
 void AMonster::SetAttackRecovery(float _DeltaTime)
 {
 	//UEngineDebug::OutPutString("Monster FSM : Attack Recovery");
+	//SetAttackRendererOffset();
 
 	//   피격시                        넉백이 적용되는 친구들은 모두 스킬 캔슬
 	if (true == Stat.IsBeingHit() && true == Stat.IsKnockbackable())
@@ -230,6 +239,7 @@ void AMonster::SetAttackRecovery(float _DeltaTime)
 
 
 	bIsFirstIdle = true; // Idle로 돌아갈때 반드시 넣어주기
+
 	ChangeNextState(EMonsterState::IDLE);
 }
 

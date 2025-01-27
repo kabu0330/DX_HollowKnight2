@@ -19,7 +19,7 @@ void AMonsterSkill::BeginPlay()
 	
 	// 지속시간 설정을 위해 생성자가 아닌 다음 비긴플레이에서.
 	std::string BlanckEffect = "BlanckEffect";
-	BodyRenderer->CreateAnimation(BlanckEffect, "SlashEffect", 5, 5, CollisionDuration, false);
+	BodyRenderer->CreateAnimation(BlanckEffect, "SlashEffect", 0, 0, CollisionDuration, false);
 	BodyRenderer->ChangeAnimation("BlanckEffect");
 
 }

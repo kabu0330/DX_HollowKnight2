@@ -57,6 +57,29 @@ void AMonster::CreateAttackEffect()
 {
 }
 
+void AMonster::ResetRendererOffest()
+{
+	BodyRenderer->SetRelativeLocation({ RendererOffset.X, RendererOffset.Y, ZSort });
+}
+
+void AMonster::SetWalkRendererOffset()
+{
+	if (FVector::ZERO == WalkRendererOffset)
+	{
+		return;
+	}
+	BodyRenderer->SetRelativeLocation({ WalkRendererOffset.X, WalkRendererOffset.Y, ZSort });
+}
+
+void AMonster::SetAttackRendererOffset()
+{
+	if (FVector::ZERO == AttackRendererOffset)
+	{
+		return;
+	}
+	BodyRenderer->SetRelativeLocation({ AttackRendererOffset.X, AttackRendererOffset.Y, ZSort });
+}
+
 void AMonster::CreateDetectCollision()
 {
 	DetectCollision = CreateDefaultSubObject<UCollision>();
@@ -84,7 +107,7 @@ void AMonster::CreatePixelCollision()
 	PixelCollision->SetCollisionProfileName("MonsterPoint");
 	PixelCollision->SetScale3D({ 100, 5 });
 	float Offset = BodyCollision->GetWorldScale3D().Half().Y;
-	PixelCollision->SetRelativeLocation({ 0.0f, Offset });
+	PixelCollision->SetRelativeLocation({ 0.0f + BodyCollisionOffset.X, Offset + BodyCollisionOffset.Y});
 	PixelCollision->SetDebugColor({ 1.0f, 1.0f, 1.0f });
 }
 
