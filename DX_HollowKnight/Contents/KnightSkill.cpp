@@ -33,7 +33,7 @@ void AKnightSkill::CreateParticleEffect(UCollision* _This, UCollision* _Other)
 	bIsParticle = true;
 	
 	AParticle* Particle = GetWorld()->SpawnActor<AParticle>().get();
-	Particle->CreateParticle("Puff", 10, 0.01f, this->GetActorLocation(), 3.0f);
+	Particle->CreateParticle("Puff", 10, 0.01f, this->GetActorLocation());
 }
 
 void AKnightSkill::Knockback(UCollision* _This, UCollision* _Other)
