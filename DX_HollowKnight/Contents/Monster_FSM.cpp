@@ -99,7 +99,7 @@ void AMonster::SetIdle(float _DeltaTime)
 	GetRandomDirection(); // chasing이 false라면 랜덤이동
 	GetDirectionToPlayer(); // chasing이 true라면 추적
 
-	if (false == bIsOnGround)
+	if (false == bIsOnGround && false == bCanFly)
 	{
 		return;
 	}
@@ -110,14 +110,6 @@ void AMonster::SetIdle(float _DeltaTime)
 	else if (true == IsPlayerNearby() || true == bCanMove)
 	{
 		FSM.ChangeState(EMonsterState::WALK);
-		//if (true == bIsTurn)
-		//{
-		//	FSM.ChangeState(EMonsterState::TURN);
-		//}
-		//else
-		//{
-		//	FSM.ChangeState(EMonsterState::WALK);
-		//}	
 	}
 }
 
@@ -129,7 +121,7 @@ void AMonster::SetWalk(float _DeltaTime)
 	CheckDeath();
 	ActiveGravity();
 
-	if (false == bIsOnGround)
+	if (false == bIsOnGround && false == bCanFly)
 	{
 		return;
 	}
@@ -159,33 +151,15 @@ void AMonster::SetWalk(float _DeltaTime)
 
 void AMonster::SetRun(float _DeltaTime)
 {
-	ActiveGravity();
 }
 
 void AMonster::SetTurn(float _DeltaTime)
 {
-	//UEngineDebug::OutPutString("Monster FSM : Turn");
-	CheckDeath();
-	ActiveGravity();
-
-	//CheckDirection(); // 좌우 반전 적용
-
-	// 좌우 반전
-	if (bIsLeft == false)
-	{
-		SetActorRelativeScale3D({ 1.0f, 1.0f, 1.0f });
-	}
-	if (bIsLeft == true)
-	{
-		SetActorRelativeScale3D({ -1.0f, 1.0f, 1.0f });
-	}
-
-	ChangeNextState(EMonsterState::WALK);
 }
 
 void AMonster::SetAttackAnticipate(float _DeltaTime)
 {
-	//UEngineDebug::OutPutString("Monster FSM : AttackAnticipate");
+	UEngineDebug::OutPutString("Monster FSM : AttackAnticipate");
 	//SetAttackRendererOffset();
 	CheckDeath();
 	ActiveGravity();
@@ -228,6 +202,14 @@ void AMonster::SetAttackRecovery(float _DeltaTime)
 	//UEngineDebug::OutPutString("Monster FSM : Attack Recovery");
 	//SetAttackRendererOffset();
 
+	if (true == bCanFly && true == bIsOnGround)
+	{
+		TimeEventor->AddUpdateEvent(0.3f, [this, _DeltaTime](float, float)
+			{
+				AddActorLocation({ 0.0f, 100.0f * _DeltaTime });
+			});
+	}
+
 	//   피격시                        넉백이 적용되는 친구들은 모두 스킬 캔슬
 	if (true == Stat.IsBeingHit() && true == Stat.IsKnockbackable())
 	{
@@ -254,6 +236,8 @@ void AMonster::SetDeathAir(float _DeltaTime)
 {
 	//UEngineDebug::OutPutString("Monster FSM : Death Air");
 	Stat.SetKnockbackDir(FVector::ZERO);
+
+	bCanFly = false; // 하늘을 나는 애도 중력 적용 받도록
 	ActiveGravity();
 
 	CheckDirectionToPlayer();
@@ -280,6 +264,7 @@ void AMonster::SetDeathAir(float _DeltaTime)
 void AMonster::SetDeathLand(float _DeltaTime)
 {
 	//UEngineDebug::OutPutString("Monster FSM : Death");
+	bCanFly = false; // 하늘을 나는 애도 중력 적용 받도록
 	ActiveGravity();
 
 	CheckDirection(); // 좌우 반전 적용

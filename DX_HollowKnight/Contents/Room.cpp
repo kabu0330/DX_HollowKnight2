@@ -92,11 +92,17 @@ void ARoom::CheckPixelCollisionWithGravity(AActor* _Actor, class UContentsRender
 		if (true == IsOnGround(CollisionPoint))
 		{
 			Monster->SetOnGround(true);
-	/*		while (true == IsOnGround(CollisionPoint1PixelUp))
+			if (true == Monster->CanFly())
 			{
-				Monster->AddRelativeLocation(FVector::UP);
-				CollisionPoint1PixelUp = GetPixelCollisionPoint(_Actor, _Renderer, _Offset + FVector::UP);
-			}*/
+				while (true == IsOnGround(CollisionPoint1PixelUp))
+				{
+					Monster->AddRelativeLocation(FVector::UP);
+					{
+						CollisionPoint1PixelUp = GetPixelCollisionPoint(_Actor, _Renderer, _Offset + FVector::UP);
+					}
+				}
+			}
+
 		}
 		else
 		{
@@ -189,11 +195,16 @@ void ARoom::Gravity(AActor* _Actor, float _DeltaTime)
 	if (nullptr != Monster)
 	{
 		FVector GravityForce = Monster->GetGravityForce();
+
+		if (true == Monster->CanFly()) // 날아다니는 몬스터는 중력 미적용
+		{
+			GravityForce = FVector::ZERO;
+			return;
+		}
+
 		if (false == Monster->IsOnGround())
 		{
 			GravityForce += FVector::DOWN * GravityValue * _DeltaTime;
-
-			UEngineDebug::OutPutString("몬스터 체공 상태 Y : " + std::to_string(GravityForce.Y));
 		}
 		else
 		{

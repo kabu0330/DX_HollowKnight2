@@ -50,7 +50,12 @@ void AMonster::CancleCurAction()
 
 void AMonster::CreateCollision()
 {
-	// 재정의하여 사용
+	// Collision
+	BodyCollision = CreateDefaultSubObject<UCollision>();
+	BodyCollision->SetupAttachment(RootComponent);
+	BodyCollision->SetScale3D(CollisionScale);
+	BodyCollision->SetWorldLocation({ BodyCollisionOffset.X, BodyCollisionOffset.Y, ZSort });
+	BodyCollision->SetCollisionProfileName("Monster");
 }
 
 void AMonster::CreateAttackEffect()

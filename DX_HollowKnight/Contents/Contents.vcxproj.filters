@@ -130,6 +130,12 @@
     <ClInclude Include="Crawlid.h">
       <Filter>Play\Monster\Normal</Filter>
     </ClInclude>
+    <ClInclude Include="Vengefly.h">
+      <Filter>Play\Monster\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="Gruzzer.h">
+      <Filter>Play\Monster\Normal</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -273,6 +279,12 @@
     <ClCompile Include="Crawlid.cpp">
       <Filter>Play\Monster\Normal</Filter>
     </ClCompile>
+    <ClCompile Include="Vengefly.cpp">
+      <Filter>Play\Monster\Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="Gruzzer.cpp">
+      <Filter>Play\Monster\Normal</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -340,9 +352,6 @@
     </Filter>
     <Filter Include="Play\Monster\Normal">
       <UniqueIdentifier>{f3236117-d2f1-4164-9124-405de932a732}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Play\Monster\Fly">
-      <UniqueIdentifier>{150e15ca-dee4-46a1-9a1a-b38245f1ac73}</UniqueIdentifier>
     </Filter>
     <Filter Include="Play\Monster\Boss">
       <UniqueIdentifier>{c0fd44bc-9723-4188-92b7-ece9aa8c76cc}</UniqueIdentifier>

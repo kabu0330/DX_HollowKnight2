@@ -1,52 +1,37 @@
 fileFormatVersion: 2
-guid: d7f9b62663310eb47adbe72a6c5eb06f
+guid: f1ba04142117a7a49aefcf81da0cf24d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6547810480675081383
-    second: CrawlBug_0
+      213: 8833554799853868850
+    second: Gruzzer_0
   - first:
-      213: -4749030884077777115
-    second: CrawlBug_1
+      213: 6223905923726908685
+    second: Gruzzer_1
   - first:
-      213: 3289904581339422195
-    second: CrawlBug_2
+      213: -1662404064802122233
+    second: Gruzzer_2
   - first:
-      213: -4268468515304759004
-    second: CrawlBug_3
+      213: -3210381918374927882
+    second: Gruzzer_3
   - first:
-      213: -733126832671148292
-    second: CrawlBug_4
+      213: 7029250455787173943
+    second: Gruzzer_4
   - first:
-      213: -6991838755356502236
-    second: CrawlBug_5
+      213: -8269905917841785792
+    second: Gruzzer_5
   - first:
-      213: 2932545829537395065
-    second: CrawlBug_6
+      213: 5135990100641744866
+    second: Gruzzer_6
   - first:
-      213: -6502959757114858914
-    second: CrawlBug_7
+      213: 811962493579284832
+    second: Gruzzer_8
   - first:
-      213: -5449628624543564398
-    second: CrawlBug_8
+      213: 6259442372410967919
+    second: Gruzzer_11
   - first:
-      213: 3765549003543125426
-    second: CrawlBug_9
-  - first:
-      213: 5465255732435803673
-    second: CrawlBug_10
-  - first:
-      213: -1726611629543018399
-    second: CrawlBug_11
-  - first:
-      213: -10669642052437739
-    second: CrawlBug_12
-  - first:
-      213: -2394501524584098902
-    second: CrawlBug_13
-  - first:
-      213: -7833638128251452503
-    second: CrawlBug_14
+      213: 2477259433823522031
+    second: Gruzzer_12
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -136,12 +121,96 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CrawlBug_0
+      name: Gruzzer_0
       rect:
         serializedVersion: 2
-        x: 81
-        y: 586
-        width: 89
+        x: 12
+        y: 245
+        width: 82
+        height: 106
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2379c3dc947179a70800000000000000
+      internalID: 8833554799853868850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gruzzer_1
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 250
+        width: 78
+        height: 105
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0d11334671cf5650800000000000000
+      internalID: 6223905923726908685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gruzzer_2
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 240
+        width: 82
+        height: 100
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 706dd449f44fde8e0800000000000000
+      internalID: -1662404064802122233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gruzzer_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 237
+        width: 80
+        height: 108
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f1ece197ae6273d0800000000000000
+      internalID: -3210381918374927882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gruzzer_4
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 126
+        width: 69
         height: 79
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -150,124 +219,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7acc73db0fe7eda50800000000000000
-      internalID: 6547810480675081383
+      spriteID: 73872760c0aec8160800000000000000
+      internalID: 7029250455787173943
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CrawlBug_1
+      name: Gruzzer_5
       rect:
         serializedVersion: 2
-        x: 330
-        y: 586
-        width: 91
-        height: 78
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 52f4f27829d081eb0800000000000000
-      internalID: -4749030884077777115
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CrawlBug_2
-      rect:
-        serializedVersion: 2
-        x: 580
-        y: 588
-        width: 91
-        height: 74
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3fd9aab39c618ad20800000000000000
-      internalID: 3289904581339422195
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CrawlBug_3
-      rect:
-        serializedVersion: 2
-        x: 829
-        y: 587
-        width: 93
-        height: 76
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 421225a208a53c4c0800000000000000
-      internalID: -4268468515304759004
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CrawlBug_4
-      rect:
-        serializedVersion: 2
-        x: 1077
-        y: 590
-        width: 96
-        height: 71
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cf6345ba70963d5f0800000000000000
-      internalID: -733126832671148292
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CrawlBug_5
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 341
-        width: 91
-        height: 69
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4279a2442bff7fe90800000000000000
-      internalID: -6991838755356502236
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CrawlBug_6
-      rect:
-        serializedVersion: 2
-        x: 331
-        y: 331
-        width: 88
+        x: 105
+        y: 127
+        width: 82
         height: 88
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -276,82 +240,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 971312905ee72b820800000000000000
-      internalID: 2932545829537395065
+      spriteID: 04cb32132646b3d80800000000000000
+      internalID: -8269905917841785792
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CrawlBug_7
+      name: Gruzzer_6
       rect:
         serializedVersion: 2
-        x: 586
-        y: 329
-        width: 79
-        height: 92
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e5222881e88d0c5a0800000000000000
-      internalID: -6502959757114858914
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CrawlBug_8
-      rect:
-        serializedVersion: 2
-        x: 833
-        y: 331
-        width: 85
-        height: 88
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 29db74ca3a70f54b0800000000000000
-      internalID: -5449628624543564398
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CrawlBug_9
-      rect:
-        serializedVersion: 2
-        x: 1080
-        y: 336
-        width: 90
-        height: 79
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2bd93843edae14430800000000000000
-      internalID: 3765549003543125426
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CrawlBug_10
-      rect:
-        serializedVersion: 2
-        x: 82
-        y: 83
-        width: 87
+        x: 15
+        y: 19
+        width: 102
         height: 85
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -360,20 +261,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 91ed08ae12d78db40800000000000000
-      internalID: 5465255732435803673
+      spriteID: 2e78caee8c3b64740800000000000000
+      internalID: 5135990100641744866
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CrawlBug_11
+      name: Gruzzer_8
       rect:
         serializedVersion: 2
-        x: 336
-        y: 82
-        width: 78
-        height: 87
+        x: 121
+        y: 9
+        width: 113
+        height: 70
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -381,20 +282,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 160b704fed7d908e0800000000000000
-      internalID: -1726611629543018399
+      spriteID: 061dbb0069ba44b00800000000000000
+      internalID: 811962493579284832
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CrawlBug_12
+      name: Gruzzer_11
       rect:
         serializedVersion: 2
-        x: 583
-        y: 81
-        width: 85
-        height: 89
+        x: 272
+        y: 4
+        width: 75
+        height: 66
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -402,20 +303,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 519759f54081adff0800000000000000
-      internalID: -10669642052437739
+      spriteID: f67859b7ca10ed650800000000000000
+      internalID: 6259442372410967919
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CrawlBug_13
+      name: Gruzzer_12
       rect:
         serializedVersion: 2
-        x: 830
-        y: 91
-        width: 91
-        height: 68
+        x: 397
+        y: 3
+        width: 19
+        height: 20
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -423,29 +324,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aa3980dcc8505ced0800000000000000
-      internalID: -2394501524584098902
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CrawlBug_14
-      rect:
-        serializedVersion: 2
-        x: 1074
-        y: 96
-        width: 103
-        height: 59
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9a3cd9270a3594390800000000000000
-      internalID: -7833638128251452503
+      spriteID: fec4989745ef06220800000000000000
+      internalID: 2477259433823522031
       vertices: []
       indices: 
       edges: []
@@ -453,7 +333,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 1e7bfa3bfcffd0a4fa6d33a595f64cf4
+    spriteID: 1872f30129ecb234ca11847e23dde091
     internalID: 0
     vertices: []
     indices: 

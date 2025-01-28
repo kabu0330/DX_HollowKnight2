@@ -18,7 +18,6 @@ AMonster::AMonster()
 	BodyRenderer->SetAutoScaleRatio(1.0f);
 
 	TimeEventor = CreateDefaultSubObject<UTimeEventComponent>().get();
-
 }
 
 void AMonster::SetStatus()
@@ -295,24 +294,52 @@ FVector AMonster::GetRandomDirection()
 	{
 		Result = Random.RandomInt(0, 1);
 	}
-	else // 날 수 있으면 8방향
+	else // 날 수 있으면 6방향
 	{
-		Result = Random.RandomInt(0, 7);
+		Result = Random.RandomInt(0, 5);
 	}
 
 	switch (Result)
 	{
 	case 0:
 	{
-		UEngineDebug::OutPutString("GetRandomDirection() : 왼쪽 이동");
+		UEngineDebug::OutPutString("GetRandomDirection() : 왼쪽");
 		Direction = FVector::LEFT;
 		bIsLeft = true;
 		break;
 	}
 	case 1:
 	{
-		UEngineDebug::OutPutString("GetRandomDirection() : 오른쪽 이동");
+		UEngineDebug::OutPutString("GetRandomDirection() : 오른쪽");
 		Direction = FVector::RIGHT;
+		bIsLeft = false;
+		break;
+	}
+	case 2:
+	{
+		UEngineDebug::OutPutString("GetRandomDirection() : 왼쪽 위");
+		Direction = LeftTop;
+		bIsLeft = true;
+		break;
+	}
+	case 3:
+	{
+		UEngineDebug::OutPutString("GetRandomDirection() : 왼쪽 아래");
+		Direction = LeftBot;
+		bIsLeft = true;
+		break;
+	}
+	case 4:
+	{
+		UEngineDebug::OutPutString("GetRandomDirection() : 오른쪽 위");
+		Direction = RightTop;
+		bIsLeft = false;
+		break;
+	}
+	case 5:
+	{
+		UEngineDebug::OutPutString("GetRandomDirection() : 오른쪽 아래");
+		Direction = RightBot;
 		bIsLeft = false;
 		break;
 	}
@@ -432,7 +459,16 @@ void AMonster::Move(float _DeltaTime)
 		return;
 	}
 	bChooseDirection = true; // true면 방향 그만 바꿔
-	FVector FinalVelocity = FVector(Stat.GetVelocity() * _DeltaTime, 0.0f);
+	FVector FinalVelocity = FVector::ZERO;
+	if (false == bCanFly)
+	{
+		FinalVelocity = FVector(Stat.GetVelocity() * _DeltaTime, 0.0f);
+	}
+	else
+	{
+		FinalVelocity = FVector(Stat.GetVelocity() * _DeltaTime, Stat.GetVelocity() * _DeltaTime * 0.5f);
+	}
+
 	FinalVelocity *= Direction;
 
 	AddActorLocation(FinalVelocity);
@@ -530,13 +566,29 @@ void AMonster::CheckDirection()
 		bIsTurn = true;
 	}
 
-	if (bIsLeft == true)
+	if (false == bIsFlip)
 	{
-		SetActorRelativeScale3D({ 1.0f, 1.0f, 1.0f });
+		if (bIsLeft == true)
+		{
+			SetActorRelativeScale3D({ 1.0f, 1.0f, 1.0f });
+		}
+		if (bIsLeft == false)
+		{
+			SetActorRelativeScale3D({ -1.0f, 1.0f, 1.0f });
+		}
 	}
-	if (bIsLeft == false)
+
+	// 좌우반전
+	if (true == bIsFlip)
 	{
-		SetActorRelativeScale3D({ -1.0f, 1.0f, 1.0f });
+		if (bIsLeft == true)
+		{
+			SetActorRelativeScale3D({ -1.0f, 1.0f, 1.0f });
+		}
+		if (bIsLeft == false)
+		{
+			SetActorRelativeScale3D({ 1.0f, 1.0f, 1.0f });
+		}
 	}
 }
 

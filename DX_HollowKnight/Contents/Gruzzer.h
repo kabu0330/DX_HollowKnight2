@@ -2,18 +2,18 @@
 #include "Monster.h"
 
 // Ό³Έν :
-class ACrawlid : public AMonster
+class AGruzzer : public AMonster
 {
 public:
 	// constrcuter destructer
-	ACrawlid();
-	~ACrawlid();
+	AGruzzer();
+	~AGruzzer();
 
 	// delete Function
-	ACrawlid(const ACrawlid& _Other) = delete;
-	ACrawlid(ACrawlid&& _Other) noexcept = delete;
-	ACrawlid& operator=(const ACrawlid& _Other) = delete;
-	ACrawlid& operator=(ACrawlid&& _Other) noexcept = delete;
+	AGruzzer(const AGruzzer& _Other) = delete;
+	AGruzzer(AGruzzer&& _Other) noexcept = delete;
+	AGruzzer& operator=(const AGruzzer& _Other) = delete;
+	AGruzzer& operator=(AGruzzer&& _Other) noexcept = delete;
 
 protected:
 	void BeginPlay() override;

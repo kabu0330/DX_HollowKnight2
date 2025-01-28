@@ -66,6 +66,11 @@ public:
 		return FSM;
 	}
 
+	bool CanFly()
+	{
+		return bCanFly;
+	}
+
 	// 몬스터 동작
 	bool IsPlayerNearby();
 	FVector GetDirectionToPlayer();
@@ -274,6 +279,7 @@ protected:
 
 	void CheckDirection();
 	bool bIsLeft = true;
+	bool bIsFlip = false;
 	FVector Direction = FVector::LEFT;
 	bool bCanFly = false;
 
