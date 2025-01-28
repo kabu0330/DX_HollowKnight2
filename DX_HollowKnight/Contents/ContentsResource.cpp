@@ -157,6 +157,7 @@ void UContentsResource::LoadResourceDirectory()
 	LoadContentsResource("Image/Effect/Knight/NailHitEffect");
 	LoadContentsResource("Image/Effect/Knight/FocusEffect");
 	LoadContentsResource("Image/Effect/Knight/FocusEffectEnd");
+	LoadContentsResource("Image/Effect/Knight/BurstEffect");
 	LoadContentsResource("Image/Effect/Knight/Dash_effect");
 	LoadContentsResource("Image/Effect/Knight/Dash_effect2");
 	LoadContentsResource("Image/Effect/Knight/Fireball");
@@ -194,6 +195,7 @@ void UContentsResource::LoadSprite()
 	UEngineSprite::CreateSpriteToMeta("Gruzzer.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("AspidMother.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("AspidHatchling.png", ".smeta");
+	UEngineSprite::CreateSpriteToMeta("AspidHunter.png", ".smeta");
 
 	UEngineSprite::CreateSpriteToMeta("fog.png", ".smeta");
 }

@@ -168,7 +168,15 @@ void AMonster::SetAttackAnticipate(float _DeltaTime)
 	Stat.SetAttacking(true);
 	bCanAttack = false;
 	bCanRotation = false;
-	ChangeNextState(EMonsterState::ATTACK);
+	if (true == Stat.IsBeingHit() && true == Stat.IsKnockbackable())
+	{
+		bIsFirstIdle = true; // Idle로 돌아갈때 반드시 넣어주기
+		FSM.ChangeState(EMonsterState::IDLE);
+	}
+	else
+	{
+		ChangeNextState(EMonsterState::ATTACK);
+	}
 }
 
 void AMonster::SetAttack(float _DeltaTime)

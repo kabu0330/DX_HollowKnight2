@@ -68,6 +68,7 @@ public:
 	{
 		BodyRenderer->SetAutoScaleRatio(_Ratio);
 	}
+	
 
 protected:
 	AKnight* Knight = nullptr;

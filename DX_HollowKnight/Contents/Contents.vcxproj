@@ -168,6 +168,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AspidHatchling.h" />
+    <ClInclude Include="AspidHunter.h" />
     <ClInclude Include="AspidMother.h">
       <SubType>
       </SubType>
@@ -331,6 +332,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AspidHatchling.cpp" />
+    <ClCompile Include="AspidHunter.cpp" />
     <ClCompile Include="AspidMother.cpp">
       <SubType>
       </SubType>

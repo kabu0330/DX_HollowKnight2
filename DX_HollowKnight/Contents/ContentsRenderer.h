@@ -132,6 +132,16 @@ public:
 		Transform.WorldLocation.Z = _ZValue;
 	}
 
+	void AddPlusColor(FVector _PlusColor)
+	{
+		ColorData.PlusColor += _PlusColor;
+	}
+	void SetMulColor(FVector _RGB, float _W = 1.0f)
+	{
+		ColorData.MulColor = _RGB;
+		ColorData.MulColor.W = _W;
+	}
+
 protected:
 	ENGINEAPI void Render(class UEngineCamera* _Camera, float _DeltaTime) override;
 	ENGINEAPI void BeginPlay() override;

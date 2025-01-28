@@ -130,17 +130,20 @@
     <ClInclude Include="Crawlid.h">
       <Filter>Play\Monster\Normal</Filter>
     </ClInclude>
-    <ClInclude Include="Vengefly.h">
-      <Filter>Play\Monster\Normal</Filter>
-    </ClInclude>
-    <ClInclude Include="Gruzzer.h">
-      <Filter>Play\Monster\Normal</Filter>
+    <ClInclude Include="AspidHatchling.h">
+      <Filter>Play\Monster\Normal\Fly</Filter>
     </ClInclude>
     <ClInclude Include="AspidMother.h">
-      <Filter>Play\Monster\Normal</Filter>
+      <Filter>Play\Monster\Normal\Fly</Filter>
     </ClInclude>
-    <ClInclude Include="AspidHatchling.h">
-      <Filter>Play\Monster\Normal</Filter>
+    <ClInclude Include="AspidHunter.h">
+      <Filter>Play\Monster\Normal\Fly</Filter>
+    </ClInclude>
+    <ClInclude Include="Vengefly.h">
+      <Filter>Play\Monster\Normal\Fly</Filter>
+    </ClInclude>
+    <ClInclude Include="Gruzzer.h">
+      <Filter>Play\Monster\Normal\Fly</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -285,17 +288,20 @@
     <ClCompile Include="Crawlid.cpp">
       <Filter>Play\Monster\Normal</Filter>
     </ClCompile>
-    <ClCompile Include="Vengefly.cpp">
-      <Filter>Play\Monster\Normal</Filter>
-    </ClCompile>
-    <ClCompile Include="Gruzzer.cpp">
-      <Filter>Play\Monster\Normal</Filter>
+    <ClCompile Include="AspidHatchling.cpp">
+      <Filter>Play\Monster\Normal\Fly</Filter>
     </ClCompile>
     <ClCompile Include="AspidMother.cpp">
-      <Filter>Play\Monster\Normal</Filter>
+      <Filter>Play\Monster\Normal\Fly</Filter>
     </ClCompile>
-    <ClCompile Include="AspidHatchling.cpp">
-      <Filter>Play\Monster\Normal</Filter>
+    <ClCompile Include="AspidHunter.cpp">
+      <Filter>Play\Monster\Normal\Fly</Filter>
+    </ClCompile>
+    <ClCompile Include="Vengefly.cpp">
+      <Filter>Play\Monster\Normal\Fly</Filter>
+    </ClCompile>
+    <ClCompile Include="Gruzzer.cpp">
+      <Filter>Play\Monster\Normal\Fly</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -368,8 +374,8 @@
     <Filter Include="Play\Monster\Boss">
       <UniqueIdentifier>{c0fd44bc-9723-4188-92b7-ece9aa8c76cc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Play\Monster\Named">
-      <UniqueIdentifier>{ef684bd6-9b6f-429a-b256-790a158d14d4}</UniqueIdentifier>
+    <Filter Include="Play\Monster\Normal\Fly">
+      <UniqueIdentifier>{214cd3a8-c991-4d63-9faa-9247fc4bbb16}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

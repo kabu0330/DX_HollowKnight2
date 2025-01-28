@@ -6,7 +6,6 @@ AMonsterSkill::AMonsterSkill()
 {
 	SetName("MonsterSkill");
 	Collision->SetCollisionProfileName("MonsterObject");
-
 }
 
 AMonsterSkill::~AMonsterSkill()

@@ -48,10 +48,15 @@ void AKnight::CreateFocusEffect()
 	}
 	std::shared_ptr<AKnightEffect> FocusEffect = GetWorld()->SpawnActor<AKnightEffect>();
 	FocusEffect->ChangeAnimation(this, "FocusEffect");
-	FVector Offest = { 0.0f, 30.0f, 0.0f };
+	FVector Offest = { 5.0f, 30.0f, 0.0f };
 	FocusEffect->SetLocation(this, Offest);
 	FocusEffect->EnableRotation(false); // 좌우반전에 따라 
-	FocusEffect->GetRenderer()->SetAutoScaleRatio(1.3f);
+	FocusEffect->GetRenderer()->SetAutoScaleRatio(1.4f);
+
+	FocusEffect->GetRenderer()->AddPlusColor({ 0.2f, 0.2f, 0.2f });
+	FocusEffect->GetRenderer()->SetMulColor({ 5.0f, 5.0f, 5.0f }, 0.2f);
+
+
 	bIsFocusEffect = true;
 }
 
@@ -63,10 +68,30 @@ void AKnight::CreateFocusEndEffect()
 	}
 	std::shared_ptr<AKnightEffect> FocusEffect = GetWorld()->SpawnActor<AKnightEffect>();
 	FocusEffect->ChangeAnimation(this, "FocusEffectEnd");
-	FVector Offest = { 0.0f, 30.0f, 0.0f };
-	FocusEffect->SetLocation(this, Offest);
+	FVector Offset = { 0.0f, 10.0f, 0.0f };
+	FocusEffect->SetLocation(this, Offset);
 	FocusEffect->EnableRotation(false); // 좌우반전에 따라 
-	FocusEffect->GetRenderer()->SetAutoScaleRatio(1.0f);
+	FocusEffect->GetRenderer()->SetAutoScaleRatio(0.8f);
+
+
+	FocusEffect->GetRenderer()->AddPlusColor({ 0.2f, 0.2f, 0.2f });
+	FocusEffect->GetRenderer()->SetMulColor({ 5.0f, 5.0f, 5.0f }, 0.6f);
+	//FocusEffect->GetRenderer()->ColorData.PlusColor += { 0.1f, 0.1f, 0.1f };
+	//FocusEffect->GetRenderer()->ColorData.MulColor = { 3.0f, 3.0f, 3.0f };
+	//FocusEffect->GetRenderer()->ColorData.MulColor.W = 0.5f;
+
+
+	std::shared_ptr<AKnightEffect> BurstEffect = GetWorld()->SpawnActor<AKnightEffect>();
+	BurstEffect->ChangeAnimation(this, "BurstEffect");
+	BurstEffect->SetLocation(this, { Offset.X, Offset.Y, FocusEffect->GetActorLocation().Z - 1.0f });
+	BurstEffect->EnableRotation(false); // 좌우반전에 따라 
+	BurstEffect->GetRenderer()->SetAutoScaleRatio(1.4f);
+
+
+	BurstEffect->GetRenderer()->AddPlusColor({ 0.1f, 0.1f, 0.1f });
+	BurstEffect->GetRenderer()->SetMulColor({ 2.0f, 2.0f, 2.0f }, 0.6f);
+
+
 	bIsFocusEndEffect = true;
 }
 
