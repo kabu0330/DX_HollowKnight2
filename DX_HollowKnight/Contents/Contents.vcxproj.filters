@@ -139,6 +139,9 @@
     <ClInclude Include="AspidMother.h">
       <Filter>Play\Monster\Normal</Filter>
     </ClInclude>
+    <ClInclude Include="AspidHatchling.h">
+      <Filter>Play\Monster\Normal</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -289,6 +292,9 @@
       <Filter>Play\Monster\Normal</Filter>
     </ClCompile>
     <ClCompile Include="AspidMother.cpp">
+      <Filter>Play\Monster\Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="AspidHatchling.cpp">
       <Filter>Play\Monster\Normal</Filter>
     </ClCompile>
   </ItemGroup>

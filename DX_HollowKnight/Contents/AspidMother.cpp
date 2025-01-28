@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "AspidMother.h"
+#include "AspidHatchling.h"
 
 AAspidMother::AAspidMother()
 {
@@ -12,6 +13,7 @@ AAspidMother::~AAspidMother()
 void AAspidMother::BeginPlay()
 {
 	AMonster::BeginPlay();
+	ChildZSort = GetActorLocation().Z;
 }
 
 void AAspidMother::Tick(float _DeltaTime)
@@ -54,7 +56,6 @@ void AAspidMother::SetStatus()
 	AttackRecoveryFrame = 0.01f;
 
 	bIsDeathDestroy = true; // 죽으면 시체 없이 소멸할건지
-	DeathTime = 0.5f;
 
 }
 
@@ -109,16 +110,40 @@ void AAspidMother::SetAttack(float _DeltaTime)
 	// 가상함수
 	//CreateAttackEffect();
 
+	// 추가된 로직
+	if (false == bIsSpawn)
+	{
+		SpawnAspidHatchling();
+	}
+
+
+
+
 	AttackFrameElapsed += _DeltaTime;
 	//   피격시                        넉백이 적용되는 친구들은 모두 스킬 캔슬
 	if (true == Stat.IsBeingHit() && true == Stat.IsKnockbackable())
 	{
+		bIsSpawn = false;
 		bIsFirstIdle = true; // Idle로 돌아갈때 반드시 넣어주기
 		FSM.ChangeState(EMonsterState::IDLE);
 	}
 	else if (AttackFrameElapsed >= AttackDuration)
 	{
+		bIsSpawn = false;
 		AttackFrameElapsed = 0.0f;
 		FSM.ChangeState(EMonsterState::ATTACK_RECOVERY);
 	}
+}
+
+void AAspidMother::SpawnAspidHatchling()
+{
+	bIsSpawn = true;
+
+	AAspidHatchling* Child = GetWorld()->SpawnActor<AAspidHatchling>().get();
+	FVector MotherPos = GetActorLocation();
+	ChildZSort += 1.0f;
+	Child->SetActorLocation({ MotherPos.X, MotherPos.Y - 100.0f, ChildZSort });
+	Child->SetParentRoom(ParentRoom);
+	ParentRoom->GetMonstersRef().push_back(Child);
+
 }

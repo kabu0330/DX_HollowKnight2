@@ -76,6 +76,11 @@ public:
 		bActiveGravity = _bActiveGravity;
 	}
 
+	std::list<AMonster*>& GetMonstersRef()
+	{
+		return Monsters;
+	}
+
 
 	template<typename MonsterType>
 	AMonster* CreateMonster(FVector _Pos, bool _CanWorldPos = true)

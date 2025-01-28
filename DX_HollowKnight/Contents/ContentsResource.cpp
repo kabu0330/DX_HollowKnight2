@@ -193,6 +193,7 @@ void UContentsResource::LoadSprite()
 	UEngineSprite::CreateSpriteToMeta("Vengefly.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("Gruzzer.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("AspidMother.png", ".smeta");
+	UEngineSprite::CreateSpriteToMeta("AspidHatchling.png", ".smeta");
 
 	UEngineSprite::CreateSpriteToMeta("fog.png", ".smeta");
 }
