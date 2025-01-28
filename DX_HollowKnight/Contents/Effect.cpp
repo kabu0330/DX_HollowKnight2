@@ -16,15 +16,25 @@ AEffect::AEffect()
 
 	
 	// 가져가서 만들 부분
-	float FrameTime = 0.06f;
+	float FrameTime = 0.04f;
 	std::string FocusEffect = "FocusEffect";
 	BodyRenderer->CreateAnimation(FocusEffect, FocusEffect, 0, 10, FrameTime, false);
+
+
+	float EffectTime = 0.05f;
+	std::string Png = ".png";
+	std::string Explode = "Explode";
+	BodyRenderer->CreateAnimation(Explode, Explode + Png, 0, 12, EffectTime, false);
+
+	std::string Puff = "Puff";
+	BodyRenderer->CreateAnimation(Puff, Puff + Png, 0, 8, EffectTime, false);
 
 	BodyRenderer->ChangeAnimation(FocusEffect);
 }
 
 AEffect::~AEffect()
 {
+	bIsValid = false;
 }
 
 void AEffect::ChangeAnimation(std::string_view _AnimationName)
@@ -81,7 +91,12 @@ void AEffect::SetPosition()
 	if (false == bIsAddLocation) // Set
 	{
 		CheckDirection(); // 왼쪽인지, 오른쪽인지 계산하고
-		SrcPos = TargetActor->GetActorLocation();
+
+		if (nullptr != TargetActor)
+		{
+			SrcPos = TargetActor->GetActorLocation();
+		}
+
 		if (true == bIsLeft || false == bIsRotation)
 		{
 			FVector OffsetPos = SrcPos + Offset;

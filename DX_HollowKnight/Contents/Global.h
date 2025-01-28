@@ -20,6 +20,7 @@ enum class EUIOrder
 enum class EZOrder
 {
 	NONE = 1,
+	HitParticleEffect = 700,
 	KNIGHT_SKILL_FRONT = 800,
 	MONSTER_SKILL_FRONT = 850,
 	PLAYER = 900,

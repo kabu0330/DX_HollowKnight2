@@ -21,7 +21,12 @@ protected:
 	void Tick(float _DeltaTime) override;
 	void SetCollisionEvent() override {}
 
+	void CreateParticleEffect(class UCollision* _This, class UCollision* _Other);
+	void Knockback(class UCollision* _This, class UCollision* _Other);
+
 private:
 	FVector KnightPos = { 0.0f, 0.0f, 0.0f };
+	bool bIsParticle = false;
+	inline static int Count = 0;
 };
 

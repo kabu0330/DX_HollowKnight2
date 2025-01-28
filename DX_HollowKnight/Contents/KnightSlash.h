@@ -24,7 +24,6 @@ protected:
 	void Collide(class UCollision* _This, class UCollision* _Other);
 	void CreateHitEffect(class UCollision* _This, class UCollision* _Other);
 	void Attack(class UCollision* _This, class UCollision* _Other);
-	void Knockback(class UCollision* _This, class UCollision* _Other);
 private:
 
 };

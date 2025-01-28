@@ -73,12 +73,8 @@ void AKnight::CreateFocusEndEffect()
 	FocusEffect->EnableRotation(false); // 좌우반전에 따라 
 	FocusEffect->GetRenderer()->SetAutoScaleRatio(0.8f);
 
-
 	FocusEffect->GetRenderer()->AddPlusColor({ 0.2f, 0.2f, 0.2f });
 	FocusEffect->GetRenderer()->SetMulColor({ 5.0f, 5.0f, 5.0f }, 0.6f);
-	//FocusEffect->GetRenderer()->ColorData.PlusColor += { 0.1f, 0.1f, 0.1f };
-	//FocusEffect->GetRenderer()->ColorData.MulColor = { 3.0f, 3.0f, 3.0f };
-	//FocusEffect->GetRenderer()->ColorData.MulColor.W = 0.5f;
 
 
 	std::shared_ptr<AKnightEffect> BurstEffect = GetWorld()->SpawnActor<AKnightEffect>();
@@ -106,6 +102,10 @@ void AKnight::CreateFireballEffect()
 	FVector Speed = { 2000.0f, 0.0f,0.0f };
 	Skill->AddLocation(this, Speed);
 	Skill->ToggleFlip(); // 좌우반전
+
+	//Skill->GetRenderer()->AddPlusColor({ 0.2f, 0.2f, 0.2f });
+	Skill->GetRenderer()->SetMulColor({ 1.5f, 1.5f, 1.5f });
+
 	bIsFireballEffect = true;
 }
 

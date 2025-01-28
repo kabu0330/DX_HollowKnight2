@@ -141,6 +141,10 @@ public:
 		ColorData.MulColor = _RGB;
 		ColorData.MulColor.W = _W;
 	}
+	void SetAlpha(float _Alpha = 1.0f)
+	{
+		ColorData.MulColor.W = _Alpha;
+	}
 
 protected:
 	ENGINEAPI void Render(class UEngineCamera* _Camera, float _DeltaTime) override;

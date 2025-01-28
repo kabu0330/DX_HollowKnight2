@@ -45,6 +45,7 @@ void AKnightSlash::Collide(class UCollision* _This, class UCollision* _Other)
 {
 	CreateHitEffect(_This, _Other);
 	Attack(_This, _Other);
+	CreateParticleEffect(_This, _Other);
 }
 
 void AKnightSlash::CreateHitEffect(UCollision* _This, UCollision* _Other)
@@ -55,7 +56,8 @@ void AKnightSlash::CreateHitEffect(UCollision* _This, UCollision* _Other)
 	Effect->SetName("SlashAttack");
 	Effect->SetZSort(EZOrder::KNIGHT_SKILL_FRONT);
 	Effect->ChangeAnimation(Knight, "NailHitEffect"); // RootComponent가 없다고 자꾸 터지는데 나이트 넣어주면 된다.
-	Effect->SetScale(1.5f);
+	Effect->SetScale(2.0f);
+	Effect->GetRenderer()->SetMulColor({ 2.0f, 2.0f, 2.0f });
 	AActor* Target = _Other->GetActor(); // Monster
 
 	FVector KnightPos = { Knight->GetActorLocation().X, Knight->GetActorLocation().Y };
@@ -114,20 +116,4 @@ void AKnightSlash::Attack(UCollision* _This, UCollision* _Other)
 	}
 }
 
-void AKnightSlash::Knockback(UCollision* _This, UCollision* _Other)
-{
-	FVector TargetPos = { _Other->GetWorldLocation().X, _Other->GetWorldLocation().Y };
-	FVector KnightPos = { Knight->GetActorLocation().X, Knight->GetActorLocation().Y };
-	FVector KnockbackDirection = KnightPos - TargetPos;
-	KnockbackDirection.Y = 0.0f;
-	KnockbackDirection.Normalize();
-	Knight->GetStatRef().SetKnockbackDir(KnockbackDirection);
-
-	AMonster* Monster = dynamic_cast<AMonster*>(_Other->GetActor());
-	if (nullptr != Monster)
-	{
-		Monster->GetStatRef().SetKnockbackDir(-KnockbackDirection);
-		Monster->GetStatRef().SetBeingHit(true);
-	}
-}
 

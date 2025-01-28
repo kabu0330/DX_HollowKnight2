@@ -145,6 +145,9 @@
     <ClInclude Include="Gruzzer.h">
       <Filter>Play\Monster\Normal\Fly</Filter>
     </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -302,6 +305,9 @@
     </ClCompile>
     <ClCompile Include="Gruzzer.cpp">
       <Filter>Play\Monster\Normal\Fly</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Global</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -46,6 +46,11 @@ public:
 		CheckDirection();
 	}
 
+	void SetLocation(FVector _Pos)
+	{
+		SrcPos = _Pos;
+	}
+
 	void AddLocation(AActor* _Actor, FVector _Speed, const FVector& _OffsetPos = { 0.0f, 0.0f, 0.0f }, const FVector& _Rotation = { 0.0f, 0.0f, 0.0f })
 	{
 		bIsAddLocation = true;
@@ -68,7 +73,8 @@ public:
 	{
 		BodyRenderer->SetAutoScaleRatio(_Ratio);
 	}
-	
+
+	bool bIsValid = true;
 
 protected:
 	AKnight* Knight = nullptr;
