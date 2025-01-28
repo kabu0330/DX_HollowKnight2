@@ -151,6 +151,8 @@ protected:
 	// 사망
 	float DeathSpriteOffset = -20.0f;
 	float DeathAirDistance = 400.0f;
+	bool bIsDeathDestroy = false; // 죽으면 디스트로이 할거냐
+	float DeathTime = 0.5f;
 
 	UStatusUnit Stat = UStatusUnit();
 	UTimeEventComponent* TimeEventor = nullptr;

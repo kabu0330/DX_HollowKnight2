@@ -279,6 +279,17 @@ void AMonster::SetDeathLand(float _DeltaTime)
 	// 렌더러 위치 조정
 	FVector SpritePos = BodyRenderer->GetRelativeLocation();
 	BodyRenderer->SetRelativeLocation({ SpritePos.X, DeathSpriteOffset });
+
+	if (true == bIsDeathDestroy) // 죽으면 액터 제거
+	{
+		if (true == BodyRenderer->IsCurAnimationEnd())
+		{
+			if (nullptr != BodyRenderer)
+			{
+				Destroy();
+			}
+		}
+	}
 }
 
 void AMonster::SetJumpAnticipate(float _DeltaTime)

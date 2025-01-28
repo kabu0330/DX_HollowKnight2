@@ -136,6 +136,9 @@
     <ClInclude Include="Gruzzer.h">
       <Filter>Play\Monster\Normal</Filter>
     </ClInclude>
+    <ClInclude Include="AspidMother.h">
+      <Filter>Play\Monster\Normal</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -283,6 +286,9 @@
       <Filter>Play\Monster\Normal</Filter>
     </ClCompile>
     <ClCompile Include="Gruzzer.cpp">
+      <Filter>Play\Monster\Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="AspidMother.cpp">
       <Filter>Play\Monster\Normal</Filter>
     </ClCompile>
   </ItemGroup>

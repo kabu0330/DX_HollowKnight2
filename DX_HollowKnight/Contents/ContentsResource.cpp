@@ -186,13 +186,13 @@ void UContentsResource::LoadFolder()
 
 void UContentsResource::LoadSprite()
 {
-	//UEngineSprite::CreateSpriteToMeta("Knight_Idle.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("WanderingHusk.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("LeapingHusk.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("HuskHornhead.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("Crawlid.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("Vengefly.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("Gruzzer.png", ".smeta");
+	UEngineSprite::CreateSpriteToMeta("AspidMother.png", ".smeta");
 
 	UEngineSprite::CreateSpriteToMeta("fog.png", ".smeta");
 }

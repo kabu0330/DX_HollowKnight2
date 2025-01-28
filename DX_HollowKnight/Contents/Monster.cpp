@@ -464,9 +464,9 @@ void AMonster::Move(float _DeltaTime)
 	{
 		FinalVelocity = FVector(Stat.GetVelocity() * _DeltaTime, 0.0f);
 	}
-	else
+	else // 하늘을 나는 몬스터는 y축도 이동할 수 있다.
 	{
-		FinalVelocity = FVector(Stat.GetVelocity() * _DeltaTime, Stat.GetVelocity() * _DeltaTime * 0.5f);
+		FinalVelocity = FVector(Stat.GetVelocity() * _DeltaTime, Stat.GetVelocity() * _DeltaTime * 0.6f);
 	}
 
 	FinalVelocity *= Direction;

@@ -33,7 +33,7 @@ void ACrawlid::SetStatus()
 	Data.Att = 1;
 	Data.SpellAtt = 2;
 	Data.bIsKnockbackable = true;
-	Data.KnockbackDistance = Data.Velocity * 1.5f;
+	Data.KnockbackDistance = 300.0f;
 	Data.Geo = 0;
 	Stat.CreateStatus(&Data);
 

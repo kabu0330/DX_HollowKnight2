@@ -9,6 +9,7 @@
 #include "Crawlid.h"
 #include "Vengefly.h"
 #include "Gruzzer.h"
+#include "AspidMother.h"
 
 URoomManager::URoomManager()
 	: Rooms()
@@ -74,7 +75,8 @@ void URoomManager::CreateRoom(AGameMode* _GameMode)
 	// 6. 몬스터 생성
 	//Crossroads1->CreateMonster<AWanderingHusk>({ 11100, -5800 });
 	//Crossroads1->CreateMonster<AVengefly>({ 9511, -5400 });
-	Crossroads1->CreateMonster<AGruzzer>({ 9511, -5400 });
+	//Crossroads1->CreateMonster<AGruzzer>({ 9511, -5400 });
+	Crossroads1->CreateMonster<AAspidMother>({ 9511, -5400 });
 	//Crossroads1->CreateMonster<ACrawlid>({ 9511, -5400 });
 	//Crossroads1->CreateMonster<AHuskHornhead>({ 9511, -5400 });
 	//Crossroads1->CreateMonster<ALeapingHusk>({ 9611, -5400 });
