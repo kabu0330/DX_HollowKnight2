@@ -190,6 +190,7 @@ void UContentsResource::LoadSprite()
 	UEngineSprite::CreateSpriteToMeta("WanderingHusk.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("LeapingHusk.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("HuskHornhead.png", ".smeta");
+	UEngineSprite::CreateSpriteToMeta("Crawlid.png", ".smeta");
 
 	UEngineSprite::CreateSpriteToMeta("fog.png", ".smeta");
 }

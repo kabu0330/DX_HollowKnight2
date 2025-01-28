@@ -127,6 +127,9 @@
     <ClInclude Include="HuskHornhead.h">
       <Filter>Play\Monster\Normal</Filter>
     </ClInclude>
+    <ClInclude Include="Crawlid.h">
+      <Filter>Play\Monster\Normal</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -265,6 +268,9 @@
       <Filter>Play\Monster\Base</Filter>
     </ClCompile>
     <ClCompile Include="HuskHornhead.cpp">
+      <Filter>Play\Monster\Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="Crawlid.cpp">
       <Filter>Play\Monster\Normal</Filter>
     </ClCompile>
   </ItemGroup>

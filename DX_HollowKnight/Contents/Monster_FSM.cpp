@@ -109,14 +109,15 @@ void AMonster::SetIdle(float _DeltaTime)
 	}
 	else if (true == IsPlayerNearby() || true == bCanMove)
 	{
-		if (true == bIsTurn)
-		{
-			FSM.ChangeState(EMonsterState::TURN);
-		}
-		else
-		{
-			FSM.ChangeState(EMonsterState::WALK);
-		}	
+		FSM.ChangeState(EMonsterState::WALK);
+		//if (true == bIsTurn)
+		//{
+		//	FSM.ChangeState(EMonsterState::TURN);
+		//}
+		//else
+		//{
+		//	FSM.ChangeState(EMonsterState::WALK);
+		//}	
 	}
 }
 
@@ -255,6 +256,7 @@ void AMonster::SetDeathAir(float _DeltaTime)
 	Stat.SetKnockbackDir(FVector::ZERO);
 	ActiveGravity();
 
+	CheckDirectionToPlayer();
 	CheckDirection(); // 좌우 반전 적용
 
 	DeathAir(_DeltaTime);

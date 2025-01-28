@@ -223,6 +223,14 @@ FVector AMonster::GetDirectionToPlayer()
 
 	bIsChangeChasingDir = true; // 일정 주기마다 들어오도록 방어
 
+
+	CheckDirectionToPlayer();
+
+	return Direction;
+}
+
+void AMonster::CheckDirectionToPlayer()
+{
 	FVector KnightPos = Knight->GetActorLocation();
 	FVector MonsterPos = this->GetActorLocation();
 
@@ -245,8 +253,6 @@ FVector AMonster::GetDirectionToPlayer()
 	{
 		bIsLeft = false;
 	}
-
-	return Direction;
 }
 
 FVector AMonster::GetRandomDirection()

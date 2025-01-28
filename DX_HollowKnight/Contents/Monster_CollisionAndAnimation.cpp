@@ -106,8 +106,8 @@ void AMonster::CreatePixelCollision()
 	PixelCollision->SetupAttachment(RootComponent);
 	PixelCollision->SetCollisionProfileName("MonsterPoint");
 	PixelCollision->SetScale3D({ 100, 5 });
-	float Offset = BodyCollision->GetWorldScale3D().Half().Y;
-	PixelCollision->SetRelativeLocation({ 0.0f + BodyCollisionOffset.X, Offset + BodyCollisionOffset.Y});
+	float Offset = ::abs(BodyCollision->GetWorldScale3D().Half().Y);
+	PixelCollision->SetRelativeLocation({ 0.0f + BodyCollisionOffset.X, -Offset + BodyCollisionOffset.Y});
 	PixelCollision->SetDebugColor({ 1.0f, 1.0f, 1.0f });
 }
 
