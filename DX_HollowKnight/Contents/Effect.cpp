@@ -38,6 +38,9 @@ AEffect::AEffect()
 	BodyRenderer->CreateAnimation(WhiteHit1, WhiteHit + Png, 1, 1, WhiteHitTime, false);
 	BodyRenderer->CreateAnimation(WhiteHit2, WhiteHit + Png, 2, 2, WhiteHitTime, false);
 
+	float BlackParticleTime = 2.0f;
+	std::string BlackParticle = "BlackParticle";
+	BodyRenderer->CreateAnimation(BlackParticle, BlackParticle + Png, 1, 1, BlackParticleTime, false);
 
 	float LightTime = 0.3f;
 	std::string HitOrange = "HitOrange";
@@ -103,6 +106,7 @@ void AEffect::Tick(float _DeltaTime)
 	AActor::Tick(_DeltaTime);
 
 	SetPosition();
+	SetScaleDecay(_DeltaTime);
 	Release();
 }
 
@@ -156,4 +160,21 @@ void AEffect::CheckDirection()
 		return;
 	}
 	bIsLeft = AKnight::GetPawn()->IsLeft();
+}
+
+void AEffect::SetScaleDecay(float _DeltaTime)
+{
+	if (false == bIsScaleDecay)
+	{
+		return;
+	}
+	if (0.0f >= ScaleRatio)
+	{
+		Destroy();
+		return;
+	}
+
+	ReductionRate *= _DeltaTime;
+	ScaleRatio -= ReductionRate;
+	BodyRenderer->SetAutoScaleRatio(ScaleRatio);
 }

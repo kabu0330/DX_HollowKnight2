@@ -19,6 +19,7 @@ enum class EParticleType
 {
 	RANDOM,
 	REVERSE,
+	RISING,
 	MAX,
 };
 
@@ -58,6 +59,13 @@ public:
 		RandomScaleMin = _MinRatio;
 		RandomScaleMax = _MaxRatio;
 	}
+	
+	// 1. 크기 점점 작게 설정 여부,
+	void SetDecayScale(bool _ScaleDecay, float _ScaleDecayRatio)
+	{
+		ScaleDecay = _ScaleDecay;
+		ScaleDecayRatio = _ScaleDecayRatio;
+	}
 
 	void SpawnParticle();
 	void Update(float _DeltaTime);
@@ -82,6 +90,9 @@ private:
 	float Alpha = 0.7f;
 	float RandomScaleMin = 0.2f;
 	float RandomScaleMax = 0.7f;
+	
+	bool ScaleDecay = false;
+	float ScaleDecayRatio = 0.01f;
 
 	int Count = 0;
 };

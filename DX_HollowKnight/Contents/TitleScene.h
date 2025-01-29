@@ -18,6 +18,7 @@ public:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime)	override;
 
+
 protected:
 
 private:
@@ -25,5 +26,7 @@ private:
 	std::shared_ptr<class UContentsRenderer> TitleLogo;
 	std::shared_ptr<class UContentsRenderer> CreditsLogo;
 	std::shared_ptr<class UContentsRenderer> StartLogo;
+
+	void CreateBlackParticle(float _DeltaTime);
 };
 

@@ -76,8 +76,16 @@ public:
 	}
 	void SetScale(float _Ratio)
 	{
+		ScaleRatio = _Ratio;
 		BodyRenderer->SetAutoScaleRatio(_Ratio);
 	}
+	void SetScaleFade(float _ReductionRate)
+	{
+		bIsAutoRelease = false; // 애니메이션 시간이 아닌 크기 비율이 0이하가 되면 소멸
+		bIsScaleDecay = true;
+		ReductionRate = _ReductionRate;
+	}
+
 	void SetAutoRelease(bool _bIsAutoRelease)
 	{
 		bIsAutoRelease = _bIsAutoRelease;
@@ -108,5 +116,10 @@ protected:
 	float ZSort = 0.0f;
 	std::shared_ptr<UContentsRenderer> BodyRenderer;
 private:
+
+	float ScaleRatio = 0.0f; // 파티클 옵션
+	bool bIsScaleDecay = false;
+	float ReductionRate = 0.0f;
+	void SetScaleDecay(float _DeltaTime);
 };
 

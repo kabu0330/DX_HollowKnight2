@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "TitleScene.h"
 #include <EngineCore/EngineCore.h>
+#include "Particle.h"
 
 ATitleScene::ATitleScene()
 {
@@ -41,5 +42,18 @@ void ATitleScene::BeginPlay()
 void ATitleScene::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
+
+	CreateBlackParticle(_DeltaTime);
+}
+
+void ATitleScene::CreateBlackParticle(float _DeltaTime)
+{
+	AParticle* BlackParticle = GetWorld()->SpawnActor<AParticle>().get();
+
+	BlackParticle->CreateParticle("BlackParticle", 10, 0.01f, FVector{ 0.0f, 0.0f, 10.0f });
+	BlackParticle->SetAlpha(0.9f);
+
+	BlackParticle->SetDecayScale(true, 0.3f);
+	BlackParticle->SetDirection(EParticleType::RANDOM, -200.0f, 200.0f);
 }
 

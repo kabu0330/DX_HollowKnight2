@@ -106,6 +106,13 @@ void AParticle::Update(float _DeltaTime)
 		if (nullptr != Particle.Effect && true == Particle.Effect->bIsValid)
 		{
 			Particle.Effect->SetLocation(EffectInitPos + Particle.Position);
+
+			// 옵션 설정
+			// 1. 크기 점점 작게
+			if (true == ScaleDecay)
+			{
+				Particle.Effect->SetScaleFade(ScaleDecayRatio);
+			}
 		}
 	}
 }
