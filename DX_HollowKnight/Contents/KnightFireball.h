@@ -18,8 +18,8 @@ public:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
-	void SetCollisionEvent() override;
-
+	void CreateHitEffect(class UCollision* _This, class UCollision* _Other) override;
+	void Attack(class UCollision* _This, class UCollision* _Other) override;
 protected:
 
 private:

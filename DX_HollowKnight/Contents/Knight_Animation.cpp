@@ -11,9 +11,9 @@
 
 void AKnight::CreateDashEffect()
 {
-	std::shared_ptr<AKnightEffect> Effect = GetWorld()->SpawnActor<AKnightEffect>();
-	Effect->ChangeAnimation(this, "Dash_effect");
-	Effect->SetScale(0.5f);
+	//std::shared_ptr<AKnightEffect> Effect = GetWorld()->SpawnActor<AKnightEffect>();
+	//Effect->ChangeAnimation(this, "Dash_effect");
+	//Effect->SetScale(0.5f);
 	//Effect->Destroy(0.1f);
 	std::shared_ptr<AKnightEffect> Effect2 = GetWorld()->SpawnActor<AKnightEffect>();
 	Effect2->ChangeAnimation(this, "Dash_effect2");

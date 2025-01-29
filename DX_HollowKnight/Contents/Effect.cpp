@@ -61,7 +61,7 @@ void AEffect::ChangeAnimation(std::string_view _AnimationName)
 // 위치 조정 안할거면 호출
 void AEffect::ChangeAnimation(AActor* _Actor, std::string_view _AnimationName)
 {
-	SrcPos = _Actor->GetActorLocation();
+	TargetActor = _Actor;
 	ChangeAnimation(_AnimationName);
 }
 
@@ -108,6 +108,10 @@ void AEffect::Tick(float _DeltaTime)
 
 void AEffect::SetPosition()
 {
+	if (nullptr != TargetActor)
+	{
+		SrcPos = TargetActor->GetActorLocation();
+	}
 	if (false == bIsAddLocation) // Set
 	{
 		CheckDirection(); // 왼쪽인지, 오른쪽인지 계산하고
