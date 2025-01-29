@@ -78,7 +78,7 @@ void AKnight::InitAnimation()
 
 
 	// 스펠 애니메이션
-	float FocusFrameTime = 0.07f;
+	float FocusFrameTime = 0.05f;
 	std::string Focus = "Focus";
 	BodyRenderer->CreateAnimation(Focus, Focus, 0, 6, FocusFrameTime, false);
 

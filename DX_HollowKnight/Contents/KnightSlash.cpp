@@ -2,6 +2,7 @@
 #include "KnightSlash.h"
 #include "KnightEffect.h"
 #include <EngineBase/EngineRandom.h>
+#include <EngineCore/EngineCore.h>
 #include "FightUnit.h"
 
 AKnightSlash::AKnightSlash()
@@ -101,6 +102,50 @@ void AKnightSlash::Attack(UCollision* _This, UCollision* _Other)
 		UEngineDebug::OutPutString("나이트가 몬스터에게 " + std::to_string(KnightAtt) + "만큼 데미지를 주었습니다. 현재 체력 : " + std::to_string(MonsterHp) );
 
 		Knockback(_This, _Other);
+	}
+}
+
+void AKnightSlash::Knockback(UCollision* _This, UCollision* _Other)
+{
+	FVector TargetPos = { _Other->GetWorldLocation().X, _Other->GetWorldLocation().Y };
+	FVector KnightPos = { Knight->GetActorLocation().X, Knight->GetActorLocation().Y };
+	FVector KnockbackDirection = KnightPos - TargetPos;
+
+	FVector MonsterKnockbackDirection = KnockbackDirection;
+	if (UEngineString::ToUpper("SlashEffect") == BodyRenderer->GetCurSpriteName())
+	{
+		KnockbackDirection.Y = 0.0f;
+		MonsterKnockbackDirection.Y = 0.0f;
+	}
+	else if (UEngineString::ToUpper("UpSlashEffect") == BodyRenderer->GetCurSpriteName())
+	{
+		KnockbackDirection = FVector::ZERO;
+		MonsterKnockbackDirection.X = 0.0f;
+	}
+	else if (UEngineString::ToUpper("DownSlashEffect") == BodyRenderer->GetCurSpriteName())
+	{
+		KnockbackDirection.X = 0.0f;
+		MonsterKnockbackDirection.X = 0.0f;
+
+		float DeltaTime = UEngineCore::GetDeltaTime();
+		TimeEventer->AddUpdateEvent(0.3f, [this, DeltaTime](float, float)
+			{
+				Knight->SetGravityForce(FVector::ZERO);
+				Knight->AddActorLocation({ 0.0f, 700.0f * DeltaTime });
+			});
+
+	}
+
+	KnockbackDirection.Normalize();
+	MonsterKnockbackDirection.Normalize();
+
+	Knight->GetStatRef().SetKnockbackDir(KnockbackDirection);
+
+	AMonster* Monster = dynamic_cast<AMonster*>(_Other->GetActor());
+	if (nullptr != Monster)
+	{
+		Monster->GetStatRef().SetKnockbackDir(-MonsterKnockbackDirection);
+		Monster->GetStatRef().SetBeingHit(true);
 	}
 }
 

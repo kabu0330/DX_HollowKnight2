@@ -186,6 +186,7 @@ private:
 
 	// 피격 : 스턴
 	bool bIsStunEffect = false;
+	float InitKnockbackDistance = 0.0f;
 	void CreateStunEffect();
 
 private:

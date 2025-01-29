@@ -147,6 +147,7 @@ void AKnight::SetLand(float _DeltaTime)
 
 	float InitJumpForce = 600.0f;
 	JumpForce = InitJumpForce;
+
 	ChangeAttackAnimation(EKnightState::IDLE); // 공중 공격
 
 	ChangeNextState(EKnightState::IDLE);
@@ -241,6 +242,9 @@ void AKnight::SetFocusEnd(float _DeltaTime)
 {
 	CreateFocusEndEffect();
 	bIsFocusEndEffect = true;
+
+	Stat.AddHp(1);
+
 	if (UEngineInput::IsPress('A'))
 	{
 		FSM.ChangeState(EKnightState::FOCUS);

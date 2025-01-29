@@ -274,7 +274,6 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Rend
 
 	if (nullptr != Knight)
 	{
-		//UEngineDebug::OutPutString("나이트 Pixel Pos : " + CollisionPoint.ToString() + " Pixel Color : " + Result);
 		if (CollisionColor == UColor::YELLOW || CollisionColor == UColor::BLACK || CollisionColor == UColor::RED)
 		{
 			Knight->SetWallHere(true);
@@ -287,7 +286,6 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Rend
 
 	if (nullptr != Monster)
 	{
-		//UEngineDebug::OutPutString("몬스터 벽 Pixel Pos : " + CollisionPoint.ToString() + " Pixel Color : " + Result);
 		if (CollisionColor == UColor::YELLOW || CollisionColor == UColor::BLACK || CollisionColor == UColor::RED)
 		{
 			Monster->SetWallHere(true);

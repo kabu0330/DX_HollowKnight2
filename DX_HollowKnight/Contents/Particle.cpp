@@ -87,7 +87,7 @@ void AParticle::SpawnParticle()
 		Effect->SetZSort(EZOrder::HitParticleEffect);
 		Effect->SetScale(RandomScale);
 		Effect->GetRenderer()->SetAlpha(Alpha);
-		Effect->SetZSort(static_cast<int>(EZOrder::HitParticleEffect) -( i + 1 + ZOrderOffset));
+		Effect->SetZSort(static_cast<int>(EZOrder::HitParticleEffect) - ( i + 1 + static_cast<int>(ZOrderOffset)));
 
 		FParticleData NewParticle(Effect, Velocities[i]);
 

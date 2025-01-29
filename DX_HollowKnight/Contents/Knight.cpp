@@ -141,10 +141,11 @@ void AKnight::SetStatus()
 	Data.Att = 5;
 	Data.SpellAtt = 15;
 	Data.bIsKnockbackable = true;
-	Data.KnockbackDistance = 200.0f;
+	Data.KnockbackDistance = 300.0f;
 	Data.Geo = 0;
 	Stat.CreateStatus(&Data);
 
+	InitKnockbackDistance = Data.KnockbackDistance;
 	JumpForce = InitJumpForce;
 	bCanRotation = true;
 }
@@ -228,7 +229,7 @@ void AKnight::SetCameraPos()
 	std::shared_ptr<ACameraActor> Camera = GetWorld()->GetCamera(0);
 	FVector KnightPos = GetActorLocation();
 	FVector ScreenSize = UEngineCore::GetScreenScale();
-	ScreenRatioY = 0.25f;
+	ScreenRatioY = 0.1f;
 	Camera->SetActorLocation({ KnightPos.X, KnightPos.Y + ScreenSize.Y * ScreenRatioY });
 	FVector Pos = Camera->GetActorLocation();
 }
@@ -393,6 +394,9 @@ void AKnight::RecoveryIdle()
 	bIsStunEffect = false;
 
 	Stat.SetStun(false);
+	Stat.SetKnockbackDistance(InitKnockbackDistance);
+
+
 	//bIsStun = false;
 }
 
@@ -505,6 +509,7 @@ void AKnight::Jump(float _DeltaTime)
 			AddRelativeLocation(FVector{ 0.0f, JumpForce * _DeltaTime, 0.0f });	
 		}
 	}
+
 }
 
 void AKnight::ChangeJumpAnimation()

@@ -161,7 +161,7 @@ protected:
 	// 충돌관련
 	void SetCollisionEvent();
 	void OnBodyCollision(class UCollision* _This, class UCollision* _Other);
-	void CancleCurAction();
+	void Knockback();
 
 	void DebugInput(float _DeltaTime);
 

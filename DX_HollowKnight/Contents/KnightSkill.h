@@ -24,14 +24,16 @@ protected:
 
 	virtual void CreateHitEffect(class UCollision* _This, class UCollision* _Other);
 	virtual void Attack(class UCollision* _This, class UCollision* _Other);
+	virtual void Knockback(class UCollision* _This, class UCollision* _Other);
+
 	void CreateOrangeParticleEffect(class UCollision* _This, class UCollision* _Other);
 	void CreateWhiteHitParticleEffect(class UCollision* _This, class UCollision* _Other);
 	void CreateHitOrangeEffect(class UCollision* _This, class UCollision* _Other);
-	void Knockback(class UCollision* _This, class UCollision* _Other);
-	
+
+
+	class UTimeEventComponent* TimeEventer = nullptr;
 private:
 	FVector KnightPos = { 0.0f, 0.0f, 0.0f };
-	class UTimeEventComponent* TimeEventer = nullptr;
 	bool bIsParticle = false;
 	inline static int Count = 0;
 };

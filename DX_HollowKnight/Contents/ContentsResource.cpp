@@ -158,7 +158,7 @@ void UContentsResource::LoadResourceDirectory()
 	LoadContentsResource("Image/Effect/Knight/FocusEffect");
 	LoadContentsResource("Image/Effect/Knight/FocusEffectEnd");
 	LoadContentsResource("Image/Effect/Knight/BurstEffect");
-	LoadContentsResource("Image/Effect/Knight/Dash_effect");
+	//LoadContentsResource("Image/Effect/Knight/Dash_effect");
 	LoadContentsResource("Image/Effect/Knight/Dash_effect2");
 	LoadContentsResource("Image/Effect/Knight/Fireball");
 	LoadContentsResource("Image/Effect/Knight/FireballImpact");

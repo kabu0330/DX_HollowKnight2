@@ -21,7 +21,7 @@ void AMonster::SetCollisionEvent()
 void AMonster::OnBodyCollision(UCollision* _This, UCollision* _Other)
 {
 	// Debug
-	return;
+	//return;
 
 	AActor* Other = _Other->GetActor();
 	AActor* Actor = dynamic_cast<AActor*>(Other);
@@ -34,18 +34,31 @@ void AMonster::OnBodyCollision(UCollision* _This, UCollision* _Other)
 	{
 		return;
 	}
-	int Att = Stat.GetAtt();
 
+	TimeEventer->AddEndEvent(0.3f, [this]()
+		{
+			Knockback();
+		});
+
+	int Att = Stat.GetAtt();
 	UFightUnit::OnHit(OtherKnight, Att);
-	CancleCurAction();
 
 	int KnightCurHp = OtherKnight->GetStatRef().GetHp();
 	UEngineDebug::OutPutString(GetName() + "의 공격으로 나이트가 " + std::to_string(Att) + "의 피해를 입었습니다. 남은 체력 : " + std::to_string(KnightCurHp));
 }
 
-void AMonster::CancleCurAction()
+void AMonster::Knockback()
 {
-	Stat.SetBeingHit(true);
+	FVector Pos = { GetActorLocation().X, GetActorLocation().Y };
+	FVector KnightPos = { Knight->GetActorLocation().X, Knight->GetActorLocation().Y };
+	FVector KnockbackDirection = KnightPos - Pos;
+	KnockbackDirection.Y = 0.0f;
+	KnockbackDirection.Normalize();
+	KnockbackDirection += FVector::UP;
+	KnockbackDirection.Normalize();
+
+	Knight->GetStatRef().SetKnockbackDistance(500.0f);
+	Knight->GetStatRef().SetKnockbackDir(KnockbackDirection);
 }
 
 void AMonster::CreateCollision()

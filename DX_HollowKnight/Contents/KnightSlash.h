@@ -22,6 +22,7 @@ protected:
 
 	void CreateHitEffect(class UCollision* _This, class UCollision* _Other) override;
 	void Attack(class UCollision* _This, class UCollision* _Other) override;
+	void Knockback(class UCollision* _This, class UCollision* _Other) override;
 private:
 
 };

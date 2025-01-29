@@ -157,15 +157,6 @@ public:
 		bIsKnockbackable = _bIsKnockbackable;
 	}
 
-	float GetKnockbackDistance()
-	{
-		return KnockbackDistance;
-	}
-	void SetKnockbackDistance(float _KnockbackDistance)
-	{
-		KnockbackDistance = _KnockbackDistance;
-	}
-
 	bool IsAttacking()
 	{
 		return bIsAttacking;
@@ -226,6 +217,15 @@ public:
 	void SetKnockbackForce(FVector _KnockbackForce)
 	{
 		KnockbackForce = _KnockbackForce;
+	}
+
+	float GetKnockbackDistance()
+	{
+		return KnockbackDistance;
+	}
+	void SetKnockbackDistance(float _KnockbackDistance)
+	{
+		KnockbackDistance = _KnockbackDistance;
 	}
 	
 
