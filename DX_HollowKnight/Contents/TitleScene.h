@@ -24,5 +24,6 @@ private:
 	std::shared_ptr<class UContentsRenderer> BackgroundRenderer;
 	std::shared_ptr<class UContentsRenderer> TitleLogo;
 	std::shared_ptr<class UContentsRenderer> CreditsLogo;
+	std::shared_ptr<class UContentsRenderer> StartLogo;
 };
 
