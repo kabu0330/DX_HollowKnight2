@@ -24,7 +24,7 @@ private:
 	FVector ScreenSize = FVector::ZERO;
 	FVector HalfSize = FVector::ZERO;
 	class AKnight* Knight = nullptr;
-	UTimeEventComponent* TimeEventor = nullptr;
+	UTimeEventComponent* TimeEventer = nullptr;
 
 	void CreateSkillGaugeFrame();
 	float SkillGaugeFramePosX = 0.35f;

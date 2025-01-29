@@ -123,7 +123,7 @@ void ALeapingHusk::SetAttack(float _DeltaTime)
 	}
 	else
 	{
-		TimeEventor->AddEndEvent(AttackDuration, [this]()
+		TimeEventer->AddEndEvent(AttackDuration, [this]()
 			{
 				bIsShowEffect = false; 
 				FSM.ChangeState(EMonsterState::ATTACK_RECOVERY);

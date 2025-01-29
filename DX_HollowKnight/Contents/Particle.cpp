@@ -14,6 +14,55 @@ AParticle::~AParticle()
 {
 }
 
+void AParticle::SetDirection(EParticleType _ParticleType, float _MinVelocity, float _MaxVelocity, FVector _Dir, FVector _Force)
+{
+	Force = _Force;
+
+	switch (_ParticleType)
+	{
+	case EParticleType::REVERSE:
+	{
+		if (FVector::ZERO == _Dir)
+		{
+			MSGASSERT("파티클 타입이 REVERSE일 때는 방향은 필수 입력 매개변수입니다.");
+			return;
+		}
+
+		_Dir.Normalize();
+
+		for (int i = 0; i < MaxParticles; i++)
+		{
+			// 랜덤 위치
+			UEngineRandom Random;
+			Random.SetSeed(reinterpret_cast<long long>(this) + time(nullptr) + i);
+			float RandomSpeed = Random.Randomfloat(_MinVelocity, _MaxVelocity);
+
+			Velocities[i] = _Dir * RandomSpeed;
+		}
+	}
+		break;
+	case EParticleType::RANDOM:
+	case EParticleType::MAX:
+	{
+		for (int i = 0; i < MaxParticles; i++)
+		{
+			// 랜덤 위치
+			UEngineRandom Random;
+			Random.SetSeed(reinterpret_cast<long long>(this) + time(nullptr) + i);
+			float RandomSpeedX = Random.Randomfloat(_MinVelocity, _MaxVelocity);
+
+			Random.SetSeed(reinterpret_cast<long long>(this) + time(nullptr) + (i * 2)); // 한번 더 셔플
+			float RandomSpeedY = Random.Randomfloat(_MinVelocity, _MaxVelocity);
+
+			Velocities[i] = FVector(RandomSpeedX, RandomSpeedY);
+		}
+	}
+		break;
+	default:
+		break;
+	}
+}
+
 void AParticle::SpawnParticle()
 {
 	int RemainParticles = MaxParticles - Count;
@@ -27,28 +76,20 @@ void AParticle::SpawnParticle()
 
 	for (int i = 0; i < RemainParticles; i++)
 	{
-		// 랜덤 위치
 		UEngineRandom Random;
-		Random.SetSeed(reinterpret_cast<long long>(this) + time(nullptr) + i); // 한번 더 셔플
-		float RandomSpeedX = Random.Randomfloat(-200.0f, 200.0f);
-
-		Random.SetSeed(reinterpret_cast<long long>(this) + time(nullptr) + (i * 2)); // 한번 더 셔플
-		float RandomSpeedY = Random.Randomfloat(-200.0f, 200.0f);
-
-		FVector RandomVelocity = FVector(RandomSpeedX, RandomSpeedY);
+		Random.SetSeed(reinterpret_cast<long long>(this) + time(nullptr) + i);
+		float RandomScale = Random.Randomfloat(RandomScaleMin, RandomScaleMax);
 
 		std::shared_ptr<AEffect> Effect = GetWorld()->SpawnActor<AEffect>();
 		Effect->ChangeAnimation(EffectName);
 
-		FVector InitPos = EmitterPosition + RandomVelocity;
-
-		Effect->SetLocation(InitPos);
+		Effect->SetLocation(EmitterPosition);
 		Effect->SetZSort(EZOrder::HitParticleEffect);
-		Effect->SetScale(1.5f);
-		Effect->GetRenderer()->SetAlpha(0.9f);
-		Effect->SetZSort(static_cast<int>(EZOrder::HitParticleEffect) + i + 1);
+		Effect->SetScale(RandomScale);
+		Effect->GetRenderer()->SetAlpha(Alpha);
+		Effect->SetZSort(static_cast<int>(EZOrder::HitParticleEffect) -( i + 1 + ZOrderOffset));
 
-		FParticleData NewParticle(Effect, RandomVelocity);
+		FParticleData NewParticle(Effect, Velocities[i]);
 
 		Particles.push_back(NewParticle);
 		++Count;
@@ -59,7 +100,8 @@ void AParticle::Update(float _DeltaTime)
 {
 	for (auto& Particle : Particles)
 	{
-		Particle.Position += Particle.Velocity * _DeltaTime * 5.0f;
+		Particle.Velocity += Force * _DeltaTime;
+		Particle.Position += Particle.Velocity * _DeltaTime;
 
 		if (nullptr != Particle.Effect && true == Particle.Effect->bIsValid)
 		{

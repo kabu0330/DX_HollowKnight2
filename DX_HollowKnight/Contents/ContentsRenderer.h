@@ -2,6 +2,7 @@
 #include <EngineCore/Renderer.h>
 #include <EngineBase/EngineDelegate.h>
 #include <map>
+#include "Global.h"
 
 // Ό³Έν :
 class UContentsRenderer : public URenderer
@@ -130,6 +131,11 @@ public:
 	void SetZSort(float _ZValue)
 	{
 		Transform.WorldLocation.Z = _ZValue;
+	}
+	template<typename ZType>
+	void SetZSort(ZType _ZValue)
+	{
+		SetZSort(static_cast<float>(_ZValue));
 	}
 
 	void AddPlusColor(FVector _PlusColor)

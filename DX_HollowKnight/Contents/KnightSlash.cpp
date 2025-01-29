@@ -36,18 +36,6 @@ void AKnightSlash::Tick(float _DeltaTime)
 	AKnightSkill::Tick(_DeltaTime);
 }
 
-void AKnightSlash::SetCollisionEvent()
-{
-	Collision->SetCollisionEnter(std::bind(&AKnightSlash::Collide, this, std::placeholders::_1, std::placeholders::_2));
-}
-
-void AKnightSlash::Collide(class UCollision* _This, class UCollision* _Other)
-{
-	CreateHitEffect(_This, _Other);
-	Attack(_This, _Other);
-	CreateParticleEffect(_This, _Other);
-}
-
 void AKnightSlash::CreateHitEffect(UCollision* _This, UCollision* _Other)
 {
 	UEngineDebug::OutPutString("SlashAttack");
@@ -56,7 +44,7 @@ void AKnightSlash::CreateHitEffect(UCollision* _This, UCollision* _Other)
 	Effect->SetName("SlashAttack");
 	Effect->SetZSort(EZOrder::KNIGHT_SKILL_FRONT);
 	Effect->ChangeAnimation(Knight, "NailHitEffect"); // RootComponent가 없다고 자꾸 터지는데 나이트 넣어주면 된다.
-	Effect->SetScale(2.0f);
+	Effect->SetScale(3.0f);
 	Effect->GetRenderer()->SetMulColor({ 2.0f, 2.0f, 2.0f });
 	AActor* Target = _Other->GetActor(); // Monster
 

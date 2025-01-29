@@ -15,6 +15,13 @@ public:
 	}
 };
 
+enum class EParticleType
+{
+	RANDOM,
+	REVERSE,
+	MAX,
+};
+
 // 설명 :
 class AParticle : public AActor
 {
@@ -35,6 +42,21 @@ public:
 		MaxParticles = _MaxParticles;
 		SpawnRate = _SpawnRate;
 		EmitterPosition = _EmitterPosition;
+		Velocities.resize(_MaxParticles);
+	}
+	void SetDirection(EParticleType _ParticleType, float _MinVelocity = -100.0f, float _MaxVelocity = 100.0f, FVector _Dir = FVector::ZERO, FVector _Force = FVector::ZERO);
+	void SetZOrderOffset(float _Value)
+	{
+		ZOrderOffset = _Value;
+	}
+	void SetAlpha(float _Ratio)
+	{
+		Alpha = _Ratio;
+	}
+	void SetRandomScale(float _MinRatio, float _MaxRatio)
+	{
+		RandomScaleMin = _MinRatio;
+		RandomScaleMax = _MaxRatio;
 	}
 
 	void SpawnParticle();
@@ -53,6 +75,13 @@ private:
 	float SpawnRate = 0.0f; // 생성 속도
 	FVector EmitterPosition = FVector::ZERO; // 파티클 생성 위치
 	FVector EffectInitPos = FVector::ZERO;
+	EParticleType ParticleType = EParticleType::RANDOM;
+	std::vector<FVector> Velocities;
+	FVector Force = FVector::ZERO;
+	float ZOrderOffset = 0.0f;
+	float Alpha = 0.7f;
+	float RandomScaleMin = 0.2f;
+	float RandomScaleMax = 0.7f;
 
 	int Count = 0;
 };

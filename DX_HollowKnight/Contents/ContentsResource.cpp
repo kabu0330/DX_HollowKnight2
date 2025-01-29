@@ -200,6 +200,8 @@ void UContentsResource::LoadSprite()
 	// Effect
 	UEngineSprite::CreateSpriteToMeta("Explode.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("Puff.png", ".smeta");
+	UEngineSprite::CreateSpriteToMeta("HitOrange.png", ".smeta");
+	UEngineSprite::CreateSpriteToMeta("WhiteHit.png", ".smeta");
 
 	UEngineSprite::CreateSpriteToMeta("fog.png", ".smeta");
 }

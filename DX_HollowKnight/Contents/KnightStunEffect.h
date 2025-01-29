@@ -23,6 +23,6 @@ public:
 protected:
 
 private:
-	UTimeEventComponent* TimeEventor = nullptr;
+	UTimeEventComponent* TimeEventer = nullptr;
 };
 

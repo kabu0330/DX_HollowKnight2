@@ -19,7 +19,7 @@ ADoor::ADoor()
 
 	BodyCollision->SetCollisionStay(std::bind(&ADoor::Warp, this, std::placeholders::_1, std::placeholders::_2));
 
-	TimeEventor = CreateDefaultSubObject<UTimeEventComponent>();
+	TimeEventer = CreateDefaultSubObject<UTimeEventComponent>();
 }
 
 ADoor::~ADoor()
@@ -63,11 +63,11 @@ void ADoor::Warp(UCollision* _Actor1, UCollision* _Actor2)
 
 	Knight->GetCollision()->SetActive(false);
 	bIsDoorEnter = true;
-	TimeEventor->AddEndEvent(0.05f, [this]()
+	TimeEventer->AddEndEvent(0.05f, [this]()
 		{
 			bIsDoorEnter = false;
 		});
-	TimeEventor->AddEndEvent(0.3f, [this]()
+	TimeEventer->AddEndEvent(0.3f, [this]()
 		{
 			UEngineDebug::OutPutString("Enter");
 
@@ -76,7 +76,7 @@ void ADoor::Warp(UCollision* _Actor1, UCollision* _Actor2)
 			Knight->SetCameraPos();
 		});
 
-	TimeEventor->AddEndEvent(1.5f, std::bind(&ADoor::ActiveKnightCollision, this));
+	TimeEventer->AddEndEvent(1.5f, std::bind(&ADoor::ActiveKnightCollision, this));
 }
 
 void ADoor::ActiveKnightCollision()

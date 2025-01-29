@@ -41,7 +41,7 @@ protected:
 private:
 	inline static bool bIsDoorEnter = false;
 	std::shared_ptr<class UCollision> BodyCollision;
-	std::shared_ptr<class UTimeEventComponent> TimeEventor;
+	std::shared_ptr<class UTimeEventComponent> TimeEventer;
 	FVector Scale;
 	FVector TargetPos = FVector::ZERO;
 	FVector InitPos = FVector::ZERO;

@@ -17,7 +17,7 @@ AMonster::AMonster()
 	BodyRenderer->SetupAttachment(RootComponent);
 	BodyRenderer->SetAutoScaleRatio(1.0f);
 
-	TimeEventor = CreateDefaultSubObject<UTimeEventComponent>().get();
+	TimeEventer = CreateDefaultSubObject<UTimeEventComponent>().get();
 }
 
 void AMonster::SetStatus()
@@ -108,7 +108,7 @@ void AMonster::TimeElapsed(float _DeltaTime)
 				bCanMove = false;
 				MoveElapsed = 0.0f;
 
-				TimeEventor->AddEndEvent(MoveCooldown, [this]()
+				TimeEventer->AddEndEvent(MoveCooldown, [this]()
 					{
 						bCanMove = true;
 						bChooseDirection = false; // 방향 랜덤 결정
@@ -140,6 +140,12 @@ void AMonster::TimeElapsed(float _DeltaTime)
 		}
 	}
 
+}
+
+void AMonster::ResetAttackCooldown()
+{
+	bCanAttack = true;
+	AttackElapsed = 0.0f;
 }
 
 bool AMonster::IsPlayerNearby()
@@ -198,7 +204,7 @@ void AMonster::Jump(float _DeltaTime)
 	}
 	AddActorLocation({ 0.0f, JumpForce * _DeltaTime});
 	UEngineDebug::OutPutString("몬스터 점프 포스 : " + std::to_string(JumpForce));
-	TimeEventor->AddEndEvent(3.0f, [this]()
+	TimeEventer->AddEndEvent(3.0f, [this]()
 		{
 			JumpForce = 0.0f;
 		});

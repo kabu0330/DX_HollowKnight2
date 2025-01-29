@@ -35,7 +35,7 @@ void AKnight::CreateStunEffect()
 	float Degree = Random.Randomfloat(0.0f, 30.0f);
 	FVector Rotation = { 0.0f, 0.0f, Degree };
 	Effect->SetLocation(this, Offest, Rotation);
-	TimeEventor->AddEndEvent(0.3f, std::bind(&KnightStunEffect::CreateStunImpactEffect, Effect));
+	TimeEventer->AddEndEvent(0.3f, std::bind(&KnightStunEffect::CreateStunImpactEffect, Effect));
 	bIsStunEffect = true;
 }
 

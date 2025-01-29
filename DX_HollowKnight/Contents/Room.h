@@ -118,7 +118,7 @@ public:
 	}
 
 protected:
-	void Gravity(AActor* _Actor, float _DeltaTime);
+	void Force(AActor* _Actor, float _DeltaTime);
 
 private:
 	inline static bool bActiveGravity = false;

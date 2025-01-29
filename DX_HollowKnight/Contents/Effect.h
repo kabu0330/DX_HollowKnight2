@@ -24,6 +24,11 @@ public:
 
 	void ChangeAnimation(std::string_view _AnimationName);
 	void ChangeAnimation(AActor* _Actor, std::string_view _AnimationName);
+	void ChangeAnimation(std::string_view _AnimationName, FVector _Pos)
+	{
+		ChangeAnimation(_AnimationName);
+		SrcPos = _Pos;
+	}
 	virtual void EndFunction() {} // 렌더러 디스트로이 직전 함수 호출
 
 
@@ -73,6 +78,10 @@ public:
 	{
 		BodyRenderer->SetAutoScaleRatio(_Ratio);
 	}
+	void SetAutoRelease(bool _bIsAutoRelease)
+	{
+		bIsAutoRelease = _bIsAutoRelease;
+	}
 
 	bool bIsValid = true;
 
@@ -94,6 +103,7 @@ protected:
 	
 	bool bIsLeft = true;
 	bool bIsRotation = true;
+	bool bIsAutoRelease = true;
 
 	float ZSort = 0.0f;
 	std::shared_ptr<UContentsRenderer> BodyRenderer;

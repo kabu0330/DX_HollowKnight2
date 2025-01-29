@@ -15,7 +15,7 @@ KnightStunEffect::KnightStunEffect()
 	SetZSort(static_cast<int>(EZOrder::KNIGHT_STUN_EFFECT));
 	BodyRenderer->ChangeAnimation(StunEffect01);
 
-	TimeEventor = CreateDefaultSubObject<UTimeEventComponent>().get();
+	TimeEventer = CreateDefaultSubObject<UTimeEventComponent>().get();
 }
 
 KnightStunEffect::~KnightStunEffect()

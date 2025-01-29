@@ -120,6 +120,7 @@ protected:
 
 	// 쿨타임
 	void TimeElapsed(float _DeltaTime);
+	void ResetAttackCooldown();
 
 	// 동작
 	bool bIsAggressive = true; // 플레이어 탐색하냐
@@ -154,7 +155,7 @@ protected:
 	bool bIsDeathDestroy = false; // 죽으면 디스트로이 할거냐
 
 	UStatusUnit Stat = UStatusUnit();
-	UTimeEventComponent* TimeEventor = nullptr;
+	UTimeEventComponent* TimeEventer = nullptr;
 	class AKnight* Knight = nullptr;
 
 	// 충돌관련

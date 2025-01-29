@@ -171,6 +171,7 @@ void AMonster::SetAttackAnticipate(float _DeltaTime)
 	if (true == Stat.IsBeingHit() && true == Stat.IsKnockbackable())
 	{
 		bIsFirstIdle = true; // Idle로 돌아갈때 반드시 넣어주기
+		ResetAttackCooldown();
 		FSM.ChangeState(EMonsterState::IDLE);
 	}
 	else
@@ -196,6 +197,7 @@ void AMonster::SetAttack(float _DeltaTime)
 	if (true == Stat.IsBeingHit() && true == Stat.IsKnockbackable()) 
 	{
 		bIsFirstIdle = true; // Idle로 돌아갈때 반드시 넣어주기
+		ResetAttackCooldown();
 		FSM.ChangeState(EMonsterState::IDLE);
 	}
 	else if (AttackFrameElapsed >= AttackDuration)
@@ -212,7 +214,7 @@ void AMonster::SetAttackRecovery(float _DeltaTime)
 
 	if (true == bCanFly && true == bIsOnGround)
 	{
-		TimeEventor->AddUpdateEvent(0.3f, [this, _DeltaTime](float, float)
+		TimeEventer->AddUpdateEvent(0.3f, [this, _DeltaTime](float, float)
 			{
 				AddActorLocation({ 0.0f, 100.0f * _DeltaTime });
 			});
@@ -259,7 +261,7 @@ void AMonster::SetDeathAir(float _DeltaTime)
 	ParentRoom->CheckPixelCollisionWithWall(this, BodyRenderer.get(), Stat.GetVelocity(), !bIsLeft, WallPointOffest);
 	ChangeNextState(EMonsterState::DEATH_LAND);
 
-	TimeEventor->AddEvent(0.5f, [this](float _DeltaTime, float _Blank)
+	TimeEventer->AddEvent(0.5f, [this](float _DeltaTime, float _Blank)
 		{
 			BodyRenderer->AddLocalRotation({ 0.0f, 0.0f, -DeathRotation * _DeltaTime });
 		},

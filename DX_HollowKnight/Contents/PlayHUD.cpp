@@ -12,7 +12,7 @@ APlayHUD::APlayHUD()
 	HalfSize = ScreenSize * 0.5f;
 	Knight = AKnight::GetPawn();
 
-	TimeEventor = CreateDefaultSubObject<UTimeEventComponent>().get();
+	TimeEventer = CreateDefaultSubObject<UTimeEventComponent>().get();
 }
 
 APlayHUD::~APlayHUD()
@@ -99,7 +99,7 @@ void APlayHUD::CreateHpUI()
 		//HpUI->SetTexture("002-40-007.png", true, 0.7f);
 		Hps.push_back(HpUI);
 	}
-	TimeEventor->AddEndEvent(1.0f, std::bind(&APlayHUD::ChangeHpUI, this));
+	TimeEventer->AddEndEvent(1.0f, std::bind(&APlayHUD::ChangeHpUI, this));
 }
 
 void APlayHUD::ChangeHpUI()
@@ -155,7 +155,7 @@ void APlayHUD::SetHpUI()
 			Hps[PrevHp]->ChangeAnimation("HealthAppear");
 		}
 
-		TimeEventor->AddEndEvent(1.0f, std::bind(&APlayHUD::ChangeHpUI, this));
+		TimeEventer->AddEndEvent(1.0f, std::bind(&APlayHUD::ChangeHpUI, this));
 	}
 	else if (true == HpMinus) // 체력 감소
 	{
@@ -203,7 +203,7 @@ void APlayHUD::FadeOut()
 
 	// 2초간 FadeChange 함수 호출하고, 끝나면 Fade Active 끄고 MulColor도 원상복구한다.
 	// UI가 다 MulColor 값을 공유하는듯 하다. -2.0f 넘어가면 다른 UI도 지워진다.
-	TimeEventor->AddEvent(0.6f, std::bind(&APlayHUD::FadeChange, this), [this]()
+	TimeEventer->AddEvent(0.6f, std::bind(&APlayHUD::FadeChange, this), [this]()
 		{
 			Fade->SetActive(false);
 			Fade->ColorData.MulColor = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -217,7 +217,7 @@ void APlayHUD::FadeIn()
 	  FadeDir = FVector::ZERO;
 	FadeDir.W = 2.0f;
 	Fade->ColorData.MulColor.W = 0.0f;
-	TimeEventor->AddEvent(0.6f, std::bind(&APlayHUD::FadeChange, this), [this]()
+	TimeEventer->AddEvent(0.6f, std::bind(&APlayHUD::FadeChange, this), [this]()
 		{
 			Fade->ColorData.MulColor = { 1.0f, 1.0f, 1.0f, 1.0f };
 			FadeOut();

@@ -318,7 +318,7 @@ void AKnight::SetStun(float _DeltaTime)
 	CreateStunEffect();
 	APlayGameMode::GetPauseRef() = true;
 
-	TimeEventor->AddEndEvent(0.3f, []()
+	TimeEventer->AddEndEvent(0.3f, []()
 		{
 			APlayGameMode::GetPauseRef() = false;
 		});

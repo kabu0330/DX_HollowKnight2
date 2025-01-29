@@ -110,7 +110,7 @@ void ARoom::CheckPixelCollisionWithGravity(AActor* _Actor, class UContentsRender
 		}
 	}
 
-	Gravity(_Actor, DeltaTime);
+	Force(_Actor, DeltaTime);
 }
 
 FVector ARoom::GetPixelCollisionPoint(AActor* _Actor, UContentsRenderer* _Renderer, FVector _Offset)
@@ -160,7 +160,7 @@ bool ARoom::IsOnGround(FVector _Pos)
 	}
 }
 
-void ARoom::Gravity(AActor* _Actor, float _DeltaTime)
+void ARoom::Force(AActor* _Actor, float _DeltaTime)
 {
 	if (true == bActiveGravity)
 	{

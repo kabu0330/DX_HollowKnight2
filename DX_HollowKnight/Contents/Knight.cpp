@@ -25,7 +25,7 @@ AKnight::AKnight()
 
 	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
 	RootComponent = Default;
-	TimeEventor = CreateDefaultSubObject<UTimeEventComponent>().get();
+	TimeEventer = CreateDefaultSubObject<UTimeEventComponent>().get();
 
 	CreateRenderer();
 	CreateCollision();

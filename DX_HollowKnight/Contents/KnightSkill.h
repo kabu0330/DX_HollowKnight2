@@ -19,13 +19,19 @@ public:
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
-	void SetCollisionEvent() override {}
+	void SetCollisionEvent() override;
+	void Collide(class UCollision* _This, class UCollision* _Other);
 
-	void CreateParticleEffect(class UCollision* _This, class UCollision* _Other);
+	virtual void CreateHitEffect(class UCollision* _This, class UCollision* _Other);
+	virtual void Attack(class UCollision* _This, class UCollision* _Other);
+	void CreateOrangeParticleEffect(class UCollision* _This, class UCollision* _Other);
+	void CreateWhiteHitParticleEffect(class UCollision* _This, class UCollision* _Other);
+	void CreateHitOrangeEffect(class UCollision* _This, class UCollision* _Other);
 	void Knockback(class UCollision* _This, class UCollision* _Other);
-
+	
 private:
 	FVector KnightPos = { 0.0f, 0.0f, 0.0f };
+	class UTimeEventComponent* TimeEventer = nullptr;
 	bool bIsParticle = false;
 	inline static int Count = 0;
 };

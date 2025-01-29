@@ -200,7 +200,7 @@ private:
 	bool NoneGravity = false;
 	static AKnight* MainPawn;
 
-	UTimeEventComponent* TimeEventor = nullptr;
+	UTimeEventComponent* TimeEventer = nullptr;
 
 	// Ä«¸Þ¶ó
 	void SetCameraLerp();
