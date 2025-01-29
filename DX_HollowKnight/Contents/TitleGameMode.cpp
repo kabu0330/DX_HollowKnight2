@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "TitleGameMode.h"
 #include "TitleLogo.h"
+#include "EnginePlatform/EngineInput.h"
 #include <EngineCore/CameraActor.h>
 #include <EngineCore/SpriteRenderer.h>
 #include <EngineCore/EngineGUIWindow.h>
@@ -15,14 +16,10 @@ ATitleGameMode::ATitleGameMode()
 	TitleScene->SetActorLocation({ 0.0f, 0.0f, 0.0f });
 	std::shared_ptr<ACameraActor> Camera = GetWorld()->GetMainCamera();
 	Camera->SetActorLocation({0.0f, 0.0f, -1000.0f, 1.0f});
-
-
-
 }
 
 ATitleGameMode::~ATitleGameMode()
 {
-
 }
 
 void ATitleGameMode::BeginPlay()
@@ -33,6 +30,18 @@ void ATitleGameMode::BeginPlay()
 void ATitleGameMode::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
+	if (UEngineInput::IsDown(VK_SPACE))
+	{
+		LevelChangeEnd();
+	}
+}
 
+void ATitleGameMode::LevelChangeStart()
+{
+}
+
+void ATitleGameMode::LevelChangeEnd()
+{
+	UEngineCore::OpenLevel("Play");
 }
 
