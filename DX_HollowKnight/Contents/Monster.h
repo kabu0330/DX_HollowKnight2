@@ -5,7 +5,6 @@
 #include "StatusUnit.h"
 #include <EngineCore/TimeEventComponent.h>
 #include "MonsterSkill.h"
-#include "MonsterEffect.h"
 
 // Ό³Έν :
 class AMonster : public AActor

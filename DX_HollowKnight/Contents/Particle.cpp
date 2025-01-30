@@ -104,7 +104,7 @@ void AParticle::SpawnParticle()
 		Effect->SetScale(RandomScale);
 		Effect->GetRenderer()->SetAlpha(Alpha);
 
-		Effect->SetZSort(static_cast<int>(EZOrder::HitParticleEffect) - ( i + static_cast<int>(ZOrderOffset) + ZOrder));
+		Effect->SetZSort(static_cast<int>(EZOrder::HitParticleEffect) - ( i + static_cast<int>(ZOrderOffset + ZOrder)));
 
 		FParticleData NewParticle(Effect, Velocities[i]);
 
@@ -177,7 +177,7 @@ void AParticle::SetEmitterPosition(float _RandomValue)
 		float ScreenHalfSizeX = UEngineCore::GetScreenScale().Half().X;
 
 		std::random_device rd;
-		std::mt19937_64 RandomGen(rd() + _RandomValue);
+		std::mt19937_64 RandomGen(rd() + static_cast<__int64>(_RandomValue));
 		std::uniform_real_distribution<float> Dist(-ScreenHalfSizeX, ScreenHalfSizeX);
 
 		EmitterPosition.X = Dist(RandomGen);
