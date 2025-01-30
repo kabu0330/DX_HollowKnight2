@@ -91,8 +91,9 @@ void AKnight::InitAnimation()
 	std::string FireballAntic = "FireballAntic";
 	BodyRenderer->CreateAnimation(FireballAntic, FireballAntic, 0, 2, ChangeFrameTime, false);
 
+	float CastFrame = 0.07f;
 	std::string FireballCast = "FireballCast";
-	BodyRenderer->CreateAnimation(FireballCast, FireballCast, 0, 5, ChangeFrameTime, false);
+	BodyRenderer->CreateAnimation(FireballCast, FireballCast, 0, 5, CastFrame, false);
 
 
 	// 피격 애니메이션

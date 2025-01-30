@@ -51,7 +51,7 @@ void AKnight::CreateFocusEffect()
 	FVector Offest = { 5.0f, 30.0f, 0.0f };
 	FocusEffect->SetLocation(this, Offest);
 	FocusEffect->EnableRotation(false); // 좌우반전에 따라 
-	FocusEffect->GetRenderer()->SetAutoScaleRatio(1.4f);
+	FocusEffect->GetRenderer()->SetAutoScaleRatio(1.5f);
 
 	FocusEffect->GetRenderer()->SetMulColor({ 12.0f, 12.0f, 12.0f }, 0.1f);
 
@@ -65,21 +65,13 @@ void AKnight::CreateFocusEndEffect()
 	{
 		return;
 	}
-	std::shared_ptr<AKnightEffect> FocusEffect = GetWorld()->SpawnActor<AKnightEffect>();
-	FocusEffect->ChangeAnimation(this, "FocusEffectEnd");
-	FVector Offset = { 0.0f, 10.0f, 0.0f };
-	FocusEffect->SetLocation(this, Offset);
-	FocusEffect->EnableRotation(false); // 좌우반전에 따라 
-	FocusEffect->GetRenderer()->SetAutoScaleRatio(0.8f);
-
-	FocusEffect->GetRenderer()->SetMulColor({ 11.0f, 11.0f, 11.0f }, 0.1f);
-
+	FVector Offset = { 10.0f, 10.0f, 0.0f };
 
 	std::shared_ptr<AKnightEffect> BurstEffect = GetWorld()->SpawnActor<AKnightEffect>();
 	BurstEffect->ChangeAnimation(this, "BurstEffect");
-	BurstEffect->SetLocation(this, { Offset.X, Offset.Y, FocusEffect->GetActorLocation().Z - 1.0f });
+	BurstEffect->SetLocation(this, { Offset.X, Offset.Y });
 	BurstEffect->EnableRotation(false); // 좌우반전에 따라 
-	BurstEffect->GetRenderer()->SetAutoScaleRatio(1.4f);
+	BurstEffect->GetRenderer()->SetAutoScaleRatio(1.6f);
 
 	BurstEffect->GetRenderer()->SetMulColor({ 11.0f, 11.0f, 11.0f }, 0.1f);
 

@@ -21,13 +21,20 @@ AEffect::AEffect()
 	BodyRenderer->CreateAnimation(FocusEffect, FocusEffect, 0, 10, FrameTime, false);
 
 
-	float EffectTime = 0.1f;
 	std::string Png = ".png";
+	float LightTime = 0.3f;
+
+
+	std::string HitOrange = "HitOrange";
+	BodyRenderer->CreateAnimation(HitOrange, HitOrange + Png, 0, 0, LightTime, false);
+
+	float EffectTime = 0.1f;
 	std::string Explode = "Explode";
 	BodyRenderer->CreateAnimation(Explode, Explode + Png, 0, 12, EffectTime, false);
 
 	std::string Puff = "Puff";
 	BodyRenderer->CreateAnimation(Puff, Puff + Png, 0, 8, EffectTime, false);
+
 
 	float WhiteHitTime = 0.5f;
 	std::string WhiteHit = "WhiteHit";
@@ -42,9 +49,10 @@ AEffect::AEffect()
 	std::string BlackParticle = "BlackParticle";
 	BodyRenderer->CreateAnimation(BlackParticle, BlackParticle + Png, 1, 1, BlackParticleTime, false);
 
-	float LightTime = 0.3f;
-	std::string HitOrange = "HitOrange";
-	BodyRenderer->CreateAnimation(HitOrange, HitOrange + Png, 0, 0, LightTime, false);
+
+	float HitFrame = 0.7f;
+	std::string DefaultHitParticle = "DefaultHitParticle";
+	BodyRenderer->CreateAnimation(DefaultHitParticle, DefaultHitParticle + Png, 0, 0, HitFrame, false);
 
 
 
@@ -107,6 +115,8 @@ void AEffect::Tick(float _DeltaTime)
 
 	SetPosition();
 	SetScaleDecay(_DeltaTime);
+	SetAlphaDecay(_DeltaTime);
+	IncreaseAlpha(_DeltaTime);
 	Release();
 }
 
@@ -174,7 +184,46 @@ void AEffect::SetScaleDecay(float _DeltaTime)
 		return;
 	}
 
-	ReductionRate *= _DeltaTime;
-	ScaleRatio -= ReductionRate;
+	ScaleReductionRate *= _DeltaTime;
+	ScaleRatio -= ScaleReductionRate;
 	BodyRenderer->SetAutoScaleRatio(ScaleRatio);
+
+	int a = 0;
+}
+
+void AEffect::SetAlphaDecay(float _DeltaTime)
+{
+	if (false == bIsAlphaDecay)
+	{
+		return;
+	}
+	float Alpha = BodyRenderer->ColorData.MulColor.W;
+	if (0.0f >= Alpha)
+	{
+		Destroy();
+		return;
+	}
+
+	float Delta = DeltaAlpha * _DeltaTime * 2.0f;
+	Alpha -= Delta;
+	BodyRenderer->ColorData.MulColor.W = Alpha;
+
+}
+
+void AEffect::IncreaseAlpha(float _DeltaTime)
+{
+	if (false == bCanIncreaseAlpha)
+	{
+		return;
+	}
+	float Alpha = BodyRenderer->ColorData.MulColor.W;
+	if (MaxAlpha <= Alpha)
+	{
+		bIsAlphaDecay = true;
+		SetAlphaDecay(_DeltaTime);
+		return;
+	}
+	float Delta = DeltaAlpha * _DeltaTime;
+	Alpha += Delta;
+	BodyRenderer->ColorData.MulColor.W = Alpha;
 }

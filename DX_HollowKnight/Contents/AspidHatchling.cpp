@@ -82,8 +82,8 @@ void AAspidHatchling::CreateAnimation()
 	float IdleTime = 0.2f;
 	float RunnigTime = 0.1f;
 	float AttackAnticipateTime = 0.1f;
-	float DeathAirTime = 0.1f;
-	float DeathTime = 0.08f;
+	float DeathAirTime = 0.4f;
+	float DeathTime = 0.18f;
 	BodyRenderer->CreateAnimation("Idle", MonsterStr, 0, 3, IdleTime);
 	BodyRenderer->CreateAnimation("Walk", MonsterStr, 0, 3, RunnigTime);
 	BodyRenderer->CreateAnimation("AttackAnticipate", MonsterStr, 0, 3, AttackAnticipateTime);

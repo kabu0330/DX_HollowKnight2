@@ -8,6 +8,7 @@ AKnightEffect::AKnightEffect()
 	float StunFrame = 0.09f;
 	float FocusTime = 0.1f;
 	float FrameTime = 0.06f;
+	float BlastTime = 0.05f;
 	float DashFrameTime = 0.03f;
 	float DashFrameTime2 = 0.02f;
 
@@ -15,9 +16,6 @@ AKnightEffect::AKnightEffect()
 
 	std::string FocusEffect = "FocusEffect";
 	BodyRenderer->CreateAnimation(FocusEffect, FocusEffect, 0, 10, FocusTime, false);
-
-	std::string FocusEffectEnd = "FocusEffectEnd";
-	BodyRenderer->CreateAnimation(FocusEffectEnd, FocusEffectEnd, 0, 1, FocusTime, false);
 
 	std::string BurstEffect = "BurstEffect";
 	BodyRenderer->CreateAnimation(BurstEffect, BurstEffect, 0, 7, FrameTime, false);
@@ -32,7 +30,7 @@ AKnightEffect::AKnightEffect()
 	BodyRenderer->CreateAnimation(NailHitEffect, NailHitEffect, 0, 4, FrameTime, false);
 
 	std::string Blast = "Blast";
-	BodyRenderer->CreateAnimation(Blast, Blast, 0, 7, FrameTime, false);
+	BodyRenderer->CreateAnimation(Blast, Blast, 0, 7, BlastTime, false);
 
 	std::string FireballImpact = "FireballImpact";
 	BodyRenderer->CreateAnimation(FireballImpact, FireballImpact, 0, 5, FrameTime, false);

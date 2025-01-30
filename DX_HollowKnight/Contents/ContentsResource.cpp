@@ -156,7 +156,7 @@ void UContentsResource::LoadResourceDirectory()
 	LoadContentsResource("Image/Effect/Knight/DownSlashEffect");
 	LoadContentsResource("Image/Effect/Knight/NailHitEffect");
 	LoadContentsResource("Image/Effect/Knight/FocusEffect");
-	LoadContentsResource("Image/Effect/Knight/FocusEffectEnd");
+	//LoadContentsResource("Image/Effect/Knight/FocusEffectEnd");
 	LoadContentsResource("Image/Effect/Knight/BurstEffect");
 	//LoadContentsResource("Image/Effect/Knight/Dash_effect");
 	LoadContentsResource("Image/Effect/Knight/Dash_effect2");
@@ -166,6 +166,7 @@ void UContentsResource::LoadResourceDirectory()
 	LoadContentsResource("Image/Effect/Knight/StunEffect02");
 	LoadContentsResource("Image/Effect/Knight/StunEffect03");
 	LoadContentsResource("Image/Effect/Knight/Blast");
+	LoadContentsResource("Image/Effect/Knight/SoulBurst");
 
 	// UI
 	LoadContentsResource("Image/UI/HealthIdle");
@@ -204,6 +205,7 @@ void UContentsResource::LoadSprite()
 	UEngineSprite::CreateSpriteToMeta("HitOrange.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("WhiteHit.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("BlackParticle.png", ".smeta");
+	UEngineSprite::CreateSpriteToMeta("DefaultHitParticle.png", ".smeta");
 
 	UEngineSprite::CreateSpriteToMeta("fog.png", ".smeta");
 }

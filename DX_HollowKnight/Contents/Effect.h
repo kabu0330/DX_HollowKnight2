@@ -83,11 +83,24 @@ public:
 		ScaleRatio = _Ratio;
 		BodyRenderer->SetAutoScaleRatio(_Ratio);
 	}
-	void SetScaleFade(float _ReductionRate)
+	void SetScaleFadeOut(float _ReductionRate)
 	{
 		bIsAutoRelease = false; // 애니메이션 시간이 아닌 크기 비율이 0이하가 되면 소멸
 		bIsScaleDecay = true;
-		ReductionRate = _ReductionRate;
+		ScaleReductionRate = _ReductionRate;
+	}
+	void SetAlphaFadeOut(float _ReductionRate)
+	{
+		AlphaValue = BodyRenderer->ColorData.MulColor.W;
+		bIsAlphaDecay = true;
+		AlphaReductionRate = _ReductionRate;
+	}
+	void SetIncreaseAlpha(float _DeltaAlpha, float _MaxAlpha = 1.0f)
+	{
+		bIsAutoRelease = false; // 맥스 알파가 되면 소멸
+		bCanIncreaseAlpha = true;
+		DeltaAlpha = _DeltaAlpha;
+		MaxAlpha = _MaxAlpha;
 	}
 
 	void SetAutoRelease(bool _bIsAutoRelease)
@@ -123,7 +136,18 @@ private:
 
 	float ScaleRatio = 0.0f; // 파티클 옵션
 	bool bIsScaleDecay = false;
-	float ReductionRate = 0.0f;
+	float ScaleReductionRate = 0.0f;
 	void SetScaleDecay(float _DeltaTime);
+
+	bool bIsAlphaDecay = false;
+	float AlphaReductionRate = 0.0f;
+	float AlphaValue = 0.0f;
+	void SetAlphaDecay(float _DeltaTime);
+
+	bool bCanIncreaseAlpha = false;
+	float MaxAlpha = 1.0f;
+	float DeltaAlpha = 0.0f;
+	void IncreaseAlpha(float _DeltaTime);
+
 };
 

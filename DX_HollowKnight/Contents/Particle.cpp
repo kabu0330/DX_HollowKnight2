@@ -129,7 +129,7 @@ void AParticle::Update(float _DeltaTime)
 			// 1. 크기 점점 작게
 			if (true == ScaleDecay)
 			{
-				Particle.Effect->SetScaleFade(ScaleDecayRatio);
+				Particle.Effect->SetScaleFadeOut(ScaleDecayRatio);
 			}
 		}
 	}
