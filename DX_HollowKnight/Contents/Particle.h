@@ -20,7 +20,7 @@ enum class EParticleType
 	RANDOM,
 	REVERSE,
 	RISING,
-	MAX,
+	MAX_PARTICLE,
 };
 
 // 설명 :
@@ -45,7 +45,7 @@ public:
 		EmitterPosition = _EmitterPosition;
 		Velocities.resize(_MaxParticles);
 	}
-	void SetDirection(EParticleType _ParticleType, float _MinVelocity = -100.0f, float _MaxVelocity = 100.0f, FVector _Dir = FVector::ZERO, FVector _Force = FVector::ZERO);
+	void SetParticleOption(EParticleType _ParticleType, float _MinVelocity = -100.0f, float _MaxVelocity = 100.0f, FVector _Dir = FVector::ZERO, FVector _Force = FVector::ZERO);
 	void SetZOrderOffset(float _Value)
 	{
 		ZOrderOffset = _Value;
@@ -75,6 +75,8 @@ protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
+	void SetEmitterPosition(float _RandomValue);
+	void ResetZOrder();
 private:
 	std::list<FParticleData> Particles;
 	class AEffect* Effect = nullptr;
@@ -83,9 +85,12 @@ private:
 	float SpawnRate = 0.0f; // 생성 속도
 	FVector EmitterPosition = FVector::ZERO; // 파티클 생성 위치
 	FVector EffectInitPos = FVector::ZERO;
+
 	EParticleType ParticleType = EParticleType::RANDOM;
+
 	std::vector<FVector> Velocities;
 	FVector Force = FVector::ZERO;
+
 	float ZOrderOffset = 0.0f;
 	float Alpha = 0.7f;
 	float RandomScaleMin = 0.2f;
@@ -95,5 +100,6 @@ private:
 	float ScaleDecayRatio = 0.01f;
 
 	int Count = 0;
+	inline static float ZOrder = 0.0f;
 };
 

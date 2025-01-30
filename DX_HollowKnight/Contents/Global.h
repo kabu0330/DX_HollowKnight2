@@ -14,7 +14,7 @@ enum class EUIOrder
 	NONE = -10000,
 	FADE = 1,
 	BACK = 9999,
-	MAX = 10000,
+	MAX_UIORDER = 10000,
 };
 
 enum class EZOrder
@@ -31,7 +31,7 @@ enum class EZOrder
 	MONSTER_SKILL_BACK = 1000,
 	BACKGROUND = 1100,
 	PIXELCOLLISION = 3999,
-	MAX
+	MAX_ZORDER
 };
 
 enum EMapObjectType
@@ -40,7 +40,7 @@ enum EMapObjectType
 	BACKGROUND_OBJECT,
 	COLLISION_OBJECT,
 	NONE_COLLISION_OBJECT,
-	MAX
+	MAX_OBJECT_TYPE
 };
 
 enum class EKnightState
@@ -75,7 +75,7 @@ enum class EKnightState
 	DEATH,
 	DEATH_DAMAGE,
 	DEATH_HEAD,
-	MAX
+	MAX_KNIGHT_STATE
 };
 
 enum class EMonsterState
@@ -141,5 +141,5 @@ enum class EMonsterState
 	FLY,
 	FIRE,
 	BURST,
-	MAX
+	MAX_MONSTER_STATE
 };

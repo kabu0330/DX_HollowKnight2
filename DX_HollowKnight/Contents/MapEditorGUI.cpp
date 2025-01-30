@@ -555,7 +555,7 @@ void MapEditorGUI::LoadFile()
 					break;
 				case NONE_COLLISION_OBJECT:
 					break;
-				case MAX:
+				case MAX_OBJECT_TYPE:
 					break;
 				default:
 					break;

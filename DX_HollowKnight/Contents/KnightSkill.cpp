@@ -81,7 +81,7 @@ void AKnightSkill::CreateOrangeParticleEffect(UCollision* _This, UCollision* _Ot
 	FVector ActorPos = Actor->GetActorLocation();
 	Particle->CreateParticle("Puff", 30, 0.01f, ActorPos);
 
-	Particle->SetDirection(EParticleType::RANDOM, -400.0f, 400.0f);
+	Particle->SetParticleOption(EParticleType::RANDOM, -400.0f, 400.0f);
 }
 
 void AKnightSkill::CreateWhiteHitParticleEffect(UCollision* _This, UCollision* _Other)
@@ -102,9 +102,9 @@ void AKnightSkill::CreateWhiteHitParticleEffect(UCollision* _This, UCollision* _
 	Particle1->SetAlpha(0.9f);
 	Particle2->SetAlpha(0.9f);
 
-	Particle0->SetDirection(EParticleType::RANDOM, -200.0f, 200.0f);
-	Particle1->SetDirection(EParticleType::RANDOM, -300.0f, 300.0f);
-	Particle2->SetDirection(EParticleType::RANDOM, -200.0f, 200.0f);
+	Particle0->SetParticleOption(EParticleType::RANDOM, -200.0f, 200.0f);
+	Particle1->SetParticleOption(EParticleType::RANDOM, -300.0f, 300.0f);
+	Particle2->SetParticleOption(EParticleType::RANDOM, -200.0f, 200.0f);
 }
 
 void AKnightSkill::CreateHitOrangeEffect(UCollision* _This, UCollision* _Other)

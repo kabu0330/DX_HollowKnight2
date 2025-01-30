@@ -9,7 +9,7 @@ class UEngineShaderRes
 {
 public:
 	std::string Name;
-	EShaderType ShaderType = EShaderType::MAX;
+	EShaderType ShaderType = EShaderType::MAX_ShaderType;
 	UINT BindIndex = 0;
 };
 

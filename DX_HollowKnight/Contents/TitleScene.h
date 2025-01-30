@@ -28,5 +28,7 @@ private:
 	std::shared_ptr<class UContentsRenderer> StartLogo;
 
 	void CreateBlackParticle(float _DeltaTime);
+	float TimeElapsed = 0.0f;
+	float Cooldown = 0.2f;
 };
 

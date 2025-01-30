@@ -14,11 +14,11 @@ AParticle::~AParticle()
 {
 }
 
-void AParticle::SetDirection(EParticleType _ParticleType, float _MinVelocity, float _MaxVelocity, FVector _Dir, FVector _Force)
+void AParticle::SetParticleOption(EParticleType _ParticleType, float _MinVelocity, float _MaxVelocity, FVector _Dir, FVector _Force)
 {
 	Force = _Force;
-
-	switch (_ParticleType)
+	ParticleType = _ParticleType;
+	switch (ParticleType)
 	{
 	case EParticleType::REVERSE:
 	{
@@ -41,8 +41,22 @@ void AParticle::SetDirection(EParticleType _ParticleType, float _MinVelocity, fl
 		}
 	}
 		break;
+	case EParticleType::RISING:
+	{
+		for (int i = 0; i < MaxParticles; i++)
+		{
+			UEngineRandom Random;
+			long long Seed = reinterpret_cast<long long>(this) + std::chrono::high_resolution_clock::now().time_since_epoch().count() + i;
+			Random.SetSeed(Seed);
+			float RandomSpeed = Random.Randomfloat(50.0f, _MaxVelocity);
+			float RandomPosX = Random.Randomfloat(-0.02f, 0.02f);
+			FVector RisingVector = FVector(FVector::UP.X + RandomPosX, FVector::UP.Y) * RandomSpeed;
+			Velocities[i] = RisingVector;
+		}
+		break;
+	}	
 	case EParticleType::RANDOM:
-	case EParticleType::MAX:
+	case EParticleType::MAX_PARTICLE:
 	{
 		for (int i = 0; i < MaxParticles; i++)
 		{
@@ -72,27 +86,31 @@ void AParticle::SpawnParticle()
 		return; // 최대 생성 개수 초과
 	}
 
-	EffectInitPos = EmitterPosition;
-
 	for (int i = 0; i < RemainParticles; i++)
 	{
 		UEngineRandom Random;
-		Random.SetSeed(reinterpret_cast<long long>(this) + time(nullptr) + i);
+		long long Seed = reinterpret_cast<long long>(this) + std::chrono::high_resolution_clock::now().time_since_epoch().count() + i;
+		Random.SetSeed(Seed);
 		float RandomScale = Random.Randomfloat(RandomScaleMin, RandomScaleMax);
 
 		std::shared_ptr<AEffect> Effect = GetWorld()->SpawnActor<AEffect>();
 		Effect->ChangeAnimation(EffectName);
 
+		SetEmitterPosition(RandomScale); // 특정 파티클 옵션일 때, EmitterPosition 값을 변환
+		EffectInitPos = EmitterPosition;
 		Effect->SetLocation(EmitterPosition);
+
 		Effect->SetZSort(EZOrder::HitParticleEffect);
 		Effect->SetScale(RandomScale);
 		Effect->GetRenderer()->SetAlpha(Alpha);
-		Effect->SetZSort(static_cast<int>(EZOrder::HitParticleEffect) - ( i + 1 + static_cast<int>(ZOrderOffset)));
+
+		Effect->SetZSort(static_cast<int>(EZOrder::HitParticleEffect) - ( i + static_cast<int>(ZOrderOffset) + ZOrder));
 
 		FParticleData NewParticle(Effect, Velocities[i]);
 
 		Particles.push_back(NewParticle);
 		++Count;
+		++ZOrder;
 	}
 }
 
@@ -143,5 +161,44 @@ void AParticle::Tick(float _DeltaTime)
 	SpawnParticle();
 	Update(_DeltaTime);
 	Remove();
+	ResetZOrder();
+
+}
+
+void AParticle::SetEmitterPosition(float _RandomValue)
+{
+	switch (ParticleType)
+	{
+	case EParticleType::RISING:
+	{
+		// Y값은 항상 화면 아래, X값은 화면 너비의 랜덤
+		EmitterPosition.Y = -UEngineCore::GetScreenScale().Half().Y;
+
+		float ScreenHalfSizeX = UEngineCore::GetScreenScale().Half().X;
+
+		std::random_device rd;
+		std::mt19937_64 RandomGen(rd() + _RandomValue);
+		std::uniform_real_distribution<float> Dist(-ScreenHalfSizeX, ScreenHalfSizeX);
+
+		EmitterPosition.X = Dist(RandomGen);
+	}
+		break;
+	case EParticleType::RANDOM:
+		break;
+	case EParticleType::REVERSE:
+		break;
+	case EParticleType::MAX_PARTICLE:
+		break;
+	default:
+		break;
+	}
+}
+
+void AParticle::ResetZOrder()
+{
+	if (ZOrder > 200.0f)
+	{
+		ZOrder = 0.0f;
+	}
 }
 

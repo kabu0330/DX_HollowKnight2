@@ -29,7 +29,7 @@ public:
 	};
 
 protected:
-	EShaderType ShaderType = EShaderType::MAX;
+	EShaderType ShaderType = EShaderType::MAX_ShaderType;
 	UINT VersionHigh = 5;
 	UINT VersionLow = 0;
 	Microsoft::WRL::ComPtr<ID3DBlob> ShaderCodeBlob = nullptr;

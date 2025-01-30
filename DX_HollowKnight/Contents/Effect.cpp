@@ -29,7 +29,7 @@ AEffect::AEffect()
 	std::string Puff = "Puff";
 	BodyRenderer->CreateAnimation(Puff, Puff + Png, 0, 8, EffectTime, false);
 
-	float WhiteHitTime = 0.6f;
+	float WhiteHitTime = 0.5f;
 	std::string WhiteHit = "WhiteHit";
 	std::string WhiteHit0 = "WhiteHit0";
 	std::string WhiteHit1 = "WhiteHit1";
@@ -38,7 +38,7 @@ AEffect::AEffect()
 	BodyRenderer->CreateAnimation(WhiteHit1, WhiteHit + Png, 1, 1, WhiteHitTime, false);
 	BodyRenderer->CreateAnimation(WhiteHit2, WhiteHit + Png, 2, 2, WhiteHitTime, false);
 
-	float BlackParticleTime = 2.0f;
+	float BlackParticleTime = 10.0f;
 	std::string BlackParticle = "BlackParticle";
 	BodyRenderer->CreateAnimation(BlackParticle, BlackParticle + Png, 1, 1, BlackParticleTime, false);
 
@@ -168,7 +168,7 @@ void AEffect::SetScaleDecay(float _DeltaTime)
 	{
 		return;
 	}
-	if (0.0f >= ScaleRatio)
+	if (0.1f >= ScaleRatio)
 	{
 		Destroy();
 		return;

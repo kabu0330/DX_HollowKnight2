@@ -37,7 +37,7 @@ void URenderUnit::MaterialResourcesCheck()
 
 	if (nullptr != TransformObject) // 모든 셰이더를 돌면서
 	{
-		for (EShaderType i = EShaderType::VS; i < EShaderType::MAX; i = static_cast<EShaderType>(static_cast<int>(i) + 1))
+		for (EShaderType i = EShaderType::VS; i < EShaderType::MAX_ShaderType; i = static_cast<EShaderType>(static_cast<int>(i) + 1))
 		{
 			if (false == Resources.contains(i))
 			{
@@ -57,7 +57,7 @@ void URenderUnit::MaterialResourcesCheck()
 
 void URenderUnit::ConstantBufferLinkData(std::string_view _Name, void* _Data)
 {
-	for (EShaderType i = EShaderType::VS; i < EShaderType::MAX; i = static_cast<EShaderType>(static_cast<int>(i) + 1))
+	for (EShaderType i = EShaderType::VS; i < EShaderType::MAX_ShaderType; i = static_cast<EShaderType>(static_cast<int>(i) + 1))
 	{
 		if (false == Resources.contains(i))
 		{
@@ -75,7 +75,7 @@ void URenderUnit::ConstantBufferLinkData(std::string_view _Name, void* _Data)
 
 void URenderUnit::SetTexture(std::string_view _Name, std::string_view _ResName)
 {
-	for (EShaderType i = EShaderType::VS; i < EShaderType::MAX; i = static_cast<EShaderType>(static_cast<int>(i) + 1))
+	for (EShaderType i = EShaderType::VS; i < EShaderType::MAX_ShaderType; i = static_cast<EShaderType>(static_cast<int>(i) + 1))
 	{
 		if (false == Resources.contains(i))
 		{
@@ -93,7 +93,7 @@ void URenderUnit::SetTexture(std::string_view _Name, std::string_view _ResName)
 
 void URenderUnit::SetTexture(std::string_view _Name, std::shared_ptr<UEngineTexture> _Texture)
 {
-	for (EShaderType i = EShaderType::VS; i < EShaderType::MAX; i = static_cast<EShaderType>(static_cast<int>(i) + 1))
+	for (EShaderType i = EShaderType::VS; i < EShaderType::MAX_ShaderType; i = static_cast<EShaderType>(static_cast<int>(i) + 1))
 	{
 		if (false == Resources.contains(i))
 		{
@@ -111,7 +111,7 @@ void URenderUnit::SetTexture(std::string_view _Name, std::shared_ptr<UEngineText
 
 void URenderUnit::SetSampler(std::string_view _Name, std::string_view _ResName)
 {
-	for (EShaderType i = EShaderType::VS; i < EShaderType::MAX; i = static_cast<EShaderType>(static_cast<int>(i) + 1))
+	for (EShaderType i = EShaderType::VS; i < EShaderType::MAX_ShaderType; i = static_cast<EShaderType>(static_cast<int>(i) + 1))
 	{
 		if (false == Resources.contains(i))
 		{

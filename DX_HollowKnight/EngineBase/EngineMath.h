@@ -762,7 +762,7 @@ enum class ECollisionType
 	Sphere,
 	AABB, 	// 회전하지 않은 박스
 	OBB, 	// 회전한 박스
-	Max
+	Max_CollisionType
 
 };
 
@@ -861,7 +861,7 @@ public:
 private:
 	friend class CollisionFunctionInit;
 
-	static std::function<bool(const FTransform&, const FTransform&)> AllCollisionFunction[static_cast<int>(ECollisionType::Max)][static_cast<int>(ECollisionType::Max)];
+	static std::function<bool(const FTransform&, const FTransform&)> AllCollisionFunction[static_cast<int>(ECollisionType::Max_CollisionType)][static_cast<int>(ECollisionType::Max_CollisionType)];
 
 public:
 	ENGINEAPI static bool Collision(ECollisionType _LeftType, const FTransform& _Left, ECollisionType _RightType, const FTransform& _Right);
