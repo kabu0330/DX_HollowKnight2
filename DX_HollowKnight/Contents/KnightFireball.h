@@ -23,6 +23,6 @@ public:
 protected:
 
 private:
-
+	void KnightKnockback(FVector _KnockbackDir) override {}
 };
 

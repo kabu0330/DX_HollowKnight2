@@ -134,12 +134,22 @@ void AKnightSkill::Knockback(UCollision* _This, UCollision* _Other)
 	FVector KnockbackDirection = KnightPos - TargetPos;
 	KnockbackDirection.Y = 0.0f;
 	KnockbackDirection.Normalize();
-	Knight->GetStatRef().SetKnockbackDir(KnockbackDirection);
 
+	KnightKnockback(KnockbackDirection);
+	MonsterKnockback(_Other, KnockbackDirection);
+}
+
+void AKnightSkill::KnightKnockback(FVector _KnockbackDir)
+{
+	Knight->GetStatRef().SetKnockbackDir(_KnockbackDir);
+}
+
+void AKnightSkill::MonsterKnockback(UCollision* _Other, FVector _KnockbackDir)
+{
 	AMonster* Monster = dynamic_cast<AMonster*>(_Other->GetActor());
 	if (nullptr != Monster)
 	{
-		Monster->GetStatRef().SetKnockbackDir(-KnockbackDirection);
+		Monster->GetStatRef().SetKnockbackDir(-_KnockbackDir);
 		Monster->GetStatRef().SetBeingHit(true);
 	}
 }

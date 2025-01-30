@@ -53,8 +53,7 @@ void AKnight::CreateFocusEffect()
 	FocusEffect->EnableRotation(false); // 좌우반전에 따라 
 	FocusEffect->GetRenderer()->SetAutoScaleRatio(1.4f);
 
-	FocusEffect->GetRenderer()->AddPlusColor({ 0.2f, 0.2f, 0.2f });
-	FocusEffect->GetRenderer()->SetMulColor({ 5.0f, 5.0f, 5.0f }, 0.2f);
+	FocusEffect->GetRenderer()->SetMulColor({ 12.0f, 12.0f, 12.0f }, 0.1f);
 
 
 	bIsFocusEffect = true;
@@ -73,8 +72,7 @@ void AKnight::CreateFocusEndEffect()
 	FocusEffect->EnableRotation(false); // 좌우반전에 따라 
 	FocusEffect->GetRenderer()->SetAutoScaleRatio(0.8f);
 
-	FocusEffect->GetRenderer()->AddPlusColor({ 0.2f, 0.2f, 0.2f });
-	FocusEffect->GetRenderer()->SetMulColor({ 5.0f, 5.0f, 5.0f }, 0.6f);
+	FocusEffect->GetRenderer()->SetMulColor({ 11.0f, 11.0f, 11.0f }, 0.1f);
 
 
 	std::shared_ptr<AKnightEffect> BurstEffect = GetWorld()->SpawnActor<AKnightEffect>();
@@ -83,9 +81,7 @@ void AKnight::CreateFocusEndEffect()
 	BurstEffect->EnableRotation(false); // 좌우반전에 따라 
 	BurstEffect->GetRenderer()->SetAutoScaleRatio(1.4f);
 
-
-	BurstEffect->GetRenderer()->AddPlusColor({ 0.1f, 0.1f, 0.1f });
-	BurstEffect->GetRenderer()->SetMulColor({ 2.0f, 2.0f, 2.0f }, 0.6f);
+	BurstEffect->GetRenderer()->SetMulColor({ 11.0f, 11.0f, 11.0f }, 0.1f);
 
 
 	bIsFocusEndEffect = true;
@@ -97,14 +93,24 @@ void AKnight::CreateFireballEffect()
 	{
 		return;
 	}
+	std::shared_ptr<AKnightEffect> Effect = GetWorld()->SpawnActor<AKnightEffect>();
+	Effect->ChangeAnimation(this, "Blast");
+	FVector Offset = { -80.0f, 0.0f, 0.0f };
+	Effect->SetLocation(this, Offset);
+	//Effect->EnableRotation(false); // 좌우반전에 따라 
+	Effect->ToggleFlip(); // 좌우반전
+	Effect->GetRenderer()->SetAutoScaleRatio(1.5f);
+
+	Effect->GetRenderer()->SetMulColor({ 11.0f, 11.0f, 11.0f }, 0.1f);
+
 	std::shared_ptr<AKnightFireball> Skill = GetWorld()->SpawnActor<AKnightFireball>();
 	Skill->ChangeAnimation("Fireball");
 	FVector Speed = { 2000.0f, 0.0f,0.0f };
+	Skill->SetZSort(Effect->GetZSort() - 5.0f);
 	Skill->AddLocation(this, Speed);
 	Skill->ToggleFlip(); // 좌우반전
 
-	//Skill->GetRenderer()->AddPlusColor({ 0.2f, 0.2f, 0.2f });
-	Skill->GetRenderer()->SetMulColor({ 1.5f, 1.5f, 1.5f });
+	Skill->GetRenderer()->SetMulColor({ 11.0f, 11.0f, 11.0f }, 0.1f);
 
 	bIsFireballEffect = true;
 }

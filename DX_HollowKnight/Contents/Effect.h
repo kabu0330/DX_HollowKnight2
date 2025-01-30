@@ -39,6 +39,10 @@ public:
 	{
 		SetZSort(static_cast<int>(_Value));
 	}
+	float GetZSort()
+	{
+		return BodyRenderer->GetWorldLocation().Z;
+	}
 
 	void SetLocation(AActor* _Actor, const FVector& _OffsetPos = { 0.0f, 0.0f, 0.0f }, const FVector& _Rotation = { 0.0f, 0.0f, 0.0f })
 	{

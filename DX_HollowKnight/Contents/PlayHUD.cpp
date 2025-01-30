@@ -141,30 +141,30 @@ void APlayHUD::SetHpUI()
 		HpPlus = true;
 	}
 
-	if (true == HpPlus) // 체력 회복
-	{
-		if (Hp == Hps.size() + 1)
-		{
-			MSGASSERT("현재 HP보다 최대 HP가 더 많을 수 없습니다.");
-			return;
-		}
-		//      4   == 5
-		PrevHpMinusOne = PrevHp - 1;
-		for (PrevHp += 1; PrevHp < Hp; ++PrevHp)
-		{
-			Hps[PrevHp]->ChangeAnimation("HealthAppear");
-		}
+	//if (true == HpPlus) // 체력 회복
+	//{
+	//	if (Hp == Hps.size() + 1)
+	//	{
+	//		MSGASSERT("현재 HP보다 최대 HP가 더 많을 수 없습니다.");
+	//		return;
+	//	}
+	//	//      4   == 5
+	//	PrevHpMinusOne = PrevHp - 1;
+	//	for (PrevHp += 1; PrevHp < Hp; ++PrevHp)
+	//	{
+	//		Hps[PrevHp]->ChangeAnimation("HealthAppear");
+	//	}
 
-		TimeEventer->AddEndEvent(1.0f, std::bind(&APlayHUD::ChangeHpUI, this));
-	}
-	else if (true == HpMinus) // 체력 감소
-	{
-		PrevHpMinusOne = PrevHp - 1;
-		for (PrevHp += 1; PrevHp != Hp; --PrevHp)
-		{
-			Hps[PrevHp - 1]->ChangeAnimation("HealthBreak");
-		}
-	}
+	//	TimeEventer->AddEndEvent(1.0f, std::bind(&APlayHUD::ChangeHpUI, this));
+	//}
+	//else if (true == HpMinus) // 체력 감소
+	//{
+	//	PrevHpMinusOne = PrevHp - 1;
+	//	for (PrevHp += 1; PrevHp != Hp; --PrevHp)
+	//	{
+	//		Hps[PrevHp - 1]->ChangeAnimation("HealthBreak");
+	//	}
+	//}
 }
 
 void APlayHUD::CreateGeo()

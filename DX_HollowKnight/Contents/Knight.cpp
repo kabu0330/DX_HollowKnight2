@@ -447,7 +447,10 @@ void AKnight::CastFocus()
 	{
 		return;
 	}
-
+	if (false == bIsOnGround)
+	{
+		return;
+	}
 	if (UEngineInput::IsPress('A'))
 	{
 		float PressTime = UEngineInput::IsPressTime('A');

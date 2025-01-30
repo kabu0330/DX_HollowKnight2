@@ -31,6 +31,9 @@ AKnightEffect::AKnightEffect()
 	std::string NailHitEffect = "NailHitEffect";
 	BodyRenderer->CreateAnimation(NailHitEffect, NailHitEffect, 0, 4, FrameTime, false);
 
+	std::string Blast = "Blast";
+	BodyRenderer->CreateAnimation(Blast, Blast, 0, 7, FrameTime, false);
+
 	std::string FireballImpact = "FireballImpact";
 	BodyRenderer->CreateAnimation(FireballImpact, FireballImpact, 0, 5, FrameTime, false);
 

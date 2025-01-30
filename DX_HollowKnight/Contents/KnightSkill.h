@@ -26,6 +26,10 @@ protected:
 	virtual void Attack(class UCollision* _This, class UCollision* _Other);
 	virtual void Knockback(class UCollision* _This, class UCollision* _Other);
 
+
+	virtual void KnightKnockback(FVector _KnockbackDir);
+	virtual void MonsterKnockback(class UCollision* _Other, FVector _KnockbackDir);
+
 	void CreateOrangeParticleEffect(class UCollision* _This, class UCollision* _Other);
 	void CreateWhiteHitParticleEffect(class UCollision* _This, class UCollision* _Other);
 	void CreateHitOrangeEffect(class UCollision* _This, class UCollision* _Other);

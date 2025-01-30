@@ -165,6 +165,7 @@ void UContentsResource::LoadResourceDirectory()
 	LoadContentsResource("Image/Effect/Knight/StunEffect01");
 	LoadContentsResource("Image/Effect/Knight/StunEffect02");
 	LoadContentsResource("Image/Effect/Knight/StunEffect03");
+	LoadContentsResource("Image/Effect/Knight/Blast");
 
 	// UI
 	LoadContentsResource("Image/UI/HealthIdle");

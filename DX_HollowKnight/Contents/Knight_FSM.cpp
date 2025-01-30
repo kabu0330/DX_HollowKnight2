@@ -213,6 +213,7 @@ void AKnight::SetDownSlash(float _DeltaTime)
 
 void AKnight::SetFocus(float _DeltaTime)
 {
+	ActiveGravity();
 	bIsFocusEffect = false;
 	bIsFocusEndEffect = false;
 
@@ -227,6 +228,7 @@ void AKnight::SetFocus(float _DeltaTime)
 
 void AKnight::SetFocusGet(float _DeltaTime)
 {
+	ActiveGravity();
 	CreateFocusEffect();
 
 	if (UEngineInput::IsUp('A'))
@@ -240,6 +242,7 @@ void AKnight::SetFocusGet(float _DeltaTime)
 
 void AKnight::SetFocusEnd(float _DeltaTime)
 {
+	ActiveGravity();
 	CreateFocusEndEffect();
 	bIsFocusEndEffect = true;
 
@@ -259,11 +262,14 @@ void AKnight::SetFocusEnd(float _DeltaTime)
 
 void AKnight::SetFireballAntic(float _DeltaTime)
 {
+	bCanRotation = false;
 	ChangeNextState(EKnightState::FIREBALL_CAST);
 }
 
 void AKnight::SetFireballCast(float _DeltaTime)
 {
+	bCanRotation = false;
+
 	CreateFireballEffect(); // ¿Ã∆Â∆Æ πﬂªÁ
 
 	if (true == bIsOnGround)
