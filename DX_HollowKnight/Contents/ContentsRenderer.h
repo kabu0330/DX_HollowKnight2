@@ -97,6 +97,10 @@ public:
 	{
 		AutoScaleRatio = _Scale;
 	}
+	float GetAutoScaleRatio()
+	{
+		return AutoScaleRatio;
+	}
 
 	void BillboardOn()
 	{

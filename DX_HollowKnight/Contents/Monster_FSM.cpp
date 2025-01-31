@@ -190,7 +190,7 @@ void AMonster::SetAttack(float _DeltaTime)
 	Dash();
 
 	// 가상함수
-	CreateAttackEffect();
+	CreateAttackLogicAndEffect();
 
 	AttackFrameElapsed += _DeltaTime;
 	//   피격시                        넉백이 적용되는 친구들은 모두 스킬 캔슬
@@ -258,7 +258,7 @@ void AMonster::SetDeathAir(float _DeltaTime)
 	BodyCollision->Destroy();
 	DetectCollision->Destroy();
 
-	ParentRoom->CheckPixelCollisionWithWall(this, BodyRenderer.get(), Stat.GetVelocity(), !bIsLeft, WallPointOffest);
+	ParentRoom->CheckPixelCollisionWithWall(this, Stat.GetVelocity(), !bIsLeft, WallPointOffest);
 	ChangeNextState(EMonsterState::DEATH_LAND);
 
 	TimeEventer->AddEvent(0.5f, [this](float _DeltaTime, float _Blank)
@@ -285,7 +285,7 @@ void AMonster::SetDeathLand(float _DeltaTime)
 	{
 		BodyCollision->Destroy();
 	}
-	ParentRoom->CheckPixelCollisionWithWall(this, BodyRenderer.get(), Stat.GetVelocity(), !bIsLeft, WallPointOffest);
+	ParentRoom->CheckPixelCollisionWithWall(this, Stat.GetVelocity(), !bIsLeft, WallPointOffest);
 	// 렌더러 위치 조정
 	FVector SpritePos = BodyRenderer->GetRelativeLocation();
 	BodyRenderer->SetRelativeLocation({ SpritePos.X, DeathSpriteOffset });

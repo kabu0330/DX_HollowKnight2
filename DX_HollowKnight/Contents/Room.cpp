@@ -60,12 +60,12 @@ ADoor* ARoom::CreateDoor(FVector _DoorScale, FVector _InitPos, ARoom* _TargetRoo
 }
 
 // 중력
-void ARoom::CheckPixelCollisionWithGravity(AActor* _Actor, class UContentsRenderer* _Renderer, FVector _Offset)
+void ARoom::CheckPixelCollisionWithGravity(AActor* _Actor, FVector _Offset)
 {
 	float DeltaTime = UEngineCore::GetDeltaTime();
 
-	FVector CollisionPoint = GetPixelCollisionPoint(_Actor, _Renderer, _Offset);
-	FVector CollisionPoint1PixelUp = GetPixelCollisionPoint(_Actor, _Renderer, _Offset + FVector::UP);
+	FVector CollisionPoint = GetPixelCollisionPoint(_Actor, _Offset);
+	FVector CollisionPoint1PixelUp = GetPixelCollisionPoint(_Actor, _Offset + FVector::UP);
 
 	AKnight* Knight = dynamic_cast<AKnight*>(_Actor);
 	if (nullptr != Knight)
@@ -77,7 +77,7 @@ void ARoom::CheckPixelCollisionWithGravity(AActor* _Actor, class UContentsRender
 			while (true == IsOnGround(CollisionPoint1PixelUp))
 			{
 				Knight->AddRelativeLocation(FVector::UP);
-				CollisionPoint1PixelUp = GetPixelCollisionPoint(_Actor, _Renderer, _Offset + FVector::UP);
+				CollisionPoint1PixelUp = GetPixelCollisionPoint(_Actor, _Offset + FVector::UP);
 			}
 		}
 		else
@@ -98,11 +98,10 @@ void ARoom::CheckPixelCollisionWithGravity(AActor* _Actor, class UContentsRender
 				{
 					Monster->AddRelativeLocation(FVector::UP);
 					{
-						CollisionPoint1PixelUp = GetPixelCollisionPoint(_Actor, _Renderer, _Offset + FVector::UP);
+						CollisionPoint1PixelUp = GetPixelCollisionPoint(_Actor, _Offset + FVector::UP);
 					}
 				}
 			}
-
 		}
 		else
 		{
@@ -113,7 +112,7 @@ void ARoom::CheckPixelCollisionWithGravity(AActor* _Actor, class UContentsRender
 	Force(_Actor, DeltaTime);
 }
 
-FVector ARoom::GetPixelCollisionPoint(AActor* _Actor, UContentsRenderer* _Renderer, FVector _Offset)
+FVector ARoom::GetPixelCollisionPoint(AActor* _Actor, FVector _Offset)
 {
 	float DeltaTime = UEngineCore::GetDeltaTime();
 
@@ -130,6 +129,11 @@ FVector ARoom::GetPixelCollisionPoint(AActor* _Actor, UContentsRenderer* _Render
 	{
 		CollisionPos = Monster->GetPixelCollision()->GetWorldLocation();
 		GravityForce = Monster->GetGravityForce();
+	}
+	ASkill* Skill = dynamic_cast<ASkill*>(_Actor);
+	if (nullptr != Skill)
+	{
+		CollisionPos = Skill->GetCollision()->GetWorldLocation();
 	}
 
 	CollisionPos -= LeftTopPos;
@@ -221,7 +225,7 @@ void ARoom::Force(AActor* _Actor, float _DeltaTime)
 	}
 }
 
-void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Renderer, float _Speed, bool _Left, FVector _Offset)
+void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, float _Speed, bool _Left, FVector _Offset)
 {
 	if (true == bActiveGravity)
 	{
@@ -267,10 +271,6 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, UContentsRenderer* _Rend
 	CollisionPoint.Y = ::roundf(CollisionPoint.Y);
 
 	UColor CollisionColor = PixelCollisionImage.GetColor({ CollisionPoint.X, -CollisionPoint.Y }); // y축 반전
-	std::string R = std::to_string(CollisionColor.R);
-	std::string G = std::to_string(CollisionColor.G);
-	std::string B = std::to_string(CollisionColor.B);
-	std::string Result = "R : " + R + " " + "G : " + G + " " + "B : " + B;
 
 	if (nullptr != Knight)
 	{

@@ -24,5 +24,6 @@ protected:
 
 private:
 	void SetAttack(float _DeltaTime) override;
+	void CreateAttackLogicAndEffect() override;
 };
 

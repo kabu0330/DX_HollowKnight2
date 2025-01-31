@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "KnightStunEffect.h"
 #include <EngineBase/EngineRandom.h>
+#include "Particle.h"
 
 KnightStunEffect::KnightStunEffect()
 {
@@ -47,7 +48,16 @@ void KnightStunEffect::CreateStunImpactEffect()
 	BlackEffect->SetZSort(static_cast<int>(EZOrder::KNIGHT_SKILL_FRONT) - 1);
 	BlackEffect->ChangeAnimation(Knight, "StunEffect02");
 	BlackEffect->SetScale(Scale0);
+	BlackEffect->GetRenderer()->SetMulColor({ 0.5f, 0.5f, 0.5f }, 1.0f);
 	BlackEffect->SetLocation(Knight, FVector::ZERO, Rotation);
+
+
+	AParticle* BlackParticle = GetWorld()->SpawnActor<AParticle>().get();
+	BlackParticle->CreateParticle("BlackParticle", 50, 0.01f, Knight->GetActorLocation());
+	BlackParticle->SetAlpha(1.0f);
+	BlackParticle->SetRandomScale(0.5f, 1.0f);
+	BlackParticle->SetDecayScale(true, 0.6f);
+	BlackParticle->SetParticleOption(EParticleType::RANDOM, -600.0f, 600.0f);
 
 
 	Random.SetSeed(reinterpret_cast<long long>(this));

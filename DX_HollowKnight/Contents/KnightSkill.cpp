@@ -125,7 +125,7 @@ void AKnightSkill::CreateHitOrangeEffect(UCollision* _This, UCollision* _Other)
 	HitOrange->ChangeAnimation("HitOrange", ActorPos);
 	HitOrange->SetZSort(EZOrder::HIT_LIGHT_EFFECT);
 	HitOrange->GetRenderer()->SetAlpha(0.3f);
-	HitOrange->SetIncreaseAlpha(1.5f, 0.7f);
+	HitOrange->SetAlphaFadeInFadeOut(1.5f, 0.7f);
 	HitOrange->SetLocation(Actor);
 	HitOrange->SetScale(5.0f);
 

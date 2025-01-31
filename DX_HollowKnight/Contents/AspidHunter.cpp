@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "AspidHunter.h"
+#include "MonsterProjectile.h"
 
 AAspidHunter::AAspidHunter()
 {
@@ -82,8 +83,8 @@ void AAspidHunter::CreateAnimation()
 	float IdleTime = 0.2f;
 	float RunnigTime = 0.1f;
 	float AttackAnticipateTime = 0.1f;
-	float DeathAirTime = 0.1f;
-	float DeathTime = 0.08f;
+	float DeathAirTime = 0.12f;
+	float DeathTime = 0.12f;
 	BodyRenderer->CreateAnimation("Idle", MonsterStr, 0, 5, IdleTime);
 	BodyRenderer->CreateAnimation("Walk", MonsterStr, 0, 5, RunnigTime);
 	BodyRenderer->CreateAnimation("AttackAnticipate", MonsterStr, 7, 10, AttackAnticipateTime);
@@ -98,4 +99,39 @@ void AAspidHunter::CreateAnimation()
 
 void AAspidHunter::SetAttack(float _DeltaTime)
 {
+	SetAttackRendererOffset();
+	CheckDeath();
+	ActiveGravity();
+
+	//Dash();
+
+	// 가상함수
+	CreateAttackLogicAndEffect();
+
+	AttackFrameElapsed += _DeltaTime;
+	//   피격시                        넉백이 적용되는 친구들은 모두 스킬 캔슬
+	if (true == Stat.IsBeingHit() && true == Stat.IsKnockbackable())
+	{
+		bIsFirstIdle = true; // Idle로 돌아갈때 반드시 넣어주기
+		ResetAttackCooldown();
+		FSM.ChangeState(EMonsterState::IDLE);
+	}
+	else if (AttackFrameElapsed >= AttackDuration)
+	{
+		AttackFrameElapsed = 0.0f;
+		FSM.ChangeState(EMonsterState::ATTACK_RECOVERY);
+	}
 }
+
+void AAspidHunter::CreateAttackLogicAndEffect()
+{
+	//std::shared_ptr<AMonsterProjectile> Projectile = GetWorld()->SpawnActor<AMonsterProjectile>();
+	//Projectile->SetParentRoom(ParentRoom);
+	//Projectile->ChangeAnimation(this, "BulletFire");
+	//FVector Offset = { 0.0f, 0.0f, 0.0f };
+	//Projectile->SetLocation(this, Offset);
+	////Projectile->EnableRotation(false); // 좌우반전에 따라 
+	//Projectile->ToggleFlip(); // 좌우반전
+	//Projectile->GetRenderer()->SetAutoScaleRatio(1.5f);
+}
+

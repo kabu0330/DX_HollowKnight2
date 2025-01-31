@@ -141,11 +141,12 @@ void AParticle::Remove()
 		std::remove_if(Particles.begin(), Particles.end(),
 			[](const FParticleData& Particle) {
 				// Effect가 유효하지 않거나 LifeTime이 끝난 경우 제거
-				return Particle.Effect->GetRenderer() == nullptr || true == Particle.Effect->GetRenderer()->IsCurAnimationEnd();
+				return Particle.Effect->GetRenderer() == nullptr || true == Particle.Effect->GetRenderer()->IsCurAnimationEnd() || 0.1f >= Particle.Effect->GetRenderer()->GetAutoScaleRatio();
 			}),
 		Particles.end());
 	if (0 >= Particles.size())
 	{
+		UEngineDebug::OutPutString("파티클 소멸");
 		Destroy();
 	}
 }

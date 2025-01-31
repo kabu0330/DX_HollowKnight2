@@ -27,6 +27,9 @@ void AKnight::CreateStunEffect()
 	{
 		return;
 	}
+
+	BodyRenderer->AddPlusColor({ -0.5f, -0.5f, -0.5f });
+
 	std::shared_ptr<KnightStunEffect> Effect = GetWorld()->SpawnActor<KnightStunEffect>();
 	Effect->ChangeAnimation(this, "StunEffect01");
 	Effect->SetScale(2.0f);
@@ -97,8 +100,9 @@ void AKnight::CreateFireballEffect()
 
 	std::shared_ptr<AKnightFireball> Skill = GetWorld()->SpawnActor<AKnightFireball>();
 	Skill->ChangeAnimation("Fireball");
+	Skill->SetParentRoom(ARoom::GetCurRoom()); // 픽셀 충돌 검사
 	FVector Speed = { 2000.0f, 0.0f,0.0f };
-	Skill->SetZSort(Effect->GetZSort() - 5.0f);
+	Skill->SetZSort(static_cast<int>(Effect->GetZSort() - 5.0f));
 	Skill->AddLocation(this, Speed);
 	Skill->ToggleFlip(); // 좌우반전
 

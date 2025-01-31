@@ -21,7 +21,7 @@ public:
 	{
 		return BodyRenderer.get();
 	}
-
+	
 	void ChangeAnimation(std::string_view _AnimationName);
 	void ChangeAnimation(AActor* _Actor, std::string_view _AnimationName);
 	void ChangeAnimation(std::string_view _AnimationName, FVector _Pos)
@@ -89,13 +89,14 @@ public:
 		bIsScaleDecay = true;
 		ScaleReductionRate = _ReductionRate;
 	}
-	void SetAlphaFadeOut(float _ReductionRate)
+	void SetAlphaFadeOut(float _ReductionRate, float _MinAlpha = 0.0f)
 	{
-		AlphaValue = BodyRenderer->ColorData.MulColor.W;
+		bIsAutoRelease = false; // 알파가 0이 되면 소멸
 		bIsAlphaDecay = true;
-		AlphaReductionRate = _ReductionRate;
+		DeltaAlpha = _ReductionRate;
+		MinAlpha = _MinAlpha;
 	}
-	void SetIncreaseAlpha(float _DeltaAlpha, float _MaxAlpha = 1.0f)
+	void SetAlphaFadeInFadeOut(float _DeltaAlpha, float _MaxAlpha = 1.0f)
 	{
 		bIsAutoRelease = false; // 맥스 알파가 되면 소멸
 		bCanIncreaseAlpha = true;
@@ -140,14 +141,26 @@ private:
 	void SetScaleDecay(float _DeltaTime);
 
 	bool bIsAlphaDecay = false;
-	float AlphaReductionRate = 0.0f;
-	float AlphaValue = 0.0f;
+	float DeltaAlpha = 0.0f;
+	float MinAlpha = 0.0f;
 	void SetAlphaDecay(float _DeltaTime);
 
 	bool bCanIncreaseAlpha = false;
 	float MaxAlpha = 1.0f;
-	float DeltaAlpha = 0.0f;
 	void IncreaseAlpha(float _DeltaTime);
 
+public:
+	// 픽셀 충돌
+
+	// 픽셀충돌 적용 필수 함수 : 부모를 알아야 픽셀 이미지와 충돌 검사를 할 수 있다.
+	void SetParentRoom(class ARoom* _ParentRoom)
+	{
+		ParentRoom = _ParentRoom;
+	}
+
+protected:
+	// 픽셀 충돌
+	bool bIsPixelCollision = false;
+	class ARoom* ParentRoom = nullptr;
 };
 

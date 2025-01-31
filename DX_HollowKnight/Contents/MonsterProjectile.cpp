@@ -1,27 +1,32 @@
 #include "PreCompile.h"
 #include "MonsterProjectile.h"
 
-MonsterProjectile::MonsterProjectile()
+AMonsterProjectile::AMonsterProjectile()
 {
 	float FrameTime = 0.1f;
-	std::string StunEffect03 = "StunEffect03";
-	BodyRenderer->CreateAnimation(StunEffect03, StunEffect03, 0, 7, FrameTime, false);
+	std::string Png = ".png";
+	std::string BulletFire = "BulletFire";
+	BodyRenderer->CreateAnimation(BulletFire, BulletFire + Png, 0, 6, FrameTime);
 
-	BodyRenderer->ChangeAnimation(StunEffect03);
+	BodyRenderer->ChangeAnimation(BulletFire);
 }
 
-MonsterProjectile::~MonsterProjectile()
+AMonsterProjectile::~AMonsterProjectile()
 {
 }
 
-void MonsterProjectile::BeginPlay()
+void AMonsterProjectile::BeginPlay()
 {
 	AMonsterSkill::BeginPlay();
 }
 
-void MonsterProjectile::Tick(float _DeltaTime)
+void AMonsterProjectile::Tick(float _DeltaTime)
 {
 	AMonsterSkill::Tick(_DeltaTime);
 
+}
+
+void AMonsterProjectile::Release()
+{
 }
 

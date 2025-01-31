@@ -167,6 +167,7 @@ void UContentsResource::LoadResourceDirectory()
 	LoadContentsResource("Image/Effect/Knight/StunEffect03");
 	LoadContentsResource("Image/Effect/Knight/Blast");
 	LoadContentsResource("Image/Effect/Knight/SoulBurst");
+	LoadContentsResource("Image/Effect/Knight/FireballWallImpact");
 
 	// UI
 	LoadContentsResource("Image/UI/HealthIdle");
@@ -206,6 +207,8 @@ void UContentsResource::LoadSprite()
 	UEngineSprite::CreateSpriteToMeta("WhiteHit.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("BlackParticle.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("DefaultHitParticle.png", ".smeta");
+
+	UEngineSprite::CreateSpriteToMeta("BulletFire.png", ".smeta");
 
 	UEngineSprite::CreateSpriteToMeta("fog.png", ".smeta");
 }

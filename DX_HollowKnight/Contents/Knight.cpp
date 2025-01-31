@@ -99,7 +99,7 @@ void AKnight::ActiveGravity()
 	ARoom* Room = ARoom::GetCurRoom();
 	if (nullptr != Room)
 	{
-		Room->CheckPixelCollisionWithGravity(this, BodyRenderer.get(), FVector::DOWN);
+		Room->CheckPixelCollisionWithGravity(this, FVector::DOWN);
 	}
 }
 
@@ -112,7 +112,7 @@ void AKnight::ActivePixelCollsion()
 	ARoom* Room = ARoom::GetCurRoom();
 	if (nullptr != Room)
 	{
-		Room->CheckPixelCollisionWithWall(this, BodyRenderer.get(), Stat.GetVelocity(), bIsLeft, FVector::ZERO);
+		Room->CheckPixelCollisionWithWall(this, Stat.GetVelocity(), bIsLeft, FVector::ZERO);
 		Room->CheckPixelCollisionWithCeil(this, BodyRenderer.get(), Stat.GetVelocity(), bIsLeft, FVector::ZERO);
 	}
 }

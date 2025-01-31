@@ -32,8 +32,6 @@ AKnightEffect::AKnightEffect()
 	std::string Blast = "Blast";
 	BodyRenderer->CreateAnimation(Blast, Blast, 0, 7, BlastTime, false);
 
-	std::string FireballImpact = "FireballImpact";
-	BodyRenderer->CreateAnimation(FireballImpact, FireballImpact, 0, 5, FrameTime, false);
 
 	std::string StunEffect02 = "StunEffect02";
 	BodyRenderer->CreateAnimation(StunEffect02, StunEffect02, 0, 6, StunFrame, false);

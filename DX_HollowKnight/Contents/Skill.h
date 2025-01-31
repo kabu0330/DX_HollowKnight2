@@ -33,6 +33,9 @@ protected:
 	std::shared_ptr<class UCollision> Collision;
 	FVector CollisionScale = FVector::ZERO;
 private:
+	bool IsCurRoom();
+	void ActivePixelCollision();
+	bool IsPixelCollision(FVector _CollisionPoint);
 
 };
 

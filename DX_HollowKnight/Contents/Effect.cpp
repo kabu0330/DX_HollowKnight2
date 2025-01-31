@@ -227,3 +227,4 @@ void AEffect::IncreaseAlpha(float _DeltaTime)
 	Alpha += Delta;
 	BodyRenderer->ColorData.MulColor.W = Alpha;
 }
+

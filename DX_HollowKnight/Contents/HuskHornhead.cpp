@@ -105,7 +105,7 @@ void AHuskHornhead::CreateCollision()
 	BodyCollision->SetCollisionProfileName("Monster");
 }
 
-void AHuskHornhead::CreateAttackEffect()
+void AHuskHornhead::CreateAttackLogicAndEffect()
 {
 	if (true == bIsShowEffect)
 	{

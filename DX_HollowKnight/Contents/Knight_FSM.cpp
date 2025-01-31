@@ -328,9 +328,10 @@ void AKnight::SetStun(float _DeltaTime)
 	CreateStunEffect();
 	APlayGameMode::GetPauseRef() = true;
 
-	TimeEventer->AddEndEvent(0.3f, []()
+	TimeEventer->AddEndEvent(0.3f, [this]()
 		{
 			APlayGameMode::GetPauseRef() = false;
+			BodyRenderer->ColorData.PlusColor = { 0.0f, 0.0f, 0.0f, 0.0f };
 		});
 
 	if (true == bIsOnGround)

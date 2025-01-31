@@ -112,7 +112,7 @@ void ALeapingHusk::SetAttack(float _DeltaTime)
 	Dash();
 	Jump(_DeltaTime);
 
-	CreateAttackEffect();
+	CreateAttackLogicAndEffect();
 
 	//   피격시                        넉백이 적용되는 친구들은 모두 스킬 캔슬
 	if (true == Stat.IsBeingHit() && true == Stat.IsKnockbackable())
@@ -131,7 +131,7 @@ void ALeapingHusk::SetAttack(float _DeltaTime)
 	}
 }
 
-void ALeapingHusk::CreateAttackEffect()
+void ALeapingHusk::CreateAttackLogicAndEffect()
 {
 	if (true == bIsShowEffect)
 	{

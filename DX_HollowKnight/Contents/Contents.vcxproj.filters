@@ -148,6 +148,9 @@
     <ClInclude Include="MonsterProjectile.h">
       <Filter>Play\Monster\Base</Filter>
     </ClInclude>
+    <ClInclude Include="KnightFireballEffect.h">
+      <Filter>Global\Knight\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -308,6 +311,9 @@
     </ClCompile>
     <ClCompile Include="MonsterProjectile.cpp">
       <Filter>Play\Monster\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="KnightFireballEffect.cpp">
+      <Filter>Global\Knight\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

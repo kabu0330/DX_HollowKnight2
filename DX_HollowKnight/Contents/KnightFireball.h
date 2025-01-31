@@ -24,5 +24,7 @@ protected:
 
 private:
 	void KnightKnockback(FVector _KnockbackDir) override {}
+	FVector PointPos = FVector::ZERO;
+	bool bIsEffect = false;
 };
 

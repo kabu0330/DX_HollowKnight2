@@ -71,7 +71,7 @@ void AMonster::CreateCollision()
 	BodyCollision->SetCollisionProfileName("Monster");
 }
 
-void AMonster::CreateAttackEffect()
+void AMonster::CreateAttackLogicAndEffect()
 {
 }
 
@@ -133,7 +133,7 @@ void AMonster::ActivePixelCollision()
 {
 	if (true == IsCurRoom())
 	{
-		ParentRoom->CheckPixelCollisionWithWall(this, BodyRenderer.get(), Stat.GetVelocity(), bIsLeft, WallPointOffest);
+		ParentRoom->CheckPixelCollisionWithWall(this, Stat.GetVelocity(), bIsLeft, WallPointOffest);
 		ParentRoom->CheckPixelCollisionWithCeil(this, BodyRenderer.get(), Stat.GetVelocity(), bIsLeft, CeilPointOffset);
 	}
 }
@@ -142,7 +142,7 @@ void AMonster::ActiveGravity()
 {
 	if (true == IsCurRoom())
 	{
-		ParentRoom->CheckPixelCollisionWithGravity(this, BodyRenderer.get(), GravityPointOffset);
+		ParentRoom->CheckPixelCollisionWithGravity(this, GravityPointOffset);
 	}
 }
 

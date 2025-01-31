@@ -85,7 +85,7 @@ protected:
 	virtual void CreateAnimation();
 	virtual void CreateCollision();
 
-	virtual void CreateAttackEffect();
+	virtual void CreateAttackLogicAndEffect();
 	bool bIsShowEffect = false;
 
 	void ResetRendererOffest();

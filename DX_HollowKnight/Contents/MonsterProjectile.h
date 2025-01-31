@@ -2,24 +2,25 @@
 #include "MonsterSkill.h"
 
 // Ό³Έν :
-class MonsterProjectile : public AMonsterSkill
+class AMonsterProjectile : public AMonsterSkill
 {
 public:
 	// constrcuter destructer
-	MonsterProjectile();
-	~MonsterProjectile();
+	AMonsterProjectile();
+	~AMonsterProjectile();
 
 	// delete Function
-	MonsterProjectile(const MonsterProjectile& _Other) = delete;
-	MonsterProjectile(MonsterProjectile&& _Other) noexcept = delete;
-	MonsterProjectile& operator=(const MonsterProjectile& _Other) = delete;
-	MonsterProjectile& operator=(MonsterProjectile&& _Other) noexcept = delete;
+	AMonsterProjectile(const AMonsterProjectile& _Other) = delete;
+	AMonsterProjectile(AMonsterProjectile&& _Other) noexcept = delete;
+	AMonsterProjectile& operator=(const AMonsterProjectile& _Other) = delete;
+	AMonsterProjectile& operator=(AMonsterProjectile&& _Other) noexcept = delete;
 
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
 private:
-
+	void Release() override;
+	
 };
 

@@ -24,6 +24,6 @@ protected:
 	void CreateCollision() override;
 
 private:
-	void CreateAttackEffect() override;
+	void CreateAttackLogicAndEffect() override;
 };
 
