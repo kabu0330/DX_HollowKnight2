@@ -25,6 +25,7 @@ protected:
 	void Tick(float _DeltaTime) override;
 
 	bool bIsCollision = false;
+	float CollisionDuration = 0.5f;
 
 private:
 	void SetCollisionEvent() override;
@@ -33,7 +34,6 @@ private:
 	void Attack(class UCollision* _This, class UCollision* _Other);
 	void Knockback();
 	
-	float CollisionDuration = 0.5f;
 
 };
 

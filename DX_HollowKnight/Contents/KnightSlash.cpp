@@ -9,7 +9,7 @@ AKnightSlash::AKnightSlash()
 {
 	SetName("Knight Slash");
 
-	float FrameTime = 0.03f;
+	float FrameTime = 0.015f;
 
 	std::string SlashEffect = "SlashEffect";
 	BodyRenderer->CreateAnimation(SlashEffect, SlashEffect, 0, 5, FrameTime, false);
@@ -44,7 +44,7 @@ void AKnightSlash::CreateHitEffect(UCollision* _This, UCollision* _Other)
 	AKnightEffect* Effect = GetWorld()->SpawnActor<AKnightEffect>().get();
 	Effect->SetName("SlashAttack");
 	Effect->SetZSort(EZOrder::KNIGHT_SKILL_FRONT);
-	Effect->ChangeAnimation(Knight, "NailHitEffect"); // RootComponent가 없다고 자꾸 터지는데 나이트 넣어주면 된다.
+	Effect->ChangeAnimation("NailHitEffect", Knight->GetActorLocation()); // RootComponent가 없다고 자꾸 터지는데 나이트 넣어주면 된다.
 	Effect->SetScale(3.0f);
 	Effect->GetRenderer()->SetMulColor({ 2.0f, 2.0f, 2.0f });
 	AActor* Target = _Other->GetActor(); // Monster

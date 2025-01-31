@@ -151,6 +151,12 @@
     <ClInclude Include="MonsterProjectile.h">
       <Filter>Play\Monster\Base\Skill</Filter>
     </ClInclude>
+    <ClInclude Include="MonsterEffect.h">
+      <Filter>Play\Monster\Base\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="AspidHunterBullet.h">
+      <Filter>Play\Monster\Base\Skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -315,6 +321,12 @@
     <ClCompile Include="MonsterProjectile.cpp">
       <Filter>Play\Monster\Base\Skill</Filter>
     </ClCompile>
+    <ClCompile Include="MonsterEffect.cpp">
+      <Filter>Play\Monster\Base\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="AspidHunterBullet.cpp">
+      <Filter>Play\Monster\Base\Skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -391,6 +403,9 @@
     </Filter>
     <Filter Include="Play\Monster\Base\Skill">
       <UniqueIdentifier>{3b4f948e-ad18-4df5-8136-d57b782b0961}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Play\Monster\Base\Effect">
+      <UniqueIdentifier>{7b5b58f4-9f35-4fc3-887b-05a50e58872a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

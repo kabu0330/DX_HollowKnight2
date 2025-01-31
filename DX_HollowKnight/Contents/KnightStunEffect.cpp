@@ -46,14 +46,14 @@ void KnightStunEffect::CreateStunImpactEffect()
 	BlackEffect->SetName("Stun Black Effect");
 	AKnight* Knight = AKnight::GetPawn();
 	BlackEffect->SetZSort(static_cast<int>(EZOrder::KNIGHT_SKILL_FRONT) - 1);
-	BlackEffect->ChangeAnimation(Knight, "StunEffect02");
+	BlackEffect->ChangeAnimation("StunEffect02", Knight->GetActorLocation());
 	BlackEffect->SetScale(Scale0);
 	BlackEffect->GetRenderer()->SetMulColor({ 0.5f, 0.5f, 0.5f }, 1.0f);
 	BlackEffect->SetLocation(Knight, FVector::ZERO, Rotation);
 
 
 	AParticle* BlackParticle = GetWorld()->SpawnActor<AParticle>().get();
-	BlackParticle->CreateParticle("BlackParticle", 50, 0.01f, Knight->GetActorLocation());
+	BlackParticle->CreateParticle("BlackParticle", 30, 0.01f, Knight->GetActorLocation());
 	BlackParticle->SetAlpha(1.0f);
 	BlackParticle->SetRandomScale(0.5f, 1.0f);
 	BlackParticle->SetDecayScale(true, 0.6f);
@@ -68,9 +68,16 @@ void KnightStunEffect::CreateStunImpactEffect()
 	AKnightEffect* WhiteEffect = GetWorld()->SpawnActor<AKnightEffect>().get();
 	WhiteEffect->SetZSort(static_cast<int>(EZOrder::KNIGHT_SKILL_FRONT) - 2);
 	WhiteEffect->SetName("Stun White Effect");
-	WhiteEffect->ChangeAnimation(Knight, "StunEffect03");
+	WhiteEffect->ChangeAnimation("StunEffect03", Knight->GetActorLocation());
 	WhiteEffect->SetScale(Scale1);
 	WhiteEffect->SetLocation(Knight, FVector::ZERO, Rotation);
+
+	AParticle* WhiteParticle = GetWorld()->SpawnActor<AParticle>().get();
+	WhiteParticle->CreateParticle("WhiteParticle", 10, 0.01f, Knight->GetActorLocation());
+	WhiteParticle->SetAlpha(1.0f);
+	WhiteParticle->SetRandomScale(0.5f, 1.0f);
+	WhiteParticle->SetDecayScale(true, 0.6f);
+	WhiteParticle->SetParticleOption(EParticleType::RANDOM, -300.0f, 300.0f);
 }
 
 

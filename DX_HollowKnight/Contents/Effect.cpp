@@ -51,6 +51,9 @@ AEffect::AEffect()
 	std::string BlackParticle = "BlackParticle";
 	BodyRenderer->CreateAnimation(BlackParticle, BlackParticle + Png, 1, 1, BlackParticleTime, false);
 
+	std::string WhiteParticle = "WhiteParticle";
+	BodyRenderer->CreateAnimation(WhiteParticle, WhiteHit + Png, 1, 1, BlackParticleTime, false);
+
 
 	float HitFrame = 0.7f;
 	std::string DefaultHitParticle = "DefaultHitParticle";
@@ -72,11 +75,11 @@ void AEffect::ChangeAnimation(std::string_view _AnimationName)
 }
 
 // 위치 조정 안할거면 호출
-void AEffect::ChangeAnimation(AActor* _Actor, std::string_view _AnimationName)
-{
-	TargetActor = _Actor;
-	ChangeAnimation(_AnimationName);
-}
+//void AEffect::ChangeAnimation(AActor* _Actor, std::string_view _AnimationName)
+//{
+//	TargetActor = _Actor;
+//	ChangeAnimation(_AnimationName);
+//}
 
 void AEffect::Release()
 {
@@ -109,6 +112,10 @@ void AEffect::BeginPlay()
 {
 	AActor::BeginPlay();
 	Knight = AKnight::GetPawn();
+	if (nullptr != TargetActor)
+	{
+		SrcPos = TargetActor->GetActorLocation();
+	}
 }
 
 void AEffect::Tick(float _DeltaTime)
@@ -124,10 +131,6 @@ void AEffect::Tick(float _DeltaTime)
 
 void AEffect::SetPosition()
 {
-	if (nullptr != TargetActor)
-	{
-		SrcPos = TargetActor->GetActorLocation();
-	}
 	if (false == bIsAddLocation) // Set
 	{
 		CheckDirection(); // 왼쪽인지, 오른쪽인지 계산하고

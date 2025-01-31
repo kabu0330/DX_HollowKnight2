@@ -23,7 +23,6 @@ public:
 	}
 	
 	void ChangeAnimation(std::string_view _AnimationName);
-	void ChangeAnimation(AActor* _Actor, std::string_view _AnimationName);
 	void ChangeAnimation(std::string_view _AnimationName, FVector _Pos)
 	{
 		ChangeAnimation(_AnimationName);
@@ -53,6 +52,12 @@ public:
 		SrcPos = TargetActor->GetActorLocation();
 		SetActorLocation(SrcPos);
 		CheckDirection();
+	}
+
+	// 위치를 실시간으로 공유하면서 데리고 다니고 싶다면, 몬스터는 사용 비권장
+	void SetTargetActor(AActor* _TargetActor)
+	{
+		TargetActor = _TargetActor;
 	}
 
 	void SetLocation(FVector _Pos)

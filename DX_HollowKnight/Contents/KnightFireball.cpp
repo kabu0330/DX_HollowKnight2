@@ -64,7 +64,8 @@ void AKnightFireball::CreateHitEffect(UCollision* _This, UCollision* _Other)
 	Effect->SetName("FireballImpact");
 	Effect->SetZSort(EZOrder::KNIGHT_SKILL_FRONT);
 	AKnight* Knight = AKnight::GetPawn();
-	Effect->ChangeAnimation(Knight, "FireballImpact"); // RootComponent가 없다고 자꾸 터지는데 나이트 넣어주면 된다.
+	//Effect->ChangeAnimation(Knight, "FireballImpact"); // RootComponent가 없다고 자꾸 터지는데 나이트 넣어주면 된다.
+	Effect->ChangeAnimation("FireballImpact",Knight->GetActorLocation()); // RootComponent가 없다고 자꾸 터지는데 나이트 넣어주면 된다.
 	Effect->SetScale(1.5f);
 	AActor* Target = _Other->GetActor();
 	Effect->SetLocation(Target);

@@ -16,7 +16,7 @@ void AKnight::CreateDashEffect()
 	//Effect->SetScale(0.5f);
 	//Effect->Destroy(0.1f);
 	std::shared_ptr<AKnightEffect> Effect2 = GetWorld()->SpawnActor<AKnightEffect>();
-	Effect2->ChangeAnimation(this, "Dash_effect2");
+	Effect2->ChangeAnimation("Dash_effect2",GetActorLocation());
 	Effect2->SetZSort(static_cast<int>(EZOrder::KNIGHT_SKILL_BACK) + 1);
 	Effect2->SetLocation(this, {200.0f, 0.0f, 0.0f}, {0.0f, 180.0f, 0.0f});
 }
@@ -31,7 +31,7 @@ void AKnight::CreateStunEffect()
 	BodyRenderer->AddPlusColor({ -0.5f, -0.5f, -0.5f });
 
 	std::shared_ptr<KnightStunEffect> Effect = GetWorld()->SpawnActor<KnightStunEffect>();
-	Effect->ChangeAnimation(this, "StunEffect01");
+	Effect->ChangeAnimation("StunEffect01", GetActorLocation());
 	Effect->SetScale(2.0f);
 	FVector Offest = { 0.0f, 0.0f, 0.0f };
 	UEngineRandom Random;
@@ -50,7 +50,7 @@ void AKnight::CreateFocusEffect()
 		return;
 	}
 	std::shared_ptr<AKnightEffect> FocusEffect = GetWorld()->SpawnActor<AKnightEffect>();
-	FocusEffect->ChangeAnimation(this, "FocusEffect");
+	FocusEffect->ChangeAnimation("FocusEffect", GetActorLocation());
 	FVector Offest = { 5.0f, 30.0f, 0.0f };
 	FocusEffect->SetLocation(this, Offest);
 	FocusEffect->EnableRotation(false); // 좌우반전에 따라 
@@ -71,7 +71,7 @@ void AKnight::CreateFocusEndEffect()
 	FVector Offset = { 10.0f, 10.0f, 0.0f };
 
 	std::shared_ptr<AKnightEffect> BurstEffect = GetWorld()->SpawnActor<AKnightEffect>();
-	BurstEffect->ChangeAnimation(this, "BurstEffect");
+	BurstEffect->ChangeAnimation("BurstEffect", GetActorLocation());
 	BurstEffect->SetLocation(this, { Offset.X, Offset.Y });
 	BurstEffect->EnableRotation(false); // 좌우반전에 따라 
 	BurstEffect->GetRenderer()->SetAutoScaleRatio(1.6f);
@@ -89,7 +89,7 @@ void AKnight::CreateFireballEffect()
 		return;
 	}
 	std::shared_ptr<AKnightEffect> Effect = GetWorld()->SpawnActor<AKnightEffect>();
-	Effect->ChangeAnimation(this, "Blast");
+	Effect->ChangeAnimation("Blast", GetActorLocation());
 	FVector Offset = { -80.0f, 0.0f, 0.0f };
 	Effect->SetLocation(this, Offset);
 	//Effect->EnableRotation(false); // 좌우반전에 따라 
@@ -120,7 +120,7 @@ void AKnight::CreateSlashEffect()
 	bIsShowEffect = true;
 
 	std::shared_ptr<AKnightSlash> SlashEffect = GetWorld()->SpawnActor<AKnightSlash>();
-	SlashEffect->ChangeAnimation("SlashEffect");
+	SlashEffect->ChangeAnimation("SlashEffect", GetActorLocation());
 	FVector Offset = FVector{ -120.0f, 0.0f };
 	SlashEffect->SetLocation(this, Offset);
 
@@ -136,7 +136,7 @@ void AKnight::CreateUpSlashEffect()
 	}
 
 	std::shared_ptr<AKnightSlash> SlashEffect = GetWorld()->SpawnActor<AKnightSlash>();
-	SlashEffect->ChangeAnimation("UpSlashEffect");
+	SlashEffect->ChangeAnimation("UpSlashEffect", GetActorLocation());
 	FVector Offset = FVector{ 0.0f, 100.0f };
 	SlashEffect->SetLocation(this, Offset);
 	SlashEffect->EnableRotation(false); // 좌우반전에 따라 
@@ -151,7 +151,7 @@ void AKnight::CreateDownSlashEffect()
 	}
 
 	std::shared_ptr<AKnightSlash> SlashEffect = GetWorld()->SpawnActor<AKnightSlash>();
-	SlashEffect->ChangeAnimation("DownSlashEffect");
+	SlashEffect->ChangeAnimation("DownSlashEffect", GetActorLocation());
 	FVector Offset = FVector{ 0.0f, -100.0f };
 	SlashEffect->SetLocation(this, Offset);
 	SlashEffect->EnableRotation(false);

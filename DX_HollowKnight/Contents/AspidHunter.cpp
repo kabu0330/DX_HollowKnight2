@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "AspidHunter.h"
 #include "MonsterProjectile.h"
+#include "AspidHunterBullet.h"
 
 AAspidHunter::AAspidHunter()
 {
@@ -133,44 +134,27 @@ void AAspidHunter::CreateAttackLogicAndEffect()
 	}
 	bIsFire = true;
 
-	std::shared_ptr<AMonsterProjectile> Projectile = GetWorld()->SpawnActor<AMonsterProjectile>();
+	std::shared_ptr<AAspidHunterBullet> Projectile = GetWorld()->SpawnActor<AAspidHunterBullet>();
 	Projectile->SetZSort(EZOrder::MONSTER_SKILL_FRONT);
-	Projectile->ChangeAnimation(this, "BulletFire");
+	FVector Pos = GetActorLocation();
+	Projectile->ChangeAnimation("OrangeBullet", Pos);
 	Projectile->SetParentRoom(ParentRoom);
 	Projectile->GetRenderer()->SetAutoScale(false);
-	FVector BulletSize = { 40.0f, 30.0f };
+	FVector BulletSize = { 60.0f, 60.0f };
 	Projectile->GetRenderer()->SetRelativeScale3D(BulletSize);
 	Projectile->GetRenderer()->SetActive(true);
-	Projectile->SetCollisionScale(BulletSize);
+	Projectile->SetCollisionScale(BulletSize * 0.6f);
 	Projectile->SetActorLocation(GetActorLocation()); 
 
-	FVector ThisPos = GetActorLocation();
+	FVector ThisPos = Pos;
 	FVector KnightPos = AKnight::GetPawn()->GetActorLocation();
 	FVector Dir = KnightPos - ThisPos;
 	Dir.Normalize();
-	float Speed = 100.0f;
+	float Speed = 300.0f;
 	FVector Offset = Dir * Speed;
 
 	Projectile->AddLocation(this, Offset);
-
-	//AKnightFireballEffect* Effect = GetWorld()->SpawnActor<AKnightFireballEffect>().get();
-	//Effect->SetName("FireballWallImpact");
-	//Effect->SetZSort(EZOrder::KNIGHT_SKILL_FRONT);
-	//AKnight* Knight = AKnight::GetPawn();
-	//Effect->ChangeAnimation("FireballWallImpact"); // RootComponent가 없다고 자꾸 터지는데 나이트 넣어주면 된다.
-	//Effect->SetScale(1.5f);
-	//Effect->ToggleFlip();
-	//FVector Offset = { 50.0f, 0.0f };
-	//if (nullptr != Collision && true == Collision->IsActive())
-	//{
-	//	if (true == bIsLeft)
-	//	{
-	//		Offset *= -1.0f;
-	//	}
-	//	PointPos = Collision->GetWorldLocation() + Offset;
-	//}
-
-	//Effect->SetLocation(PointPos);
-	//Effect->GetRenderer()->SetMulColor({ 12.0f, 12.0f, 12.0f }, 0.1f);
+	Projectile->SetCollisionTime(5.0f);
+	Projectile->GetRenderer()->SetMulColor({ 2.0f, 1.5f, 1.0f });
 }
 
