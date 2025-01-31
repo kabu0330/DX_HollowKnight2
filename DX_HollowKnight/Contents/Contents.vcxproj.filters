@@ -118,9 +118,6 @@
     <ClInclude Include="LeapingHusk.h">
       <Filter>Play\Monster\Normal</Filter>
     </ClInclude>
-    <ClInclude Include="MonsterSkill.h">
-      <Filter>Play\Monster\Base</Filter>
-    </ClInclude>
     <ClInclude Include="HuskHornhead.h">
       <Filter>Play\Monster\Normal</Filter>
     </ClInclude>
@@ -145,11 +142,14 @@
     <ClInclude Include="Particle.h">
       <Filter>Global</Filter>
     </ClInclude>
-    <ClInclude Include="MonsterProjectile.h">
-      <Filter>Play\Monster\Base</Filter>
-    </ClInclude>
     <ClInclude Include="KnightFireballEffect.h">
       <Filter>Global\Knight\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterSkill.h">
+      <Filter>Play\Monster\Base\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterProjectile.h">
+      <Filter>Play\Monster\Base\Skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -282,9 +282,6 @@
     <ClCompile Include="WanderingHusk.cpp">
       <Filter>Play\Monster\Normal</Filter>
     </ClCompile>
-    <ClCompile Include="MonsterSkill.cpp">
-      <Filter>Play\Monster\Base</Filter>
-    </ClCompile>
     <ClCompile Include="HuskHornhead.cpp">
       <Filter>Play\Monster\Normal</Filter>
     </ClCompile>
@@ -309,11 +306,14 @@
     <ClCompile Include="Particle.cpp">
       <Filter>Global</Filter>
     </ClCompile>
-    <ClCompile Include="MonsterProjectile.cpp">
-      <Filter>Play\Monster\Base</Filter>
-    </ClCompile>
     <ClCompile Include="KnightFireballEffect.cpp">
       <Filter>Global\Knight\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterSkill.cpp">
+      <Filter>Play\Monster\Base\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterProjectile.cpp">
+      <Filter>Play\Monster\Base\Skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -388,6 +388,9 @@
     </Filter>
     <Filter Include="Play\Monster\Normal\Fly">
       <UniqueIdentifier>{214cd3a8-c991-4d63-9faa-9247fc4bbb16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Play\Monster\Base\Skill">
+      <UniqueIdentifier>{3b4f948e-ad18-4df5-8136-d57b782b0961}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

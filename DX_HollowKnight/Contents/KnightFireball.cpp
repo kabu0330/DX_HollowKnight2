@@ -31,6 +31,7 @@ void AKnightFireball::Tick(float _DeltaTime)
 			return;
 		}
 		bIsEffect = true;
+
 		AKnightFireballEffect* Effect = GetWorld()->SpawnActor<AKnightFireballEffect>().get();
 		Effect->SetName("FireballWallImpact");
 		Effect->SetZSort(EZOrder::KNIGHT_SKILL_FRONT);

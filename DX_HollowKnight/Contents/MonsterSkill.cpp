@@ -37,6 +37,7 @@ void AMonsterSkill::Collide(UCollision* _This, UCollision* _Other)
 {
 	CreateHitEffect(_This, _Other);
 	Attack(_This, _Other);
+	bIsCollision = true;
 }
 
 void AMonsterSkill::CreateHitEffect(UCollision* _This, UCollision* _Other)
@@ -56,23 +57,23 @@ void AMonsterSkill::Attack(UCollision* _This, UCollision* _Other)
 
 	UEngineDebug::OutPutString("몬스터가 나이트에게 데미지를 주었습니다." );
 
-	//	Knockback(_This, _Other);
+	TimeEventer->AddEndEvent(0.3f, [this]()
+		{
+			Knockback();
+		});
 }
 
-void AMonsterSkill::Knockback(UCollision* _This, UCollision* _Other)
+void AMonsterSkill::Knockback()
 {
-	//FVector TargetPos = { _Other->GetWorldLocation().X, _Other->GetWorldLocation().Y };
-	//FVector KnightPos = { Knight->GetActorLocation().X, Knight->GetActorLocation().Y };
-	//FVector KnockbackDirection = KnightPos - TargetPos;
-	//KnockbackDirection.Y = 0.0f;
-	//KnockbackDirection.Normalize();
-	//Knight->GetStatRef().SetKnockbackDir(KnockbackDirection);
+	FVector Pos = { GetActorLocation().X, GetActorLocation().Y };
+	FVector KnightPos = { Knight->GetActorLocation().X, Knight->GetActorLocation().Y };
+	FVector KnockbackDirection = KnightPos - Pos;
+	KnockbackDirection.Y = 0.0f;
+	KnockbackDirection.Normalize();
+	KnockbackDirection += FVector::UP;
+	KnockbackDirection.Normalize();
 
-	//AMonster* Monster = dynamic_cast<AMonster*>(_Other->GetActor());
-	//if (nullptr != Monster)
-	//{
-	//	Monster->GetStatRef().SetKnockbackDir(-KnockbackDirection);
-	//	Monster->GetStatRef().SetBeingHit(true);
-	//}
+	Knight->GetStatRef().SetKnockbackDistance(500.0f);
+	Knight->GetStatRef().SetKnockbackDir(KnockbackDirection);
 }
 

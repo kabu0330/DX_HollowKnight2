@@ -9,8 +9,6 @@ AKnightSkill::AKnightSkill()
 {
 	SetName("AKnightSkill");
 	Collision->SetCollisionProfileName("KnightObject");
-
-	TimeEventer = CreateDefaultSubObject<UTimeEventComponent>().get();
 }
 
 AKnightSkill::~AKnightSkill()

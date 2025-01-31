@@ -35,7 +35,7 @@ protected:
 	void CreateHitOrangeEffect(class UCollision* _This, class UCollision* _Other);
 
 
-	class UTimeEventComponent* TimeEventer = nullptr;
+
 private:
 	FVector KnightPos = { 0.0f, 0.0f, 0.0f };
 	bool bIsParticle = false;

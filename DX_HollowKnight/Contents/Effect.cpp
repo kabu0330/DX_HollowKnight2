@@ -5,6 +5,8 @@ AEffect::AEffect()
 {
 	SetName("AEffect");
 
+	TimeEventer = CreateDefaultSubObject<UTimeEventComponent>().get();
+
 	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
 	RootComponent = Default;
 
@@ -148,18 +150,36 @@ void AEffect::SetPosition()
 	else // Add
 	{
 		float DeltaTime = UEngineCore::GetDeltaTime();
-		if (true == bIsLeft || false == bIsRotation)
+		if (false == bIsSwitchDirection)
 		{
-			AddActorLocation(-Speed * DeltaTime);
-			SetActorRelativeScale3D(RotationScale);
-			SetActorRotation(-Rotation);
+			if (true == bIsLeft)
+			{
+				AddActorLocation(Speed * DeltaTime);
+			}
+			else
+			{
+				AddActorLocation(Speed * DeltaTime);
+			}
+
+
+			return;
 		}
 		else
 		{
-			AddActorLocation(Speed * DeltaTime);
-			SetActorRelativeScale3D({ RotationScale.X * -1.0f, RotationScale.Y, RotationScale.Z });
-			SetActorRotation(Rotation);
+			if (true == bIsLeft || false == bIsRotation)
+			{
+				AddActorLocation(-Speed * DeltaTime);
+				SetActorRelativeScale3D(RotationScale);
+				SetActorRotation(-Rotation);
+			}
+			else
+			{
+				AddActorLocation(Speed * DeltaTime);
+				SetActorRelativeScale3D({ RotationScale.X * -1.0f, RotationScale.Y, RotationScale.Z });
+				SetActorRotation(Rotation);
+			}
 		}
+
 	}
 }
 
@@ -169,7 +189,20 @@ void AEffect::CheckDirection()
 	{
 		return;
 	}
-	bIsLeft = AKnight::GetPawn()->IsLeft();
+	AMonster* Monster = dynamic_cast<AMonster*>(TargetActor);
+	if (nullptr != Monster)
+	{
+		bIsSwitchDirection = false; // AddLocation 방향전환 안할거임
+		bIsLeft = Monster->IsLeft();
+		return;
+
+	}
+	else
+	{
+		bIsLeft = AKnight::GetPawn()->IsLeft();
+		return;
+	}
+
 }
 
 void AEffect::SetScaleDecay(float _DeltaTime)

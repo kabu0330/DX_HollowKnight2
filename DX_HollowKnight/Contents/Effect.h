@@ -113,6 +113,8 @@ public:
 
 protected:
 	AKnight* Knight = nullptr;
+	class UTimeEventComponent* TimeEventer = nullptr;
+
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 	void SetPosition();
@@ -130,6 +132,7 @@ protected:
 	bool bIsLeft = true;
 	bool bIsRotation = true;
 	bool bIsAutoRelease = true;
+	bool bIsSwitchDirection = true;
 
 	float ZSort = 0.0f;
 	std::shared_ptr<UContentsRenderer> BodyRenderer;
