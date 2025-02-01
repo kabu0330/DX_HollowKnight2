@@ -7,6 +7,10 @@ void AMonster::CreateAnimation()
 	// 재정의하여 사용
 }
 
+void AMonster::DamageEffect(float _DeltaTime)
+{
+}
+
 void AMonster::SetCollisionEvent()
 {
 	BodyCollision->SetCollisionEnter(std::bind(&AMonster::OnBodyCollision, this, std::placeholders::_1, std::placeholders::_2));
@@ -123,7 +127,7 @@ void AMonster::CreatePixelCollision()
 	PixelCollision = CreateDefaultSubObject<UCollision>();
 	PixelCollision->SetupAttachment(RootComponent);
 	PixelCollision->SetCollisionProfileName("MonsterPoint");
-	PixelCollision->SetScale3D({ 100, 5 });
+	PixelCollision->SetScale3D({ CollisionScale.X, 5.0f });
 	float Offset = ::abs(BodyCollision->GetWorldScale3D().Half().Y);
 	PixelCollision->SetRelativeLocation({ 0.0f + BodyCollisionOffset.X, -Offset + BodyCollisionOffset.Y});
 	PixelCollision->SetDebugColor({ 1.0f, 1.0f, 1.0f });

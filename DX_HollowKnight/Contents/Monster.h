@@ -83,6 +83,8 @@ protected:
 	virtual void SetStatus();
 	virtual void SetOffset();
 	virtual void CreateAnimation();
+	virtual void DamageEffect(float _DeltaTime);
+
 	virtual void CreateCollision();
 
 	virtual void CreateAttackLogicAndEffect();
@@ -179,6 +181,7 @@ protected:
 	void CreateDetectCollision();
 	FVector RendererOffset = FVector::ZERO;
 	FVector BodyCollisionOffset = FVector::ZERO;
+	FVector InitBodyCollisionOffset = FVector::ZERO;
 	FVector DetectRange = FVector::ZERO;
 	FVector CollisionScale = FVector::ZERO;
 	float DeathRotation = 0.0f;
@@ -207,6 +210,7 @@ protected:
 	// ¿Ãµø
 	void UpdateFSM(float _DeltaTime);
 	virtual void SetIdle(float _DeltaTime);
+	virtual void SetWalkAnticipate(float _DeltaTime);
 	virtual void SetWalk(float _DeltaTime);
 	virtual void SetRun(float _DeltaTime);
 	virtual void SetTurn(float _DeltaTime);
@@ -216,6 +220,7 @@ protected:
 	virtual void SetJump(float _DeltaTime);
 	virtual void SetJumpAttackAnticipate(float _DeltaTime);
 	virtual void SetJumpAttack(float _DeltaTime);
+	virtual void SetJumpAttackRecovery(float _DeltaTime);
 	virtual void SetLand(float _DeltaTime);
 	virtual void SetHardLand(float _DeltaTime);
 

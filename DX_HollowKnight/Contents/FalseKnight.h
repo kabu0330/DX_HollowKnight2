@@ -1,0 +1,28 @@
+#pragma once
+#include "Monster.h"
+
+// Ό³Έν :
+class AFalseKnight : public AMonster
+{
+public:
+	// constrcuter destructer
+	AFalseKnight();
+	~AFalseKnight();
+
+	// delete Function
+	AFalseKnight(const AFalseKnight& _Other) = delete;
+	AFalseKnight(AFalseKnight&& _Other) noexcept = delete;
+	AFalseKnight& operator=(const AFalseKnight& _Other) = delete;
+	AFalseKnight& operator=(AFalseKnight&& _Other) noexcept = delete;
+
+protected:
+	void BeginPlay() override;
+	void Tick(float _DeltaTime)	override;
+	void SetStatus() override;
+	void SetOffset() override;
+	void CreateAnimation() override;
+
+private:
+
+};
+

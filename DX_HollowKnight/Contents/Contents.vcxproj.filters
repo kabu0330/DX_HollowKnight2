@@ -157,6 +157,9 @@
     <ClInclude Include="AspidHunterBullet.h">
       <Filter>Play\Monster\Base\Skill</Filter>
     </ClInclude>
+    <ClInclude Include="FalseKnight.h">
+      <Filter>Play\Monster\Boss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -326,6 +329,9 @@
     </ClCompile>
     <ClCompile Include="AspidHunterBullet.cpp">
       <Filter>Play\Monster\Base\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="FalseKnight.cpp">
+      <Filter>Play\Monster\Boss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

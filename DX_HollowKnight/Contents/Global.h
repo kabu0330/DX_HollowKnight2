@@ -81,6 +81,7 @@ enum class EKnightState
 enum class EMonsterState
 {
 	IDLE,
+	WALK_ANTICIPATE,
 	WALK,
 	RUN,
 	TURN,
@@ -89,6 +90,7 @@ enum class EMonsterState
 	JUMP,
 	JUMP_ATTACK_ANTICIPATE,
 	JUMP_ATTACK,
+	JUMP_ATTACK_RECOVERY,
 	LAND,
 	HARD_LAND,
 

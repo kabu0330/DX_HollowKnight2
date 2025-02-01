@@ -4,6 +4,7 @@
 void AMonster::SetFSM()
 {
 	CreateState(EMonsterState::IDLE, &AMonster::SetIdle, "Idle");
+	CreateState(EMonsterState::WALK_ANTICIPATE, &AMonster::SetWalkAnticipate, "Walk_Anticipate");
 	CreateState(EMonsterState::WALK, &AMonster::SetWalk, "Walk");
 	CreateState(EMonsterState::RUN, &AMonster::SetRun, "Run");
 	CreateState(EMonsterState::TURN, &AMonster::SetTurn, "Turn");
@@ -12,6 +13,7 @@ void AMonster::SetFSM()
 	CreateState(EMonsterState::JUMP, &AMonster::SetJump, "Jump");
 	CreateState(EMonsterState::JUMP_ATTACK_ANTICIPATE, &AMonster::SetJumpAttackAnticipate, "JumpAttackAnticipate");
 	CreateState(EMonsterState::JUMP_ATTACK, &AMonster::SetJumpAttack, "JumpAttack");
+	CreateState(EMonsterState::JUMP_ATTACK_RECOVERY, &AMonster::SetJumpAttackRecovery, "JumpAttackRecovery");
 	CreateState(EMonsterState::LAND, &AMonster::SetLand, "Land");
 	CreateState(EMonsterState::HARD_LAND, &AMonster::SetHardLand, "HardLand");
 
@@ -111,6 +113,10 @@ void AMonster::SetIdle(float _DeltaTime)
 	{
 		FSM.ChangeState(EMonsterState::WALK);
 	}
+}
+
+void AMonster::SetWalkAnticipate(float _DeltaTime)
+{
 }
 
 void AMonster::SetWalk(float _DeltaTime)
@@ -315,6 +321,10 @@ void AMonster::SetJumpAttackAnticipate(float _DeltaTime)
 }
 
 void AMonster::SetJumpAttack(float _DeltaTime)
+{
+}
+
+void AMonster::SetJumpAttackRecovery(float _DeltaTime)
 {
 }
 

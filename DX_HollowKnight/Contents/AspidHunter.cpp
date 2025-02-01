@@ -49,8 +49,8 @@ void AAspidHunter::SetStatus()
 	MoveDuration = 2.0f;
 	MoveCooldown = 5.0f;
 
-	AttackFrame = 0.15f;// 매번 설정
-	AttackDuration = AttackFrame * 12.0f;
+	AttackFrame = 0.1f;// 매번 설정
+	AttackDuration = AttackFrame * 2.0f;
 	AttackCooldown = 5.0f;
 
 	AttackRecoveryFrame = 0.1f;
@@ -83,14 +83,14 @@ void AAspidHunter::CreateAnimation()
 	std::string MonsterStr = "AspidHunter.png";
 	float IdleTime = 0.2f;
 	float RunnigTime = 0.1f;
-	float AttackAnticipateTime = 0.1f;
+	float AttackAnticipateTime = 0.15f;
 	float DeathAirTime = 0.12f;
 	float DeathTime = 0.12f;
 	BodyRenderer->CreateAnimation("Idle", MonsterStr, 0, 5, IdleTime);
 	BodyRenderer->CreateAnimation("Walk", MonsterStr, 0, 5, RunnigTime);
-	BodyRenderer->CreateAnimation("AttackAnticipate", MonsterStr, 7, 10, AttackAnticipateTime);
-	BodyRenderer->CreateAnimation("Attack", MonsterStr, 11, 15, AttackFrame);
-	BodyRenderer->CreateAnimation("AttackRecovery", MonsterStr, 16, 18, AttackRecoveryFrame, false);
+	BodyRenderer->CreateAnimation("AttackAnticipate", MonsterStr, 7, 15, AttackAnticipateTime);
+	BodyRenderer->CreateAnimation("Attack", MonsterStr, 16, 17, AttackFrame, false);
+	BodyRenderer->CreateAnimation("AttackRecovery", MonsterStr, 18, 18, AttackRecoveryFrame, false);
 	BodyRenderer->CreateAnimation("DeathAir", MonsterStr, 19, 21, DeathAirTime);
 	BodyRenderer->CreateAnimation("DeathLand", MonsterStr, 22, 24, DeathTime, false);
 

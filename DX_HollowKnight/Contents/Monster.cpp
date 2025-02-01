@@ -70,6 +70,7 @@ void AMonster::BeginPlay()
 	SetCollisionEvent(); 
 	SetFSM();
 
+	InitBodyCollisionOffset = BodyCollisionOffset;
 	BodyRenderer->SetRelativeLocation({ RendererOffset.X, RendererOffset.Y, ZSort });
 }
 
@@ -569,7 +570,7 @@ void AMonster::CheckDirection()
 	if (bIsPrevLeft != bIsLeft)
 	{
 		bIsPrevLeft = bIsLeft;
-		bIsTurn = true;
+		//bIsTurn = true;
 	}
 
 	if (false == bIsFlip)
@@ -577,10 +578,13 @@ void AMonster::CheckDirection()
 		if (bIsLeft == true)
 		{
 			SetActorRelativeScale3D({ 1.0f, 1.0f, 1.0f });
+			BodyCollisionOffset.X = InitBodyCollisionOffset.X;
 		}
 		if (bIsLeft == false)
 		{
 			SetActorRelativeScale3D({ -1.0f, 1.0f, 1.0f });
+			int Offset = BodyCollisionOffset.X * 1.5f;
+			BodyCollisionOffset.X = Offset;
 		}
 	}
 
