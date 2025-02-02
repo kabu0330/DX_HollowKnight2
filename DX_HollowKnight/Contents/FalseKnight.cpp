@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "FalseKnight.h"
 #include "MonsterEffect.h"
+#include <EngineBase/EngineRandom.h>
 
 AFalseKnight::AFalseKnight()
 {
@@ -65,7 +66,7 @@ void AFalseKnight::SetStatus()
 void AFalseKnight::SetOffset()
 {
 	//FVector ImageSize = { 479.0f , 469.0f };
-	FVector SpriteSize = { 300.0f, 280.0f };
+	FVector SpriteSize = { 290.0f, 280.0f };
 
 	bIsFlip = true; // 렌더러 좌우반전
 
@@ -103,9 +104,10 @@ void AFalseKnight::CreateAnimation()
 	BodyRenderer->CreateAnimation("Attack", MonsterStr, 29, 31, AttackFrame, false);
 	BodyRenderer->CreateAnimation("AttackRecovery", MonsterStr, 32, 34, AttackRecoveryFrame, false);
 	BodyRenderer->CreateAnimation("AttackRecovery2", MonsterStr, 35, 36, AttackRecoveryFrame, false);
-	BodyRenderer->CreateAnimation("JumpAttackAnticipate", MonsterStr, 38, 42, AttackRecoveryFrame, false);
-	BodyRenderer->CreateAnimation("JumpAttack", MonsterStr, 43, 44, AttackRecoveryFrame, false);
-	BodyRenderer->CreateAnimation("JumpAttackRecovery", MonsterStr, 45, 48, AttackRecoveryFrame, false);
+	BodyRenderer->CreateAnimation("JumpAttackAnticipate", MonsterStr, 37, 42, AttackRecoveryFrame, false);
+	BodyRenderer->CreateAnimation("JumpAttack", MonsterStr, 43, 43, AttackAnticipateTime, false);
+	BodyRenderer->CreateAnimation("JumpAttackRecovery", MonsterStr, 44, 45, AttackRecoveryFrame, false);
+	BodyRenderer->CreateAnimation("JumpAttackLand", MonsterStr, 46, 47, AttackRecoveryFrame, false);
 	BodyRenderer->CreateAnimation("Stun", MonsterStr, 49, 62, AttackRecoveryFrame, false);
 	BodyRenderer->CreateAnimation("DeathAir", MonsterStr, 78, 80, DeathAirTime, false);
 	BodyRenderer->CreateAnimation("DeathLand", MonsterStr, 81, 86, DeathTime, false);
@@ -205,7 +207,7 @@ void AFalseKnight::EndFlashEffect(float _DeltaTime)
 
 void AFalseKnight::SetIdle(float _DeltaTime)
 {
-	ResetRendererOffest();
+	ResetRendererOffset();
 
 	ActiveGravity();
 	CheckDeath();
@@ -227,15 +229,21 @@ void AFalseKnight::SetIdle(float _DeltaTime)
 	{
 		return;
 	}
+
+	// 패턴
+	// 패턴 1. 지면강타
 	if (true == IsPlayerNearby() && false == Stat.IsAttacking() && true == bCanAttack) // 플레이어 조우
 	{
 		FSM.ChangeState(EMonsterState::ATTACK_ANTICIPATE);
 	}
+	// 패턴 2. 점프
 	if (true == IsPlayerNearby() && false == Stat.IsAttacking() && true == bCanJump) 
 	{
-		FSM.ChangeState(EMonsterState::JUMP_ANTICIPATE);
+		UEngineRandom Random;
+		float Result = Random.Randomfloat(-300.0f, 300.0f);
+		//Stat.SetVelocity(Result);
+		//FSM.ChangeState(EMonsterState::JUMP_ANTICIPATE);
 	}
-
 }
 
 void AFalseKnight::SetJumpAnticipate(float _DeltaTime)
@@ -243,12 +251,23 @@ void AFalseKnight::SetJumpAnticipate(float _DeltaTime)
 	ActiveGravity();
 	bCanJump = false;
 
-	ChangeNextState(EMonsterState::JUMP);
+	UEngineRandom Random;
+	float Result = Random.RandomInt(0, 1);
+	if (0 == Result)
+	{
+		ChangeNextState(EMonsterState::JUMP);
+	}
+	else
+	{
+		ChangeNextState(EMonsterState::JUMP_ATTACK_ANTICIPATE);
+	}
 }
 
 void AFalseKnight::SetJump(float _DeltaTime)
 {
 	ActiveGravity();
+
+
 	Move(_DeltaTime);
 
 	JumpActionInitElapsed += _DeltaTime;
@@ -264,7 +283,6 @@ void AFalseKnight::SetJump(float _DeltaTime)
 	}
 }
 
-
 void AFalseKnight::SetLand(float _DeltaTime)
 {
 	ActiveGravity();
@@ -277,14 +295,90 @@ void AFalseKnight::SetLand(float _DeltaTime)
 
 void AFalseKnight::SetJumpAttackAnticipate(float _DeltaTime)
 {
+	ActiveGravity();
+
+	Move(_DeltaTime);
+	FVector Offset = { 50.0f, 60.0f }; 
+	SetRendererOffset(Offset);
+
+	JumpActionInitElapsed += _DeltaTime;
+	float JumpActionTime = 1.0f;
+	if (JumpActionInitElapsed <= JumpActionTime)
+	{
+		Jump(_DeltaTime);
+	}
+	else if (JumpActionInitElapsed >= JumpActionTime && true == bIsOnGround)
+	{
+		JumpActionInitElapsed = 0.0f;
+		FSM.ChangeState(EMonsterState::JUMP_ATTACK);
+	}
 }
 
 void AFalseKnight::SetJumpAttack(float _DeltaTime)
 {
+	ActiveGravity();
+	FVector Offset = { -150.0f, 90.0f }; 
+	SetRendererOffset(Offset);
+
+	CreateJumpAttackLogicAndEffect();
+
+	ChangeNextState(EMonsterState::JUMP_ATTACK_RECOVERY);
+}
+
+void AFalseKnight::CreateJumpAttackLogicAndEffect()
+{
+	// 컬리전 생성
+	std::shared_ptr<AMonsterSkill> Skill = GetWorld()->SpawnActor<AMonsterSkill>();
+
+	//Skill->SetCollisionTime(AttackDuration);
+	Skill->SetCollisionTime(0.1f);
+	Skill->SetParentMonster(this); // 좌우 반전 적용을 위해
+
+	FVector CollisionScale = FVector(200, 200);
+	Skill->SetCollisionScale(CollisionScale);
+
+	// 이펙트 생성
+	AMonsterEffect* Effect = GetWorld()->SpawnActor<AMonsterEffect>().get();
+	FVector Pos = GetActorLocation();
+	Effect->ChangeAnimation("GroundImapctEffect", { Pos.X, Pos.Y });
+	Effect->SetScale(1.5f);
+
+	FVector Offset = FVector{ -330.0f, -100.0f };
+	FVector EffectOffset = FVector(0.0f, 20.0f);
+	if (true == bIsLeft)
+	{
+		Skill->SetLocation(this, { Offset.X, Offset.Y });
+		Effect->SetLocation(this, { Offset.X, Offset.Y + EffectOffset.Y });
+	}
+	else
+	{
+		Skill->SetLocation(this, { Offset.X, -Offset.Y });
+		Effect->SetLocation(this, { Offset.X, -(Offset.Y + EffectOffset.Y) });
+	}
 }
 
 void AFalseKnight::SetJumpAttackRecovery(float _DeltaTime)
 {
+	ActiveGravity();
+
+	//ResetRendererOffest();
+	FVector Offset = { 0.0f, 50.0f }; 
+	SetRendererOffset(Offset);
+
+	ChangeNextState(EMonsterState::JUMP_ATTACK_LAND);
+}
+
+void AFalseKnight::SetJumpAttackLand(float _DeltaTime)
+{
+	ActiveGravity();
+
+
+	//ResetRendererOffest();
+	FVector Offset = { 20.0f, 0.0f }; 
+	SetRendererOffset(Offset);
+
+	bIsResting = true; // 패턴과 패턴 간 쿨타임 적용
+	ChangeNextState(EMonsterState::IDLE);
 }
 
 void AFalseKnight::SetAttackAnticipate(float _DeltaTime)
@@ -293,8 +387,8 @@ void AFalseKnight::SetAttackAnticipate(float _DeltaTime)
 	ActiveGravity();
 
 	// 렌더러 위치 조정
-	FVector Offset = { -35.0f, 20.0f };
-	BodyRenderer->SetRelativeLocation(Offset); 
+	FVector Offset = { 40.0f, -20.0f };
+	SetRendererOffset(Offset);
 	
 	Stat.SetAttacking(true);
 	bCanAttack = false;
@@ -309,16 +403,16 @@ void AFalseKnight::SetAttack(float _DeltaTime)
 	// 렌더러 위치 조정
 	if (false == bIsOffsetAttack1Frame)
 	{
-		FVector Offset = { 150.0f, 130.0f };
-		BodyRenderer->SetRelativeLocation(Offset);
+		FVector Offset = { -70.0f, 80.0f };
+		SetRendererOffset(Offset);
 		bIsOffsetAttack1Frame = true;
 	}
 	if (false == bIsShowEffect) // 한 번만 공격 로직 호출
 	{
 		TimeEventer->AddEndEvent(0.15f, [this]()
 			{
-				FVector Offset = { 150.0f, 67.0f };
-				BodyRenderer->SetRelativeLocation(Offset);
+				FVector Offset = { -160.0f, 20.0f };
+				SetRendererOffset(Offset);
 				CreateAttackLogicAndEffect();
 			});
 	}
@@ -326,8 +420,8 @@ void AFalseKnight::SetAttack(float _DeltaTime)
 
 	TimeEventer->AddEndEvent(0.3f, [this]()
 		{
-			FVector Offset = { 150.0f, 0.0f };
-			BodyRenderer->SetRelativeLocation(Offset);
+			FVector Offset = { -160.0f, -45.0f };
+			SetRendererOffset(Offset);
 		});
 
 	ChangeNextState(EMonsterState::ATTACK_RECOVERY);
@@ -341,6 +435,7 @@ void AFalseKnight::CreateAttackLogicAndEffect()
 
 	//Skill->SetCollisionTime(AttackDuration);
 	Skill->SetCollisionTime(0.1f);
+	Skill->SetParentMonster(this); // 좌우 반전 적용을 위해
 
 	FVector CollisionScale = FVector(150, 150);
 	Skill->SetCollisionScale(CollisionScale);
@@ -355,6 +450,7 @@ void AFalseKnight::CreateAttackLogicAndEffect()
 	std::shared_ptr<AMonsterSkill> GroundWave = GetWorld()->SpawnActor<AMonsterSkill>();
 	GroundWave->ChangeAnimation("BossGroundWave");
 	GroundWave->ChangeNextAnimation("BossGroundWaveLoop"); // 현재 애니메이션이 끝나면 바꿀 애니메이션
+	GroundWave->SetParentMonster(this); 
 	GroundWave->SetAutoRelease(false);
 	GroundWave->SetZSort(static_cast<int>(EZOrder::KNIGHT_SKILL_FRONT) - 1);
 	GroundWave->SetParentRoom(ParentRoom); // 픽셀충돌 검사
@@ -387,9 +483,9 @@ void AFalseKnight::SetAttackRecovery(float _DeltaTime)
 {
 	ActiveGravity();
 
-	ResetRendererOffest();
-	FVector Offset = { 0.0f, 120.0f };
-	BodyRenderer->SetRelativeLocation(Offset);
+	ResetRendererOffset();
+	FVector Offset = { 0.0f, 60.0f };
+	SetRendererOffset(Offset);
 
 	bIsShowEffect = false;
 	bIsOffsetAttack1Frame = false;
@@ -402,7 +498,7 @@ void AFalseKnight::SetAttackRecovery2(float _DeltaTime)
 {
 	ActiveGravity();
 
-	ResetRendererOffest();
+	ResetRendererOffset();
 
 	ChangeNextState(EMonsterState::IDLE);
 }

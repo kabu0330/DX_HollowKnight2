@@ -113,9 +113,38 @@ void AMonster::CreateAttackLogicAndEffect()
 {
 }
 
-void AMonster::ResetRendererOffest()
+void AMonster::ResetRendererOffset()
 {
 	BodyRenderer->SetRelativeLocation({ RendererOffset.X, RendererOffset.Y, ZSort });
+}
+
+void AMonster::SetRendererOffset(FVector _Offset)
+{
+	FVector Offset = _Offset;
+	if (true == bIsFlip)
+	{
+		if (true == bIsLeft)
+		{
+			Offset.X *= -1.0f;
+		}
+		else
+		{
+			Offset.X *= -1.0f;
+		}
+	}
+	else
+	{
+		if (true == bIsLeft)
+		{
+			Offset.X *= -1.0f;
+		}
+		else
+		{
+			Offset.X *= 1.0f;
+		}
+	}
+
+	BodyRenderer->SetRelativeLocation({ Offset.X + RendererOffset.X, Offset.Y + RendererOffset.Y, ZSort });
 }
 
 void AMonster::SetWalkRendererOffset()

@@ -12,11 +12,12 @@ void AMonster::SetFSM()
 	CreateState(EMonsterState::JUMP_ANTICIPATE, &AMonster::SetJumpAnticipate, "JumpAnticipate");
 	CreateState(EMonsterState::JUMP, &AMonster::SetJump, "Jump");
 	CreateState(EMonsterState::JUMPING, &AMonster::SetJumping, "Jumping");
+	CreateState(EMonsterState::LAND, &AMonster::SetLand, "Land");
 
 	CreateState(EMonsterState::JUMP_ATTACK_ANTICIPATE, &AMonster::SetJumpAttackAnticipate, "JumpAttackAnticipate");
 	CreateState(EMonsterState::JUMP_ATTACK, &AMonster::SetJumpAttack, "JumpAttack");
 	CreateState(EMonsterState::JUMP_ATTACK_RECOVERY, &AMonster::SetJumpAttackRecovery, "JumpAttackRecovery");
-	CreateState(EMonsterState::LAND, &AMonster::SetLand, "Land");
+	CreateState(EMonsterState::JUMP_ATTACK_LAND, &AMonster::SetJumpAttackLand, "JumpAttackLand");
 	CreateState(EMonsterState::HARD_LAND, &AMonster::SetHardLand, "HardLand");
 
 	// 공격스킬에 해당
@@ -90,7 +91,7 @@ void AMonster::SetIdle(float _DeltaTime)
 {
 	//UEngineDebug::OutPutString("Monster FSM : Idle");
 
-	ResetRendererOffest();
+	ResetRendererOffset();
 
 	ActiveGravity();
 	CheckDeath();

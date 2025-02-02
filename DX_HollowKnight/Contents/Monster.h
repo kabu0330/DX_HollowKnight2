@@ -99,7 +99,8 @@ protected:
 	virtual void CreateAttackLogicAndEffect();
 	bool bIsShowEffect = false;
 
-	void ResetRendererOffest();
+	void ResetRendererOffset();
+	void SetRendererOffset(FVector _Offset);
 
 	void SetWalkRendererOffset();
 	FVector WalkRendererOffset = FVector::ZERO;
@@ -225,23 +226,24 @@ protected:
 	virtual void SetRun(float _DeltaTime);
 	virtual void SetTurn(float _DeltaTime);
 
-	// 점프
-	virtual void SetJumpAnticipate(float _DeltaTime);
-	virtual void SetJump(float _DeltaTime);
-	virtual void SetJumping(float _DeltaTime) {}
-
-	virtual void SetJumpAttackAnticipate(float _DeltaTime);
-	virtual void SetJumpAttack(float _DeltaTime);
-	virtual void SetJumpAttackRecovery(float _DeltaTime);
-	virtual void SetLand(float _DeltaTime);
-	virtual void SetHardLand(float _DeltaTime);
-
 	// 대시
 	virtual void SetDashArrive(float _DeltaTime);
 	virtual void SetDashAnticipate(float _DeltaTime);
 	virtual void SetDash(float _DeltaTime);
 	virtual void SetDashAttack(float _DeltaTime);
 	virtual void SetDashRecovery(float _DeltaTime);
+
+	// 점프
+	virtual void SetJumpAnticipate(float _DeltaTime);
+	virtual void SetJump(float _DeltaTime);
+	virtual void SetJumping(float _DeltaTime) {}
+	virtual void SetLand(float _DeltaTime);
+	virtual void SetHardLand(float _DeltaTime);
+
+	virtual void SetJumpAttackAnticipate(float _DeltaTime);
+	virtual void SetJumpAttack(float _DeltaTime);
+	virtual void SetJumpAttackRecovery(float _DeltaTime);
+	virtual void SetJumpAttackLand(float _DeltaTime) {}
 
 	// 공격
 	virtual void SetAttackAnticipate(float _DeltaTime);

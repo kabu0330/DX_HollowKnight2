@@ -19,7 +19,10 @@ public:
 	{
 		CollisionDuration = _AttackTime;
 	}
-	
+	void SetParentMonster(class AMonster* _Monster)
+	{
+		Monster = _Monster;
+	}
 
 protected:
 	void BeginPlay() override;
@@ -28,6 +31,7 @@ protected:
 	bool bIsCollision = false;
 	float CollisionDuration = 0.5f;
 	float TimeElapsed = 0.0f;
+	class AMonster* Monster = nullptr;
 
 private:
 	void SetCollisionEvent() override;

@@ -88,6 +88,14 @@ void AMonsterSkill::Knockback()
 	KnockbackDirection += FVector::UP;
 	KnockbackDirection.Normalize();
 
+	if (nullptr != Monster)
+	{
+		if (true == Monster->IsFlip())
+		{
+			KnockbackDirection.X *= -1.0f;
+		}
+	}
+
 	Knight->GetStatRef().SetKnockbackDistance(500.0f);
 	Knight->GetStatRef().SetKnockbackDir(KnockbackDirection);
 }

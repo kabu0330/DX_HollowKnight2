@@ -45,6 +45,8 @@ private:
 	bool bIsOffsetAttack1Frame = false;
 	bool bISOffsetAttackRecovery1Fame = false;
 
+	void CreateJumpAttackLogicAndEffect();
+
 private:
 	void SetIdle(float _DeltaTime) override;
 	void SetJumpAnticipate(float _DeltaTime) override;
@@ -54,6 +56,7 @@ private:
 	void SetJumpAttackAnticipate(float _DeltaTime) override;
 	void SetJumpAttack(float _DeltaTime) override;
 	void SetJumpAttackRecovery(float _DeltaTime) override;
+	void SetJumpAttackLand(float _DeltaTime) override;
 
 	void SetAttackAnticipate(float _DeltaTime) override;
 	void SetAttack(float _DeltaTime) override;
