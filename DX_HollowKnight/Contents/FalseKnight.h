@@ -42,10 +42,13 @@ private:
 	void EndFlashEffect(float _DeltaTime);
 
 	void CreateAttackLogicAndEffect();
+	void CreateGroundImpack();
 	bool bIsOffsetAttack1Frame = false;
 	bool bISOffsetAttackRecovery1Fame = false;
 
 	void CreateJumpAttackLogicAndEffect();
+
+	bool bIsBerserkMode = false; // 첫 스턴 전까진 광폭 상태가 아니다.
 
 private:
 	void SetIdle(float _DeltaTime) override;
@@ -62,5 +65,10 @@ private:
 	void SetAttack(float _DeltaTime) override;
 	void SetAttackRecovery(float _DeltaTime) override;
 	void SetAttackRecovery2(float _DeltaTime) override;
+
+	void SetBerserkAttackAnticipate(float _DeltaTime) override;
+	void SetBerserkAttack(float _DeltaTime) override;
+	void SetBerserkAttack2(float _DeltaTime) override;
+	void SetBerserkAttackRecovery(float _DeltaTime) override;
 };
 

@@ -21,8 +21,14 @@ void AMonster::CreateOrangeParticleEffect()
 	PuffParticle->CreateParticle("Puff", 8, 0.01f, ActorPos);
 	PuffParticle->SetParticleOption(EParticleType::RANDOM, -300.0f, 300.0f);
 
+	AParticle* OrangeParticle = GetWorld()->SpawnActor<AParticle>().get();
+	OrangeParticle->CreateParticle("OrangeParticle", 20, 0.01f, ActorPos);
+	OrangeParticle->SetRandomScale(0.5f, 1.0f);
+	OrangeParticle->SetDecayScale(true, 0.6f);
+	OrangeParticle->SetParticleOption(EParticleType::RANDOM, -400.0f, 400.0f);
+
 	AParticle* Particle = GetWorld()->SpawnActor<AParticle>().get();
-	Particle->CreateParticle("DefaultHitParticle", 20, 0.01f, ActorPos);
+	Particle->CreateParticle("DefaultHitParticle", 10, 0.01f, ActorPos);
 	Particle->SetParticleOption(EParticleType::RANDOM, -400.0f, 400.0f);
 }
 

@@ -81,7 +81,8 @@ void URoomManager::CreateRoom(AGameMode* _GameMode)
 	//Crossroads1->CreateMonster<AGruzzer>({ 9511, -5400 });
 	//Crossroads1->CreateMonster<AAspidMother>({ 9511, -5400 });
 	//Crossroads1->CreateMonster<AAspidHunter>({ 9511, -5400 });
-	Crossroads2->CreateMonster<AFalseKnight>({ 14300, -5300 });
+	//Crossroads2->CreateMonster<AFalseKnight>({ 14300, -5300 });
+	Crossroads2->CreateMonster<AAspidHatchling>({ 14300, -5300 });
 	//Crossroads1->CreateMonster<AAspidHatchling>({ 9511, -5400 });
 	//Crossroads1->CreateMonster<ACrawlid>({ 9511, -5400 });
 	//Crossroads1->CreateMonster<AHuskHornhead>({ 9511, -5400 });

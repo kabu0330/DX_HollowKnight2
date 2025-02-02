@@ -54,6 +54,8 @@ AEffect::AEffect()
 	std::string WhiteParticle = "WhiteParticle";
 	BodyRenderer->CreateAnimation(WhiteParticle, WhiteHit + Png, 1, 1, BlackParticleTime, false);
 
+	std::string OrangeParticle = "OrangeParticle";
+	BodyRenderer->CreateAnimation(OrangeParticle, OrangeParticle + Png, 0, 0, BlackParticleTime, false);
 
 	float HitFrame = 0.7f;
 	std::string DefaultHitParticle = "DefaultHitParticle";

@@ -251,6 +251,11 @@ protected:
 	virtual void SetAttackRecovery(float _DeltaTime);
 	virtual void SetAttackRecovery2(float _DeltaTime) {}
 
+	virtual void SetBerserkAttackAnticipate(float _DeltaTime) {}
+	virtual void SetBerserkAttack(float _DeltaTime) {}
+	virtual void SetBerserkAttack2(float _DeltaTime) {}
+	virtual void SetBerserkAttackRecovery(float _DeltaTime) {}
+
 	virtual void SetThrowAnticipate(float _DeltaTime);
 	virtual void SetThrow(float _DeltaTime);
 	virtual void SetThrowRecovery(float _DeltaTime);

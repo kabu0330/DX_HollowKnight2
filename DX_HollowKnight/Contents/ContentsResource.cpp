@@ -171,6 +171,7 @@ void UContentsResource::LoadResourceDirectory()
 
 	// Monster Effect
 	LoadContentsResource("Image/Effect/Monster/BossGroundWave");
+	LoadContentsResource("Image/Effect/Monster/BossDropObject");
 
 	// UI
 	LoadContentsResource("Image/UI/HealthIdle");
@@ -211,6 +212,7 @@ void UContentsResource::LoadSprite()
 	UEngineSprite::CreateSpriteToMeta("WhiteHit.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("BlackParticle.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("DefaultHitParticle.png", ".smeta");
+	UEngineSprite::CreateSpriteToMeta("OrangeParticle.png", ".smeta");
 
 	UEngineSprite::CreateSpriteToMeta("GroundImapctEffect.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("BulletFire.png", ".smeta");

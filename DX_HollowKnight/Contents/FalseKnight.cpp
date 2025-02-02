@@ -241,8 +241,8 @@ void AFalseKnight::SetIdle(float _DeltaTime)
 	{
 		UEngineRandom Random;
 		float Result = Random.Randomfloat(-300.0f, 300.0f);
-		//Stat.SetVelocity(Result);
-		//FSM.ChangeState(EMonsterState::JUMP_ANTICIPATE);
+		Stat.SetVelocity(Result);
+		FSM.ChangeState(EMonsterState::JUMP_ANTICIPATE);
 	}
 }
 
@@ -361,7 +361,6 @@ void AFalseKnight::SetJumpAttackRecovery(float _DeltaTime)
 {
 	ActiveGravity();
 
-	//ResetRendererOffest();
 	FVector Offset = { 0.0f, 50.0f }; 
 	SetRendererOffset(Offset);
 
@@ -372,8 +371,6 @@ void AFalseKnight::SetJumpAttackLand(float _DeltaTime)
 {
 	ActiveGravity();
 
-
-	//ResetRendererOffest();
 	FVector Offset = { 20.0f, 0.0f }; 
 	SetRendererOffset(Offset);
 
@@ -445,20 +442,7 @@ void AFalseKnight::CreateAttackLogicAndEffect()
 	FVector Pos = GetActorLocation();
 	Effect->ChangeAnimation("GroundImapctEffect", { Pos.X, Pos.Y });
 	Effect->SetScale(1.5f);
-
-	// 그라운드 웨이브(이동하는 충격파) 생성
-	std::shared_ptr<AMonsterSkill> GroundWave = GetWorld()->SpawnActor<AMonsterSkill>();
-	GroundWave->ChangeAnimation("BossGroundWave");
-	GroundWave->ChangeNextAnimation("BossGroundWaveLoop"); // 현재 애니메이션이 끝나면 바꿀 애니메이션
-	GroundWave->SetParentMonster(this); 
-	GroundWave->SetAutoRelease(false);
-	GroundWave->SetZSort(static_cast<int>(EZOrder::KNIGHT_SKILL_FRONT) - 1);
-	GroundWave->SetParentRoom(ParentRoom); // 픽셀충돌 검사
-	GroundWave->SetCollisionTime(AttackDuration * 5.0f);
-	GroundWave->SetCollisionScale({ 180.0f, 50.0f });
-	GroundWave->SetScale(1.3f);
 	
-
 	FVector Offset = FVector{ -330.0f, -100.0f };
 	FVector EffectOffset = FVector(0.0f, 20.0f);
 	FVector GroundWaveOffset = FVector(-330.0f, -70.0f);
@@ -467,16 +451,41 @@ void AFalseKnight::CreateAttackLogicAndEffect()
 	{
 		Skill->SetLocation(this, { Offset.X, Offset.Y });
 		Effect->SetLocation(this, { Offset.X, Offset.Y + EffectOffset.Y});
-
-		GroundWave->AddLocation(this, -Speed, GroundWaveOffset);
 	}
 	else
 	{
 		Skill->SetLocation(this, { Offset.X, -Offset.Y });
 		Effect->SetLocation(this, { Offset.X, -(Offset.Y + EffectOffset.Y) });
+	}	
+	TimeEventer->AddEndEvent(0.2f, std::bind(&AFalseKnight::CreateGroundImpack, this));
+}
+
+void AFalseKnight::CreateGroundImpack()
+{
+	// 그라운드 웨이브(이동하는 충격파) 생성
+	std::shared_ptr<AMonsterSkill> GroundWave = GetWorld()->SpawnActor<AMonsterSkill>();
+	GroundWave->ChangeAnimation("BossGroundWave");
+	GroundWave->ChangeNextAnimation("BossGroundWaveLoop"); // 현재 애니메이션이 끝나면 바꿀 애니메이션
+	GroundWave->SetParentMonster(this);
+	GroundWave->SetAutoRelease(false);
+	GroundWave->SetZSort(static_cast<int>(EZOrder::KNIGHT_SKILL_FRONT) - 1);
+	GroundWave->SetParentRoom(ParentRoom); // 픽셀충돌 검사
+	GroundWave->SetCollisionTime(AttackDuration * 5.0f);
+	GroundWave->SetCollisionScale({ 180.0f, 50.0f });
+	GroundWave->SetScale(1.3f);
+
+	FVector Offset = FVector{ -330.0f, -100.0f };
+	FVector EffectOffset = FVector(0.0f, 20.0f);
+	FVector GroundWaveOffset = FVector(-330.0f, -70.0f);
+	FVector Speed = FVector(900.0f, 0.0f);
+	if (true == bIsLeft)
+	{
+		GroundWave->AddLocation(this, -Speed, GroundWaveOffset);
+	}
+	else
+	{
 		GroundWave->AddLocation(this, Speed, { GroundWaveOffset.X, -GroundWaveOffset.Y });
 	}
-		
 }
 
 void AFalseKnight::SetAttackRecovery(float _DeltaTime)
@@ -501,5 +510,21 @@ void AFalseKnight::SetAttackRecovery2(float _DeltaTime)
 	ResetRendererOffset();
 
 	ChangeNextState(EMonsterState::IDLE);
+}
+
+void AFalseKnight::SetBerserkAttackAnticipate(float _DeltaTime)
+{
+}
+
+void AFalseKnight::SetBerserkAttack(float _DeltaTime)
+{
+}
+
+void AFalseKnight::SetBerserkAttack2(float _DeltaTime)
+{
+}
+
+void AFalseKnight::SetBerserkAttackRecovery(float _DeltaTime)
+{
 }
 
