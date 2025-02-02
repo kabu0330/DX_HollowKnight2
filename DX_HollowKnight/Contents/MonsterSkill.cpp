@@ -1,14 +1,25 @@
 #include "PreCompile.h"
 #include "MonsterSkill.h"
 #include "FightUnit.h"
+#include <EngineCore/EngineCore.h>
 
 AMonsterSkill::AMonsterSkill()
 {
 	SetName("MonsterSkill");
 	Collision->SetCollisionProfileName("MonsterObject");
 
+	// 이펙트 없이 컬리전만
 	std::string BlanckEffect = "BlanckEffect";
 	BodyRenderer->CreateAnimation(BlanckEffect, "SlashEffect", 0, 0, CollisionDuration, false);
+
+	float FrameTime = 0.05f;
+	// 이펙트 포함
+	std::string BossGroundWave = "BossGroundWave";
+	BodyRenderer->CreateAnimation(BossGroundWave, BossGroundWave, 0, 15, FrameTime, false);
+
+	std::string BossGroundWaveLoop = "BossGroundWaveLoop";
+	BodyRenderer->CreateAnimation(BossGroundWaveLoop, BossGroundWave, 13, 15, FrameTime);
+
 	BodyRenderer->ChangeAnimation("BlanckEffect");
 }
 
@@ -50,9 +61,14 @@ void AMonsterSkill::Attack(UCollision* _This, UCollision* _Other)
 	{
 		return;
 	}
+	if (true == Knight->IsInvincible())
+	{
+		return;
+	}
 
 	int MonsterAtt = 1;
 	UFightUnit::OnHit(Knight, MonsterAtt);
+	Knight->SetInvicible(true);
 
 	UEngineDebug::OutPutString("몬스터가 나이트에게 데미지를 주었습니다." );
 
@@ -74,5 +90,19 @@ void AMonsterSkill::Knockback()
 
 	Knight->GetStatRef().SetKnockbackDistance(500.0f);
 	Knight->GetStatRef().SetKnockbackDir(KnockbackDirection);
+}
+
+void AMonsterSkill::Release()
+{
+	float DeltaTime = UEngineCore::GetDeltaTime();
+
+	TimeElapsed += DeltaTime;
+	if (TimeElapsed >= CollisionDuration)
+	{
+		TimeElapsed = 0.0f;
+		BodyRenderer->Destroy();
+		Collision->Destroy();
+		Destroy();
+	}
 }
 

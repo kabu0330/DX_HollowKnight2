@@ -11,6 +11,10 @@ UFightUnit::~UFightUnit()
 
 void UFightUnit::OnHit(AKnight* _Knight, int _Att)
 {
+	if (true == _Knight->IsInvincible())
+	{
+		return;
+	}
 	UStatusUnit& Stat = _Knight->GetStatRef();
 	Stat.AddHp(-_Att); // 체력 감소
 

@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "FalseKnight.h"
+#include "MonsterEffect.h"
 
 AFalseKnight::AFalseKnight()
 {
@@ -25,7 +26,7 @@ void AFalseKnight::Tick(float _DeltaTime)
 void AFalseKnight::SetStatus()
 {
 	FStatusData Data;
-	Data.Velocity = 300.0f;
+	Data.Velocity = 0.0f;
 	Data.InitVelocity = Data.Velocity;
 	Data.RunSpeed = Data.Velocity * 2.5f;
 	Data.DashSpeed = Data.Velocity * 3.0f;
@@ -53,9 +54,9 @@ void AFalseKnight::SetStatus()
 
 	AttackFrame = 0.15f;// 매번 설정
 	AttackDuration = AttackFrame * 12.0f;
-	AttackCooldown = 5.0f;
+	AttackCooldown = 7.0f;
 
-	AttackRecoveryFrame = 0.1f;
+	AttackRecoveryFrame = 0.2f;
 
 	bIsDeathDestroy = false; // 죽으면 시체 없이 소멸할건지
 
@@ -64,11 +65,11 @@ void AFalseKnight::SetStatus()
 void AFalseKnight::SetOffset()
 {
 	//FVector ImageSize = { 479.0f , 469.0f };
-	FVector SpriteSize = { 290.0f, 300.0f };
+	FVector SpriteSize = { 300.0f, 280.0f };
 
 	bIsFlip = true; // 렌더러 좌우반전
 
-	BodyCollisionOffset = { 60.0f, 0.0f }; // 컬리전 위치에 따라 픽셀충돌 위치도 바뀐다.
+	BodyCollisionOffset = { 60.0f, -10.0f }; // 컬리전 위치에 따라 픽셀충돌 위치도 바뀐다.
 	RendererOffset = { 0.0f, 40.0f };
 
 	CollisionScale = SpriteSize;
@@ -88,7 +89,7 @@ void AFalseKnight::CreateAnimation()
 	float IdleTime = 0.2f;
 	float JumpTime = 0.2f;
 	float RunnigTime = 0.1f;
-	float AttackAnticipateTime = 0.1f;
+	float AttackAnticipateTime = 0.2f;
 	float DeathAirTime = 0.1f; // 날아가는 시간 조절에 따라서 자연스러움이 표현된다.
 	float DeathTime = 0.08f;
 	BodyRenderer->CreateAnimation("Idle", MonsterStr, 0, 3, IdleTime);
@@ -98,9 +99,10 @@ void AFalseKnight::CreateAnimation()
 	BodyRenderer->CreateAnimation("Jump", MonsterStr, 16, 19, JumpTime, false);
 	BodyRenderer->CreateAnimation("Jumping", MonsterStr, 19, 19, JumpTime, false);
 	BodyRenderer->CreateAnimation("Land", MonsterStr, 20, 22, JumpTime, false);
-	BodyRenderer->CreateAnimation("AttackAnticipate", MonsterStr, 24, 29, AttackAnticipateTime, false);
-	BodyRenderer->CreateAnimation("Attack", MonsterStr, 30, 32, AttackFrame, false);
-	BodyRenderer->CreateAnimation("AttackRecovery", MonsterStr, 33, 37, AttackRecoveryFrame, false);
+	BodyRenderer->CreateAnimation("AttackAnticipate", MonsterStr, 23, 28, AttackAnticipateTime, false);
+	BodyRenderer->CreateAnimation("Attack", MonsterStr, 29, 31, AttackFrame, false);
+	BodyRenderer->CreateAnimation("AttackRecovery", MonsterStr, 32, 34, AttackRecoveryFrame, false);
+	BodyRenderer->CreateAnimation("AttackRecovery2", MonsterStr, 35, 36, AttackRecoveryFrame, false);
 	BodyRenderer->CreateAnimation("JumpAttackAnticipate", MonsterStr, 38, 42, AttackRecoveryFrame, false);
 	BodyRenderer->CreateAnimation("JumpAttack", MonsterStr, 43, 44, AttackRecoveryFrame, false);
 	BodyRenderer->CreateAnimation("JumpAttackRecovery", MonsterStr, 45, 48, AttackRecoveryFrame, false);
@@ -113,14 +115,27 @@ void AFalseKnight::CreateAnimation()
 
 void AFalseKnight::BossPatternTimeElapsed(float _DeltaTime)
 {
+	// 점프 이동
 	if (false == bCanJump)
 	{
 		JumpElapsed += _DeltaTime;
-		float Cooldown = 3.0f;
+		float Cooldown = 7.0f;
 		if (JumpElapsed >= Cooldown)
 		{
 			JumpElapsed = 0.0f;
 			bCanJump = true;
+		}
+	}
+
+	// 공격 이후 즉시 다음 공격을 하지 않도록
+	if (true == bIsResting)
+	{
+		RestElapsed += _DeltaTime;
+		float Cooldown = 3.0f;
+		if (RestElapsed >= Cooldown)
+		{
+			RestElapsed = 0.0f;
+			bIsResting = false;
 		}
 	}
 }
@@ -208,9 +223,13 @@ void AFalseKnight::SetIdle(float _DeltaTime)
 	{
 		return;
 	}
+	if (true == bIsResting) // 직전에 이미 기술을 사용했으면 잠시 Idle 상태 고정
+	{
+		return;
+	}
 	if (true == IsPlayerNearby() && false == Stat.IsAttacking() && true == bCanAttack) // 플레이어 조우
 	{
-		//FSM.ChangeState(EMonsterState::ATTACK_ANTICIPATE);
+		FSM.ChangeState(EMonsterState::ATTACK_ANTICIPATE);
 	}
 	if (true == IsPlayerNearby() && false == Stat.IsAttacking() && true == bCanJump) 
 	{
@@ -251,8 +270,8 @@ void AFalseKnight::SetLand(float _DeltaTime)
 	ActiveGravity();
 
 	JumpForce = 0.0f;
+	bIsResting = true; // 패턴과 패턴 간 쿨타임 적용
 
-	BodyRenderer->SetRelativeLocation({ 0.0f, 0.0f });
 	ChangeNextState(EMonsterState::IDLE);
 }
 
@@ -266,5 +285,125 @@ void AFalseKnight::SetJumpAttack(float _DeltaTime)
 
 void AFalseKnight::SetJumpAttackRecovery(float _DeltaTime)
 {
+}
+
+void AFalseKnight::SetAttackAnticipate(float _DeltaTime)
+{
+	CheckDeath();
+	ActiveGravity();
+
+	// 렌더러 위치 조정
+	FVector Offset = { -35.0f, 20.0f };
+	BodyRenderer->SetRelativeLocation(Offset); 
+	
+	Stat.SetAttacking(true);
+	bCanAttack = false;
+	bCanRotation = false;
+	ChangeNextState(EMonsterState::ATTACK);
+}
+
+void AFalseKnight::SetAttack(float _DeltaTime)
+{
+	ActiveGravity();
+
+	// 렌더러 위치 조정
+	if (false == bIsOffsetAttack1Frame)
+	{
+		FVector Offset = { 150.0f, 130.0f };
+		BodyRenderer->SetRelativeLocation(Offset);
+		bIsOffsetAttack1Frame = true;
+	}
+	if (false == bIsShowEffect) // 한 번만 공격 로직 호출
+	{
+		TimeEventer->AddEndEvent(0.15f, [this]()
+			{
+				FVector Offset = { 150.0f, 67.0f };
+				BodyRenderer->SetRelativeLocation(Offset);
+				CreateAttackLogicAndEffect();
+			});
+	}
+	bIsShowEffect = true;
+
+	TimeEventer->AddEndEvent(0.3f, [this]()
+		{
+			FVector Offset = { 150.0f, 0.0f };
+			BodyRenderer->SetRelativeLocation(Offset);
+		});
+
+	ChangeNextState(EMonsterState::ATTACK_RECOVERY);
+}
+
+// 공격 컬리전 생성
+void AFalseKnight::CreateAttackLogicAndEffect()
+{
+	// 컬리전 생성
+	std::shared_ptr<AMonsterSkill> Skill = GetWorld()->SpawnActor<AMonsterSkill>();
+
+	//Skill->SetCollisionTime(AttackDuration);
+	Skill->SetCollisionTime(0.1f);
+
+	FVector CollisionScale = FVector(150, 150);
+	Skill->SetCollisionScale(CollisionScale);
+
+	// 이펙트 생성
+	AMonsterEffect* Effect = GetWorld()->SpawnActor<AMonsterEffect>().get();
+	FVector Pos = GetActorLocation();
+	Effect->ChangeAnimation("GroundImapctEffect", { Pos.X, Pos.Y });
+	Effect->SetScale(1.5f);
+
+	// 그라운드 웨이브(이동하는 충격파) 생성
+	std::shared_ptr<AMonsterSkill> GroundWave = GetWorld()->SpawnActor<AMonsterSkill>();
+	GroundWave->ChangeAnimation("BossGroundWave");
+	GroundWave->ChangeNextAnimation("BossGroundWaveLoop"); // 현재 애니메이션이 끝나면 바꿀 애니메이션
+	GroundWave->SetAutoRelease(false);
+	GroundWave->SetZSort(static_cast<int>(EZOrder::KNIGHT_SKILL_FRONT) - 1);
+	GroundWave->SetParentRoom(ParentRoom); // 픽셀충돌 검사
+	GroundWave->SetCollisionTime(AttackDuration * 5.0f);
+	GroundWave->SetCollisionScale({ 180.0f, 50.0f });
+	GroundWave->SetScale(1.3f);
+	
+
+	FVector Offset = FVector{ -330.0f, -100.0f };
+	FVector EffectOffset = FVector(0.0f, 20.0f);
+	FVector GroundWaveOffset = FVector(-330.0f, -70.0f);
+	FVector Speed = FVector(900.0f, 0.0f);
+	if (true == bIsLeft)
+	{
+		Skill->SetLocation(this, { Offset.X, Offset.Y });
+		Effect->SetLocation(this, { Offset.X, Offset.Y + EffectOffset.Y});
+
+		GroundWave->AddLocation(this, -Speed, GroundWaveOffset);
+	}
+	else
+	{
+		Skill->SetLocation(this, { Offset.X, -Offset.Y });
+		Effect->SetLocation(this, { Offset.X, -(Offset.Y + EffectOffset.Y) });
+		GroundWave->AddLocation(this, Speed, { GroundWaveOffset.X, -GroundWaveOffset.Y });
+	}
+		
+}
+
+void AFalseKnight::SetAttackRecovery(float _DeltaTime)
+{
+	ActiveGravity();
+
+	ResetRendererOffest();
+	FVector Offset = { 0.0f, 120.0f };
+	BodyRenderer->SetRelativeLocation(Offset);
+
+	bIsShowEffect = false;
+	bIsOffsetAttack1Frame = false;
+	bIsResting = true; // 패턴과 패턴 간 쿨타임 적용
+
+	ChangeNextState(EMonsterState::ATTACK_RECOVERY2);
+}
+
+void AFalseKnight::SetAttackRecovery2(float _DeltaTime)
+{
+	ActiveGravity();
+
+	ResetRendererOffest();
+
+	ChangeNextState(EMonsterState::IDLE);
 }
 

@@ -138,6 +138,7 @@ protected:
 	bool bIsRotation = true;
 	bool bIsAutoRelease = true;
 	bool bIsSwitchDirection = true;
+	bool bInitSetPos = false;
 
 	float ZSort = 0.0f;
 	std::shared_ptr<UContentsRenderer> BodyRenderer;

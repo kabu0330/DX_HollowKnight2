@@ -30,6 +30,7 @@ void AMonster::SetFSM()
 	CreateState(EMonsterState::ATTACK_ANTICIPATE, &AMonster::SetAttackAnticipate, "AttackAnticipate");
 	CreateState(EMonsterState::ATTACK, &AMonster::SetAttack, "Attack");
 	CreateState(EMonsterState::ATTACK_RECOVERY, &AMonster::SetAttackRecovery, "AttackRecovery");
+	CreateState(EMonsterState::ATTACK_RECOVERY2, &AMonster::SetAttackRecovery2, "AttackRecovery2");
 
 	CreateState(EMonsterState::THROW_ANTICIPATE, &AMonster::SetThrowAnticipate, "ThrowAnticipate");
 	CreateState(EMonsterState::THROW, &AMonster::SetThrow, "Throw");

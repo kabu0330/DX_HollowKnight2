@@ -152,6 +152,23 @@ void AEffect::SetPosition()
 	}
 	else // Add
 	{
+		if (false == bInitSetPos) // 딱한번 위치 조정하고
+		{
+			CheckDirection(); // 왼쪽인지, 오른쪽인지 계산하고
+
+			if (true == bIsLeft || false == bIsRotation)
+			{
+				FVector OffsetPos = SrcPos + Offset;
+				SetActorLocation(OffsetPos);
+			}
+			else
+			{
+				FVector OffsetPos = (SrcPos - Offset);
+				SetActorLocation(OffsetPos);
+			}
+			bInitSetPos = true;
+		}
+
 		float DeltaTime = UEngineCore::GetDeltaTime();
 		if (false == bIsSwitchDirection)
 		{

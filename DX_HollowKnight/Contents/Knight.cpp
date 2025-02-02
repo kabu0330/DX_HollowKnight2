@@ -35,7 +35,7 @@ AKnight::AKnight()
 	//SetActorLocation(InitPos::Dirtmouth_well);
 	//SetActorLocation(InitPos::CrossroadsEntrance);
 	SetActorLocation({9911, -5450});
-	SetActorLocation({13600, -5360});
+	SetActorLocation({13900, -5360});
 	//SetActorLocation({1100, -2950});
 
 	// Debug
@@ -682,7 +682,7 @@ void AKnight::CreateCollision()
 	BodyCollision = CreateDefaultSubObject<UCollision>();
 	BodyCollision->SetupAttachment(RootComponent);
 	BodyCollision->SetCollisionProfileName("Knight");
-	BodyCollision->SetScale3D({ 100.0f, 130.0f });
+	BodyCollision->SetScale3D({ 60.0f, 130.0f });
 	BodyCollision->SetRelativeLocation(BodyRenderer->GetActorLocation());
 	//BodyCollision->SetCollisionType(ECollisionType::AABB);
 

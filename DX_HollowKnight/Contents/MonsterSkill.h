@@ -19,6 +19,7 @@ public:
 	{
 		CollisionDuration = _AttackTime;
 	}
+	
 
 protected:
 	void BeginPlay() override;
@@ -26,6 +27,7 @@ protected:
 
 	bool bIsCollision = false;
 	float CollisionDuration = 0.5f;
+	float TimeElapsed = 0.0f;
 
 private:
 	void SetCollisionEvent() override;
@@ -33,7 +35,9 @@ private:
 	void CreateHitEffect(class UCollision* _This, class UCollision* _Other);
 	void Attack(class UCollision* _This, class UCollision* _Other);
 	void Knockback();
-	
+
+	void Release() override;
+
 
 };
 

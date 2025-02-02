@@ -169,6 +169,9 @@ void UContentsResource::LoadResourceDirectory()
 	LoadContentsResource("Image/Effect/Knight/SoulBurst");
 	LoadContentsResource("Image/Effect/Knight/FireballWallImpact");
 
+	// Monster Effect
+	LoadContentsResource("Image/Effect/Monster/BossGroundWave");
+
 	// UI
 	LoadContentsResource("Image/UI/HealthIdle");
 	LoadContentsResource("Image/UI/HealthAppear");
@@ -209,6 +212,7 @@ void UContentsResource::LoadSprite()
 	UEngineSprite::CreateSpriteToMeta("BlackParticle.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("DefaultHitParticle.png", ".smeta");
 
+	UEngineSprite::CreateSpriteToMeta("GroundImapctEffect.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("BulletFire.png", ".smeta");
 
 	UEngineSprite::CreateSpriteToMeta("fog.png", ".smeta");

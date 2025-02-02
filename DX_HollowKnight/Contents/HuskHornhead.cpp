@@ -117,7 +117,7 @@ void AHuskHornhead::CreateAttackLogicAndEffect()
 
 	Skill->SetCollisionTime(AttackDuration);
 
-	FVector CollisionScale = FVector(100, 50); // 어디서 충돌스케일 값을 렌더링 크기로 수정하고 있어서 반영이 안되고 있다.
+	FVector CollisionScale = FVector(100, 50); 
 	Skill->SetCollisionScale(CollisionScale);
 	FVector Offset = FVector{ -50.0f, -25.0f };
 	if (true == bIsLeft)

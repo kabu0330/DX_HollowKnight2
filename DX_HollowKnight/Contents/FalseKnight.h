@@ -29,6 +29,9 @@ private:
 
 	float JumpActionInitElapsed = 0.0f;
 	bool bCanJumpAttack = false;
+	
+	bool bIsResting = false;
+	float RestElapsed = 0.0f;
 
 
 	void DamageEffect() override;
@@ -37,6 +40,10 @@ private:
 	bool bIsEndFlashEffect = false;
 	void StartFlashEffect(float _DeltaTime);
 	void EndFlashEffect(float _DeltaTime);
+
+	void CreateAttackLogicAndEffect();
+	bool bIsOffsetAttack1Frame = false;
+	bool bISOffsetAttackRecovery1Fame = false;
 
 private:
 	void SetIdle(float _DeltaTime) override;
@@ -48,5 +55,9 @@ private:
 	void SetJumpAttack(float _DeltaTime) override;
 	void SetJumpAttackRecovery(float _DeltaTime) override;
 
+	void SetAttackAnticipate(float _DeltaTime) override;
+	void SetAttack(float _DeltaTime) override;
+	void SetAttackRecovery(float _DeltaTime) override;
+	void SetAttackRecovery2(float _DeltaTime) override;
 };
 

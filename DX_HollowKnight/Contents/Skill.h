@@ -24,6 +24,12 @@ public:
 		CollisionScale = _Scale;
 	}
 
+	void ChangeNextAnimation(std::string_view _AnimName)
+	{
+		bIsNextAnimation = true;
+		NextAnimationName = _AnimName;
+	}
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
@@ -32,10 +38,16 @@ protected:
 
 	std::shared_ptr<class UCollision> Collision;
 	FVector CollisionScale = FVector::ZERO;
+
+	bool bIsNextAnimation = false;
+	std::string NextAnimationName = "";
+
 private:
 	bool IsCurRoom();
 	void ActivePixelCollision();
 	bool IsPixelCollision(FVector _CollisionPoint);
+	
+	void ChangeNextAnimation();
 
 };
 

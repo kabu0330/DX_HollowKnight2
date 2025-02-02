@@ -32,6 +32,11 @@ public:
 		return bIsLeft;
 	}
 
+	bool IsFlip()
+	{
+		return bIsFlip;
+	}
+
 	UContentsRenderer* GetRenderer() const
 	{
 		return BodyRenderer.get();
@@ -242,6 +247,7 @@ protected:
 	virtual void SetAttackAnticipate(float _DeltaTime);
 	virtual void SetAttack(float _DeltaTime);
 	virtual void SetAttackRecovery(float _DeltaTime);
+	virtual void SetAttackRecovery2(float _DeltaTime) {}
 
 	virtual void SetThrowAnticipate(float _DeltaTime);
 	virtual void SetThrow(float _DeltaTime);

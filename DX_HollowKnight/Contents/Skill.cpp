@@ -37,6 +37,7 @@ void ASkill::Tick(float _DeltaTime)
 {
 	AEffect::Tick(_DeltaTime);
 
+	ChangeNextAnimation();
 	ActivePixelCollision();
 	Release();
 }
@@ -118,6 +119,18 @@ bool ASkill::IsPixelCollision(FVector _CollisionPoint)
 	else
 	{
 		return false;
+	}
+}
+
+void ASkill::ChangeNextAnimation()
+{
+	if (true == bIsNextAnimation)
+	{
+		if (true == BodyRenderer->IsCurAnimationEnd())
+		{
+			BodyRenderer->ChangeAnimation(NextAnimationName);
+			bIsNextAnimation = false;
+		}
 	}
 }
 

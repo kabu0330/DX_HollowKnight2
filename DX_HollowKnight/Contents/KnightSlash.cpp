@@ -64,7 +64,8 @@ void AKnightSlash::CreateHitEffect(UCollision* _This, UCollision* _Other)
 	// 몬스터 위치에 따라서 이펙트가 출력되는 위치를 다르게 하고 싶다.
 	// 몬스터 중앙에서 이펙트가 터지는게 아니라 몬스터와 나이트 위치를 비교하여 나이트의 공격과 충돌하는
 	// 몬스터의 외곽부분에서 이펙트가 터진다.
-	FVector Offset = Monster->GetRenderer()->GetRealScale().Half();
+	FVector Offset = Monster->GetRenderer()->GetRealScale().Half() * 0.5f;
+
 	if (UEngineString::ToUpper("SlashEffect") == BodyRenderer->GetCurSpriteName())
 	{
 		Offset.Y = 0.0f;
@@ -76,7 +77,19 @@ void AKnightSlash::CreateHitEffect(UCollision* _This, UCollision* _Other)
 	else if (UEngineString::ToUpper("DownSlashEffect") == BodyRenderer->GetCurSpriteName())
 	{
 		Offset.Y *= 1.0f;
+		Offset.X = 0.0f;
+		if (Monster->IsLeft())
+		{
+			Offset.Y *= -1.0f;
+		}
 	}
+	if (true == Monster->IsFlip())
+	{
+		Offset.X *= -1.0f;
+		Offset.Y *= -1.0f;
+	}
+
+
 	Effect->SetLocation(Target, Offset * Dir);
 
 	UEngineRandom Random;
