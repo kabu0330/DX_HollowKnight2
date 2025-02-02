@@ -34,6 +34,7 @@ void AKnightSkill::SetCollisionEvent()
 
 void AKnightSkill::Collide(UCollision* _This, UCollision* _Other)
 {
+	CreateDamagedEffect(_This, _Other);
 	CreateHitEffect(_This, _Other);
 	Attack(_This, _Other);
 	CreateOrangeParticleEffect(_This, _Other);
@@ -65,24 +66,15 @@ void AKnightSkill::Attack(UCollision* _This, UCollision* _Other)
 	}
 }
 
-void AKnightSkill::CreateOrangeParticleEffect(UCollision* _This, UCollision* _Other)
+void AKnightSkill::CreateDamagedEffect(UCollision* _This, UCollision* _Other)
 {
-	if (true == bIsParticle)
-	{
-		return; 
-	}
-
-	bIsParticle = true;
-	
-	AParticle* PuffParticle = GetWorld()->SpawnActor<AParticle>().get();
 	AActor* Actor = _Other->GetActor();
-	FVector ActorPos = Actor->GetActorLocation();
-	PuffParticle->CreateParticle("Puff", 8, 0.01f, ActorPos);
-	PuffParticle->SetParticleOption(EParticleType::RANDOM, -300.0f, 300.0f);
-
-	AParticle* Particle = GetWorld()->SpawnActor<AParticle>().get();
-	Particle->CreateParticle("DefaultHitParticle", 20, 0.01f, ActorPos);
-	Particle->SetParticleOption(EParticleType::RANDOM, -400.0f, 400.0f);
+	AMonster* Monster = dynamic_cast<AMonster*>(Actor);
+	if (nullptr == Monster)
+	{
+		return;
+	}
+	Monster->DamageEffect();
 }
 
 void AKnightSkill::CreateWhiteHitParticleEffect(UCollision* _This, UCollision* _Other)
@@ -106,27 +98,6 @@ void AKnightSkill::CreateWhiteHitParticleEffect(UCollision* _This, UCollision* _
 	Particle0->SetParticleOption(EParticleType::RANDOM, -200.0f, 200.0f);
 	Particle1->SetParticleOption(EParticleType::RANDOM, -300.0f, 300.0f);
 	Particle2->SetParticleOption(EParticleType::RANDOM, -200.0f, 200.0f);
-}
-
-void AKnightSkill::CreateHitOrangeEffect(UCollision* _This, UCollision* _Other)
-{
-	AActor* Actor = _Other->GetActor();
-	AMonster* Monster = dynamic_cast<AMonster*>(Actor);
-	if (nullptr == Monster)
-	{
-		return;
-	}
-	FVector ActorPos = Actor->GetActorLocation();
-	FVector MonsterScale = Monster->GetRenderer()->GetScale();
-
-	AEffect* HitOrange = GetWorld()->SpawnActor<AEffect>().get();
-	HitOrange->ChangeAnimation("HitOrange", ActorPos);
-	HitOrange->SetZSort(EZOrder::HIT_LIGHT_EFFECT);
-	HitOrange->GetRenderer()->SetAlpha(0.3f);
-	HitOrange->SetAlphaFadeInFadeOut(1.5f, 0.7f);
-	HitOrange->SetLocation(Actor);
-	HitOrange->SetScale(5.0f);
-
 }
 
 void AKnightSkill::Knockback(UCollision* _This, UCollision* _Other)

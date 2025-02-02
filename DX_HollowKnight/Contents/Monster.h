@@ -76,6 +76,11 @@ public:
 	void CheckDirectionToPlayer();
 	FVector GetRandomDirection();
 
+	// 히트 이펙트
+	virtual void DamageEffect();
+	void CreateOrangeParticleEffect();
+	void CreateHitOrangeEffect();
+
 protected:
 	// 반드시 자식 클래스가 재정의 해야하는 가상함수
 	void BeginPlay() override;
@@ -83,7 +88,6 @@ protected:
 	virtual void SetStatus();
 	virtual void SetOffset();
 	virtual void CreateAnimation();
-	virtual void DamageEffect(float _DeltaTime);
 
 	virtual void CreateCollision();
 
