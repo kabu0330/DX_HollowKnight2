@@ -42,7 +42,7 @@ void AMonster::CreateHitOrangeEffect()
 
 void AMonster::SetCollisionEvent()
 {
-	BodyCollision->SetCollisionEnter(std::bind(&AMonster::OnBodyCollision, this, std::placeholders::_1, std::placeholders::_2));
+	BodyCollision->SetCollisionStay(std::bind(&AMonster::OnBodyCollision, this, std::placeholders::_1, std::placeholders::_2));
 	DetectCollision->SetCollisionStay([this](UCollision* _This, UCollision* _Other) {
 		bIsChasing = true;
 		});
@@ -67,6 +67,10 @@ void AMonster::OnBodyCollision(UCollision* _This, UCollision* _Other)
 	{
 		return;
 	}
+	if (true == OtherKnight->IsInvincible())
+	{
+		return;
+	}
 
 	TimeEventer->AddEndEvent(0.3f, [this]()
 		{
@@ -75,6 +79,7 @@ void AMonster::OnBodyCollision(UCollision* _This, UCollision* _Other)
 
 	int Att = Stat.GetAtt();
 	UFightUnit::OnHit(OtherKnight, Att);
+	OtherKnight->SetInvicible(true);
 
 	int KnightCurHp = OtherKnight->GetStatRef().GetHp();
 	UEngineDebug::OutPutString(GetName() + "의 공격으로 나이트가 " + std::to_string(Att) + "의 피해를 입었습니다. 남은 체력 : " + std::to_string(KnightCurHp));

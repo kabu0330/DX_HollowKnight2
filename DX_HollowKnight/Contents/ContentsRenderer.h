@@ -156,6 +156,7 @@ public:
 		ColorData.MulColor.W = _Alpha;
 	}
 
+
 protected:
 	ENGINEAPI void Render(class UEngineCamera* _Camera, float _DeltaTime) override;
 	ENGINEAPI void BeginPlay() override;
@@ -175,5 +176,6 @@ private:
 	UEngineSprite* Sprite = nullptr;
 	bool IsAutoScale = true;
 	float AutoScaleRatio = 1.0f;
+
 };
 

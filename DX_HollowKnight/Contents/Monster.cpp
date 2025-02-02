@@ -579,12 +579,14 @@ void AMonster::CheckDirection()
 		{
 			SetActorRelativeScale3D({ 1.0f, 1.0f, 1.0f });
 			BodyCollisionOffset.X = InitBodyCollisionOffset.X;
+			return;
 		}
 		if (bIsLeft == false)
 		{
 			SetActorRelativeScale3D({ -1.0f, 1.0f, 1.0f });
-			int Offset = BodyCollisionOffset.X * 1.5f;
+			float Offset = BodyCollisionOffset.X * 1.5f;
 			BodyCollisionOffset.X = Offset;
+			return;
 		}
 	}
 
@@ -594,10 +596,12 @@ void AMonster::CheckDirection()
 		if (bIsLeft == true)
 		{
 			SetActorRelativeScale3D({ -1.0f, 1.0f, 1.0f });
+			return;
 		}
 		if (bIsLeft == false)
 		{
 			SetActorRelativeScale3D({ 1.0f, 1.0f, 1.0f });
+			return;
 		}
 	}
 }

@@ -114,6 +114,15 @@ public:
 	{
 		return JumpForce;
 	}
+	
+	bool IsInvincible()
+	{
+		return bIsInvincible;
+	}
+	void SetInvicible(bool _bIsInvincible)
+	{
+		bIsInvincible = _bIsInvincible;
+	}
 
 protected:
 	void BeginPlay() override;
@@ -141,6 +150,9 @@ private:
 
 
 	float HitStunDuration = 0.5f;
+	float InvincibleDuration = 3.0f;
+	float InvincibleElapsed = 0.0f;
+	bool bIsInvincible = false;
 
 	void ReverseForce(float _DeltaTime);
 	void Knockback(float _DeltaTime);

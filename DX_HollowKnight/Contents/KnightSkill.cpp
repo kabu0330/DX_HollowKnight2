@@ -37,8 +37,6 @@ void AKnightSkill::Collide(UCollision* _This, UCollision* _Other)
 	CreateDamagedEffect(_This, _Other);
 	CreateHitEffect(_This, _Other);
 	Attack(_This, _Other);
-	CreateOrangeParticleEffect(_This, _Other);
-	CreateHitOrangeEffect(_This, _Other);
 	CreateWhiteHitParticleEffect(_This, _Other);
 }
 

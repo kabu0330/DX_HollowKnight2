@@ -23,6 +23,14 @@ protected:
 	void CreateAnimation() override;
 
 private:
+	void DamageEffect() override;
 
+	bool bCanFlashEffect = false;
+	bool bIsEndFlashEffect = false;
+	void StartFlashEffect(float _DeltaTime);
+	void EndFlashEffect(float _DeltaTime);
+
+private:
+	void SetIdle(float _DeltaTime) override;
 };
 

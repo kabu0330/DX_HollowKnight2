@@ -322,6 +322,17 @@ void AKnight::TimeElapsed(float _DeltaTime)
 			}
 		}
 	}
+
+	// 무적 해제
+	if (true == bIsInvincible)
+	{
+		InvincibleElapsed += _DeltaTime;
+		if (InvincibleElapsed >= InvincibleDuration)
+		{
+			InvincibleElapsed = 0.0f;
+			bIsInvincible = false;
+		}
+	}
 }
 
 void AKnight::CheckEnterButton()

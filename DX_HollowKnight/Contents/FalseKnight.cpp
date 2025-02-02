@@ -17,17 +17,19 @@ void AFalseKnight::BeginPlay()
 void AFalseKnight::Tick(float _DeltaTime)
 {
 	AMonster::Tick(_DeltaTime);
+	StartFlashEffect(_DeltaTime);
+	EndFlashEffect(_DeltaTime);
 }
 
 void AFalseKnight::SetStatus()
 {
 	FStatusData Data;
-	Data.Velocity = 0.0f;
+	Data.Velocity = 50.0f;
 	Data.InitVelocity = Data.Velocity;
 	Data.RunSpeed = Data.Velocity * 2.5f;
 	Data.DashSpeed = Data.Velocity * 3.0f;
-	Data.MaxHp = 15;
-	Data.Hp = 10;
+	Data.MaxHp = 385;
+	Data.Hp = 300;
 	Data.MaxMp = 0;
 	Data.Mp = 0;
 	Data.Att = 1;
@@ -101,5 +103,94 @@ void AFalseKnight::CreateAnimation()
 	BodyRenderer->CreateAnimation("DeathLand", MonsterStr, 81, 86, DeathTime, false);
 
 	BodyRenderer->ChangeAnimation("Idle");
+}
+
+void AFalseKnight::DamageEffect()
+{
+	bCanFlashEffect = true;
+}
+
+void AFalseKnight::StartFlashEffect(float _DeltaTime)
+{
+	if (false == bCanFlashEffect)
+	{
+		return;
+	}
+	if (false == BodyRenderer->IsActive())
+	{
+		return;
+	}
+	if (true == bIsEndFlashEffect)
+	{
+		return;
+	}
+	
+	FVector PlusColor = { 1.0f, 1.0f, 1.0f };
+	float4 MaxColor = { 1.0f, 1.0f, 1.0f};
+
+	if (MaxColor.X <= BodyRenderer->ColorData.PlusColor.X)
+	{
+		bIsEndFlashEffect = true;
+		return;
+	}
+	float Power = 7.0f;
+	PlusColor *= _DeltaTime * Power;
+	BodyRenderer->AddPlusColor(PlusColor);
+
+}
+
+void AFalseKnight::EndFlashEffect(float _DeltaTime)
+{
+	if (false == bCanFlashEffect)
+	{
+		return;
+	}
+	if (false == bIsEndFlashEffect)
+	{
+		return;
+	}
+
+	if (0.0f >= BodyRenderer->ColorData.PlusColor.X)
+	{
+		//BodyRenderer->ColorData.PlusColor = { 0.0f, 0.0f, 0.0f };
+		bCanFlashEffect = false;
+		bIsEndFlashEffect = false;
+		return;
+	}
+
+	FVector PlusColor = { 1.0f, 1.0f, 1.0f };
+	float4 MaxColor = { 1.0f, 1.0f, 1.0f };
+
+	float Power = 7.0f;
+	PlusColor *= -_DeltaTime * Power;
+	BodyRenderer->AddPlusColor(PlusColor);
+
+	float4 Data = BodyRenderer->ColorData.PlusColor;
+}
+
+void AFalseKnight::SetIdle(float _DeltaTime)
+{
+	ResetRendererOffest();
+
+	ActiveGravity();
+	CheckDeath();
+
+	Stat.SetBeingHit(false);
+	Stat.SetAttacking(false);
+
+	bCanRotation = true; // 방향전환 허용
+	CheckDirection(); // 좌우 반전 적용
+
+	GetRandomDirection(); // chasing이 false라면 랜덤이동
+	GetDirectionToPlayer(); // chasing이 true라면 추적
+
+	if (false == bIsOnGround && false == bCanFly)
+	{
+		return;
+	}
+	if (true == IsPlayerNearby() && false == Stat.IsAttacking() && true == bCanAttack) // 플레이어 조우
+	{
+		FSM.ChangeState(EMonsterState::ATTACK_ANTICIPATE);
+	}
 }
 
