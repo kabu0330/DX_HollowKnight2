@@ -151,8 +151,9 @@ protected:
 
 	// ±‚≈∏ Ω∫≈›
 	float HitStunDuration = 1.0f;
-	float JumpForce = 1000.0f;
+	float JumpForce = 0.0f;
 	float InitJumpForce = 600.0f;
+	float JumpForceMax = 1800.0f;
 
 	// ªÁ∏¡
 	float DeathSpriteOffset = -20.0f;
@@ -222,6 +223,8 @@ protected:
 	// ¡°«¡
 	virtual void SetJumpAnticipate(float _DeltaTime);
 	virtual void SetJump(float _DeltaTime);
+	virtual void SetJumping(float _DeltaTime) {}
+
 	virtual void SetJumpAttackAnticipate(float _DeltaTime);
 	virtual void SetJumpAttack(float _DeltaTime);
 	virtual void SetJumpAttackRecovery(float _DeltaTime);

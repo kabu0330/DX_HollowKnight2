@@ -11,6 +11,8 @@ void AMonster::SetFSM()
 
 	CreateState(EMonsterState::JUMP_ANTICIPATE, &AMonster::SetJumpAnticipate, "JumpAnticipate");
 	CreateState(EMonsterState::JUMP, &AMonster::SetJump, "Jump");
+	CreateState(EMonsterState::JUMPING, &AMonster::SetJumping, "Jumping");
+
 	CreateState(EMonsterState::JUMP_ATTACK_ANTICIPATE, &AMonster::SetJumpAttackAnticipate, "JumpAttackAnticipate");
 	CreateState(EMonsterState::JUMP_ATTACK, &AMonster::SetJumpAttack, "JumpAttack");
 	CreateState(EMonsterState::JUMP_ATTACK_RECOVERY, &AMonster::SetJumpAttackRecovery, "JumpAttackRecovery");
@@ -217,6 +219,8 @@ void AMonster::SetAttackRecovery(float _DeltaTime)
 {
 	//UEngineDebug::OutPutString("Monster FSM : Attack Recovery");
 	//SetAttackRendererOffset();
+	JumpForce = 0.0f;
+
 
 	if (true == bCanFly && true == bIsOnGround)
 	{

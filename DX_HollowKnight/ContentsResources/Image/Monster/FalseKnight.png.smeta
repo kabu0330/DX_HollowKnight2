@@ -286,25 +286,25 @@ TextureImporter:
     second: FalseKnight_94
   - first:
       213: -588560185754396558
-    second: FalseKnight_3_1
+    second: FalseKnight_95
   - first:
       213: -5518360066875521911
-    second: FalseKnight_70_1
+    second: FalseKnight_30
   - first:
       213: 6159040742304970952
-    second: FalseKnight_70_2
+    second: FalseKnight_96
   - first:
       213: -1186250753066351972
-    second: FalseKnight_70_3
+    second: FalseKnight_97
   - first:
       213: -1629563122394736747
-    second: FalseKnight_70_4
+    second: FalseKnight_98
   - first:
       213: -9153999738409071680
-    second: FalseKnight_72_1
+    second: FalseKnight_99
   - first:
       213: 8841290909266365634
-    second: FalseKnight_85_1
+    second: FalseKnight_100
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -462,7 +462,7 @@ TextureImporter:
         serializedVersion: 2
         x: 1873
         y: 12581
-        width: 622
+        width: 620
         height: 394
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -1385,7 +1385,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 622
-        y: 5479
+        y: 5478
         width: 610
         height: 394
       alignment: 7
@@ -1848,7 +1848,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 2139
-        width: 120
+        width: 119
         height: 127
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -2163,7 +2163,7 @@ TextureImporter:
         serializedVersion: 2
         x: 844
         y: 387
-        width: 251
+        width: 249
         height: 191
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -2368,14 +2368,14 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FalseKnight_3_1
+      name: FalseKnight_95
       rect:
         serializedVersion: 2
-        x: 2498
-        y: 12581
-        width: 622
-        height: 393
-      alignment: 9
+        x: 2497
+        y: 12580
+        width: 618
+        height: 398
+      alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
@@ -2389,14 +2389,14 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FalseKnight_70_1
+      name: FalseKnight_30
       rect:
         serializedVersion: 2
-        x: 122
-        y: 2139
-        width: 119
-        height: 127
-      alignment: 9
+        x: 123
+        y: 2141
+        width: 118
+        height: 124
+      alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
@@ -2410,14 +2410,14 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FalseKnight_70_2
+      name: FalseKnight_96
       rect:
         serializedVersion: 2
-        x: 243
-        y: 2139
-        width: 122
-        height: 127
-      alignment: 9
+        x: 244
+        y: 2142
+        width: 120
+        height: 124
+      alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
@@ -2431,14 +2431,14 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FalseKnight_70_3
+      name: FalseKnight_97
       rect:
         serializedVersion: 2
         x: 367
-        y: 2139
-        width: 120
-        height: 127
-      alignment: 9
+        y: 2143
+        width: 118
+        height: 121
+      alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
@@ -2452,14 +2452,14 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FalseKnight_70_4
+      name: FalseKnight_98
       rect:
         serializedVersion: 2
-        x: 488
-        y: 2139
-        width: 121
-        height: 126
-      alignment: 9
+        x: 486
+        y: 2143
+        width: 127
+        height: 120
+      alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
@@ -2473,14 +2473,14 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FalseKnight_72_1
+      name: FalseKnight_99
       rect:
         serializedVersion: 2
         x: 251
-        y: 1980
-        width: 120
-        height: 127
-      alignment: 9
+        y: 1982
+        width: 125
+        height: 125
+      alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
@@ -2494,14 +2494,14 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FalseKnight_85_1
+      name: FalseKnight_100
       rect:
         serializedVersion: 2
-        x: 1098
-        y: 385
-        width: 258
-        height: 175
-      alignment: 9
+        x: 1096
+        y: 387
+        width: 261
+        height: 190
+      alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
@@ -2517,7 +2517,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: ef9a310d664a6244dad5e1f1ee02f013
+    spriteID: ae278ebdfdc050740a01204b7b19e8fd
     internalID: 0
     vertices: []
     indices: 

@@ -35,6 +35,7 @@ AKnight::AKnight()
 	//SetActorLocation(InitPos::Dirtmouth_well);
 	//SetActorLocation(InitPos::CrossroadsEntrance);
 	SetActorLocation({9911, -5450});
+	SetActorLocation({13600, -5360});
 	//SetActorLocation({1100, -2950});
 
 	// Debug

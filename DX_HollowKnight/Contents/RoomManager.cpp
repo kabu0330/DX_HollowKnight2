@@ -73,7 +73,7 @@ void URoomManager::CreateRoom(AGameMode* _GameMode)
 	// 5. 시작 위치 중력 설정 : 문과 충돌해야만 픽셀충돌 맵이 지정되기 때문에 여기서 강제로 설정 필요한 경우 사용
 	//SetInitCurRoom(ForgottenCrossroads1.get());
 	//SetInitCurRoom(Dirtmouth.get());
-	SetInitCurRoom(Crossroads1.get());
+	SetInitCurRoom(Crossroads2.get());
 
 	// 6. 몬스터 생성
 	//Crossroads1->CreateMonster<AWanderingHusk>({ 11100, -5800 });
@@ -81,7 +81,7 @@ void URoomManager::CreateRoom(AGameMode* _GameMode)
 	//Crossroads1->CreateMonster<AGruzzer>({ 9511, -5400 });
 	//Crossroads1->CreateMonster<AAspidMother>({ 9511, -5400 });
 	//Crossroads1->CreateMonster<AAspidHunter>({ 9511, -5400 });
-	Crossroads1->CreateMonster<AFalseKnight>({ 9511, -5400 });
+	Crossroads2->CreateMonster<AFalseKnight>({ 14300, -5300 });
 	//Crossroads1->CreateMonster<AAspidHatchling>({ 9511, -5400 });
 	//Crossroads1->CreateMonster<ACrawlid>({ 9511, -5400 });
 	//Crossroads1->CreateMonster<AHuskHornhead>({ 9511, -5400 });

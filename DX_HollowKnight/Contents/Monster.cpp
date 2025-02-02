@@ -197,18 +197,13 @@ void AMonster::Jump(float _DeltaTime)
 	}
 
 	CheckDirection(); // 좌우 반전 적용
-	JumpForce = InitJumpForce;
-	float JumpForceMax = 1800.0f;
+	JumpForce += InitJumpForce;
 	if (JumpForce >= JumpForceMax)
 	{
 		JumpForce = JumpForceMax;
 	}
-	AddActorLocation({ 0.0f, JumpForce * _DeltaTime});
-	UEngineDebug::OutPutString("몬스터 점프 포스 : " + std::to_string(JumpForce));
-	TimeEventer->AddEndEvent(3.0f, [this]()
-		{
-			JumpForce = 0.0f;
-		});
+	AddActorLocation({ 0.0f, JumpForce * _DeltaTime });
+	UEngineDebug::OutPutString("몬스터 점프 포스 : " + std::to_string(JumpForce * _DeltaTime));
 }
 
 FVector AMonster::GetDirectionToPlayer()
@@ -577,12 +572,14 @@ void AMonster::CheckDirection()
 	{
 		if (bIsLeft == true)
 		{
+			UEngineDebug::OutPutString("왼쪽 방향");
 			SetActorRelativeScale3D({ 1.0f, 1.0f, 1.0f });
 			BodyCollisionOffset.X = InitBodyCollisionOffset.X;
 			return;
 		}
 		if (bIsLeft == false)
 		{
+			UEngineDebug::OutPutString("오른쪽 방향");
 			SetActorRelativeScale3D({ -1.0f, 1.0f, 1.0f });
 			float Offset = BodyCollisionOffset.X * 1.5f;
 			BodyCollisionOffset.X = Offset;
