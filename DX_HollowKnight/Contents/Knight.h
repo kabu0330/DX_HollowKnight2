@@ -125,6 +125,7 @@ public:
 	}
 
 protected:
+	bool bCanReset = false;
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
@@ -135,6 +136,8 @@ protected:
 	void SetCollisionEvent();
 	void Collide(class UCollision* _This, class UCollision* _Other);
 
+	void DeathCheck();
+	void ResetLevel();
 
 private:
 	// Stat
@@ -150,7 +153,7 @@ private:
 
 
 	float HitStunDuration = 0.5f;
-	float InvincibleDuration = 3.0f;
+	float InvincibleDuration = 1.5f;
 	float InvincibleElapsed = 0.0f;
 	bool bIsInvincible = false;
 

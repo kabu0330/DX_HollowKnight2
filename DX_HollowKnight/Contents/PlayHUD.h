@@ -16,6 +16,8 @@ public:
 	APlayHUD& operator=(const APlayHUD& _Other) = delete;
 	APlayHUD& operator=(APlayHUD&& _Other) noexcept = delete;
 
+	void FadeIn();
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime)	override;
@@ -50,7 +52,6 @@ private:
 
 	void CreateFade();
 	void FadeOut();
-	void FadeIn();
 	void FadeChange();
 	std::shared_ptr<class UImageWidget> Fade;
 	float4 FadeValue = FVector::ZERO;

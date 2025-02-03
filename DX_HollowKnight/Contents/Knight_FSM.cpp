@@ -346,18 +346,27 @@ void AKnight::SetStun(float _DeltaTime)
 
 void AKnight::SetDeathDamage(float _DeltaTime)
 {
+	BodyCollision->SetActive(false);
 	ChangeNextState(EKnightState::DEATH);
 }
 
 void AKnight::SetDeath(float _DeltaTime)
 {
 	ChangeNextState(EKnightState::DEATH_HEAD);
-
 }
 
 void AKnight::SetDeathHead(float _DeltaTime)
 {
-	ChangeNextState(EKnightState::IDLE);
+	ActiveGravity();
+
+	AddActorRotation({ 0.0f, 0.0f, -5.0f * _DeltaTime });
+	BodyRenderer->SetRelativeLocation({ 0.0f, -20.0f, 0.0f });
+	if (false == bCanReset)
+	{
+		bCanReset = true;
+		TimeEventer->AddEndEvent(2.0f, std::bind(&AKnight::ResetLevel, this));
+	}
+
 }
 
 void AKnight::SetFSM()

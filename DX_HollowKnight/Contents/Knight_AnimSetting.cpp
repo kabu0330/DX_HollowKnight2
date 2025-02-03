@@ -103,15 +103,15 @@ void AKnight::InitAnimation()
 
 
 	// 사망 애니메이션
-	float DeathFrameTime = 0.1f;
+	float DeathFrameTime = 0.2f;
 	std::string DeathDamage = "DeathDamage";
 	BodyRenderer->CreateAnimation(DeathDamage, DeathDamage, 0, 4, DeathFrameTime, false);
 
 	std::string Death = "Death";
-	BodyRenderer->CreateAnimation(Death, Death, 0, 12, DeathFrameTime, false);
+	BodyRenderer->CreateAnimation(Death, Death, 0, 12, RunFrameTime, false);
 
 	std::string DeathHead = "DeathHead";
-	BodyRenderer->CreateAnimation(DeathHead, DeathHead, 0, 1, 1.0f, false);
+	BodyRenderer->CreateAnimation(DeathHead, DeathHead, 0, 1, 2.5f, false);
 }
 
 // 다음 애니메이션으로 변경

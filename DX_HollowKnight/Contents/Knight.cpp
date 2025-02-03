@@ -15,6 +15,7 @@
 #include "PlayGameMode.h"
 #include "Door.h"
 #include <math.h>
+#include "PlayHUD.h"
 
 AKnight* AKnight::MainPawn = nullptr;
 
@@ -59,6 +60,8 @@ void AKnight::Tick(float _DeltaTime)
 
 	ActivePixelCollsion();
 
+	DeathCheck();
+
 	SetCameraPos();
 	//CheckCameraPos();
 	//SetCameraLerp();
@@ -74,8 +77,6 @@ void AKnight::Tick(float _DeltaTime)
 	DebugInput(_DeltaTime);
 	DebugCamera();
 
-
-
 }
 
 void AKnight::SetCollisionEvent()
@@ -88,6 +89,30 @@ void AKnight::SetCollisionEvent()
 void AKnight::Collide(UCollision* _This, UCollision* _Other)
 {
 	UEngineDebug::OutPutString("Kinigt Collision Event Enter");
+
+}
+
+void AKnight::DeathCheck()
+{
+	if (0 >= Stat.GetHp())
+	{
+		if (true == Stat.IsDeath())
+		{
+			return;
+		}
+		Stat.SetDeath(true);
+		FSM.ChangeState(EKnightState::DEATH_DAMAGE);
+	}
+}
+
+void AKnight::ResetLevel()
+{
+	APlayHUD* HUD = dynamic_cast<APlayHUD*>(GetWorld()->GetHUD());
+	HUD->FadeIn();
+	TimeEventer->AddEndEvent(0.5f, [this]()
+		{
+			UEngineCore::ResetLevel<APlayGameMode, AKnight, APlayHUD>("Play");
+		});
 
 }
 
