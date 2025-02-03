@@ -124,6 +124,11 @@ void AMonster::ResetRendererOffset()
 	BodyRenderer->SetRelativeLocation({ RendererOffset.X, RendererOffset.Y, ZSort });
 }
 
+void AMonster::ResetRendererOffset(UContentsRenderer* _Renderer)
+{
+	_Renderer->SetRelativeLocation({ RendererOffset.X, RendererOffset.Y, ZSort });
+}
+
 void AMonster::SetRendererOffset(FVector _Offset)
 {
 	FVector Offset = _Offset;
@@ -151,6 +156,35 @@ void AMonster::SetRendererOffset(FVector _Offset)
 	}
 
 	BodyRenderer->SetRelativeLocation({ Offset.X + RendererOffset.X, Offset.Y + RendererOffset.Y, ZSort });
+}
+
+void AMonster::SetRendererOffset(UContentsRenderer* _Renderer, FVector _Offset)
+{
+	FVector Offset = _Offset;
+	if (true == bIsFlip)
+	{
+		if (true == bIsLeft)
+		{
+			Offset.X *= -1.0f;
+		}
+		else
+		{
+			Offset.X *= -1.0f;
+		}
+	}
+	else
+	{
+		if (true == bIsLeft)
+		{
+			Offset.X *= -1.0f;
+		}
+		else
+		{
+			Offset.X *= 1.0f;
+		}
+	}
+
+	_Renderer->SetRelativeLocation({ Offset.X + RendererOffset.X, Offset.Y + RendererOffset.Y, ZSort });
 }
 
 void AMonster::SetCollisionOffset(UCollision* _Target, FVector _Offset)

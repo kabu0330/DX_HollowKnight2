@@ -17,13 +17,15 @@ void AFalseKnight::BeginPlay()
 	AMonster::BeginPlay();
 }
 
-void AFalseKnight::Tick(float _DeltaTime)
+void AFalseKnight::Tick(float _DeltaTime) 
 {
 	AMonster::Tick(_DeltaTime);
 	BossPatternTimeElapsed(_DeltaTime);
 	StartFlashEffect(_DeltaTime);
 	EndFlashEffect(_DeltaTime);
 	CreateHeadCollision();
+	CreateHeadRenderer();
+	SetBossCollisionEvent();
 }
 
 void AFalseKnight::SetStatus()
@@ -124,6 +126,46 @@ void AFalseKnight::CreateAnimation()
 	BodyRenderer->CreateAnimation("DeathLand", MonsterStr, 81, 86, DeathTime, false);
 
 	BodyRenderer->ChangeAnimation("Idle");
+}
+
+void AFalseKnight::CreateHeadRenderer()
+{
+	HeadRenderer = CreateDefaultSubObject<UContentsRenderer>().get();
+	HeadRenderer->SetupAttachment(RootComponent);
+	//HeadRenderer->SetAutoScaleRatio(1.0f);
+	FVector HeadScale = { 120.0f, 120.0f };
+	HeadRenderer->SetAutoScale(false);
+	HeadRenderer->SetRelativeScale3D(HeadScale);
+	HeadRenderer->SetWorldLocation({ BodyCollisionOffset.X, BodyCollisionOffset.Y, ZSort - 5.0f });
+
+	std::string FalseKnightHead = "FalseKnightHead.png";
+	std::string FalseKnightDeath = "FalseKnightDeath.png";
+
+	float FrameTime = 0.1f;
+	HeadRenderer->CreateAnimation("Stun", FalseKnightHead, 0, 4, FrameTime);
+	HeadRenderer->CreateAnimation("StunHit", FalseKnightHead, 5, 7, FrameTime, false);
+
+	HeadRenderer->ChangeAnimation("Stun");
+	HeadRenderer->SetActive(true);
+}
+
+void AFalseKnight::SetBossCollisionEvent()
+{
+	HeadCollision->SetCollisionEnter(std::bind(&AFalseKnight::OnHeadCollision, this, std::placeholders::_1, std::placeholders::_2));
+}
+
+void AFalseKnight::OnHeadCollision(UCollision* _This, UCollision* _Other)
+{
+	int Att = Knight->GetStatRef().GetAtt();
+	HeadHp -= Att;
+	if (0 >= HeadHp)
+	{
+		// 스턴 상태 종료
+	}
+	else //스턴 히트 이펙트
+	{
+		FSM.ChangeState(EMonsterState::STUN_HIT);
+	}
 }
 
 void AFalseKnight::CreateHeadCollision()
@@ -776,25 +818,43 @@ void AFalseKnight::SetBerserkAttackRecovery2(float _DeltaTime)
 void AFalseKnight::SetStun(float _DeltaTime)
 {
 	ActiveGravity();
-	bIsBerserkMode = true;
-	HeadCollision->SetActive(true);
+	if (true == bIsInit) // 스턴 진입 최초 1회
+	{
+		bIsBerserkMode = true; // 최초 스턴부터 광폭화 모드를 발동
 
-	ResetRendererOffset();
-	FVector Offset = { -100.0f, -110.0f };
-	SetCollisionOffset(HeadCollision, Offset);
+		BodyCollision->SetActive(false);
+		ResetRendererOffset();
+		bIsInit = false;
+		TimeEventer->AddEndEvent(1.0f, [this]()
+			{
+				HeadCollision->SetActive(true);
+				FVector Offset = { -100.0f, -110.0f };
+				SetCollisionOffset(HeadCollision, Offset);
+				ResetRendererOffset(HeadRenderer);
+				SetRendererOffset(HeadRenderer, Offset);
+			});
+	}
 
-	BodyCollision->SetActive(false);
 	ChangeNextState(EMonsterState::STUN_OPEN);
 }
 
 void AFalseKnight::SetStunOpen(float _DeltaTime)
 {
 	ActiveGravity();
+
 }
 
 void AFalseKnight::SetStunHit(float _DeltaTime)
 {
 	ActiveGravity();
+
+	ChangeNextState(EMonsterState::STUN_OPEN);
+}
+
+void AFalseKnight::SetStunRecovery(float _DeltaTime)
+{
+	ActiveGravity();
+	bIsInit = true;
 }
 
 void AFalseKnight::SetDeathAir(float _DeltaTime)

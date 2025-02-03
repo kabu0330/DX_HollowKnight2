@@ -69,6 +69,7 @@ void AMonster::SetFSM()
 	CreateState(EMonsterState::STUN_ROLL_END, &AMonster::SetStunRollEnd, "StunRollEnd");
 	CreateState(EMonsterState::STUN_OPEN, &AMonster::SetStunOpen, "StunOpen");
 	CreateState(EMonsterState::STUN_HIT, &AMonster::SetStunHit, "StunHit");
+	CreateState(EMonsterState::STUN_RECOVERY, &AMonster::SetStunRecovery, "StunRecovery");
 
 	CreateState(EMonsterState::DEATH_AIR, &AMonster::SetDeathAir, "DeathAir");
 	CreateState(EMonsterState::DEATH_LAND, &AMonster::SetDeathLand, "DeathLand");

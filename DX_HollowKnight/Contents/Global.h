@@ -145,6 +145,7 @@ enum class EMonsterState
 	STUN_ROLL_END,
 	STUN_OPEN,
 	STUN_HIT,
+	STUN_RECOVERY,
 
 	DEATH_AIR,
 	DEATH_LAND,

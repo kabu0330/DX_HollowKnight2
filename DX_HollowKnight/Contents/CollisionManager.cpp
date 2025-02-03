@@ -43,7 +43,8 @@ void UCollisionManager::LinkCollision(AGameMode* _GameMode)
 
 	// 나이트 공격
 	_GameMode->GetWorld()->LinkCollisionProfile("KnightObject", "Monster"); 
-	_GameMode->GetWorld()->LinkCollisionProfile("KnightObject", "MonsterHead"); 
+	//_GameMode->GetWorld()->LinkCollisionProfile("KnightObject", "MonsterHead"); 
+	_GameMode->GetWorld()->LinkCollisionProfile("MonsterHead", "KnightObject"); 
 
 	// 몬스터 공격
 	_GameMode->GetWorld()->LinkCollisionProfile("Monster", "Knight"); 

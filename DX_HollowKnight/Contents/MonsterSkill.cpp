@@ -105,7 +105,7 @@ void AMonsterSkill::Release()
 	float DeltaTime = UEngineCore::GetDeltaTime();
 
 	TimeElapsed += DeltaTime;
-	if (TimeElapsed >= CollisionDuration)
+	if (TimeElapsed >= CollisionDuration || true == bIsCollision || true == bIsPixelCollision)
 	{
 		TimeElapsed = 0.0f;
 		BodyRenderer->Destroy();

@@ -60,10 +60,15 @@ private:
 	int BerserkAttackCount = 0;
 	int BerserkAttackCountMax = 8;
 
-	UCollision* HeadCollision = nullptr;
+	void SetBossCollisionEvent();
+	void OnHeadCollision(class UCollision* _This, class UCollision* _Other);
 	void CreateHeadCollision();
+	void CreateHeadRenderer();
+	class UCollision* HeadCollision = nullptr;	
+	class UContentsRenderer* HeadRenderer = nullptr;
 
 	void ChangeStunAnimation();
+	bool bIsInit = true;
 private:
 	void SetIdle(float _DeltaTime) override;
 	void SetJumpAnticipate(float _DeltaTime) override;
@@ -86,9 +91,10 @@ private:
 	void SetBerserkAttackRecovery(float _DeltaTime) override;
 	void SetBerserkAttackRecovery2(float _DeltaTime) override;
 
-	void SetStun(float _DeltaTime);
-	void SetStunOpen(float _DeltaTime);
-	void SetStunHit(float _DeltaTime);
+	void SetStun(float _DeltaTime) override;
+	void SetStunOpen(float _DeltaTime) override;
+	void SetStunHit(float _DeltaTime) override;
+	void SetStunRecovery(float _DeltaTime) override;
 
 	void SetDeathAir(float _DeltaTime);
 	void SetDeathLand(float _DeltaTime);

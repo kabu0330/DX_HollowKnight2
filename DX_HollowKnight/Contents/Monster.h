@@ -102,7 +102,9 @@ protected:
 	bool bIsShowEffect = false;
 
 	void ResetRendererOffset();
+	void ResetRendererOffset(UContentsRenderer* _Renderer);
 	void SetRendererOffset(FVector _Offset);
+	void SetRendererOffset(UContentsRenderer* _Renderer, FVector _Offset);
 	void SetCollisionOffset(UCollision* _Target, FVector _Offset);
 
 	void SetWalkRendererOffset();
@@ -295,6 +297,7 @@ protected:
 	virtual void SetStunRollEnd(float _DeltaTime);
 	virtual void SetStunOpen(float _DeltaTime);
 	virtual void SetStunHit(float _DeltaTime);
+	virtual void SetStunRecovery(float _DeltaTime) {}
 
 	// »ç¸Á
 	virtual void SetDeathAir(float _DeltaTime);
