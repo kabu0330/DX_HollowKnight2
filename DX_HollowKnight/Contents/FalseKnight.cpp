@@ -4,6 +4,7 @@
 #include <EngineBase/EngineRandom.h>
 #include "MonsterProjectile.h"
 #include "FalseKnightHead.h"
+#include "ContentsRenderer.h"
 
 AFalseKnight::AFalseKnight()
 {
@@ -34,8 +35,8 @@ void AFalseKnight::SetStatus()
 	Data.InitVelocity = Data.Velocity;
 	Data.RunSpeed = Data.Velocity * 2.5f;
 	Data.DashSpeed = Data.Velocity * 3.0f;
-	Data.MaxHp = 385;
-	Data.Hp = 300;
+	Data.MaxHp = 1000;
+	Data.Hp = 1000;
 	Data.MaxMp = 0;
 	Data.Mp = 0;
 	Data.Att = 1;
@@ -120,9 +121,12 @@ void AFalseKnight::CreateAnimation()
 	BodyRenderer->CreateAnimation("JumpAttackRecovery", MonsterStr, 44, 45, AttackRecoveryFrame, false);
 	BodyRenderer->CreateAnimation("JumpAttackLand", MonsterStr, 46, 47, AttackRecoveryFrame, false);
 
-	BodyRenderer->CreateAnimation("Stun", MonsterStr, 48, 61, StunTime, false);
+	BodyRenderer->CreateAnimation("Stun", MonsterStr, 48, 61, DeathTime, false);
 	BodyRenderer->CreateAnimation("StunOpen", MonsterStr, 62, 62, StunTime, false); // 62
-	BodyRenderer->CreateAnimation("DeathAir", MonsterStr, 78, 80, DeathAirTime, false);
+	BodyRenderer->CreateAnimation("StunHit", MonsterStr, 62, 62, StunTime, false); 
+	BodyRenderer->CreateAnimation("StunRecovery", MonsterStr, {61, 60, 59, 58, 57, 56, 55, 54, 53, 52, 51, 50, 49, 48}, DeathTime, false);
+
+	BodyRenderer->CreateAnimation("DeathAir", MonsterStr, 0, 0, DeathAirTime, false);
 	BodyRenderer->CreateAnimation("DeathLand", MonsterStr, 81, 86, DeathTime, false);
 
 	BodyRenderer->ChangeAnimation("Idle");
@@ -134,16 +138,17 @@ void AFalseKnight::CreateHeadRenderer()
 
 	Head->ChangeAnimation("Stun");
 	Head->ToggleFlip();
+	Head->SetParent(this);
 
 	FVector CollisionScale = FVector(120, 120);
 	Head->SetCollisionScale(CollisionScale);
+	Head->SetActive(false);
 }
 
 void AFalseKnight::DamageLogic(int _KnightAtt)
 {
 	if (0 >= PhaseHp)
 	{
-		PhaseHp = 75;
 		bIsStun = true;
 	}
 	PhaseHp -= _KnightAtt;
@@ -176,7 +181,7 @@ void AFalseKnight::BossPatternTimeElapsed(float _DeltaTime)
 	if (false == bCanBerserkAttack)
 	{
 		BerserkAttackElapsed += _DeltaTime;
-		float Cooldown = 10.0f;
+		float Cooldown = 20.0f;
 		if (BerserkAttackElapsed >= Cooldown)
 		{
 			BerserkAttackElapsed = 0.0f;
@@ -263,8 +268,10 @@ void AFalseKnight::SetIdle(float _DeltaTime)
 {
 	ResetRendererOffset();
 
+	ChangeStunAnimation();
+
+
 	ActiveGravity();
-	CheckDeath();
 
 	Stat.SetBeingHit(false);
 	Stat.SetAttacking(false);
@@ -272,10 +279,11 @@ void AFalseKnight::SetIdle(float _DeltaTime)
 	bCanRotation = true; // 방향전환 허용
 	CheckDirection(); // 좌우 반전 적용
 
+
 	GetRandomDirection(); // chasing이 false라면 랜덤이동
 	GetDirectionToPlayer(); // chasing이 true라면 추적
 
-	ChangeStunAnimation();
+	
 
 	if (false == bIsOnGround && false == bCanFly)
 	{
@@ -310,15 +318,15 @@ void AFalseKnight::SetIdle(float _DeltaTime)
 void AFalseKnight::SetJumpAnticipate(float _DeltaTime)
 {
 	ActiveGravity();
+
 	ChangeStunAnimation();
 
 	Stat.SetAttacking(true);
-	bCanAttack = false;
 	bCanRotation = false;
 	bCanJump = false;
 
 	UEngineRandom Random;
-	float Result = Random.RandomInt(0, 1);
+	int Result = Random.RandomInt(0, 1);
 	if (0 == Result)
 	{
 		ChangeNextState(EMonsterState::JUMP);
@@ -332,6 +340,7 @@ void AFalseKnight::SetJumpAnticipate(float _DeltaTime)
 void AFalseKnight::SetJump(float _DeltaTime)
 {
 	ActiveGravity();
+
 	ChangeStunAnimation();
 
 	Move(_DeltaTime);
@@ -352,6 +361,7 @@ void AFalseKnight::SetJump(float _DeltaTime)
 void AFalseKnight::SetLand(float _DeltaTime)
 {
 	ActiveGravity();
+
 	ChangeStunAnimation();
 
 	JumpForce = 0.0f;
@@ -363,6 +373,7 @@ void AFalseKnight::SetLand(float _DeltaTime)
 void AFalseKnight::SetJumpAttackAnticipate(float _DeltaTime)
 {
 	ActiveGravity();
+
 	ChangeStunAnimation();
 
 	Move(_DeltaTime);
@@ -385,6 +396,7 @@ void AFalseKnight::SetJumpAttackAnticipate(float _DeltaTime)
 void AFalseKnight::SetJumpAttack(float _DeltaTime)
 {
 	ActiveGravity();
+
 	ChangeStunAnimation();
 
 	FVector Offset = { -150.0f, 90.0f }; 
@@ -430,6 +442,7 @@ void AFalseKnight::CreateJumpAttackLogicAndEffect()
 void AFalseKnight::SetJumpAttackRecovery(float _DeltaTime)
 {
 	ActiveGravity();
+
 	ChangeStunAnimation();
 
 	FVector Offset = { 0.0f, 50.0f }; 
@@ -441,6 +454,7 @@ void AFalseKnight::SetJumpAttackRecovery(float _DeltaTime)
 void AFalseKnight::SetJumpAttackLand(float _DeltaTime)
 {
 	ActiveGravity();
+
 	ChangeStunAnimation();
 
 	FVector Offset = { 20.0f, 0.0f }; 
@@ -453,7 +467,7 @@ void AFalseKnight::SetJumpAttackLand(float _DeltaTime)
 void AFalseKnight::SetAttackAnticipate(float _DeltaTime)
 {
 	ActiveGravity();
-	CheckDeath();
+
 	ChangeStunAnimation();
 
 	// 렌더러 위치 조정
@@ -469,6 +483,7 @@ void AFalseKnight::SetAttackAnticipate(float _DeltaTime)
 void AFalseKnight::SetAttack(float _DeltaTime)
 {
 	ActiveGravity();
+
 	ChangeStunAnimation();
 
 	// 렌더러 위치 조정
@@ -566,14 +581,13 @@ void AFalseKnight::CreateGroundImpack()
 
 void AFalseKnight::CreateDropObject()
 {
-	//if (false == bIsBerserkMode)
-	//{
-	//	return;
-	//}
+	if (false == bIsBerserkMode)
+	{
+		return;
+	}
 
 	AMonsterProjectile* DropObject = GetWorld()->SpawnActor<AMonsterProjectile>().get();
 	DropObject->ChangeAnimation("BossDropObject");
-	//GroundWave->ChangeNextAnimation("BossGroundWaveLoop"); // 현재 애니메이션이 끝나면 바꿀 애니메이션
 	DropObject->SetParentMonster(this);
 	DropObject->SetAutoRelease(false);
 	DropObject->SetZSort(static_cast<int>(EZOrder::KNIGHT_SKILL_FRONT) - DropObjectCount);
@@ -612,6 +626,7 @@ void AFalseKnight::CreateDropObject()
 void AFalseKnight::SetAttackRecovery(float _DeltaTime)
 {
 	ActiveGravity();
+
 	ChangeStunAnimation();
 
 	ResetRendererOffset();
@@ -628,6 +643,7 @@ void AFalseKnight::SetAttackRecovery(float _DeltaTime)
 void AFalseKnight::SetAttackRecovery2(float _DeltaTime)
 {
 	ActiveGravity();
+
 	ChangeStunAnimation();
 
 	ResetRendererOffset();
@@ -638,7 +654,7 @@ void AFalseKnight::SetAttackRecovery2(float _DeltaTime)
 void AFalseKnight::SetBerserkAttackAnticipate(float _DeltaTime)
 {
 	ActiveGravity();
-	CheckDeath();
+
 	ChangeStunAnimation();
 
 	bCanBerserkAttack = false;
@@ -655,6 +671,9 @@ void AFalseKnight::SetBerserkAttackAnticipate(float _DeltaTime)
 
 void AFalseKnight::SetBerserkAttack(float _DeltaTime)
 {
+	ActiveGravity();
+
+	ChangeStunAnimation();
 	// 렌더러 위치 조정
 	if (false == bIsOffsetAttack1Frame)
 	{
@@ -695,6 +714,7 @@ void AFalseKnight::SetBerserkAttack(float _DeltaTime)
 void AFalseKnight::SetBerserkAttack2(float _DeltaTime)
 {
 	ActiveGravity();
+
 	ChangeStunAnimation();
 
 	// 렌더러 위치 조정
@@ -735,6 +755,7 @@ void AFalseKnight::SetBerserkAttack2(float _DeltaTime)
 void AFalseKnight::SetBerserkAttackRecovery(float _DeltaTime)
 {
 	ActiveGravity();
+
 	ChangeStunAnimation();
 
 	ResetRendererOffset();
@@ -766,6 +787,7 @@ void AFalseKnight::SetBerserkAttackRecovery(float _DeltaTime)
 void AFalseKnight::SetBerserkAttackRecovery2(float _DeltaTime)
 {
 	ActiveGravity();
+
 	ChangeStunAnimation();
 
 	bIsResting = true; // 패턴과 패턴 간 쿨타임 적용
@@ -778,7 +800,11 @@ void AFalseKnight::SetBerserkAttackRecovery2(float _DeltaTime)
 void AFalseKnight::SetStun(float _DeltaTime)
 {
 	ActiveGravity();
+
 	ResetRendererOffset();
+	BodyCollision->SetActive(false); // 본체는 무적
+	bIsInit = true;
+
 	FVector Offset = { 0.0f, 30.0f };
 	SetRendererOffset(Offset);
 
@@ -794,9 +820,10 @@ void AFalseKnight::SetStunOpen(float _DeltaTime)
 		bIsInit = false;
 		bIsBerserkMode = true; // 최초 스턴부터 광폭화 모드를 발동
 
-		BodyCollision->SetActive(false); // 본체는 무적
+		Head->SetActive(true);
+		Head->SetDamage(false);
 
-		// 머리 생성
+		// 헤드 생성
 		FVector Offset = { 135.0f, -100.0f };
 		if (true == bIsLeft)
 		{
@@ -807,40 +834,78 @@ void AFalseKnight::SetStunOpen(float _DeltaTime)
 			Head->SetLocation(this, { -Offset.X, -Offset.Y });
 		}
 	}
-
-	//int Att = Knight->GetStatRef().GetAtt();
-	//HeadHp -= Att;
-	//if (0 >= HeadHp)
-	//{
-	//	// 스턴 상태 종료
-	//}
-	//else //스턴 히트 이펙트
-	//{
-	//	FSM.ChangeState(EMonsterState::STUN_HIT);
-	//}
-
 }
 
 void AFalseKnight::SetStunHit(float _DeltaTime)
 {
 	ActiveGravity();
+	UEngineDebug::OutPutString("스턴 히트" + std::to_string(HeadHp));
 
-	ChangeNextState(EMonsterState::STUN_OPEN);
+	Head->GetRenderer()->ChangeAnimation("StunHit");
+	if (0 >= HeadHp)
+	{
+		bCanStunRecovery = false;
+
+		// 스턴 초기화
+		bIsStun = false; // 스턴 종료
+
+		--DeathCountValue;
+		if (0 >= DeathCountValue)
+		{
+			bIsDeathAir = true;
+			FSM.ChangeState(EMonsterState::DEATH_AIR);
+			return;
+		}
+		else
+		{
+			bIsDeathAir = false;
+			FSM.ChangeState(EMonsterState::STUN_RECOVERY);
+			return;
+		}
+	}
+	else
+	{
+		TimeEventer->AddEndEvent(0.3f, [this]()
+			{
+				bIsInit = true;
+				Head->GetRenderer()->ChangeAnimation("Stun");
+				FSM.ChangeState(EMonsterState::STUN_OPEN);
+			});
+	}
 }
 
 void AFalseKnight::SetStunRecovery(float _DeltaTime)
 {
 	ActiveGravity();
-	bIsInit = true;
+
+	if (false == bIsDeathAir)
+	{
+		HeadHp = 40;
+		PhaseHp = 75;
+
+		Head->SetActive(false);
+
+		TimeEventer->AddEndEvent(2.0f, [this]()
+			{
+				BodyCollision->SetActive(true);
+			});
+	}
+
+	ChangeNextState(EMonsterState::IDLE);	
 }
 
 void AFalseKnight::SetDeathAir(float _DeltaTime)
 {
 	ActiveGravity();
+	BodyCollision->SetActive(false);
+	Head->SetActive(false);
+
 }
 
 void AFalseKnight::SetDeathLand(float _DeltaTime)
 {
 	ActiveGravity();
+
+	//Head->Release(); // 로직 추후 수정
 }
 

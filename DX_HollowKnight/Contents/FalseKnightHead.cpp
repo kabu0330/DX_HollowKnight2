@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "FalseKnightHead.h"
+#include "FalseKnight.h"
 
 AFalseKnightHead::AFalseKnightHead()
 {
@@ -13,12 +14,15 @@ AFalseKnightHead::AFalseKnightHead()
 	FVector HeadScale = { 120.0f, 120.0f };
 	//BodyRenderer->SetAutoScale(false);
 	//BodyRenderer->SetRelativeScale3D(HeadScale);
+	ZSort = static_cast<float>(EZOrder::MONSTER) - 1.0f;
+	BodyRenderer->SetWorldLocation({ 0.0f, 0.0f, ZSort });
 
 	std::string AFalseKnightHead = "FalseKnightHead.png";
 	std::string FalseKnightDeath = "FalseKnightDeath.png";
 
-	float FrameTime = 0.5f;
-	BodyRenderer->CreateAnimation("Stun", AFalseKnightHead, 0, 4, FrameTime);
+	float StunFrame = 0.5f;
+	float FrameTime = 0.1f;
+	BodyRenderer->CreateAnimation("Stun", AFalseKnightHead, 0, 4, StunFrame);
 	BodyRenderer->CreateAnimation("StunHit", AFalseKnightHead, 5, 7, FrameTime, false);
 
 	BodyRenderer->ChangeAnimation("Stun");
@@ -39,11 +43,55 @@ void AFalseKnightHead::BeginPlay()
 void AFalseKnightHead::Tick(float _DeltaTime)
 {
 	ASkill::Tick(_DeltaTime);
-
 	
+}
+
+void AFalseKnightHead::SetCollisionEvent()
+{
+	Collision->SetCollisionEnter(std::bind(&AFalseKnightHead::Collide, this, std::placeholders::_1, std::placeholders::_2));
+}
+
+void AFalseKnightHead::Collide(UCollision* _This, UCollision* _Other)
+{
+	Attack();
+}
+
+void AFalseKnightHead::Attack()
+{
+	UEngineDebug::OutPutString("헤드 어택!!!");
+
+	if (nullptr == Boss)
+	{
+		MSGASSERT("거짓된 기사의 포인터를 가지고 있지 않습니다. SetParent 함수를 이용하여 연결하여 주세요.");
+		return;
+	}
+	
+	int Att = Knight->GetStatRef().GetAtt();
+	Boss->AddHeadHp(-Att);
+
+	if (false == bIsDamage)
+	{
+		Boss->GetFSM().ChangeState(EMonsterState::STUN_HIT);
+		bIsDamage = true;
+	}
+
 }
 
 void AFalseKnightHead::Release()
 {
+	if (false == bCanRelease)
+	{
+		return;
+	}
+	if (nullptr != Collision)
+	{
+		Collision->Destroy();
+	}
+
+	if (true == BodyRenderer->IsCurAnimationEnd())
+	{
+		BodyRenderer->Destroy();
+		Destroy();
+	}
 }
 

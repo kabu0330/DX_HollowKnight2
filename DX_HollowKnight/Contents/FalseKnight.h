@@ -15,6 +15,15 @@ public:
 	AFalseKnight& operator=(const AFalseKnight& _Other) = delete;
 	AFalseKnight& operator=(AFalseKnight&& _Other) noexcept = delete;
 
+	UFSMStateManager& GetFSM()
+	{
+		return FSM;
+	}
+	void AddHeadHp(int _Att)
+	{
+		HeadHp += _Att;
+	}
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime)	override;
@@ -23,8 +32,10 @@ protected:
 	void CreateAnimation() override;
 
 	void DamageLogic(int _KnightAtt) override;
-	int PhaseHp = 5;
+	int PhaseHp = 15;
 	int HeadHp = 40;
+
+	int DeathCountValue = 2;
 
 private:
 	void BossPatternTimeElapsed(float _DeltaTime);
@@ -65,6 +76,8 @@ private:
 
 	void ChangeStunAnimation();
 	bool bIsInit = true;
+	bool bCanStunRecovery = false;
+	bool bIsDeathAir = false;
 private:
 	void SetIdle(float _DeltaTime) override;
 	void SetJumpAnticipate(float _DeltaTime) override;
