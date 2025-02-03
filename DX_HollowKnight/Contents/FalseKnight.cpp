@@ -5,6 +5,7 @@
 #include "MonsterProjectile.h"
 #include "FalseKnightHead.h"
 #include "ContentsRenderer.h"
+#include "PlayGameMode.h"
 
 AFalseKnight::AFalseKnight()
 {
@@ -31,7 +32,7 @@ void AFalseKnight::Tick(float _DeltaTime)
 void AFalseKnight::SetStatus()
 {
 	FStatusData Data;
-	Data.Velocity = 0.0f;
+	Data.Velocity = 400.0f;
 	Data.InitVelocity = Data.Velocity;
 	Data.RunSpeed = Data.Velocity * 2.5f;
 	Data.DashSpeed = Data.Velocity * 3.0f;
@@ -99,8 +100,6 @@ void AFalseKnight::CreateAnimation()
 	float StunTime = 0.15f;
 	BodyRenderer->SetName("FalseKnight");
 	BodyRenderer->CreateAnimation("Idle", MonsterStr, 0, 3, IdleTime);
-	//BodyRenderer->CreateAnimation("WalkAnticipate", MonsterStr, 7, 8, RunnigTime, false);
-	//BodyRenderer->CreateAnimation("Walk", MonsterStr, 9, 13, RunnigTime);
 	BodyRenderer->CreateAnimation("JumpAnticipate", MonsterStr, 13, 15, RunnigTime, false);
 	BodyRenderer->CreateAnimation("Jump", MonsterStr, 16, 19, JumpTime, false);
 	BodyRenderer->CreateAnimation("Jumping", MonsterStr, 19, 19, JumpTime, false);
@@ -810,12 +809,34 @@ void AFalseKnight::SetStun(float _DeltaTime)
 	FVector Offset = { 0.0f, 30.0f };
 	SetRendererOffset(Offset);
 
+	// 잠시 게임 정지
+	CreateStunEffect();
+
+
+
 	ChangeNextState(EMonsterState::STUN_OPEN);
+}
+
+void AFalseKnight::CreateStunEffect()
+{
+	if (true == bIsStunEffect)
+	{
+		return;
+	}
+	bIsStunEffect = true;
+
+	AEffect* WhiteEffect = GetWorld()->SpawnActor<AEffect>().get();
+	WhiteEffect->SetZSort(static_cast<int>(EZOrder::MONSTER_SKILL_FRONT) - 6);
+	WhiteEffect->SetName("Stun White Effect");
+	WhiteEffect->ChangeAnimation("StunEffect03", GetActorLocation());
+	WhiteEffect->SetScale(2.5f);
+	WhiteEffect->SetLocation(this);
 }
 
 void AFalseKnight::SetStunOpen(float _DeltaTime)
 {
 	ActiveGravity();
+	bIsStunEffect = false;
 
 	if (true == bIsInit) // 스턴 진입 최초 1회
 	{

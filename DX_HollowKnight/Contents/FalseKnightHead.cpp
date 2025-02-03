@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "FalseKnightHead.h"
 #include "FalseKnight.h"
+#include "KnightSkill.h"
 
 AFalseKnightHead::AFalseKnightHead()
 {
@@ -21,7 +22,7 @@ AFalseKnightHead::AFalseKnightHead()
 	std::string FalseKnightDeath = "FalseKnightDeath.png";
 
 	float StunFrame = 0.5f;
-	float FrameTime = 0.1f;
+	float FrameTime = 0.2f;
 	float DeathTime = 0.2f;
 	BodyRenderer->CreateAnimation("Stun", AFalseKnightHead, 0, 4, StunFrame);
 	BodyRenderer->CreateAnimation("StunHit", AFalseKnightHead, 5, 7, FrameTime, false);
@@ -56,6 +57,7 @@ void AFalseKnightHead::SetCollisionEvent()
 void AFalseKnightHead::Collide(UCollision* _This, UCollision* _Other)
 {
 	Attack();
+	CreateKnightHitEffect(_This, _Other);
 }
 
 void AFalseKnightHead::Attack()
@@ -77,6 +79,19 @@ void AFalseKnightHead::Attack()
 		bIsDamage = true;
 	}
 
+}
+
+void AFalseKnightHead::CreateKnightHitEffect(UCollision* _This, UCollision* _Other)
+{
+	AActor* Actor = _Other->GetActor();
+	AKnightSkill* KnightSkill = dynamic_cast<AKnightSkill*>(Actor);
+	if (nullptr == KnightSkill)
+	{
+		return;
+	}
+	KnightSkill->CreateHitEffect(_Other, Boss->GetCollision());
+	KnightSkill->CreateWhiteHitParticleEffect(_Other, Boss->GetCollision());
+	KnightSkill->CreateDamagedEffect(_Other, Boss->GetCollision());
 }
 
 void AFalseKnightHead::Release()

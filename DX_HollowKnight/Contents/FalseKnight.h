@@ -75,6 +75,8 @@ private:
 	class AFalseKnightHead* Head = nullptr;
 
 	void ChangeStunAnimation();
+	void CreateStunEffect();
+	bool bIsStunEffect = false;
 	bool bIsInit = true;
 	bool bCanStunRecovery = false;
 	bool bIsDeathAir = false;

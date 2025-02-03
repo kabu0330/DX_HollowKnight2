@@ -456,10 +456,6 @@ void AMonster::Move(float _DeltaTime)
 	{
 		return;
 	}
-	if (true == Stat.IsAttacking())
-	{
-		return;
-	}
 	bChooseDirection = true; // true면 방향 그만 바꿔
 	FVector FinalVelocity = FVector::ZERO;
 	if (false == bCanFly)

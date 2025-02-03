@@ -16,13 +16,15 @@ public:
 	AKnightSkill& operator=(const AKnightSkill& _Other) = delete;
 	AKnightSkill& operator=(AKnightSkill&& _Other) noexcept = delete;
 
+	virtual void CreateHitEffect(class UCollision* _This, class UCollision* _Other);
+	void CreateWhiteHitParticleEffect(class UCollision* _This, class UCollision* _Other);
+	void CreateDamagedEffect(class UCollision* _This, class UCollision* _Other);
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 	void SetCollisionEvent() override;
 	void Collide(class UCollision* _This, class UCollision* _Other);
 
-	virtual void CreateHitEffect(class UCollision* _This, class UCollision* _Other);
 	virtual void Attack(class UCollision* _This, class UCollision* _Other);
 	virtual void Knockback(class UCollision* _This, class UCollision* _Other);
 
@@ -30,8 +32,6 @@ protected:
 	virtual void KnightKnockback(FVector _KnockbackDir);
 	virtual void MonsterKnockback(class UCollision* _Other, FVector _KnockbackDir);
 
-	void CreateDamagedEffect(class UCollision* _This, class UCollision* _Other);
-	void CreateWhiteHitParticleEffect(class UCollision* _This, class UCollision* _Other);
 
 
 

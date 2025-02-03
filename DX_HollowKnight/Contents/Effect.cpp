@@ -26,6 +26,10 @@ AEffect::AEffect()
 	std::string Png = ".png";
 	float LightTime = 0.3f;
 
+	float StunEffectTime = 0.06f;
+	std::string StunEffect03 = "StunEffect03";
+	BodyRenderer->CreateAnimation(StunEffect03, StunEffect03, 0, 7, StunEffectTime, false);
+
 
 	std::string HitOrange = "HitOrange";
 	BodyRenderer->CreateAnimation(HitOrange, HitOrange + Png, 0, 0, LightTime, false);
