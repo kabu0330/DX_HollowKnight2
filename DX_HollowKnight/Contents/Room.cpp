@@ -13,6 +13,7 @@ ARoom::ARoom()
 	RootComponent = Default;
 
 	BackgroundRenderer = CreateDefaultSubObject<UContentsRenderer>();
+	BackgroundRenderer->SetName("Background");
 	BackgroundRenderer->SetupAttachment(RootComponent);
 }
 

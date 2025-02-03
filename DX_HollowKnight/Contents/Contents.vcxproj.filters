@@ -160,6 +160,9 @@
     <ClInclude Include="FalseKnight.h">
       <Filter>Play\Monster\Boss</Filter>
     </ClInclude>
+    <ClInclude Include="FalseKnightHead.h">
+      <Filter>Play\Monster\Boss</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -331,6 +334,9 @@
       <Filter>Play\Monster\Base\Skill</Filter>
     </ClCompile>
     <ClCompile Include="FalseKnight.cpp">
+      <Filter>Play\Monster\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="FalseKnightHead.cpp">
       <Filter>Play\Monster\Boss</Filter>
     </ClCompile>
   </ItemGroup>

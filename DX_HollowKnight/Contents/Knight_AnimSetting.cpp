@@ -4,6 +4,7 @@
 void AKnight::CreateRenderer()
 {
 	BodyRenderer = CreateDefaultSubObject<UContentsRenderer>();
+	BodyRenderer->SetName("Knight");
 	BodyRenderer->SetupAttachment(RootComponent);
 	BodyRenderer->SetAutoScaleRatio(1.0f);
 	float ZSort = static_cast<float>(EZOrder::PLAYER);

@@ -77,6 +77,10 @@ public:
 	{
 		RotationScale = { -1.0f, 1.0f, 1.0f };
 	}
+	void SwitchRotationScale()
+	{
+		RotationScale.X *= -1.0f;
+	}
 
 	// 좌우 반전을 원치 않는다면 false
 	void EnableRotation(bool _bIsRotation)

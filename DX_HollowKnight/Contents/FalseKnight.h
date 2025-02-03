@@ -60,12 +60,8 @@ private:
 	int BerserkAttackCount = 0;
 	int BerserkAttackCountMax = 8;
 
-	void SetBossCollisionEvent();
-	void OnHeadCollision(class UCollision* _This, class UCollision* _Other);
-	void CreateHeadCollision();
 	void CreateHeadRenderer();
-	class UCollision* HeadCollision = nullptr;	
-	class UContentsRenderer* HeadRenderer = nullptr;
+	class AFalseKnightHead* Head = nullptr;
 
 	void ChangeStunAnimation();
 	bool bIsInit = true;
