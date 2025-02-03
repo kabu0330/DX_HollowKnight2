@@ -126,7 +126,7 @@ void AMonster::ResetRendererOffset()
 
 void AMonster::ResetRendererOffset(UContentsRenderer* _Renderer)
 {
-	_Renderer->SetRelativeLocation({ RendererOffset.X, RendererOffset.Y, ZSort });
+	_Renderer->SetRelativeLocation({ RendererOffset.X, RendererOffset.Y, ZSort - 1.0f });
 }
 
 void AMonster::SetRendererOffset(FVector _Offset)

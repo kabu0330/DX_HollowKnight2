@@ -126,8 +126,8 @@ void AFalseKnight::CreateAnimation()
 	BodyRenderer->CreateAnimation("StunHit", MonsterStr, 62, 62, StunTime, false); 
 	BodyRenderer->CreateAnimation("StunRecovery", MonsterStr, {61, 60, 59, 58, 57, 56, 55, 54, 53, 52, 51, 50, 49, 48}, DeathTime, false);
 
-	BodyRenderer->CreateAnimation("DeathAir", MonsterStr, 0, 0, DeathAirTime, false);
-	BodyRenderer->CreateAnimation("DeathLand", MonsterStr, 81, 86, DeathTime, false);
+	BodyRenderer->CreateAnimation("DeathAir", MonsterStr, 72, 79, AttackAnticipateTime, false);
+	BodyRenderer->CreateAnimation("DeathLand", MonsterStr, 80, 80, DeathTime, false); //75
 
 	BodyRenderer->ChangeAnimation("Idle");
 }
@@ -698,6 +698,7 @@ void AFalseKnight::SetBerserkAttack(float _DeltaTime)
 				CreateAttackLogicAndEffect();
 				CreateDropObject();
 				CreateDropObject();
+				CreateDropObject();
 			});
 	}
 	bIsShowEffect = true;
@@ -737,6 +738,7 @@ void AFalseKnight::SetBerserkAttack2(float _DeltaTime)
 				FVector Offset = { -160.0f, 20.0f };
 				SetRendererOffset(Offset);
 				CreateAttackLogicAndEffect();
+				CreateDropObject();
 				CreateDropObject();
 				CreateDropObject();
 			});
@@ -885,7 +887,7 @@ void AFalseKnight::SetStunRecovery(float _DeltaTime)
 
 		Head->SetActive(false);
 
-		TimeEventer->AddEndEvent(2.0f, [this]()
+		TimeEventer->AddEndEvent(1.5f, [this]()
 			{
 				BodyCollision->SetActive(true);
 			});
@@ -899,13 +901,46 @@ void AFalseKnight::SetDeathAir(float _DeltaTime)
 	ActiveGravity();
 	BodyCollision->SetActive(false);
 	Head->SetActive(false);
+	bIsDeath = true;
 
+	JumpActionInitElapsed += _DeltaTime;
+	float JumpActionTime = 1.0f;
+	if (JumpActionInitElapsed <= JumpActionTime)
+	{
+		Jump(_DeltaTime);
+	}
+	if (true == bIsOnGround && true == BodyRenderer->IsCurAnimationEnd())
+	{
+		FSM.ChangeState(EMonsterState::DEATH_LAND);
+	}
 }
 
 void AFalseKnight::SetDeathLand(float _DeltaTime)
 {
 	ActiveGravity();
 
-	//Head->Release(); // 로직 추후 수정
+	if (true == bIsDeath) // 딱 한번만 호출
+	{
+		ResetRendererOffset();
+		FVector Offset = { 0.0f, -70.0f };
+		SetRendererOffset(Offset);
+
+		Head->SetActive(true);
+		Head->GetCollision()->SetActive(false);
+		ResetRendererOffset(Head->GetRenderer());
+		Head->ChangeAnimation("Death");
+
+		FVector HeadOffset = { 260.0f, -130.0f };
+		if (true == bIsLeft)
+		{
+			Head->SetLocation(this, { -HeadOffset.X, HeadOffset.Y });
+		}
+		else
+		{
+			Head->SetLocation(this, { -HeadOffset.X, -HeadOffset.Y });
+		}
+
+		bIsDeath = false;
+	}
 }
 

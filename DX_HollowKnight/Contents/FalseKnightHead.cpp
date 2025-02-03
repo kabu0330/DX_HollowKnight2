@@ -22,8 +22,10 @@ AFalseKnightHead::AFalseKnightHead()
 
 	float StunFrame = 0.5f;
 	float FrameTime = 0.1f;
+	float DeathTime = 0.2f;
 	BodyRenderer->CreateAnimation("Stun", AFalseKnightHead, 0, 4, StunFrame);
 	BodyRenderer->CreateAnimation("StunHit", AFalseKnightHead, 5, 7, FrameTime, false);
+	BodyRenderer->CreateAnimation("Death", FalseKnightDeath, 0, 13, DeathTime, false);
 
 	BodyRenderer->ChangeAnimation("Stun");
 	BodyRenderer->SetActive(true);

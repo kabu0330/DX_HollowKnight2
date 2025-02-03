@@ -78,6 +78,8 @@ private:
 	bool bIsInit = true;
 	bool bCanStunRecovery = false;
 	bool bIsDeathAir = false;
+
+	bool bIsDeath = false;
 private:
 	void SetIdle(float _DeltaTime) override;
 	void SetJumpAnticipate(float _DeltaTime) override;
