@@ -116,6 +116,11 @@ public:
 
 	bool bIsValid = true;
 
+	bool IsPixelCollision()
+	{
+		return bIsPixelCollision;
+	}
+
 protected:
 	AKnight* Knight = nullptr;
 	class UTimeEventComponent* TimeEventer = nullptr;

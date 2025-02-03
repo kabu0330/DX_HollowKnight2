@@ -133,6 +133,10 @@ void AEffect::Tick(float _DeltaTime)
 
 void AEffect::SetPosition()
 {
+	if (true == bIsPixelCollision)
+	{
+		return;
+	}
 	if (false == bIsAddLocation) // Set
 	{
 		CheckDirection(); // 왼쪽인지, 오른쪽인지 계산하고

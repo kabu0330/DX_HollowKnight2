@@ -21,6 +21,7 @@ protected:
 
 private:
 	void Release() override;
+	void ChangePixelCollisionAnimaion();
 	
 };
 

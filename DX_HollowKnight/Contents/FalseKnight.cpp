@@ -2,6 +2,7 @@
 #include "FalseKnight.h"
 #include "MonsterEffect.h"
 #include <EngineBase/EngineRandom.h>
+#include "MonsterProjectile.h"
 
 AFalseKnight::AFalseKnight()
 {
@@ -104,6 +105,13 @@ void AFalseKnight::CreateAnimation()
 	BodyRenderer->CreateAnimation("Attack", MonsterStr, 29, 31, AttackFrame, false);
 	BodyRenderer->CreateAnimation("AttackRecovery", MonsterStr, 32, 34, AttackRecoveryFrame, false);
 	BodyRenderer->CreateAnimation("AttackRecovery2", MonsterStr, 35, 36, AttackRecoveryFrame, false);
+
+	BodyRenderer->CreateAnimation("BerserkAttackAnticipate", MonsterStr, 23, 28, AttackAnticipateTime, false);
+	BodyRenderer->CreateAnimation("BerserkAttack", MonsterStr, 29, 31, DeathAirTime, false);
+	BodyRenderer->CreateAnimation("BerserkAttack2", MonsterStr, 29, 31, DeathAirTime, false);
+	BodyRenderer->CreateAnimation("BerserkAttackRecovery", MonsterStr, 32, 34, DeathAirTime, false);
+	BodyRenderer->CreateAnimation("BerserkAttackRecovery2", MonsterStr, 35, 36, AttackRecoveryFrame, false);
+
 	BodyRenderer->CreateAnimation("JumpAttackAnticipate", MonsterStr, 37, 42, AttackRecoveryFrame, false);
 	BodyRenderer->CreateAnimation("JumpAttack", MonsterStr, 43, 43, AttackAnticipateTime, false);
 	BodyRenderer->CreateAnimation("JumpAttackRecovery", MonsterStr, 44, 45, AttackRecoveryFrame, false);
@@ -126,6 +134,18 @@ void AFalseKnight::BossPatternTimeElapsed(float _DeltaTime)
 		{
 			JumpElapsed = 0.0f;
 			bCanJump = true;
+		}
+	}
+
+	// 광폭화 공격
+	if (false == bCanBerserkAttack)
+	{
+		BerserkAttackElapsed += _DeltaTime;
+		float Cooldown = 10.0f;
+		if (BerserkAttackElapsed >= Cooldown)
+		{
+			BerserkAttackElapsed = 0.0f;
+			bCanBerserkAttack = true;
 		}
 	}
 
@@ -232,23 +252,32 @@ void AFalseKnight::SetIdle(float _DeltaTime)
 
 	// 패턴
 	// 패턴 1. 지면강타
-	if (true == IsPlayerNearby() && false == Stat.IsAttacking() && true == bCanAttack) // 플레이어 조우
+	//if (true == IsPlayerNearby() && false == Stat.IsAttacking() && true == bCanAttack) // 플레이어 조우
+	//{
+	//	FSM.ChangeState(EMonsterState::ATTACK_ANTICIPATE);
+	//}
+	// 패턴 2. 점프, 3. 점프 공격
+	//if (true == IsPlayerNearby() && false == Stat.IsAttacking() && true == bCanJump) 
+	//{
+	//	UEngineRandom Random;
+	//	float Result = Random.Randomfloat(-300.0f, 300.0f);
+	//	Stat.SetVelocity(Result);
+	//	FSM.ChangeState(EMonsterState::JUMP_ANTICIPATE);
+	//}
+	// 패턴 4. 광폭화 공격
+	if (true == IsPlayerNearby() && false == Stat.IsAttacking() && true == bCanBerserkAttack && true == bIsBerserkMode)
 	{
-		FSM.ChangeState(EMonsterState::ATTACK_ANTICIPATE);
-	}
-	// 패턴 2. 점프
-	if (true == IsPlayerNearby() && false == Stat.IsAttacking() && true == bCanJump) 
-	{
-		UEngineRandom Random;
-		float Result = Random.Randomfloat(-300.0f, 300.0f);
-		Stat.SetVelocity(Result);
-		FSM.ChangeState(EMonsterState::JUMP_ANTICIPATE);
+		FSM.ChangeState(EMonsterState::BERSERK_ATTACK_ANTICIPATE);
 	}
 }
 
 void AFalseKnight::SetJumpAnticipate(float _DeltaTime)
 {
 	ActiveGravity();
+
+	Stat.SetAttacking(true);
+	bCanAttack = false;
+	bCanRotation = false;
 	bCanJump = false;
 
 	UEngineRandom Random;
@@ -266,7 +295,6 @@ void AFalseKnight::SetJumpAnticipate(float _DeltaTime)
 void AFalseKnight::SetJump(float _DeltaTime)
 {
 	ActiveGravity();
-
 
 	Move(_DeltaTime);
 
@@ -380,8 +408,8 @@ void AFalseKnight::SetJumpAttackLand(float _DeltaTime)
 
 void AFalseKnight::SetAttackAnticipate(float _DeltaTime)
 {
-	CheckDeath();
 	ActiveGravity();
+	CheckDeath();
 
 	// 렌더러 위치 조정
 	FVector Offset = { 40.0f, -20.0f };
@@ -411,6 +439,9 @@ void AFalseKnight::SetAttack(float _DeltaTime)
 				FVector Offset = { -160.0f, 20.0f };
 				SetRendererOffset(Offset);
 				CreateAttackLogicAndEffect();
+				TimeEventer->AddEndEvent(0.2f, std::bind(&AFalseKnight::CreateGroundImpack, this));
+				CreateDropObject();
+				CreateDropObject();
 			});
 	}
 	bIsShowEffect = true;
@@ -457,7 +488,6 @@ void AFalseKnight::CreateAttackLogicAndEffect()
 		Skill->SetLocation(this, { Offset.X, -Offset.Y });
 		Effect->SetLocation(this, { Offset.X, -(Offset.Y + EffectOffset.Y) });
 	}	
-	TimeEventer->AddEndEvent(0.2f, std::bind(&AFalseKnight::CreateGroundImpack, this));
 }
 
 void AFalseKnight::CreateGroundImpack()
@@ -488,6 +518,51 @@ void AFalseKnight::CreateGroundImpack()
 	}
 }
 
+void AFalseKnight::CreateDropObject()
+{
+	//if (false == bIsBerserkMode)
+	//{
+	//	return;
+	//}
+
+	AMonsterProjectile* DropObject = GetWorld()->SpawnActor<AMonsterProjectile>().get();
+	DropObject->ChangeAnimation("BossDropObject");
+	//GroundWave->ChangeNextAnimation("BossGroundWaveLoop"); // 현재 애니메이션이 끝나면 바꿀 애니메이션
+	DropObject->SetParentMonster(this);
+	DropObject->SetAutoRelease(false);
+	DropObject->SetZSort(static_cast<int>(EZOrder::KNIGHT_SKILL_FRONT) - DropObjectCount);
+	DropObject->SetParentRoom(ParentRoom); // 픽셀충돌 검사
+	DropObject->SetCollisionTime(AttackDuration * 5.0f);
+	DropObject->SetCollisionScale({ 157.0f * 0.6f, 143.0f * 0.6f });
+	DropObject->SetScale(0.7f);
+
+	FVector ScreenSize = UEngineCore::GetScreenScale();
+	FVector ScreenHalfSize = ScreenSize.Half();
+
+	std::random_device rd;
+	std::mt19937_64 RandomGen(rd() + static_cast<__int64>(DropObjectCount));
+	std::uniform_real_distribution<float> Dist(-ScreenHalfSize.X, ScreenHalfSize.X);
+	std::uniform_real_distribution<float> Dist2(-550.0f, -350.0f);
+
+	FVector Offset = FVector{ Dist(RandomGen), ScreenHalfSize.Y + 300.0f };
+	FVector Speed = FVector(0.0f, Dist2(RandomGen));
+	if (true == bIsLeft)
+	{
+		DropObject->AddLocation(this, -Speed, Offset);
+	}
+	else
+	{
+		DropObject->AddLocation(this, Speed, { Offset.X, -Offset.Y });
+	}
+
+
+	++DropObjectCount;
+	if (50 >= DropObjectCount)
+	{
+		DropObjectCount = 1;
+	}
+}
+
 void AFalseKnight::SetAttackRecovery(float _DeltaTime)
 {
 	ActiveGravity();
@@ -514,17 +589,161 @@ void AFalseKnight::SetAttackRecovery2(float _DeltaTime)
 
 void AFalseKnight::SetBerserkAttackAnticipate(float _DeltaTime)
 {
+	ActiveGravity();
+	CheckDeath();
+
+	bCanBerserkAttack = false;
+
+	// 렌더러 위치 조정
+	FVector Offset = { 40.0f, -20.0f };
+	SetRendererOffset(Offset);
+
+	Stat.SetAttacking(true);
+	bCanAttack = false;
+	bCanRotation = false;
+	ChangeNextState(EMonsterState::BERSERK_ATTACK);
 }
 
 void AFalseKnight::SetBerserkAttack(float _DeltaTime)
 {
+	// 렌더러 위치 조정
+	if (false == bIsOffsetAttack1Frame)
+	{
+		if (1 >= BerserkAttackCount)
+		{
+			bIsLeft = !bIsLeft;
+			bCanRotation = true; // 방향전환 허용
+			CheckDirection(); // 좌우 반전 적용
+		}
+		++BerserkAttackCount;
+
+		FVector Offset = { -70.0f, 83.0f };
+		SetRendererOffset(Offset);
+		bIsOffsetAttack1Frame = true;
+	}
+	if (false == bIsShowEffect) // 한 번만 공격 로직 호출
+	{
+		TimeEventer->AddEndEvent(0.1f, [this]()
+			{
+				FVector Offset = { -160.0f, 20.0f };
+				SetRendererOffset(Offset);
+				CreateAttackLogicAndEffect();
+				CreateDropObject();
+				CreateDropObject();
+			});
+	}
+	bIsShowEffect = true;
+
+	TimeEventer->AddEndEvent(0.2f, [this]()
+		{
+			FVector Offset = { -160.0f, -45.0f };
+			SetRendererOffset(Offset);
+		});
+
+	ChangeNextState(EMonsterState::BERSERK_ATTACK_RECOVERY);
 }
 
 void AFalseKnight::SetBerserkAttack2(float _DeltaTime)
 {
+	ActiveGravity();
+
+	// 렌더러 위치 조정
+	if (false == bIsOffsetAttack1Frame)
+	{
+		++BerserkAttackCount;
+
+		bIsLeft = !bIsLeft;
+		bCanRotation = true; // 방향전환 허용
+		CheckDirection(); // 좌우 반전 적용
+
+		FVector Offset = { -70.0f, 83.0f };
+		SetRendererOffset(Offset);
+		bIsOffsetAttack1Frame = true;
+	}
+	if (false == bIsShowEffect) // 한 번만 공격 로직 호출
+	{
+		TimeEventer->AddEndEvent(0.1f, [this]()
+			{
+				FVector Offset = { -160.0f, 20.0f };
+				SetRendererOffset(Offset);
+				CreateAttackLogicAndEffect();
+				CreateDropObject();
+				CreateDropObject();
+			});
+	}
+	bIsShowEffect = true;
+
+	TimeEventer->AddEndEvent(0.2f, [this]()
+		{
+			FVector Offset = { -160.0f, -45.0f };
+			SetRendererOffset(Offset);
+		});
+
+	ChangeNextState(EMonsterState::BERSERK_ATTACK_RECOVERY);
 }
 
 void AFalseKnight::SetBerserkAttackRecovery(float _DeltaTime)
 {
+	ActiveGravity();
+
+	ResetRendererOffset();
+	FVector Offset = { 0.0f, 60.0f };
+	SetRendererOffset(Offset);
+
+	bIsShowEffect = false;
+	bIsOffsetAttack1Frame = false;
+	
+	if (BerserkAttackCount > BerserkAttackCountMax)
+	{
+		ChangeNextState(EMonsterState::BERSERK_ATTACK_RECOVERY_2);
+	}
+	else
+	{
+		if (1 == BerserkAttackCount % 2)
+		{
+			ChangeNextState(EMonsterState::BERSERK_ATTACK);
+			return;
+		}
+		else
+		{
+			ChangeNextState(EMonsterState::BERSERK_ATTACK_2);
+			return;
+		}
+	}
+}
+
+void AFalseKnight::SetBerserkAttackRecovery2(float _DeltaTime)
+{
+	ActiveGravity();
+	bIsResting = true; // 패턴과 패턴 간 쿨타임 적용
+	BerserkAttackCount = 0;
+	ResetRendererOffset();
+
+	ChangeNextState(EMonsterState::IDLE);
+}
+
+void AFalseKnight::SetStun(float _DeltaTime)
+{
+	ActiveGravity();
+}
+
+void AFalseKnight::SetStunOpen(float _DeltaTime)
+{
+	ActiveGravity();
+}
+
+void AFalseKnight::SetStunHit(float _DeltaTime)
+{
+	ActiveGravity();
+}
+
+void AFalseKnight::SetDeathAir(float _DeltaTime)
+{
+	ActiveGravity();
+}
+
+void AFalseKnight::SetDeathLand(float _DeltaTime)
+{
+	ActiveGravity();
 }
 

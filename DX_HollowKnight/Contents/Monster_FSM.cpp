@@ -36,7 +36,8 @@ void AMonster::SetFSM()
 	CreateState(EMonsterState::BERSERK_ATTACK_ANTICIPATE, &AMonster::SetBerserkAttackAnticipate, "BerserkAttackAnticipate");
 	CreateState(EMonsterState::BERSERK_ATTACK, &AMonster::SetBerserkAttack, "BerserkAttack");
 	CreateState(EMonsterState::BERSERK_ATTACK_2, &AMonster::SetBerserkAttack2, "BerserkAttack2");
-	CreateState(EMonsterState::BERSERK_ATTACK_RECOVERY, &AMonster::SetBerserkAttackRecovery, "BerserkAttackAttackRecovery");
+	CreateState(EMonsterState::BERSERK_ATTACK_RECOVERY, &AMonster::SetBerserkAttackRecovery, "BerserkAttackRecovery");
+	CreateState(EMonsterState::BERSERK_ATTACK_RECOVERY_2, &AMonster::SetBerserkAttackRecovery2, "BerserkAttackRecovery2");
 
 	CreateState(EMonsterState::THROW_ANTICIPATE, &AMonster::SetThrowAnticipate, "ThrowAnticipate");
 	CreateState(EMonsterState::THROW, &AMonster::SetThrow, "Throw");

@@ -172,6 +172,7 @@ void UContentsResource::LoadResourceDirectory()
 	// Monster Effect
 	LoadContentsResource("Image/Effect/Monster/BossGroundWave");
 	LoadContentsResource("Image/Effect/Monster/BossDropObject");
+	LoadContentsResource("Image/Effect/Monster/ShotImpact");
 
 	// UI
 	LoadContentsResource("Image/UI/HealthIdle");

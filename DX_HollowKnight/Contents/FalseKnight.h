@@ -48,7 +48,13 @@ private:
 
 	void CreateJumpAttackLogicAndEffect();
 
+	void CreateDropObject();
 	bool bIsBerserkMode = false; // 첫 스턴 전까진 광폭 상태가 아니다.
+	bool bCanBerserkAttack = true;
+	float BerserkAttackElapsed = 0.0f;
+	int DropObjectCount = 1;
+	int BerserkAttackCount = 0;
+	int BerserkAttackCountMax = 8;
 
 private:
 	void SetIdle(float _DeltaTime) override;
@@ -70,5 +76,13 @@ private:
 	void SetBerserkAttack(float _DeltaTime) override;
 	void SetBerserkAttack2(float _DeltaTime) override;
 	void SetBerserkAttackRecovery(float _DeltaTime) override;
+	void SetBerserkAttackRecovery2(float _DeltaTime) override;
+
+	void SetStun(float _DeltaTime);
+	void SetStunOpen(float _DeltaTime);
+	void SetStunHit(float _DeltaTime);
+
+	void SetDeathAir(float _DeltaTime);
+	void SetDeathLand(float _DeltaTime);
 };
 

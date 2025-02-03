@@ -16,6 +16,13 @@ AMonsterProjectile::AMonsterProjectile()
 	std::string OrangeBullet = "OrangeBullet";
 	BodyRenderer->CreateAnimation(OrangeBullet, HitOrange + Png, 0, 0, FrameTime);
 
+	float RatationTime = 0.06f;
+	std::string BossDropObject = "BossDropObject";
+	BodyRenderer->CreateAnimation(BossDropObject, BossDropObject, 0, 7, RatationTime);
+
+	std::string ShotImpact = "ShotImpact";
+	BodyRenderer->CreateAnimation(ShotImpact, ShotImpact, 0, 5, RatationTime);
+
 
 	BodyRenderer->ChangeAnimation(BulletFire);
 }
@@ -32,7 +39,7 @@ void AMonsterProjectile::BeginPlay()
 void AMonsterProjectile::Tick(float _DeltaTime)
 {
 	AMonsterSkill::Tick(_DeltaTime);
-
+	ChangePixelCollisionAnimaion();
 }
 
 void AMonsterProjectile::Release()
@@ -49,5 +56,19 @@ void AMonsterProjectile::Release()
 			BodyRenderer->Destroy();
 			Destroy();
 		});
+}
+
+void AMonsterProjectile::ChangePixelCollisionAnimaion()
+{
+	if (true == bIsPixelCollision)
+	{
+		BodyRenderer->ChangeAnimation("ShotImpact");
+
+		Collision->SetActive(false);
+		if (true == BodyRenderer->IsCurAnimationEnd())
+		{
+			BodyRenderer->SetActive(false);
+		}
+	}
 }
 
