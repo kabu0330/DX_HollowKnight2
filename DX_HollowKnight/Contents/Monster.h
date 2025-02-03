@@ -86,6 +86,8 @@ public:
 	void CreateOrangeParticleEffect();
 	void CreateHitOrangeEffect();
 
+	virtual void DamageLogic(int _KnightAtt) {};
+
 protected:
 	// 반드시 자식 클래스가 재정의 해야하는 가상함수
 	void BeginPlay() override;
@@ -101,6 +103,7 @@ protected:
 
 	void ResetRendererOffset();
 	void SetRendererOffset(FVector _Offset);
+	void SetCollisionOffset(UCollision* _Target, FVector _Offset);
 
 	void SetWalkRendererOffset();
 	FVector WalkRendererOffset = FVector::ZERO;
@@ -154,6 +157,7 @@ protected:
 	float AttackCooldown = 2.0f;
 	float AttackElapsed = 0.0f;
 	float AttackFrameElapsed = 0.0f;
+	bool bIsStun = false;
 
 	// 기타 스텟
 	float HitStunDuration = 1.0f;

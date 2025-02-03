@@ -56,6 +56,7 @@ void AKnightSkill::Attack(UCollision* _This, UCollision* _Other)
 	{
 		int KnightAtt = Knight->GetStatRef().GetAtt();
 		UFightUnit::OnHit(Monster, KnightAtt);
+		Monster->DamageLogic(KnightAtt);
 
 		int MonsterHp = Monster->GetStatRef().GetHp();
 		UEngineDebug::OutPutString("나이트가 몬스터에게 " + std::to_string(KnightAtt) + "만큼 데미지를 주었습니다. 현재 체력 : " + std::to_string(MonsterHp));

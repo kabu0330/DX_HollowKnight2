@@ -22,6 +22,10 @@ protected:
 	void SetOffset() override;
 	void CreateAnimation() override;
 
+	void DamageLogic(int _KnightAtt) override;
+	int PhaseHp = 5;
+	int HeadHp = 40;
+
 private:
 	void BossPatternTimeElapsed(float _DeltaTime);
 	float JumpElapsed = 0.0f;
@@ -56,6 +60,10 @@ private:
 	int BerserkAttackCount = 0;
 	int BerserkAttackCountMax = 8;
 
+	UCollision* HeadCollision = nullptr;
+	void CreateHeadCollision();
+
+	void ChangeStunAnimation();
 private:
 	void SetIdle(float _DeltaTime) override;
 	void SetJumpAnticipate(float _DeltaTime) override;

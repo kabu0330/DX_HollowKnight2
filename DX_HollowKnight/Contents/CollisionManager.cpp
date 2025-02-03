@@ -20,6 +20,7 @@ void UCollisionManager::CreateCollisionProfile(AGameMode* _GameMode)
 	_GameMode->GetWorld()->CreateCollisionProfile("MonsterObject");
 	_GameMode->GetWorld()->CreateCollisionProfile("MonsterPoint");
 	_GameMode->GetWorld()->CreateCollisionProfile("MonsterDetect");
+	_GameMode->GetWorld()->CreateCollisionProfile("MonsterHead");
 
 	// 기타 오브젝트
 	_GameMode->GetWorld()->CreateCollisionProfile("Object");
@@ -42,6 +43,7 @@ void UCollisionManager::LinkCollision(AGameMode* _GameMode)
 
 	// 나이트 공격
 	_GameMode->GetWorld()->LinkCollisionProfile("KnightObject", "Monster"); 
+	_GameMode->GetWorld()->LinkCollisionProfile("KnightObject", "MonsterHead"); 
 
 	// 몬스터 공격
 	_GameMode->GetWorld()->LinkCollisionProfile("Monster", "Knight"); 

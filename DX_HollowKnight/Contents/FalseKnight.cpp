@@ -23,6 +23,7 @@ void AFalseKnight::Tick(float _DeltaTime)
 	BossPatternTimeElapsed(_DeltaTime);
 	StartFlashEffect(_DeltaTime);
 	EndFlashEffect(_DeltaTime);
+	CreateHeadCollision();
 }
 
 void AFalseKnight::SetStatus()
@@ -61,7 +62,6 @@ void AFalseKnight::SetStatus()
 	AttackRecoveryFrame = 0.2f;
 
 	bIsDeathDestroy = false; // 죽으면 시체 없이 소멸할건지
-
 }
 
 void AFalseKnight::SetOffset()
@@ -94,6 +94,7 @@ void AFalseKnight::CreateAnimation()
 	float AttackAnticipateTime = 0.2f;
 	float DeathAirTime = 0.1f; // 날아가는 시간 조절에 따라서 자연스러움이 표현된다.
 	float DeathTime = 0.08f;
+	float StunTime = 0.15f;
 	BodyRenderer->CreateAnimation("Idle", MonsterStr, 0, 3, IdleTime);
 	//BodyRenderer->CreateAnimation("WalkAnticipate", MonsterStr, 7, 8, RunnigTime, false);
 	//BodyRenderer->CreateAnimation("Walk", MonsterStr, 9, 13, RunnigTime);
@@ -116,11 +117,43 @@ void AFalseKnight::CreateAnimation()
 	BodyRenderer->CreateAnimation("JumpAttack", MonsterStr, 43, 43, AttackAnticipateTime, false);
 	BodyRenderer->CreateAnimation("JumpAttackRecovery", MonsterStr, 44, 45, AttackRecoveryFrame, false);
 	BodyRenderer->CreateAnimation("JumpAttackLand", MonsterStr, 46, 47, AttackRecoveryFrame, false);
-	BodyRenderer->CreateAnimation("Stun", MonsterStr, 49, 62, AttackRecoveryFrame, false);
+
+	BodyRenderer->CreateAnimation("Stun", MonsterStr, 48, 61, StunTime, false);
+	BodyRenderer->CreateAnimation("StunOpen", MonsterStr, 62, 62, StunTime, false);
 	BodyRenderer->CreateAnimation("DeathAir", MonsterStr, 78, 80, DeathAirTime, false);
 	BodyRenderer->CreateAnimation("DeathLand", MonsterStr, 81, 86, DeathTime, false);
 
 	BodyRenderer->ChangeAnimation("Idle");
+}
+
+void AFalseKnight::CreateHeadCollision()
+{
+	HeadCollision = CreateDefaultSubObject<UCollision>().get();
+	HeadCollision->SetupAttachment(RootComponent);
+	FVector HeadScale = { 120.0f, 120.0f };
+	HeadCollision->SetScale3D(HeadScale);
+	HeadCollision->SetWorldLocation({ BodyCollisionOffset.X, BodyCollisionOffset.Y, ZSort });
+	HeadCollision->SetCollisionProfileName("MonsterHead");
+	HeadCollision->SetActive(false);
+}
+
+void AFalseKnight::DamageLogic(int _KnightAtt)
+{
+	if (0 >= PhaseHp)
+	{
+		PhaseHp = 75;
+		bIsStun = true;
+	}
+	PhaseHp -= _KnightAtt;
+}
+
+void AFalseKnight::ChangeStunAnimation()
+{
+	if (true == bIsStun)
+	{
+		FSM.ChangeState(EMonsterState::STUN);
+		return;
+	}
 }
 
 void AFalseKnight::BossPatternTimeElapsed(float _DeltaTime)
@@ -209,7 +242,6 @@ void AFalseKnight::EndFlashEffect(float _DeltaTime)
 
 	if (0.0f >= BodyRenderer->ColorData.PlusColor.X)
 	{
-		//BodyRenderer->ColorData.PlusColor = { 0.0f, 0.0f, 0.0f };
 		bCanFlashEffect = false;
 		bIsEndFlashEffect = false;
 		return;
@@ -241,6 +273,8 @@ void AFalseKnight::SetIdle(float _DeltaTime)
 	GetRandomDirection(); // chasing이 false라면 랜덤이동
 	GetDirectionToPlayer(); // chasing이 true라면 추적
 
+	ChangeStunAnimation();
+
 	if (false == bIsOnGround && false == bCanFly)
 	{
 		return;
@@ -252,18 +286,18 @@ void AFalseKnight::SetIdle(float _DeltaTime)
 
 	// 패턴
 	// 패턴 1. 지면강타
-	//if (true == IsPlayerNearby() && false == Stat.IsAttacking() && true == bCanAttack) // 플레이어 조우
-	//{
-	//	FSM.ChangeState(EMonsterState::ATTACK_ANTICIPATE);
-	//}
+	if (true == IsPlayerNearby() && false == Stat.IsAttacking() && true == bCanAttack) // 플레이어 조우
+	{
+		FSM.ChangeState(EMonsterState::ATTACK_ANTICIPATE);
+	}
 	// 패턴 2. 점프, 3. 점프 공격
-	//if (true == IsPlayerNearby() && false == Stat.IsAttacking() && true == bCanJump) 
-	//{
-	//	UEngineRandom Random;
-	//	float Result = Random.Randomfloat(-300.0f, 300.0f);
-	//	Stat.SetVelocity(Result);
-	//	FSM.ChangeState(EMonsterState::JUMP_ANTICIPATE);
-	//}
+	if (true == IsPlayerNearby() && false == Stat.IsAttacking() && true == bCanJump) 
+	{
+		UEngineRandom Random;
+		float Result = Random.Randomfloat(-300.0f, 300.0f);
+		Stat.SetVelocity(Result);
+		FSM.ChangeState(EMonsterState::JUMP_ANTICIPATE);
+	}
 	// 패턴 4. 광폭화 공격
 	if (true == IsPlayerNearby() && false == Stat.IsAttacking() && true == bCanBerserkAttack && true == bIsBerserkMode)
 	{
@@ -274,6 +308,7 @@ void AFalseKnight::SetIdle(float _DeltaTime)
 void AFalseKnight::SetJumpAnticipate(float _DeltaTime)
 {
 	ActiveGravity();
+	ChangeStunAnimation();
 
 	Stat.SetAttacking(true);
 	bCanAttack = false;
@@ -295,6 +330,7 @@ void AFalseKnight::SetJumpAnticipate(float _DeltaTime)
 void AFalseKnight::SetJump(float _DeltaTime)
 {
 	ActiveGravity();
+	ChangeStunAnimation();
 
 	Move(_DeltaTime);
 
@@ -314,6 +350,7 @@ void AFalseKnight::SetJump(float _DeltaTime)
 void AFalseKnight::SetLand(float _DeltaTime)
 {
 	ActiveGravity();
+	ChangeStunAnimation();
 
 	JumpForce = 0.0f;
 	bIsResting = true; // 패턴과 패턴 간 쿨타임 적용
@@ -324,6 +361,7 @@ void AFalseKnight::SetLand(float _DeltaTime)
 void AFalseKnight::SetJumpAttackAnticipate(float _DeltaTime)
 {
 	ActiveGravity();
+	ChangeStunAnimation();
 
 	Move(_DeltaTime);
 	FVector Offset = { 50.0f, 60.0f }; 
@@ -345,6 +383,8 @@ void AFalseKnight::SetJumpAttackAnticipate(float _DeltaTime)
 void AFalseKnight::SetJumpAttack(float _DeltaTime)
 {
 	ActiveGravity();
+	ChangeStunAnimation();
+
 	FVector Offset = { -150.0f, 90.0f }; 
 	SetRendererOffset(Offset);
 
@@ -388,6 +428,7 @@ void AFalseKnight::CreateJumpAttackLogicAndEffect()
 void AFalseKnight::SetJumpAttackRecovery(float _DeltaTime)
 {
 	ActiveGravity();
+	ChangeStunAnimation();
 
 	FVector Offset = { 0.0f, 50.0f }; 
 	SetRendererOffset(Offset);
@@ -398,6 +439,7 @@ void AFalseKnight::SetJumpAttackRecovery(float _DeltaTime)
 void AFalseKnight::SetJumpAttackLand(float _DeltaTime)
 {
 	ActiveGravity();
+	ChangeStunAnimation();
 
 	FVector Offset = { 20.0f, 0.0f }; 
 	SetRendererOffset(Offset);
@@ -410,6 +452,7 @@ void AFalseKnight::SetAttackAnticipate(float _DeltaTime)
 {
 	ActiveGravity();
 	CheckDeath();
+	ChangeStunAnimation();
 
 	// 렌더러 위치 조정
 	FVector Offset = { 40.0f, -20.0f };
@@ -424,6 +467,7 @@ void AFalseKnight::SetAttackAnticipate(float _DeltaTime)
 void AFalseKnight::SetAttack(float _DeltaTime)
 {
 	ActiveGravity();
+	ChangeStunAnimation();
 
 	// 렌더러 위치 조정
 	if (false == bIsOffsetAttack1Frame)
@@ -566,6 +610,7 @@ void AFalseKnight::CreateDropObject()
 void AFalseKnight::SetAttackRecovery(float _DeltaTime)
 {
 	ActiveGravity();
+	ChangeStunAnimation();
 
 	ResetRendererOffset();
 	FVector Offset = { 0.0f, 60.0f };
@@ -581,6 +626,7 @@ void AFalseKnight::SetAttackRecovery(float _DeltaTime)
 void AFalseKnight::SetAttackRecovery2(float _DeltaTime)
 {
 	ActiveGravity();
+	ChangeStunAnimation();
 
 	ResetRendererOffset();
 
@@ -591,6 +637,7 @@ void AFalseKnight::SetBerserkAttackAnticipate(float _DeltaTime)
 {
 	ActiveGravity();
 	CheckDeath();
+	ChangeStunAnimation();
 
 	bCanBerserkAttack = false;
 
@@ -646,6 +693,7 @@ void AFalseKnight::SetBerserkAttack(float _DeltaTime)
 void AFalseKnight::SetBerserkAttack2(float _DeltaTime)
 {
 	ActiveGravity();
+	ChangeStunAnimation();
 
 	// 렌더러 위치 조정
 	if (false == bIsOffsetAttack1Frame)
@@ -685,6 +733,7 @@ void AFalseKnight::SetBerserkAttack2(float _DeltaTime)
 void AFalseKnight::SetBerserkAttackRecovery(float _DeltaTime)
 {
 	ActiveGravity();
+	ChangeStunAnimation();
 
 	ResetRendererOffset();
 	FVector Offset = { 0.0f, 60.0f };
@@ -715,6 +764,8 @@ void AFalseKnight::SetBerserkAttackRecovery(float _DeltaTime)
 void AFalseKnight::SetBerserkAttackRecovery2(float _DeltaTime)
 {
 	ActiveGravity();
+	ChangeStunAnimation();
+
 	bIsResting = true; // 패턴과 패턴 간 쿨타임 적용
 	BerserkAttackCount = 0;
 	ResetRendererOffset();
@@ -725,6 +776,15 @@ void AFalseKnight::SetBerserkAttackRecovery2(float _DeltaTime)
 void AFalseKnight::SetStun(float _DeltaTime)
 {
 	ActiveGravity();
+	bIsBerserkMode = true;
+	HeadCollision->SetActive(true);
+
+	ResetRendererOffset();
+	FVector Offset = { -100.0f, -110.0f };
+	SetCollisionOffset(HeadCollision, Offset);
+
+	BodyCollision->SetActive(false);
+	ChangeNextState(EMonsterState::STUN_OPEN);
 }
 
 void AFalseKnight::SetStunOpen(float _DeltaTime)
