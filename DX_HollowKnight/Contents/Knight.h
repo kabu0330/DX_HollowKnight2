@@ -139,6 +139,8 @@ protected:
 	void DeathCheck();
 	void ResetLevel();
 
+	void UpdateFSM(float _DeltaTime);
+
 private:
 	// Stat
 	void SetStatus();

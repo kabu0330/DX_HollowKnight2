@@ -18,7 +18,7 @@ void AMonster::CreateOrangeParticleEffect()
 {
 	AParticle* PuffParticle = GetWorld()->SpawnActor<AParticle>().get();
 	FVector ActorPos = GetActorLocation();
-	PuffParticle->CreateParticle("Puff", 8, 0.01f, ActorPos);
+	PuffParticle->CreateParticle("Puff", 10, 0.01f, ActorPos);
 	PuffParticle->SetParticleOption(EParticleType::RANDOM, -300.0f, 300.0f);
 
 	AParticle* OrangeParticle = GetWorld()->SpawnActor<AParticle>().get();
@@ -28,7 +28,7 @@ void AMonster::CreateOrangeParticleEffect()
 	OrangeParticle->SetParticleOption(EParticleType::RANDOM, -400.0f, 400.0f);
 
 	AParticle* Particle = GetWorld()->SpawnActor<AParticle>().get();
-	Particle->CreateParticle("DefaultHitParticle", 10, 0.01f, ActorPos);
+	Particle->CreateParticle("DefaultHitParticle", 20, 0.01f, ActorPos);
 	Particle->SetParticleOption(EParticleType::RANDOM, -400.0f, 400.0f);
 }
 

@@ -6,6 +6,7 @@
 #include "FalseKnightHead.h"
 #include "ContentsRenderer.h"
 #include "PlayGameMode.h"
+#include "Particle.h"
 
 AFalseKnight::AFalseKnight()
 {
@@ -120,10 +121,10 @@ void AFalseKnight::CreateAnimation()
 	BodyRenderer->CreateAnimation("JumpAttackRecovery", MonsterStr, 44, 45, AttackRecoveryFrame, false);
 	BodyRenderer->CreateAnimation("JumpAttackLand", MonsterStr, 46, 47, AttackRecoveryFrame, false);
 
-	BodyRenderer->CreateAnimation("Stun", MonsterStr, 48, 61, DeathTime, false);
-	BodyRenderer->CreateAnimation("StunOpen", MonsterStr, 62, 62, StunTime, false); // 62
-	BodyRenderer->CreateAnimation("StunHit", MonsterStr, 62, 62, StunTime, false); 
-	BodyRenderer->CreateAnimation("StunRecovery", MonsterStr, {61, 60, 59, 58, 57, 56, 55, 54, 53, 52, 51, 50, 49, 48}, DeathTime, false);
+	BodyRenderer->CreateAnimation("Stun", MonsterStr, 48, 61, DeathAirTime, false);
+	BodyRenderer->CreateAnimation("StunOpen", MonsterStr, 62, 62, AttackAnticipateTime, false); // 62
+	BodyRenderer->CreateAnimation("StunHit", MonsterStr, 62, 62, DeathTime, false);
+	BodyRenderer->CreateAnimation("StunRecovery", MonsterStr, {61, 60, 59, 58, 57, 56, 55, 54, 53, 52, 51, 50, 49, 48}, DeathAirTime, false);
 
 	BodyRenderer->CreateAnimation("DeathAir", MonsterStr, 72, 79, AttackAnticipateTime, false);
 	BodyRenderer->CreateAnimation("DeathLand", MonsterStr, 80, 80, DeathTime, false); //75
@@ -499,7 +500,8 @@ void AFalseKnight::SetAttack(float _DeltaTime)
 				FVector Offset = { -160.0f, 20.0f };
 				SetRendererOffset(Offset);
 				CreateAttackLogicAndEffect();
-				TimeEventer->AddEndEvent(0.2f, std::bind(&AFalseKnight::CreateGroundImpack, this));
+				TimeEventer->AddEndEvent(0.3f, std::bind(&AFalseKnight::CreateGroundImpack, this));
+				CreateDropObject();
 				CreateDropObject();
 				CreateDropObject();
 			});
@@ -567,7 +569,7 @@ void AFalseKnight::CreateGroundImpack()
 	FVector Offset = FVector{ -330.0f, -100.0f };
 	FVector EffectOffset = FVector(0.0f, 20.0f);
 	FVector GroundWaveOffset = FVector(-330.0f, -70.0f);
-	FVector Speed = FVector(900.0f, 0.0f);
+	FVector Speed = FVector(800.0f, 0.0f);
 	if (true == bIsLeft)
 	{
 		GroundWave->AddLocation(this, -Speed, GroundWaveOffset);
@@ -698,6 +700,7 @@ void AFalseKnight::SetBerserkAttack(float _DeltaTime)
 				CreateDropObject();
 				CreateDropObject();
 				CreateDropObject();
+				CreateDropObject();
 			});
 	}
 	bIsShowEffect = true;
@@ -737,6 +740,7 @@ void AFalseKnight::SetBerserkAttack2(float _DeltaTime)
 				FVector Offset = { -160.0f, 20.0f };
 				SetRendererOffset(Offset);
 				CreateAttackLogicAndEffect();
+				CreateDropObject();
 				CreateDropObject();
 				CreateDropObject();
 				CreateDropObject();
@@ -809,10 +813,7 @@ void AFalseKnight::SetStun(float _DeltaTime)
 	FVector Offset = { 0.0f, 30.0f };
 	SetRendererOffset(Offset);
 
-	// 잠시 게임 정지
 	CreateStunEffect();
-
-
 
 	ChangeNextState(EMonsterState::STUN_OPEN);
 }
@@ -932,8 +933,41 @@ void AFalseKnight::SetDeathAir(float _DeltaTime)
 	}
 	if (true == bIsOnGround && true == BodyRenderer->IsCurAnimationEnd())
 	{
-		FSM.ChangeState(EMonsterState::DEATH_LAND);
+		TimeEventer->AddEvent(3.0f, std::bind(&AFalseKnight::CreateDeathEffect, this, std::placeholders::_1), [this]()
+			{
+				FSM.ChangeState(EMonsterState::DEATH_LAND);
+			});
 	}
+}
+
+void AFalseKnight::CreateDeathEffect(float _DeltaTime)
+{
+	DeathEffectTimeElapesd += _DeltaTime;
+	float Cooldown = 0.3f;
+	if (DeathEffectTimeElapesd >= Cooldown)
+	{
+		CreateDeathOrangeParticleEffect();
+		CreateDeathOrangeParticleEffect();
+		DeathEffectTimeElapesd = 0.0f;
+	}	
+}
+
+void AFalseKnight::CreateDeathOrangeParticleEffect()
+{
+	AParticle* PuffParticle = GetWorld()->SpawnActor<AParticle>().get();
+	FVector ActorPos = GetActorLocation();
+	PuffParticle->CreateParticle("Puff", 10, 0.01f, ActorPos);
+	PuffParticle->SetParticleOption(EParticleType::RANDOM, -1200.0f, 1200.0f);
+
+	AParticle* OrangeParticle = GetWorld()->SpawnActor<AParticle>().get();
+	OrangeParticle->CreateParticle("OrangeParticle", 20, 0.01f, ActorPos);
+	OrangeParticle->SetRandomScale(0.5f, 1.0f);
+	OrangeParticle->SetDecayScale(true, 0.6f);
+	OrangeParticle->SetParticleOption(EParticleType::RANDOM, -1200.0f, 1200.0f);
+
+	AParticle* Particle = GetWorld()->SpawnActor<AParticle>().get();
+	Particle->CreateParticle("DefaultHitParticle", 20, 0.01f, ActorPos);
+	Particle->SetParticleOption(EParticleType::RANDOM, -1200.0f, 1200.0f);
 }
 
 void AFalseKnight::SetDeathLand(float _DeltaTime)
@@ -943,15 +977,16 @@ void AFalseKnight::SetDeathLand(float _DeltaTime)
 	if (true == bIsDeath) // 딱 한번만 호출
 	{
 		ResetRendererOffset();
-		FVector Offset = { 0.0f, -70.0f };
+		FVector Offset = { 0.0f, -75.0f };
 		SetRendererOffset(Offset);
 
 		Head->SetActive(true);
 		Head->GetCollision()->SetActive(false);
 		ResetRendererOffset(Head->GetRenderer());
 		Head->ChangeAnimation("Death");
+		Head->SetScale(0.8f);
 
-		FVector HeadOffset = { 260.0f, -130.0f };
+		FVector HeadOffset = { 260.0f, -145.0f };
 		if (true == bIsLeft)
 		{
 			Head->SetLocation(this, { -HeadOffset.X, HeadOffset.Y });

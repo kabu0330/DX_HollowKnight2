@@ -301,10 +301,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Platform.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="PlayHUD.h">
       <SubType>
       </SubType>
@@ -484,10 +480,6 @@
     <ClCompile Include="Monster_CollisionAndAnimation.cpp" />
     <ClCompile Include="Monster_FSM.cpp" />
     <ClCompile Include="Particle.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Platform.cpp">
       <SubType>
       </SubType>
     </ClCompile>

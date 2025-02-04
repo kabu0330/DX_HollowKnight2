@@ -82,6 +82,10 @@ private:
 	bool bIsDeathAir = false;
 
 	bool bIsDeath = false;
+
+	void CreateDeathEffect(float _DeltaTime);
+	void CreateDeathOrangeParticleEffect();
+	float DeathEffectTimeElapesd = 0.0f;
 private:
 	void SetIdle(float _DeltaTime) override;
 	void SetJumpAnticipate(float _DeltaTime) override;

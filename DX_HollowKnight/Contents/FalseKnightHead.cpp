@@ -106,7 +106,7 @@ void AFalseKnightHead::CreateKnightHitEffect(UCollision* _This, UCollision* _Oth
 	}
 	KnightSkill->CreateHitEffect(_Other, Boss->GetCollision());
 	KnightSkill->CreateWhiteHitParticleEffect(_Other, Boss->GetCollision());
-	KnightSkill->CreateDamagedEffect(_Other, Boss->GetCollision());
+	Boss->CreateOrangeParticleEffect();
 }
 
 void AFalseKnightHead::Release()

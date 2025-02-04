@@ -12,7 +12,7 @@ AMonsterSkill::AMonsterSkill()
 	std::string BlanckEffect = "BlanckEffect";
 	BodyRenderer->CreateAnimation(BlanckEffect, "SlashEffect", 0, 0, CollisionDuration, false);
 
-	float FrameTime = 0.05f;
+	float FrameTime = 0.04f;
 	// ÀÌÆåÆ® Æ÷ÇÔ
 	std::string BossGroundWave = "BossGroundWave";
 	BodyRenderer->CreateAnimation(BossGroundWave, BossGroundWave, 0, 15, FrameTime, false);

@@ -67,8 +67,7 @@ void AKnight::Tick(float _DeltaTime)
 	//SetCameraLerp();
 	CheckEnterButton();
 
-	FSM.Update(_DeltaTime);
-
+	UpdateFSM(_DeltaTime);
 	TimeElapsed(_DeltaTime);
 
 	ReverseForce(_DeltaTime);
@@ -114,6 +113,11 @@ void AKnight::ResetLevel()
 			UEngineCore::ResetLevel<APlayGameMode, AKnight, APlayHUD>("Play");
 		});
 
+}
+
+void AKnight::UpdateFSM(float _DeltaTime)
+{
+	FSM.Update(_DeltaTime);
 }
 
 void AKnight::ActiveGravity()

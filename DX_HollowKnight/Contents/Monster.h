@@ -83,7 +83,7 @@ public:
 
 	// 히트 이펙트
 	virtual void DamageEffect();
-	void CreateOrangeParticleEffect();
+	virtual void CreateOrangeParticleEffect();
 	void CreateHitOrangeEffect();
 
 	virtual void DamageLogic(int _KnightAtt) {};
