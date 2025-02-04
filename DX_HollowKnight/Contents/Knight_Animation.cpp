@@ -78,6 +78,7 @@ void AKnight::CreateFocusEndEffect()
 
 	BurstEffect->GetRenderer()->SetMulColor({ 11.0f, 11.0f, 11.0f }, 0.1f);
 
+	Stat.AddHp(1);
 
 	bIsFocusEndEffect = true;
 }

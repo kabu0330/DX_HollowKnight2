@@ -36,18 +36,22 @@ private:
 	bool bIsSkillGaugeFrame = false;
 
 	void InitHpFrame();
+	std::vector<std::shared_ptr<class UImageWidget>> Hps;
 	float HpFramePosX = 0.31f;
 	float HpFramePosY = 0.39f;
 	float HpFramePosXGap = 0.045f;
-	bool bIsHpIdle = false;
 	bool bIsHpFrame = false;
+	int KnightHp = 0;
+	int InitKinghtHp = 0;
 
 	void CheckKnightHp();
-	int KnightHp = 0;
+	int PrevKnightHp = 0;
 
-	std::vector<std::shared_ptr<class UImageWidget>> Hps;
 	void ChangeHpUI();
-	void SetHpUI();
+	void UpdateHpUI();
+	bool bIsHpPlus = false;
+	bool bIsHpMinus = false;
+	
 
 	void CreateGeo();
 	void CreateGeoCount();

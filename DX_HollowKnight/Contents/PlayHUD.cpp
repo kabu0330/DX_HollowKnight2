@@ -24,7 +24,7 @@ void APlayHUD::BeginPlay()
 	AHUD::BeginPlay();
 
 	InitSkillGaugeFrame();
-
+	InitKinghtHp = AKnight::GetPawn()->GetStatRef().GetMaxHp();
 	//CreateGeo();
 	//CreateGeoCount();
 
@@ -47,11 +47,8 @@ void APlayHUD::Tick(float _DeltaTime)
 
 	CheckKnightHp();
 	InitHpFrame();
+	UpdateHpUI();
 
-	//CreateHPFrame();
-	//CreateHpUI();
-
-	//SetHpUI(); // 실시간 HP 개수 반영
 }
 
 void APlayHUD::InitSkillGaugeFrame()
@@ -60,6 +57,9 @@ void APlayHUD::InitSkillGaugeFrame()
 	std::string HUDFrame = "HUDFrame";
 	SkillGaugeFrame->CreateAnimation(HUDFrame, HUDFrame, 0, 5, 0.2f, false);
 	SkillGaugeFrame->ChangeAnimation(HUDFrame);
+
+	SkillGaugeFrame->SetWorldLocation({ -ScreenSize.X * SkillGaugeFramePosX,  ScreenSize.Y * SkillGaugeFramePosY });
+
 	SkillGaugeFrame->SetActive(false);
 
 	// 게임 실행 이후 0.5초 뒤에 프레임 생성
@@ -69,21 +69,25 @@ void APlayHUD::InitSkillGaugeFrame()
 void APlayHUD::CreateSkillGaugeFrame()
 {
 	SkillGaugeFrame->SetActive(true);
-	SkillGaugeFrame->SetWorldLocation({ -ScreenSize.X * SkillGaugeFramePosX,  ScreenSize.Y * SkillGaugeFramePosY });
 
-	SkillGaugeFrame->SetDownEvent([]()
-		{
-			UEngineDebug::OutPutString("Click");
-		});
+	//SkillGaugeFrame->SetDownEvent([]()
+	//	{
+	//		UEngineDebug::OutPutString("Click");
+	//	});
 }
 
 void APlayHUD::CheckKnightHp()
 {
-	KnightHp = Knight->GetStatRef().GetHp();
+	int& KnightHpRef = Knight->GetStatRef().GetHpRef();
+	KnightHp = KnightHpRef;
 }
 
 void APlayHUD::InitHpFrame()
 {
+	if (true == bIsHpFrame)
+	{
+		return;
+	}
 	if (true == SkillGaugeFrame->IsCurAnimationEnd())
 	{
 		bIsSkillGaugeFrame = true;
@@ -93,14 +97,12 @@ void APlayHUD::InitHpFrame()
 	{
 		return;
 	}
-	if (true == bIsHpFrame)
-	{
-		return;
-	}
 
-	Hps.reserve(KnightHp);
+	// 초기 이전 Hp 저장
+	PrevKnightHp = InitKinghtHp;
 
-	for (int i = 0; i < KnightHp; i++)
+	Hps.reserve(InitKinghtHp);
+	for (int i = 0; i < InitKinghtHp; i++)
 	{
 		// 초기 세팅
 		std::shared_ptr<UImageWidget> HpUI = CreateWidget<UImageWidget>(static_cast<int>(EUIOrder::BACK) + 10, "HpUI");
@@ -108,9 +110,9 @@ void APlayHUD::InitHpFrame()
 		std::string HealthIdle = "HealthIdle";
 		std::string HealthBreak = "HealthBreak";
 
-		HpUI->CreateAnimation(HealthRefill, HealthRefill, 0, 6, 0.1f, false);
+		HpUI->CreateAnimation(HealthRefill, HealthRefill, 0, 6, 0.07f, false);
 		HpUI->CreateAnimation(HealthIdle, HealthIdle, { 0, 1, 2, 3, 4 }, { 3.0f, 0.1f, 0.1f, 0.1f, 0.1f }, true);
-		HpUI->CreateAnimation(HealthBreak, HealthBreak, 0, 6, 0.1f, false);
+		HpUI->CreateAnimation(HealthBreak, HealthBreak, 0, 6, 0.08f, false);
 
 		HpUI->SetWorldLocation({ -ScreenSize.X * (HpFramePosX - (HpFramePosXGap * i)),  ScreenSize.Y * HpFramePosY });
 		HpUI->SetAutoScale(true);
@@ -119,72 +121,77 @@ void APlayHUD::InitHpFrame()
 		Hps.push_back(HpUI);
 	}
 
-	bIsHpFrame = true;
+	bIsHpFrame = true; // HP UI 생성 이후 접근 금지
 
+	// 1초 뒤 체력 UI가 반짝거리도록 애니메이션 변경
 	TimeEventer->AddEndEvent(1.0f, std::bind(&APlayHUD::ChangeHpUI, this));
 }
 
 void APlayHUD::ChangeHpUI()
 {
+	if (KnightHp != InitKinghtHp)
+	{
+		CheckKnightHp();
+	}
+	if (KnightHp == Hps.size() + 1)
+	{
+		return;
+	}
+
 	for (int i = 0; i < KnightHp; i++)
 	{
 		Hps[i]->ChangeAnimation("HealthIdle");
 	}
 }
 
-void APlayHUD::SetHpUI()
+void APlayHUD::UpdateHpUI()
 {
-	//if (false == bIsHpIdle)
-	//{
-	//	return;
-	//}
+	if (false == bIsHpFrame)
+	{
+		return;
+	}
+	if (PrevKnightHp == KnightHp) // 체력이 같으면 굳이 연산 금지
+	{
+		return;
+	}
 
-	//int Hp = Knight->GetStatRef().GetHp();
-	//bool HpMinus = false;
-	//bool HpPlus = false;
+	// 지금 체력이 이전보다 커? 그러면 체력 회복
+	KnightHp > PrevKnightHp ? bIsHpPlus = true : bIsHpMinus = true;
 
-	//// 조건식 보강 필요
-	//if (0 == Hp)
-	//{
-	//	return;
-	//}
-	//if (Hp == PrevHp + 1)
-	//{
-	//	return; // 체력 변화가 없으므로
-	//}
-	//else if (Hp <= PrevHp) // 체력이 감소
-	//{
-	//	HpMinus = true;
-	//}
-	//else if (Hp >= PrevHpMinusOne) // 4 , 2(3)
-	//{
-	//	HpPlus = true;
-	//}
+	if (true == bIsHpPlus) // 체력 회복
+	{
+		//     5      =      4     + 1
+		if (KnightHp == Hps.size() + 1) 
+		{
+			return;
+		}
+		//           4           5
+		for (; PrevKnightHp < KnightHp; ++PrevKnightHp)
+		{
+			//   vector[4]가 5번째 hp니까.
+			Hps[PrevKnightHp]->ChangeAnimation("HealthRefill");
+		}
 
-	//if (true == HpPlus) // 체력 회복
-	//{
-	//	if (Hp == Hps.size() + 1)
-	//	{
-	//		MSGASSERT("현재 HP보다 최대 HP가 더 많을 수 없습니다.");
-	//		return;
-	//	}
-	//	//      4   == 5
-	//	PrevHpMinusOne = PrevHp - 1;
-	//	for (PrevHp += 1; PrevHp < Hp; ++PrevHp)
-	//	{
-	//		Hps[PrevHp]->ChangeAnimation("HealthAppear");
-	//	}
+		PrevKnightHp = KnightHp;
+		bIsHpPlus = false;
+		TimeEventer->AddEndEvent(1.0f, std::bind(&APlayHUD::ChangeHpUI, this));
+	}
+	else if (true == bIsHpMinus) // 체력 감소
+	{
+		if (0 > KnightHp)
+		{
+			return;
+		}
+		//         5              4
+		for (; PrevKnightHp != KnightHp; --PrevKnightHp)
+		{
+			//  vector[4]가 5번째 hp니까.
+			Hps[PrevKnightHp - 1]->ChangeAnimation("HealthBreak");
+		}
 
-	//	TimeEventer->AddEndEvent(1.0f, std::bind(&APlayHUD::ChangeHpUI, this));
-	//}
-	//else if (true == HpMinus) // 체력 감소
-	//{
-	//	PrevHpMinusOne = PrevHp - 1;
-	//	for (PrevHp += 1; PrevHp != Hp; --PrevHp)
-	//	{
-	//		Hps[PrevHp - 1]->ChangeAnimation("HealthBreak");
-	//	}
-	//}
+		bIsHpMinus = false;
+		PrevKnightHp = KnightHp;
+	}
 }
 
 void APlayHUD::CreateGeo()

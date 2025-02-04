@@ -93,18 +93,23 @@ public:
 	{
 		return Hp;
 	}
+	int& GetHpRef()
+	{
+		return Hp;
+	}
 	void AddHp(int _HP)
 	{
+		Hp += _HP;
 		if (Hp > MaxHp)
 		{
 			Hp = MaxHp;
 			return;
 		}
-		if (Hp < 0)
+		else if (Hp < 0)
 		{
 			Hp = 0;
+			return;
 		}
-		Hp += _HP;
 	}
 
 	int GetMaxMp()

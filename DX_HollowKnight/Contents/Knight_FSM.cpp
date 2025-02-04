@@ -246,8 +246,6 @@ void AKnight::SetFocusEnd(float _DeltaTime)
 	CreateFocusEndEffect();
 	bIsFocusEndEffect = true;
 
-	Stat.AddHp(1);
-
 	if (UEngineInput::IsPress('A'))
 	{
 		FSM.ChangeState(EKnightState::FOCUS);
