@@ -53,6 +53,8 @@ private:
 	
 	void CheckInfo();
 
+	void SetActiveRoom();
+
 	URoomManager Rooms = URoomManager();
 
 	std::shared_ptr<class UCollision> BasePointCollision = nullptr;

@@ -45,6 +45,7 @@ void APlayGameMode::Tick(float _DeltaTime)
 	AActor::Tick(_DeltaTime);
 	CheckInfo();
 	CheckDebugInput();
+	SetActiveRoom();
 }
 
 void APlayGameMode::CheckDebugInput()
@@ -67,6 +68,27 @@ void APlayGameMode::CheckInfo()
 {
 	MousePos = Camera->ScreenMousePosToWorldPos();
 	KnightPos = AKnight::GetPawn()->GetRootComponent()->GetTransformRef().RelativeLocation;
+}
+
+void APlayGameMode::SetActiveRoom()
+{
+	ARoom* PrevRoom = Rooms.GetPrevRoom();
+	ARoom* CurRoom = ARoom::GetCurRoom();
+	if (PrevRoom != CurRoom)
+	{
+		std::vector<std::shared_ptr<ARoom>> VectorRooms = Rooms.GetRoomsRef();
+		for (std::shared_ptr<ARoom> Room : VectorRooms)
+		{
+			if (Room.get() == CurRoom)
+			{
+				Room->SetRoomActive(true);
+			}
+			else
+			{
+				Room->SetRoomActive(false);
+			}
+		}
+	}
 }
 
 void APlayGameMode::BeginPlay()

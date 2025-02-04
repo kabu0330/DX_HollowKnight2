@@ -116,6 +116,36 @@ public:
 
 		return NewObject;
 	}
+	void SetRoomActive(bool _Value)
+	{
+		if (nullptr != PixelCollisionTexture)
+		{
+			PixelCollisionTexture->SetActive(_Value);
+		}
+		if (nullptr != BackgroundRenderer)
+		{
+			BackgroundRenderer->SetActive(_Value);
+		}
+		if (true != Monsters.empty())
+		{
+			for (AMonster* Monster : Monsters)
+			{
+				Monster->SetActive(_Value);
+			}
+		}
+		this->SetActive(_Value);
+	}
+	void CheckActiveRoom()
+	{
+		if (this != CurRoom)
+		{
+			SetRoomActive(false);
+		}
+		else if (this == CurRoom)
+		{
+			SetRoomActive(true);
+		}
+	}
 
 protected:
 	void Force(AActor* _Actor, float _DeltaTime);
@@ -123,7 +153,6 @@ protected:
 private:
 	inline static bool bActiveGravity = false;
 	float GravityValue = 0.0f;
-	//FVector GravityForce = FVector::ZERO;
 
 	inline static ARoom* CurRoom = nullptr;
 	UEngineWinImage PixelCollisionImage;
