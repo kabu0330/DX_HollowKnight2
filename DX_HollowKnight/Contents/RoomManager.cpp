@@ -157,8 +157,9 @@ void URoomManager::CreateRoom(AGameMode* _GameMode)
 
 	Crossroads5->CreateMonster<AAspidMother>({ 19700, -8060 });
 	Crossroads5->CreateMonster<AAspidMother>({ 20300, -8100 });
-	Crossroads5->CreateMonster<ALeapingHusk>({ 16730, -8300 });
+	//Crossroads5->CreateMonster<ALeapingHusk>({ 16730, -8300 });
 	Crossroads5->CreateMonster<AHuskHornhead>({ 17000, -8300 });
+	Crossroads5->CreateMonster<ACrawlid>({ 16730, -8300 });
 
 
 
