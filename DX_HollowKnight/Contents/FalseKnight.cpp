@@ -79,7 +79,7 @@ void AFalseKnight::SetOffset()
 	RendererOffset = { 0.0f, 40.0f };
 
 	CollisionScale = SpriteSize;
-	DetectRange = { 2000, 500 };
+	DetectRange = { 4000, 1000 };
 
 	DeathSpriteOffset = 0.0f;
 	DeathAirDistance = 300.0f;
@@ -304,7 +304,7 @@ void AFalseKnight::SetIdle(float _DeltaTime)
 	if (true == IsPlayerNearby() && false == Stat.IsAttacking() && true == bCanJump) 
 	{
 		UEngineRandom Random;
-		float Result = Random.Randomfloat(-300.0f, 300.0f);
+		float Result = Random.Randomfloat(-300.0f, 400.0f);
 		Stat.SetVelocity(Result);
 		FSM.ChangeState(EMonsterState::JUMP_ANTICIPATE);
 	}
@@ -538,8 +538,6 @@ void AFalseKnight::CreateAttackLogicAndEffect()
 	
 	FVector Offset = FVector{ -330.0f, -100.0f };
 	FVector EffectOffset = FVector(0.0f, 20.0f);
-	FVector GroundWaveOffset = FVector(-330.0f, -70.0f);
-	FVector Speed = FVector(900.0f, 0.0f);
 	if (true == bIsLeft)
 	{
 		Skill->SetLocation(this, { Offset.X, Offset.Y });
@@ -566,8 +564,6 @@ void AFalseKnight::CreateGroundImpack()
 	GroundWave->SetCollisionScale({ 180.0f, 50.0f });
 	GroundWave->SetScale(1.3f);
 
-	FVector Offset = FVector{ -330.0f, -100.0f };
-	FVector EffectOffset = FVector(0.0f, 20.0f);
 	FVector GroundWaveOffset = FVector(-330.0f, -70.0f);
 	FVector Speed = FVector(800.0f, 0.0f);
 	if (true == bIsLeft)
@@ -602,7 +598,7 @@ void AFalseKnight::CreateDropObject()
 
 	std::random_device rd;
 	std::mt19937_64 RandomGen(rd() + static_cast<__int64>(DropObjectCount));
-	std::uniform_real_distribution<float> Dist(-ScreenHalfSize.X, ScreenHalfSize.X);
+	std::uniform_real_distribution<float> Dist(-ScreenSize.X * 1.5f, ScreenSize.X * 1.5f);
 	std::uniform_real_distribution<float> Dist2(-550.0f, -350.0f);
 
 	FVector Offset = FVector{ Dist(RandomGen), ScreenHalfSize.Y + 300.0f };

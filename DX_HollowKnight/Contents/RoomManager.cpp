@@ -31,6 +31,10 @@ void URoomManager::CreateRoom(AGameMode* _GameMode)
 	std::string CrossroadsStr1 = "ForgottenCrossroads1";
 	std::string CrossroadsStr2 = "ForgottenCrossroads2";
 	std::string CrossroadsStr3 = "ForgottenCrossroads3";
+	std::string CrossroadsStr4 = "ForgottenCrossroads4";
+	std::string CrossroadsStr5 = "ForgottenCrossroads5";
+	std::string CrossroadsStr6 = "ForgottenCrossroads6";
+	std::string FalseKnightRoom = "FalseKnightRoom"; // 보스방
 
 	// 맵 세팅
 	// 1. 생성
@@ -38,35 +42,84 @@ void URoomManager::CreateRoom(AGameMode* _GameMode)
 	std::shared_ptr<ARoom> Crossroads1 = CreateRoom(CrossroadsStr1, CrossroadsStr1 + PNG, CrossroadsStr1 + BMP, { 5878, 2826 });
 	std::shared_ptr<ARoom> Crossroads2 = CreateRoom(CrossroadsStr2, CrossroadsStr2 + PNG, CrossroadsStr2 + BMP, { 5752, 2470 });
 	std::shared_ptr<ARoom> Crossroads3 = CreateRoom(CrossroadsStr3, CrossroadsStr3 + PNG, CrossroadsStr3 + BMP, { 3150, 6746 });
+	std::shared_ptr<ARoom> Crossroads4 = CreateRoom(CrossroadsStr4, CrossroadsStr4 + PNG, CrossroadsStr4 + BMP, { 5904, 1574 });
+	std::shared_ptr<ARoom> Crossroads5 = CreateRoom(CrossroadsStr5, CrossroadsStr5 + PNG, CrossroadsStr5 + BMP, { 7292, 1946 });
+	std::shared_ptr<ARoom> Crossroads6 = CreateRoom(CrossroadsStr6, CrossroadsStr6 + PNG, CrossroadsStr6 + BMP, { 4794, 1578 });
+	std::shared_ptr<ARoom> BossRoom = CreateRoom(FalseKnightRoom, FalseKnightRoom + PNG, FalseKnightRoom + BMP, { 3188, 1348 });
 
 	// 2. push_back
-	Rooms.reserve(10);
+	Rooms.reserve(8);
 	Rooms.push_back(Dirtmouth);
 	Rooms.push_back(Crossroads1);
 	Rooms.push_back(Crossroads2);
 	Rooms.push_back(Crossroads3);
+	Rooms.push_back(Crossroads4);
+	Rooms.push_back(Crossroads5);
+	Rooms.push_back(Crossroads6);
+	Rooms.push_back(BossRoom);
 
 	// 3. 픽셀충돌 위치지정
 	Dirtmouth->SetRoomLocation({ 0, 0 });
+	// 우측
 	Crossroads1->SetRoomLocation({ 6150, -3550 });
 	Crossroads2->SetRoomLocation({ 12572, -3580 });
-	Crossroads3->SetRoomLocation({ 2400, -4450 });
+	Crossroads4->SetRoomLocation({ 18400, -4228 });
 
+	// 좌측
+	Crossroads3->SetRoomLocation({ 2400, -4450 });
+	
+	// 아래층 왼쪽 -> 오른쪽
+	Crossroads6->SetRoomLocation({ 6000, -7100 });
+	BossRoom->SetRoomLocation({ 11000, -7200 });
+	Crossroads5->SetRoomLocation({ 14600, -6800 });
 
 	// 4. 포탈 or 문 생성
+	FVector DoorSize = { 50, 400 };
 	//                      문 크기               문 위치                    도착 맵             도착 위치              입력 키 받을건지?
+	// 흙의마을 <-> 교차로1
 	  Dirtmouth->CreateDoor({ 300, 100 }, RoomPos::FromDirtmouth,   Crossroads1.get(), RoomPos::ToCrossroads1      );
+	Crossroads1->CreateDoor({ 200, 150 }, RoomPos::FromCrossroads1 , Dirtmouth.get(),   RoomPos::ToDirtmouth    , true); // 방향키 입력으로 포탈
 
-	// 교차로 1
-	Crossroads1->CreateDoor({ 300, 200 }, RoomPos::FromCrossroads1 , Dirtmouth.get()  , RoomPos::ToDirtmouth    , true);
-	Crossroads1->CreateDoor({ 50, 300 }, RoomPos::Crossroads1Right, Crossroads2.get(), RoomPos::Crossroads2Left      );
-	Crossroads1->CreateDoor({ 50, 300 }, RoomPos::Crossroads1Left , Crossroads3.get(), RoomPos::Crossroads3Right     );
 
-	// 교차로 2 좌상단
-	Crossroads2->CreateDoor({ 50, 300 }, RoomPos::Crossroads2Left, Crossroads1.get(), RoomPos::Crossroads1Right);
+	// 위층
+	// 교차로1 <-> 교차로2 (우측)
+	Crossroads1->CreateDoor(DoorSize, RoomPos::Crossroads1Right, Crossroads2.get(), RoomPos::Crossroads2Left);
+	Crossroads2->CreateDoor(DoorSize, RoomPos::Crossroads2Left, Crossroads1.get(), RoomPos::Crossroads1Right);
+	
+	// 교차로2 <-> 교차로4
+	Crossroads2->CreateDoor(DoorSize, RoomPos::Crossroads2Right, Crossroads4.get(), RoomPos::Crossroads4Left);
+	Crossroads4->CreateDoor(DoorSize, RoomPos::Crossroads4Left, Crossroads2.get(), RoomPos::Crossroads2Right);
 
-	// 교차로 3 우측
-	Crossroads2->CreateDoor({ 50, 300 }, RoomPos::Crossroads3Right, Crossroads1.get(), RoomPos::Crossroads1Left);
+	// 교차로1 <-> 교차로3 (좌측)
+	Crossroads1->CreateDoor(DoorSize,     RoomPos::Crossroads1Left , Crossroads3.get(), RoomPos::Crossroads3RightTop);
+	Crossroads3->CreateDoor(DoorSize, RoomPos::Crossroads3RightTop, Crossroads1.get(), RoomPos::Crossroads1Left);
+
+
+	// 아래층
+	// 교차로3 <-> 교차로6 (우측)
+	Crossroads3->CreateDoor(DoorSize, RoomPos::Crossroads3RightBot, Crossroads6.get(), RoomPos::Crossroads6Left);
+	Crossroads6->CreateDoor(DoorSize, RoomPos::Crossroads6Left, Crossroads3.get(), RoomPos::Crossroads3RightBot);
+
+	// 교차로6 <-> 보스방 (우측)
+	Crossroads6->CreateDoor(DoorSize, RoomPos::Crossroads6Right, BossRoom.get(), RoomPos::BossRoomLeft);
+	BossRoom->CreateDoor(DoorSize, RoomPos::BossRoomLeft, Crossroads6.get(), RoomPos::Crossroads6Right);
+
+	// 보스방 <-> 교차로5 (우측)
+	BossRoom->CreateDoor(DoorSize, RoomPos::BossRoomRight, Crossroads5.get(), RoomPos::Crossroads5LeftBot);
+	Crossroads5->CreateDoor(DoorSize, RoomPos::Crossroads5LeftBot, BossRoom.get(), RoomPos::BossRoomRight);
+
+	// 교차로 4 <-> 교차로5 (위/아래 층)
+	Crossroads4->CreateDoor(DoorSize, RoomPos::Crossroads4Right, Crossroads5.get(), RoomPos::Crossroads5LeftTop);
+	Crossroads5->CreateDoor(DoorSize, RoomPos::Crossroads5LeftTop, Crossroads4.get(), RoomPos::Crossroads4Right);
+
+	// 미구현 맵 워프 처리
+	Crossroads3->CreateDoor(DoorSize, RoomPos::Crossroads3LeftBot, Crossroads3.get(), RoomPos::Crossroads3LeftBot);
+	Crossroads3->CreateDoor(DoorSize, RoomPos::Crossroads3LeftTop, Crossroads3.get(), RoomPos::Crossroads3LeftTop);
+	Crossroads3->CreateDoor({300, 200}, RoomPos::Crossroads3Bot, Crossroads3.get(), RoomPos::Crossroads3BotWarpPoint);
+
+	Crossroads5->CreateDoor(DoorSize, RoomPos::Crossroads5Right, Crossroads5.get(), RoomPos::Crossroads5Right);
+
+	
 	// ForgottenCrossroads1->CreateDoor({ 0, 0 }, ForgottenCrossroads1, {100, -100});
 
 	// 5. 시작 위치 중력 설정 : 문과 충돌해야만 픽셀충돌 맵이 지정되기 때문에 여기서 강제로 설정 필요한 경우 사용
@@ -80,7 +133,7 @@ void URoomManager::CreateRoom(AGameMode* _GameMode)
 	//Crossroads1->CreateMonster<AGruzzer>({ 9511, -5400 });
 	//Crossroads1->CreateMonster<AAspidMother>({ 9511, -5400 });
 	//Crossroads1->CreateMonster<AAspidHunter>({ 9511, -5400 });
-	Crossroads2->CreateMonster<AFalseKnight>({ 14300, -5300 });
+	//Crossroads2->CreateMonster<AFalseKnight>({ 14300, -5300 });
 	//Crossroads2->CreateMonster<AAspidHatchling>({ 14300, -5300 });
 	//Crossroads1->CreateMonster<AAspidHatchling>({ 9511, -5400 });
 	//Crossroads1->CreateMonster<ACrawlid>({ 9511, -5400 });

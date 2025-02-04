@@ -260,7 +260,7 @@ void AKnight::SetCameraPos()
 	std::shared_ptr<ACameraActor> Camera = GetWorld()->GetCamera(0);
 	FVector KnightPos = GetActorLocation();
 	FVector ScreenSize = UEngineCore::GetScreenScale();
-	ScreenRatioY = 0.1f;
+	ScreenRatioY = 0.15f;
 	Camera->SetActorLocation({ KnightPos.X, KnightPos.Y + ScreenSize.Y * ScreenRatioY });
 	FVector Pos = Camera->GetActorLocation();
 }
