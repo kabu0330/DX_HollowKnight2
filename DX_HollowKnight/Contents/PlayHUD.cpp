@@ -53,7 +53,40 @@ void APlayHUD::Tick(float _DeltaTime)
 	UpdateHpUI();
 	CreateSkillGauge();
 	UpdateSkillGauge();
+	SetNextAnimationForSkillGauge();
+	if (true == SkillGaugeEffect->IsCurAnimationEnd())
+	{
+		SkillGaugeEffect->SetActive(false);
+	}
 }
+
+void APlayHUD::SetNextAnimationForSkillGauge()
+{
+	if (false == bIsNextAnimation) // 트리거
+	{
+		return;
+	}
+	if ("" == NextAnimName)
+	{
+		return;
+	}
+
+	if (true == SkillGauge->IsCurAnimationEnd())
+	{
+		SkillGauge->ChangeAnimation(NextAnimName);
+
+		bIsNextAnimation = false;
+		NextAnimName = "";
+		return;
+	}
+}
+
+void APlayHUD::NextAnimation(std::string_view _Name)
+{
+	bIsNextAnimation = true; // Tick에서 현재 재생중인 애니메이션이 종료되었는지 검사해라.
+	NextAnimName = _Name; // 현재 재생중인 애니메이션이 끝나면 이 이름의 애니메이션으로 바꿔라.
+}
+
 
 void APlayHUD::InitSkillGaugeFrame()
 {
@@ -105,22 +138,23 @@ void APlayHUD::InitSkillGauge()
 	std::string V_Empty = "V_Empty";
 
 	float FrameTime = 0.2f;
+	float FastTime = 0.1f;
 
-	SkillGauge->CreateAnimation(V_Full, V_Full, 0, 3, FrameTime, false);
+	SkillGauge->CreateAnimation(V_Full, V_Full, 0, 3, FastTime, false);
 
-	SkillGauge->CreateAnimation(V_UpTo3Quarter, V_UpTo3Quarter, 0, 5, FrameTime);
-	SkillGauge->CreateAnimation(V_DownTo3Quarter, V_DownTo3Quarter, 0, 4, FrameTime);
+	SkillGauge->CreateAnimation(V_UpTo3Quarter, V_UpTo3Quarter, 0, 5, FastTime);
+	SkillGauge->CreateAnimation(V_DownTo3Quarter, V_DownTo3Quarter, 0, 4, FastTime);
 	SkillGauge->CreateAnimation(V_3Quarter, V_3Quarter, 0, 3, FrameTime);
 
-	SkillGauge->CreateAnimation(V_UpToHalf, V_UpToHalf, 0, 5, FrameTime);
-	SkillGauge->CreateAnimation(V_DownToHalf, V_DownToHalf, 0, 5, FrameTime);
+	SkillGauge->CreateAnimation(V_UpToHalf, V_UpToHalf, 0, 5, FastTime);
+	SkillGauge->CreateAnimation(V_DownToHalf, V_DownToHalf, 0, 5, FastTime);
 	SkillGauge->CreateAnimation(V_Half, V_Half, 0, 3, FrameTime);
 
-	SkillGauge->CreateAnimation(V_UpToQuarter, V_UpToQuarter, 0, 5, FrameTime);
-	SkillGauge->CreateAnimation(V_DownToQuarter, V_DownToQuarter, 0, 5, FrameTime);
+	SkillGauge->CreateAnimation(V_UpToQuarter, V_UpToQuarter, 0, 5, FastTime);
+	SkillGauge->CreateAnimation(V_DownToQuarter, V_DownToQuarter, 0, 5, FastTime);
 	SkillGauge->CreateAnimation(V_Quarter, V_Quarter, 0, 3, FrameTime);
 
-	SkillGauge->CreateAnimation(V_DownToEmpty, V_DownToEmpty, 0, 2, FrameTime);
+	SkillGauge->CreateAnimation(V_DownToEmpty, V_DownToEmpty, 0, 2, FastTime);
 	SkillGauge->CreateAnimation(V_Empty, V_DownToEmpty, 2, 2, FrameTime);
 
 	SkillGauge->ChangeAnimation(V_Empty);
@@ -149,6 +183,136 @@ void APlayHUD::CreateSkillGauge()
 	}
 }
 
+void APlayHUD::UpdateSkillGauge()
+{
+	int KnightMp = AKnight::GetPawn()->GetStatRef().GetMp();
+	if (KnightMp == PrevKnightMp)
+	{
+		return;
+	}
+
+	// 마나량을 5단계로 구분하고
+	ESkillGauge CurGauge = SwitchToEnumSkillGauge(KnightMp);
+	ESkillGauge PrevGauge = SwitchToEnumSkillGauge(PrevKnightMp);
+	if (CurGauge == PrevGauge) // 단계가 같으면 리턴 
+	{
+		return;
+	}
+
+	int CurPhase = static_cast<int>(CurGauge);
+	int PrevPhase = static_cast<int>(PrevGauge);
+	int Result = CurPhase - PrevPhase;
+	//              25          50     = -25 => 마나를 사용한 것 -> 마나 감소
+	//              50          25     =  25 => 마나를 획득한 것 -> 마나 증가
+	if (0 > Result) // 마나 감소
+	{
+		bIsPickupMp = false;
+	}
+	else // 마나 획득
+	{
+		bIsPickupMp = true;
+	}
+
+	PrevKnightMp = KnightMp; 
+	
+	std::string V_Full = "V_Full";
+	std::string V_UpTo3Quarter = "V_UpTo3Quarter";
+	std::string V_DownTo3Quarter = "V_DownTo3Quarter";
+	std::string V_3Quarter = "V_3Quarter";
+	std::string V_UpToHalf = "V_UpToHalf";
+	std::string V_DownToHalf = "V_DownToHalf";
+	std::string V_Half = "V_Half";
+	std::string V_UpToQuarter = "V_UpToQuarter";
+	std::string V_DownToQuarter = "V_DownToQuarter";
+	std::string V_Quarter = "V_Quarter";
+	std::string V_DownToEmpty = "V_DownToEmpty";
+	std::string V_Empty = "V_Empty";
+
+	// 1. 마나가 증가한 경우
+	if (true == bIsPickupMp)
+	{
+		// 마나가 증가했는데 Empty인 경우는 없다.
+
+		if (1 == CurPhase) // 마나가 0에서 25가 됐다면 쿼터
+		{
+			SkillGauge->ChangeAnimation(V_UpToQuarter); // 이 애니메이션 먼저 재생하고
+			NextAnimation(V_Quarter); // 다음 애니메이션은 이걸로 재생해라.
+			return;
+		}
+		else if (2 == CurPhase) // 마나가 25에서 50이 됐다면
+		{
+			SkillGauge->ChangeAnimation(V_UpToHalf);
+			NextAnimation(V_Half);
+			return;
+		}
+		else if (3 == CurPhase) // 마나가 50에서 75이 됐다면
+		{
+			SkillGauge->ChangeAnimation(V_UpTo3Quarter);
+			NextAnimation(V_3Quarter);
+			return;
+		}
+		else if (4 == CurPhase)
+		{
+			SkillGauge->ChangeAnimation(V_Full);
+			SkillGaugeEffect->SetActive(true);
+			return;
+		}
+	}
+	else // 2. 마나가 감소한 경우
+	{
+		// 마나를 사용했는데 풀마나일 순 없다.
+
+		if (3 == CurPhase) // 마나를 써서 98 ~ 75 사이가 남았다면
+		{
+			SkillGauge->ChangeAnimation(V_DownTo3Quarter);
+			NextAnimation(V_3Quarter);
+			return;
+		}
+		else if (2 == CurPhase)
+		{
+			SkillGauge->ChangeAnimation(V_DownToHalf);
+			NextAnimation(V_Half);
+			return;
+		}
+		else if (1 == CurPhase)
+		{
+			SkillGauge->ChangeAnimation(V_DownToQuarter);
+			NextAnimation(V_Quarter);
+			return;
+		}
+		else if (0 == CurPhase)
+		{
+			SkillGauge->ChangeAnimation(V_DownToEmpty);
+			NextAnimation(V_Empty);
+			return;
+		}
+	}
+}
+
+ESkillGauge APlayHUD::SwitchToEnumSkillGauge(int _Value)
+{
+	if (25 > _Value)
+	{
+		return ESkillGauge::EMPTY;
+	}
+	else if (50 > _Value)
+	{
+		return ESkillGauge::QUARTER;
+	}
+	else if (75 > _Value)
+	{
+		return ESkillGauge::HALF;
+	}
+	else if (99 > _Value)
+	{
+		return ESkillGauge::THREE_QUARTER;
+	}
+	else
+	{
+		return ESkillGauge::FULL;
+	}
+}
+
 void APlayHUD::CreateSkillGaugeEffect()
 {
 	SkillGaugeEffect = CreateWidget<UImageWidget>(static_cast<int>(EUIOrder::BACK) + 11, "SkillGaugeEffect").get();
@@ -159,13 +323,6 @@ void APlayHUD::CreateSkillGaugeEffect()
 	SkillGaugeEffect->SetWorldLocation({ -ScreenSize.X * 0.388f,  ScreenSize.Y * 0.372f });
 	SkillGaugeEffect->SetActive(false);
 	SkillGaugeEffect->SetAutoScaleRatio(1.5f);
-}
-
-void APlayHUD::UpdateSkillGauge()
-{
-
-
-	
 }
 
 void APlayHUD::InitHpFrame()

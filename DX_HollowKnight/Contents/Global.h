@@ -9,6 +9,15 @@ public:
 
 };
 
+enum class ESkillGauge
+{
+	EMPTY,
+	QUARTER,
+	HALF,
+	THREE_QUARTER,
+	FULL
+};
+
 enum class EUIOrder
 {
 	NONE = -10000,

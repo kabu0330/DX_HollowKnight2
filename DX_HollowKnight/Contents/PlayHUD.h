@@ -22,6 +22,11 @@ protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime)	override;
 
+	void SetNextAnimationForSkillGauge();
+	bool bIsNextAnimation = false;
+
+	void NextAnimation(std::string_view _Name);
+	std::string NextAnimName = "";
 private:
 	FVector ScreenSize = FVector::ZERO;
 	FVector HalfSize = FVector::ZERO;
@@ -37,9 +42,13 @@ private:
 
 	void InitSkillGauge();
 	void CreateSkillGauge();
-	void CreateSkillGaugeEffect();
 	void UpdateSkillGauge();
+	ESkillGauge SwitchToEnumSkillGauge(int _Value);
 	class UImageWidget* SkillGauge = nullptr;
+	int PrevKnightMp = 0;
+	bool bIsPickupMp = false;
+
+	void CreateSkillGaugeEffect();
 	class UImageWidget* SkillGaugeEffect = nullptr;
 
 	void InitHpFrame();

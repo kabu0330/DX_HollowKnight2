@@ -34,7 +34,7 @@ protected:
 
 	void SetCollisionEvent() override;
 	void Collide(class UCollision* _This, class UCollision* _Other);
-	void Attack();
+	void Attack(class UCollision* _This, class UCollision* _Other);
 	void CreateKnightHitEffect(class UCollision* _This, class UCollision* _Other);
 
 private:

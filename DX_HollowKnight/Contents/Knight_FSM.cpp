@@ -217,13 +217,16 @@ void AKnight::SetFocus(float _DeltaTime)
 	bIsFocusEffect = false;
 	bIsFocusEndEffect = false;
 
-	if (UEngineInput::IsUp('A'))
+	if (UEngineInput::IsUp('A') || 22 > Stat.GetMp())
 	{
 		ChangeNextState(EKnightState::IDLE);
 		return;
 	}
-
-	ChangeNextState(EKnightState::FOCUS_GET);
+	else
+	{
+		ChangeNextState(EKnightState::FOCUS_GET);
+		return;
+	}
 }
 
 void AKnight::SetFocusGet(float _DeltaTime)
@@ -364,7 +367,6 @@ void AKnight::SetDeathHead(float _DeltaTime)
 		bCanReset = true;
 		TimeEventer->AddEndEvent(2.0f, std::bind(&AKnight::ResetLevel, this));
 	}
-
 }
 
 void AKnight::SetFSM()

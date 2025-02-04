@@ -127,12 +127,17 @@ public:
 	}
 	void AddMp(int _MP)
 	{
+		Mp += _MP;
 		if (Mp > MaxMp)
 		{
 			Mp = MaxMp;
 			return;
 		}
-		Mp += _MP;
+		else if (Mp < 0)
+		{
+			Mp = 0;
+			return;
+		}
 	}
 
 	int GetAtt()

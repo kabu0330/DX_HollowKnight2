@@ -56,6 +56,7 @@ void AKnightSkill::Attack(UCollision* _This, UCollision* _Other)
 	{
 		int KnightAtt = Knight->GetStatRef().GetAtt();
 		UFightUnit::OnHit(Monster, KnightAtt);
+		UFightUnit::RecoverMp(11);
 		Monster->DamageLogic(KnightAtt);
 
 		int MonsterHp = Monster->GetStatRef().GetHp();

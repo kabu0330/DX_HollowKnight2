@@ -485,6 +485,10 @@ void AKnight::CastFocus()
 	{
 		return;
 	}
+	if (22 > Stat.GetMp())
+	{
+		return;
+	}
 	if (false == bIsOnGround)
 	{
 		return;
@@ -506,6 +510,10 @@ void AKnight::CastFocus()
 void AKnight::CastFireball()
 {
 	if (false == CanAction())
+	{
+		return;
+	}
+	if (22 > Stat.GetMp())
 	{
 		return;
 	}

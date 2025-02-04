@@ -34,3 +34,10 @@ void UFightUnit::OnHit(AMonster* _Monster, int _Att)
 	//_Monster->GetFSMRef().ChangeState(EMonsterState::HIT);
 }
 
+void UFightUnit::RecoverMp(int _Mp)
+{
+	AKnight* Knight = AKnight::GetPawn();
+	Knight->GetStatRef().AddMp(_Mp); // 예외처리는 AddMp에서 한다.
+
+}
+

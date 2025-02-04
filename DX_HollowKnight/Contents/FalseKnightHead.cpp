@@ -2,6 +2,8 @@
 #include "FalseKnightHead.h"
 #include "FalseKnight.h"
 #include "KnightSkill.h"
+#include "FightUnit.h"
+#include "KnightFireball.h"
 
 AFalseKnightHead::AFalseKnightHead()
 {
@@ -56,11 +58,11 @@ void AFalseKnightHead::SetCollisionEvent()
 
 void AFalseKnightHead::Collide(UCollision* _This, UCollision* _Other)
 {
-	Attack();
+	Attack(_This, _Other);
 	CreateKnightHitEffect(_This, _Other);
 }
 
-void AFalseKnightHead::Attack()
+void AFalseKnightHead::Attack(UCollision* _This, UCollision* _Other)
 {
 	UEngineDebug::OutPutString("헤드 어택!!!");
 
@@ -72,6 +74,19 @@ void AFalseKnightHead::Attack()
 	
 	int Att = Knight->GetStatRef().GetAtt();
 	Boss->AddHeadHp(-Att);
+	
+	AActor* Actor = _Other->GetActor();
+	AKnightFireball* Fireball = dynamic_cast<AKnightFireball*>(Actor);
+	if (nullptr == Fireball)
+	{
+		UFightUnit::RecoverMp(11);
+		UEngineDebug::OutPutString("나이트가 마나를 획득하였습니다. 현재 마나 :  " + std::to_string(Knight->GetStatRef().GetMp()));
+	}
+	else
+	{
+		UFightUnit::RecoverMp(-33);
+		UEngineDebug::OutPutString("나이트가 마나를 소비하였습니다. 현재 마나 :  " + std::to_string(Knight->GetStatRef().GetMp()));
+	}
 
 	if (false == bIsDamage)
 	{

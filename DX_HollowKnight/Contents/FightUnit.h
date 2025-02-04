@@ -9,6 +9,7 @@ class UFightUnit
 public:
 	static void OnHit(AKnight* _Knight, int _Att);
 	static void OnHit(AMonster* _Monster, int _Att);
+	static void RecoverMp(int _Mp);
 
 
 protected:
