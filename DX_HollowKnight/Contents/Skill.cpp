@@ -53,7 +53,6 @@ void ASkill::Release()
 	{
 		if (nullptr != Collision)
 		{
-			UEngineDebug::OutPutString(GetName() + " Skill Collision Destroy");
 			Collision->Destroy();
 		}
 		Destroy();
@@ -62,10 +61,6 @@ void ASkill::Release()
 
 void ASkill::SetCollisionEvent()
 {
-	Collision->SetCollisionEnter([](UCollision* _This, UCollision* _Other)
-		{
-			UEngineDebug::OutPutString("Hit!!!");
-		});
 }
 
 bool ASkill::IsCurRoom()

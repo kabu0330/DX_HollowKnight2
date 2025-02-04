@@ -123,24 +123,43 @@ void URoomManager::CreateRoom(AGameMode* _GameMode)
 	// ForgottenCrossroads1->CreateDoor({ 0, 0 }, ForgottenCrossroads1, {100, -100});
 
 	// 5. 시작 위치 중력 설정 : 문과 충돌해야만 픽셀충돌 맵이 지정되기 때문에 여기서 강제로 설정 필요한 경우 사용
-	//SetInitCurRoom(ForgottenCrossroads1.get());
+	SetInitCurRoom(Crossroads1.get());
 	//SetInitCurRoom(Dirtmouth.get());
-	SetInitCurRoom(Crossroads2.get());
+	//SetInitCurRoom(Crossroads2.get());
 
 	// 6. 몬스터 생성
-	//Crossroads1->CreateMonster<AWanderingHusk>({ 11100, -5800 });
-	//Crossroads1->CreateMonster<AVengefly>({ 9511, -5400 });
-	//Crossroads1->CreateMonster<AGruzzer>({ 9511, -5400 });
-	//Crossroads1->CreateMonster<AAspidMother>({ 9511, -5400 });
-	//Crossroads1->CreateMonster<AAspidHunter>({ 9511, -5400 });
-	//Crossroads2->CreateMonster<AFalseKnight>({ 14300, -5300 });
-	//Crossroads2->CreateMonster<AAspidHatchling>({ 14300, -5300 });
-	//Crossroads1->CreateMonster<AAspidHatchling>({ 9511, -5400 });
-	//Crossroads1->CreateMonster<ACrawlid>({ 9511, -5400 });
-	//Crossroads1->CreateMonster<AHuskHornhead>({ 9511, -5400 });
-	//Crossroads1->CreateMonster<ALeapingHusk>({ 9611, -5400 });
+	Crossroads3->CreateMonster<AGruzzer>({ 4400, -5970 });
+	Crossroads3->CreateMonster<AGruzzer>({ 2940, -7700 });
+	Crossroads3->CreateMonster<AGruzzer>({ 3660, -8060 });
+	Crossroads3->CreateMonster<AGruzzer>({ 3730, -9870 });
+	Crossroads3->CreateMonster<AGruzzer>({ 4620, -6700 });
 
-	//Crossroads1->CreateObject<APlatform>({10250, -5680}, {150, 40});
+	Crossroads1->CreateMonster<AWanderingHusk>({ 11270, -5800 });
+	Crossroads1->CreateMonster<AWanderingHusk>({ 9000, -6000 });
+	Crossroads1->CreateMonster<ACrawlid>({ 7000, -5940 });
+
+	Crossroads2->CreateMonster<AVengefly>({ 14300, -5200 });
+	Crossroads2->CreateMonster<AAspidHunter>({ 16700, -5200 });
+
+	Crossroads4->CreateMonster<AWanderingHusk>({ 19550, -5350 });
+	Crossroads4->CreateMonster<AWanderingHusk>({ 23520, -5350 });
+	Crossroads4->CreateMonster<AHuskHornhead>({ 22300, -5350 });
+
+	Crossroads6->CreateMonster<AVengefly>({ 9070, -7950 });
+	Crossroads6->CreateMonster<AVengefly>({ 7780, -7440 });
+	Crossroads6->CreateMonster<AHuskHornhead>({ 8100, -8290 });
+	Crossroads6->CreateMonster<ACrawlid>({ 8720, -8350 });
+	Crossroads6->CreateMonster<ACrawlid>({ 7200, -8400 });
+
+	BossRoom->CreateMonster<AFalseKnight>({ 12200, -7300 });
+
+	Crossroads5->CreateMonster<AAspidMother>({ 19700, -8060 });
+	Crossroads5->CreateMonster<AAspidMother>({ 20300, -8100 });
+	Crossroads5->CreateMonster<ALeapingHusk>({ 16730, -8300 });
+	Crossroads5->CreateMonster<AHuskHornhead>({ 17000, -8300 });
+
+
+
 }
 
 std::shared_ptr<ARoom> URoomManager::CreateRoom(std::string_view _RoomName, std::string_view _BackgroundName, std::string_view _PixelCollisionName, FVector _Size, float _ScaleRatio/* = 1.0f*/)

@@ -52,7 +52,6 @@ void AMonsterSkill::Collide(UCollision* _This, UCollision* _Other)
 
 void AMonsterSkill::CreateHitEffect(UCollision* _This, UCollision* _Other)
 {
-	UEngineDebug::OutPutString("Create Monster Effect!!!");
 }
 
 void AMonsterSkill::Attack(UCollision* _This, UCollision* _Other)

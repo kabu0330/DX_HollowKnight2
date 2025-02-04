@@ -80,13 +80,6 @@ void AEffect::ChangeAnimation(std::string_view _AnimationName)
 	BodyRenderer->ChangeAnimation(_AnimationName);
 }
 
-// 위치 조정 안할거면 호출
-//void AEffect::ChangeAnimation(AActor* _Actor, std::string_view _AnimationName)
-//{
-//	TargetActor = _Actor;
-//	ChangeAnimation(_AnimationName);
-//}
-
 void AEffect::Release()
 {
 	if (false == bIsAutoRelease)

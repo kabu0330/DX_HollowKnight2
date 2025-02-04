@@ -11,10 +11,6 @@
 
 void AKnight::CreateDashEffect()
 {
-	//std::shared_ptr<AKnightEffect> Effect = GetWorld()->SpawnActor<AKnightEffect>();
-	//Effect->ChangeAnimation(this, "Dash_effect");
-	//Effect->SetScale(0.5f);
-	//Effect->Destroy(0.1f);
 	std::shared_ptr<AKnightEffect> Effect2 = GetWorld()->SpawnActor<AKnightEffect>();
 	Effect2->ChangeAnimation("Dash_effect2",GetActorLocation());
 	Effect2->SetZSort(static_cast<int>(EZOrder::KNIGHT_SKILL_BACK) + 1);

@@ -34,10 +34,10 @@ AKnight::AKnight()
 
 	//SetActorLocation({ 1100.0f, -3000.0f });
 	//SetActorLocation(InitPos::Dirtmouth_well);
-	//SetActorLocation(InitPos::CrossroadsEntrance);
-	SetActorLocation({9911, -5450});
-	SetActorLocation({13900, -5360}); // 哭率
-	SetActorLocation({14800, -5360}); // 坷弗率
+	SetActorLocation(InitPos::CrossroadsEntrance);
+	//SetActorLocation({9911, -5450});
+	//SetActorLocation({13900, -5360}); // 哭率
+	//SetActorLocation({14800, -5360}); // 坷弗率
 	//SetActorLocation({1100, -2950});
 
 	// Debug
@@ -87,8 +87,6 @@ void AKnight::SetCollisionEvent()
 
 void AKnight::Collide(UCollision* _This, UCollision* _Other)
 {
-	UEngineDebug::OutPutString("Kinigt Collision Event Enter");
-
 }
 
 void AKnight::DeathCheck()
