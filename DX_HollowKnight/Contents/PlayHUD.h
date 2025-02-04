@@ -27,13 +27,20 @@ private:
 	FVector HalfSize = FVector::ZERO;
 	class AKnight* Knight = nullptr;
 	UTimeEventComponent* TimeEventer = nullptr;
-
+	
 	void InitSkillGaugeFrame();
 	void CreateSkillGaugeFrame();
 	std::shared_ptr<class UImageWidget> SkillGaugeFrame = nullptr;
 	float SkillGaugeFramePosX = 0.35f;
 	float SkillGaugeFramePosY = 0.39f;
 	bool bIsSkillGaugeFrame = false;
+
+	void InitSkillGauge();
+	void CreateSkillGauge();
+	void CreateSkillGaugeEffect();
+	void UpdateSkillGauge();
+	class UImageWidget* SkillGauge = nullptr;
+	class UImageWidget* SkillGaugeEffect = nullptr;
 
 	void InitHpFrame();
 	std::vector<std::shared_ptr<class UImageWidget>> Hps;

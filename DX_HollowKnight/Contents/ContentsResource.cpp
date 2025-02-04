@@ -179,10 +179,19 @@ void UContentsResource::LoadResourceDirectory()
 	LoadContentsResource("Image/UI/HealthRefill");
 	LoadContentsResource("Image/UI/HealthBreak");
 	LoadContentsResource("Image/UI/HUDFrame");
+	LoadContentsResource("Image/UI/VSoulBurst");
+	LoadContentsResource("Image/UI/V_3Quarter");
+	LoadContentsResource("Image/UI/V_DownTo3Quarter");
+	LoadContentsResource("Image/UI/V_DownToEmpty");
+	LoadContentsResource("Image/UI/V_DownToHalf");
+	LoadContentsResource("Image/UI/V_DownToQuarter");
+	LoadContentsResource("Image/UI/V_Full");
+	LoadContentsResource("Image/UI/V_Half");
+	LoadContentsResource("Image/UI/V_Quarter");
+	LoadContentsResource("Image/UI/V_UpTo3Quarter");
+	LoadContentsResource("Image/UI/V_UpToHalf");
+	LoadContentsResource("Image/UI/V_UpToQuarter");
 
-	// Monster
-
-	// Monster Effect
 
 }
 
@@ -220,7 +229,6 @@ void UContentsResource::LoadSprite()
 	UEngineSprite::CreateSpriteToMeta("GroundImapctEffect.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("BulletFire.png", ".smeta");
 
-	UEngineSprite::CreateSpriteToMeta("fog.png", ".smeta");
 }
 
 void UContentsResource::LoadShaderResource()

@@ -24,11 +24,14 @@ void APlayHUD::BeginPlay()
 	AHUD::BeginPlay();
 
 	InitSkillGaugeFrame();
+	InitSkillGauge();
 	InitKinghtHp = AKnight::GetPawn()->GetStatRef().GetMaxHp();
-	//CreateGeo();
-	//CreateGeoCount();
+	CreateSkillGaugeEffect();
 
 	CreateFade();
+
+	//CreateGeo();
+	//CreateGeoCount();
 }
 
 void APlayHUD::Tick(float _DeltaTime)
@@ -48,7 +51,8 @@ void APlayHUD::Tick(float _DeltaTime)
 	CheckKnightHp();
 	InitHpFrame();
 	UpdateHpUI();
-
+	CreateSkillGauge();
+	UpdateSkillGauge();
 }
 
 void APlayHUD::InitSkillGaugeFrame()
@@ -61,6 +65,8 @@ void APlayHUD::InitSkillGaugeFrame()
 	SkillGaugeFrame->SetWorldLocation({ -ScreenSize.X * SkillGaugeFramePosX,  ScreenSize.Y * SkillGaugeFramePosY });
 
 	SkillGaugeFrame->SetActive(false);
+	SkillGaugeFrame->SetAutoScaleRatio(0.9f);
+
 
 	// 게임 실행 이후 0.5초 뒤에 프레임 생성
 	TimeEventer->AddEndEvent(0.5f, std::bind(&APlayHUD::CreateSkillGaugeFrame, this));
@@ -80,6 +86,86 @@ void APlayHUD::CheckKnightHp()
 {
 	int& KnightHpRef = Knight->GetStatRef().GetHpRef();
 	KnightHp = KnightHpRef;
+}
+
+void APlayHUD::InitSkillGauge()
+{
+	SkillGauge = CreateWidget<UImageWidget>(static_cast<int>(EUIOrder::BACK) + 10 , "SkillGauge").get();
+	std::string V_Full = "V_Full";
+	std::string V_UpTo3Quarter = "V_UpTo3Quarter";
+	std::string V_DownTo3Quarter = "V_DownTo3Quarter";
+	std::string V_3Quarter = "V_3Quarter";
+	std::string V_UpToHalf = "V_UpToHalf";
+	std::string V_DownToHalf = "V_DownToHalf";
+	std::string V_Half = "V_Half";
+	std::string V_UpToQuarter = "V_UpToQuarter";
+	std::string V_DownToQuarter = "V_DownToQuarter";
+	std::string V_Quarter = "V_Quarter";
+	std::string V_DownToEmpty = "V_DownToEmpty";
+	std::string V_Empty = "V_Empty";
+
+	float FrameTime = 0.2f;
+
+	SkillGauge->CreateAnimation(V_Full, V_Full, 0, 3, FrameTime, false);
+
+	SkillGauge->CreateAnimation(V_UpTo3Quarter, V_UpTo3Quarter, 0, 5, FrameTime);
+	SkillGauge->CreateAnimation(V_DownTo3Quarter, V_DownTo3Quarter, 0, 4, FrameTime);
+	SkillGauge->CreateAnimation(V_3Quarter, V_3Quarter, 0, 3, FrameTime);
+
+	SkillGauge->CreateAnimation(V_UpToHalf, V_UpToHalf, 0, 5, FrameTime);
+	SkillGauge->CreateAnimation(V_DownToHalf, V_DownToHalf, 0, 5, FrameTime);
+	SkillGauge->CreateAnimation(V_Half, V_Half, 0, 3, FrameTime);
+
+	SkillGauge->CreateAnimation(V_UpToQuarter, V_UpToQuarter, 0, 5, FrameTime);
+	SkillGauge->CreateAnimation(V_DownToQuarter, V_DownToQuarter, 0, 5, FrameTime);
+	SkillGauge->CreateAnimation(V_Quarter, V_Quarter, 0, 3, FrameTime);
+
+	SkillGauge->CreateAnimation(V_DownToEmpty, V_DownToEmpty, 0, 2, FrameTime);
+	SkillGauge->CreateAnimation(V_Empty, V_DownToEmpty, 2, 2, FrameTime);
+
+	SkillGauge->ChangeAnimation(V_Empty);
+
+	SkillGauge->SetWorldLocation({ -ScreenSize.X * 0.388f,  ScreenSize.Y * 0.372f });
+	SkillGauge->SetAutoScaleRatio(1.0f);
+	SkillGauge->SetAutoScaleRatio(1.05f);
+	SkillGauge->ColorData.MulColor = { 2.0f, 2.0f, 2.0f };
+	SkillGauge->ColorData.MulColor.W = 0.5f;
+
+	SkillGauge->SetActive(false);
+}
+
+void APlayHUD::CreateSkillGauge()
+{
+	if (false == bIsSkillGaugeFrame)
+	{
+		return;
+	}
+	if (true == SkillGaugeFrame->IsCurAnimationEnd())
+	{
+		if (false == SkillGauge->IsActive())
+		{
+			SkillGauge->SetActive(true);
+		}
+	}
+}
+
+void APlayHUD::CreateSkillGaugeEffect()
+{
+	SkillGaugeEffect = CreateWidget<UImageWidget>(static_cast<int>(EUIOrder::BACK) + 11, "SkillGaugeEffect").get();
+	std::string VSoulBurst = "VSoulBurst";
+	SkillGaugeEffect->CreateAnimation(VSoulBurst, VSoulBurst, 0, 5, 0.1f, false);
+	SkillGaugeEffect->ChangeAnimation(VSoulBurst);
+
+	SkillGaugeEffect->SetWorldLocation({ -ScreenSize.X * 0.388f,  ScreenSize.Y * 0.372f });
+	SkillGaugeEffect->SetActive(false);
+	SkillGaugeEffect->SetAutoScaleRatio(1.5f);
+}
+
+void APlayHUD::UpdateSkillGauge()
+{
+
+
+	
 }
 
 void APlayHUD::InitHpFrame()
@@ -116,7 +202,7 @@ void APlayHUD::InitHpFrame()
 
 		HpUI->SetWorldLocation({ -ScreenSize.X * (HpFramePosX - (HpFramePosXGap * i)),  ScreenSize.Y * HpFramePosY });
 		HpUI->SetAutoScale(true);
-		HpUI->SetAutoScaleRatio(0.8f);
+		HpUI->SetAutoScaleRatio(0.7f);
 		HpUI->ChangeAnimation(HealthRefill);
 		Hps.push_back(HpUI);
 	}
@@ -268,6 +354,5 @@ void APlayHUD::FadeChange()
 		Fade->ColorData.MulColor.W = 0.0f;
 		return;
 	}
-
 }
 
