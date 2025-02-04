@@ -176,9 +176,9 @@ void UContentsResource::LoadResourceDirectory()
 
 	// UI
 	LoadContentsResource("Image/UI/HealthIdle");
-	LoadContentsResource("Image/UI/HealthAppear");
 	LoadContentsResource("Image/UI/HealthRefill");
 	LoadContentsResource("Image/UI/HealthBreak");
+	LoadContentsResource("Image/UI/HUDFrame");
 
 	// Monster
 

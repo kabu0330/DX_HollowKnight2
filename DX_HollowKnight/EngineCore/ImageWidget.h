@@ -44,6 +44,11 @@ public:
 
 	ENGINEAPI FrameAnimation* FindAnimation(std::string_view _AnimationName);
 
+	bool IsCurAnimationEnd()
+	{
+		return CurAnimation->IsEnd;
+	}
+
 private:
 	int CurIndex = 0;
 	float CurAnimationSpeed = 1.0f;

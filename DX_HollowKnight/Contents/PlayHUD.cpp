@@ -23,11 +23,10 @@ void APlayHUD::BeginPlay()
 {
 	AHUD::BeginPlay();
 
-	CreateSkillGaugeFrame();
-	CreateHPFrame();
-	CreateHpUI();
-	CreateGeo();
-	CreateGeoCount();
+	InitSkillGaugeFrame();
+
+	//CreateGeo();
+	//CreateGeoCount();
 
 	CreateFade();
 }
@@ -35,7 +34,7 @@ void APlayHUD::BeginPlay()
 void APlayHUD::Tick(float _DeltaTime)
 {
 	AHUD::Tick(_DeltaTime);
-	SetHpUI(); // 실시간 HP 개수 반영
+
 	if (true == ADoor::IsDoorEnter())
 	{
 		FadeIn();
@@ -43,103 +42,124 @@ void APlayHUD::Tick(float _DeltaTime)
 	if (UEngineInput::IsDown('F'))
 	{
 		//FadeOut();
-		FadeIn();
+		FadeIn(); // 페이드 인에 페이드 아웃까지 같이 로직을 넣었다.
 	}
+
+	CheckKnightHp();
+	InitHpFrame();
+
+	//CreateHPFrame();
+	//CreateHpUI();
+
+	//SetHpUI(); // 실시간 HP 개수 반영
+}
+
+void APlayHUD::InitSkillGaugeFrame()
+{
+	SkillGaugeFrame = CreateWidget<UImageWidget>(static_cast<int>(EUIOrder::BACK), "SkillGaugeFrame");
+	std::string HUDFrame = "HUDFrame";
+	SkillGaugeFrame->CreateAnimation(HUDFrame, HUDFrame, 0, 5, 0.2f, false);
+	SkillGaugeFrame->ChangeAnimation(HUDFrame);
+	SkillGaugeFrame->SetActive(false);
+
+	// 게임 실행 이후 0.5초 뒤에 프레임 생성
+	TimeEventer->AddEndEvent(0.5f, std::bind(&APlayHUD::CreateSkillGaugeFrame, this));
 }
 
 void APlayHUD::CreateSkillGaugeFrame()
 {
-	std::shared_ptr<UImageWidget> SkillGaugeFrame = CreateWidget<UImageWidget>(static_cast<int>(EUIOrder::BACK), "SkillGaugeFrame");
-
+	SkillGaugeFrame->SetActive(true);
 	SkillGaugeFrame->SetWorldLocation({ -ScreenSize.X * SkillGaugeFramePosX,  ScreenSize.Y * SkillGaugeFramePosY });
-	SkillGaugeFrame->SetTexture("018-05-118.png", true, 0.9f);
+
 	SkillGaugeFrame->SetDownEvent([]()
 		{
 			UEngineDebug::OutPutString("Click");
 		});
 }
 
-void APlayHUD::CreateHPFrame()
+void APlayHUD::CheckKnightHp()
 {
-	int MaxHp = Knight->GetStatRef().GetMaxHp();
-	for (int i = 0; i < MaxHp; i++)
-	{
-		std::shared_ptr<UImageWidget> HpFrame = CreateWidget<UImageWidget>(static_cast<int>(EUIOrder::BACK), "HpFrame");
-
-		HpFrame->SetWorldLocation({ - ScreenSize.X *(HpFramePosX - (HpFramePosXGap * i)),  ScreenSize.Y * HpFramePosY });
-		HpFrame->SetTexture("004-00-003.png", true, 0.7f);
-	}
+	KnightHp = Knight->GetStatRef().GetHp();
 }
 
-void APlayHUD::CreateHpUI()
+void APlayHUD::InitHpFrame()
 {
-	int Hp = Knight->GetStatRef().GetHp();
-	PrevHp = Hp - 1;
-	Hps.reserve(Hp);
-
-	for (int i = 0; i < Hp; i++)
+	if (true == SkillGaugeFrame->IsCurAnimationEnd())
 	{
+		bIsSkillGaugeFrame = true;
+	}
+
+	if (false == bIsSkillGaugeFrame)
+	{
+		return;
+	}
+	if (true == bIsHpFrame)
+	{
+		return;
+	}
+
+	Hps.reserve(KnightHp);
+
+	for (int i = 0; i < KnightHp; i++)
+	{
+		// 초기 세팅
 		std::shared_ptr<UImageWidget> HpUI = CreateWidget<UImageWidget>(static_cast<int>(EUIOrder::BACK) + 10, "HpUI");
 		std::string HealthRefill = "HealthRefill";
 		std::string HealthIdle = "HealthIdle";
-		std::string HealthAppear = "HealthAppear";
 		std::string HealthBreak = "HealthBreak";
 
 		HpUI->CreateAnimation(HealthRefill, HealthRefill, 0, 6, 0.1f, false);
-		HpUI->CreateAnimation(HealthIdle, HealthIdle, {0, 1, 2, 3, 4}, {3.0f, 0.1f, 0.1f, 0.1f, 0.1f}, true);
-		HpUI->CreateAnimation(HealthAppear, HealthAppear, 0, 5, 0.1f, false);
+		HpUI->CreateAnimation(HealthIdle, HealthIdle, { 0, 1, 2, 3, 4 }, { 3.0f, 0.1f, 0.1f, 0.1f, 0.1f }, true);
 		HpUI->CreateAnimation(HealthBreak, HealthBreak, 0, 6, 0.1f, false);
-
-
 
 		HpUI->SetWorldLocation({ -ScreenSize.X * (HpFramePosX - (HpFramePosXGap * i)),  ScreenSize.Y * HpFramePosY });
 		HpUI->SetAutoScale(true);
-		HpUI->SetAutoScaleRatio(0.7f);
+		HpUI->SetAutoScaleRatio(0.8f);
 		HpUI->ChangeAnimation(HealthRefill);
-		//HpUI->SetTexture("002-40-007.png", true, 0.7f);
 		Hps.push_back(HpUI);
 	}
+
+	bIsHpFrame = true;
+
 	TimeEventer->AddEndEvent(1.0f, std::bind(&APlayHUD::ChangeHpUI, this));
 }
 
 void APlayHUD::ChangeHpUI()
 {
-	for (int i = 0; i < PrevHp; i++)
+	for (int i = 0; i < KnightHp; i++)
 	{
 		Hps[i]->ChangeAnimation("HealthIdle");
 	}
-
-	bIsHpIdle = true;
 }
 
 void APlayHUD::SetHpUI()
 {
-	if (false == bIsHpIdle)
-	{
-		return;
-	}
+	//if (false == bIsHpIdle)
+	//{
+	//	return;
+	//}
 
-	int Hp = Knight->GetStatRef().GetHp();
-	bool HpMinus = false;
-	bool HpPlus = false;
+	//int Hp = Knight->GetStatRef().GetHp();
+	//bool HpMinus = false;
+	//bool HpPlus = false;
 
-	// 조건식 보강 필요
-	if (0 == Hp)
-	{
-		return;
-	}
-	if (Hp == PrevHp + 1)
-	{
-		return; // 체력 변화가 없으므로
-	}
-	else if (Hp <= PrevHp) // 체력이 감소
-	{
-		HpMinus = true;
-	}
-	else if (Hp >= PrevHpMinusOne) // 4 , 2(3)
-	{
-		HpPlus = true;
-	}
+	//// 조건식 보강 필요
+	//if (0 == Hp)
+	//{
+	//	return;
+	//}
+	//if (Hp == PrevHp + 1)
+	//{
+	//	return; // 체력 변화가 없으므로
+	//}
+	//else if (Hp <= PrevHp) // 체력이 감소
+	//{
+	//	HpMinus = true;
+	//}
+	//else if (Hp >= PrevHpMinusOne) // 4 , 2(3)
+	//{
+	//	HpPlus = true;
+	//}
 
 	//if (true == HpPlus) // 체력 회복
 	//{

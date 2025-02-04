@@ -28,19 +28,23 @@ private:
 	class AKnight* Knight = nullptr;
 	UTimeEventComponent* TimeEventer = nullptr;
 
+	void InitSkillGaugeFrame();
 	void CreateSkillGaugeFrame();
+	std::shared_ptr<class UImageWidget> SkillGaugeFrame = nullptr;
 	float SkillGaugeFramePosX = 0.35f;
-	float SkillGaugeFramePosY = 0.37f;
+	float SkillGaugeFramePosY = 0.39f;
+	bool bIsSkillGaugeFrame = false;
 
-	void CreateHPFrame();
+	void InitHpFrame();
 	float HpFramePosX = 0.31f;
 	float HpFramePosY = 0.39f;
 	float HpFramePosXGap = 0.045f;
 	bool bIsHpIdle = false;
-	int PrevHp = 0;
-	int PrevHpMinusOne = 0;
+	bool bIsHpFrame = false;
 
-	void CreateHpUI();
+	void CheckKnightHp();
+	int KnightHp = 0;
+
 	std::vector<std::shared_ptr<class UImageWidget>> Hps;
 	void ChangeHpUI();
 	void SetHpUI();
