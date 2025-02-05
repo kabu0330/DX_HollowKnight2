@@ -166,7 +166,7 @@ void AKnight::SetStatus()
 	Data.MaxHp = 5;
 	Data.Hp = 5;
 	Data.MaxMp = 99;
-	Data.Mp = 0;
+	Data.Mp = 99;
 	Data.Att = 5;
 	Data.SpellAtt = 15;
 	Data.bIsKnockbackable = true;

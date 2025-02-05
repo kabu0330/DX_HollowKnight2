@@ -938,18 +938,19 @@ void AFalseKnight::SetDeathAir(float _DeltaTime)
 
 void AFalseKnight::CreateDeathEffect(float _DeltaTime)
 {
-	if (4.0f <= DeathEffectEndTimeElapesd)
+	if (4.5f <= DeathEffectEndTimeElapesd)
 	{
 		return;
 	}
 	DeathEffectEndTimeElapesd += _DeltaTime;
 	DeathEffectTimeElapesd += _DeltaTime;
-	float Cooldown = 0.5f;
+	float Cooldown = 0.3f;
 	if (DeathEffectTimeElapesd >= Cooldown)
 	{
 		CreateDeathOrangeParticleEffect();
 		CreateDeathOrangeParticleEffect();
 		DeathEffectTimeElapesd = 0.0f;
+		DeathEffectEndTimeElapesd = 0.0f;
 	}	
 }
 
