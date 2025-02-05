@@ -306,7 +306,10 @@ void AMonster::SetDeathLand(float _DeltaTime)
 	ParentRoom->CheckPixelCollisionWithWall(this, Stat.GetVelocity(), !bIsLeft, WallPointOffest);
 	// 렌더러 위치 조정
 	FVector SpritePos = BodyRenderer->GetRelativeLocation();
-	BodyRenderer->SetRelativeLocation({ SpritePos.X, DeathSpriteOffset });
+	//BodyRenderer->SetRelativeLocation({ SpritePos.X, DeathSpriteOffset });
+	SetRendererOffset({ SpritePos.X, DeathSpriteOffset });
+
+
 
 	if (true == bIsDeathDestroy) // 죽으면 액터 제거
 	{

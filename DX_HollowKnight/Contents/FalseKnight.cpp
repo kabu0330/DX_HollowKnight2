@@ -957,12 +957,12 @@ void AFalseKnight::CreateDeathOrangeParticleEffect()
 {
 	AParticle* ExplodeParticle = GetWorld()->SpawnActor<AParticle>().get();
 	FVector ActorPos = GetActorLocation();
-	ExplodeParticle->CreateParticle("Explode", 10, 0.01f, ActorPos);
+	ExplodeParticle->CreateParticle("Explode", 20, 0.01f, ActorPos);
 	ExplodeParticle->SetParticleOption(EParticleType::RANDOM, -1200.0f, 1200.0f);
 	ExplodeParticle->SetRandomScale(0.8f, 1.3f);
 
 	AParticle* OrangeParticle = GetWorld()->SpawnActor<AParticle>().get();
-	OrangeParticle->CreateParticle("OrangeParticle", 5, 0.01f, ActorPos);
+	OrangeParticle->CreateParticle("OrangeParticle", 20, 0.01f, ActorPos);
 	OrangeParticle->SetRandomScale(0.5f, 1.0f);
 	OrangeParticle->SetDecayScale(true, 0.6f);
 	OrangeParticle->SetParticleOption(EParticleType::RANDOM, -1200.0f, 1200.0f);

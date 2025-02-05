@@ -318,6 +318,7 @@
     </CopyFileToFolders>
   </ItemGroup>
   <ItemGroup>
+    <None Include="cpp.hint" />
     <None Include="ThirdParty\DirectxTex\Inc\DirectXTex.inl" />
     <CopyFileToFolders Include="ThirdParty\FW1FontWrapper\Debug\FW1FontWrapper.dll">
       <FileType>Document</FileType>

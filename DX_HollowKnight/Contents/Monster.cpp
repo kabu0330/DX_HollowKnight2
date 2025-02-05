@@ -90,6 +90,7 @@ void AMonster::Tick(float _DeltaTime)
 	UpdateFSM(_DeltaTime);
 
 	DebugInput(_DeltaTime);
+
 }
 
 void AMonster::TimeElapsed(float _DeltaTime)

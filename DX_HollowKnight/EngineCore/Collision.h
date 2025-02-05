@@ -61,7 +61,10 @@ public:
 		return DebugColor;
 	}
 
+	ENGINEAPI static bool& GetDebugModeRef();
+
 private:
+	static bool bIsDebugMode;
 	FVector DebugColor = { 0.0f, 1.0f, 0.0f, 1.0f };
 	ECollisionType CollisionType = ECollisionType::OBB2D;
 	// 내가 충돌한 상대를 기억하는 용도의 set

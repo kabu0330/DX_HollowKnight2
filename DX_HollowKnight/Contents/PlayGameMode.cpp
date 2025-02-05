@@ -19,6 +19,12 @@ FVector APlayGameMode::KnightPos = { 0.0f, 0.0f, 0.0f };
 
 APlayGameMode::APlayGameMode()
 {
+#ifdef _DEBUG
+	UCollision::GetDebugModeRef() = true;
+#else
+	UCollision::GetDebugModeRef() = false;
+#endif // _DEBUG
+
 	PlayGameMode = this;
 	SetCamera();
 	CreateAndLinkCollisionGroup();

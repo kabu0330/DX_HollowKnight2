@@ -3,6 +3,13 @@
 #include <EngineBase/EngineString.h>
 #include <EngineCore/EngineCamera.h>
 
+bool UCollision::bIsDebugMode = true;
+
+bool& UCollision::GetDebugModeRef()
+{
+	return bIsDebugMode;
+}
+
 UCollision::UCollision()
 {
 }
@@ -233,6 +240,11 @@ void UCollision::CollisionEventCheck(std::shared_ptr<UCollision> _Other)
 
 void UCollision::DebugRender(UEngineCamera* _Camera, float _DeltaTime)
 {
+	if (false == bIsDebugMode)
+	{
+		return;
+	}
+
 	URenderUnit Unit;
 
 	FTransform& CameraTrans = _Camera->GetTransformRef();
