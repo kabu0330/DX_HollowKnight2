@@ -25,6 +25,7 @@ ATitleGameMode::~ATitleGameMode()
 void ATitleGameMode::BeginPlay()
 {
 	AActor::BeginPlay();
+	Sound = UEngineSound::Play("Title.mp3");
 }
 
 void ATitleGameMode::Tick(float _DeltaTime)
@@ -32,6 +33,7 @@ void ATitleGameMode::Tick(float _DeltaTime)
 	AActor::Tick(_DeltaTime);
 	if (UEngineInput::IsDown(VK_SPACE))
 	{
+		Sound = UEngineSound::Play("ui_button_confirm.wav");
 		LevelChangeEnd();
 	}
 }

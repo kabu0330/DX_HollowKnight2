@@ -1,5 +1,6 @@
 #pragma once
 #include <EngineCore/GameMode.h>
+#include <EnginePlatform/EngineSound.h>
 
 // Ό³Έν :
 class ATitleGameMode : public AGameMode
@@ -23,6 +24,6 @@ protected:
 
 private:
 	std::shared_ptr<class ATitleScene> TitleScene;
-
+	USoundPlayer Sound;
 };
 
