@@ -151,9 +151,6 @@
     <ClInclude Include="MonsterEffect.h">
       <Filter>Play\Monster\Base\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="AspidHunterBullet.h">
-      <Filter>Play\Monster\Base\Skill</Filter>
-    </ClInclude>
     <ClInclude Include="FalseKnight.h">
       <Filter>Play\Monster\Boss</Filter>
     </ClInclude>
@@ -323,9 +320,6 @@
     </ClCompile>
     <ClCompile Include="MonsterEffect.cpp">
       <Filter>Play\Monster\Base\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="AspidHunterBullet.cpp">
-      <Filter>Play\Monster\Base\Skill</Filter>
     </ClCompile>
     <ClCompile Include="FalseKnight.cpp">
       <Filter>Play\Monster\Boss</Filter>

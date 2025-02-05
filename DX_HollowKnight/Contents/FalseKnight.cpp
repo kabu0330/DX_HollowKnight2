@@ -929,7 +929,7 @@ void AFalseKnight::SetDeathAir(float _DeltaTime)
 	}
 	if (true == bIsOnGround && true == BodyRenderer->IsCurAnimationEnd())
 	{
-		TimeEventer->AddEvent(3.0f, std::bind(&AFalseKnight::CreateDeathEffect, this, std::placeholders::_1), [this]()
+		TimeEventer->AddEvent(5.0f, std::bind(&AFalseKnight::CreateDeathEffect, this, std::placeholders::_1), [this]()
 			{
 				FSM.ChangeState(EMonsterState::DEATH_LAND);
 			});
@@ -938,8 +938,13 @@ void AFalseKnight::SetDeathAir(float _DeltaTime)
 
 void AFalseKnight::CreateDeathEffect(float _DeltaTime)
 {
+	if (4.0f <= DeathEffectEndTimeElapesd)
+	{
+		return;
+	}
+	DeathEffectEndTimeElapesd += _DeltaTime;
 	DeathEffectTimeElapesd += _DeltaTime;
-	float Cooldown = 0.3f;
+	float Cooldown = 0.5f;
 	if (DeathEffectTimeElapesd >= Cooldown)
 	{
 		CreateDeathOrangeParticleEffect();
@@ -950,20 +955,21 @@ void AFalseKnight::CreateDeathEffect(float _DeltaTime)
 
 void AFalseKnight::CreateDeathOrangeParticleEffect()
 {
-	AParticle* PuffParticle = GetWorld()->SpawnActor<AParticle>().get();
+	AParticle* ExplodeParticle = GetWorld()->SpawnActor<AParticle>().get();
 	FVector ActorPos = GetActorLocation();
-	PuffParticle->CreateParticle("Puff", 10, 0.01f, ActorPos);
-	PuffParticle->SetParticleOption(EParticleType::RANDOM, -1200.0f, 1200.0f);
+	ExplodeParticle->CreateParticle("Explode", 10, 0.01f, ActorPos);
+	ExplodeParticle->SetParticleOption(EParticleType::RANDOM, -1200.0f, 1200.0f);
+	ExplodeParticle->SetRandomScale(0.8f, 1.3f);
 
 	AParticle* OrangeParticle = GetWorld()->SpawnActor<AParticle>().get();
-	OrangeParticle->CreateParticle("OrangeParticle", 20, 0.01f, ActorPos);
+	OrangeParticle->CreateParticle("OrangeParticle", 5, 0.01f, ActorPos);
 	OrangeParticle->SetRandomScale(0.5f, 1.0f);
 	OrangeParticle->SetDecayScale(true, 0.6f);
 	OrangeParticle->SetParticleOption(EParticleType::RANDOM, -1200.0f, 1200.0f);
 
-	AParticle* Particle = GetWorld()->SpawnActor<AParticle>().get();
-	Particle->CreateParticle("DefaultHitParticle", 20, 0.01f, ActorPos);
-	Particle->SetParticleOption(EParticleType::RANDOM, -1200.0f, 1200.0f);
+	//AParticle* Particle = GetWorld()->SpawnActor<AParticle>().get();
+	//Particle->CreateParticle("DefaultHitParticle", 10, 0.01f, ActorPos);
+	//Particle->SetParticleOption(EParticleType::RANDOM, -1200.0f, 1200.0f);
 }
 
 void AFalseKnight::SetDeathLand(float _DeltaTime)

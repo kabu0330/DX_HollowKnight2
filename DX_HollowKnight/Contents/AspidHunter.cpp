@@ -1,7 +1,6 @@
 #include "PreCompile.h"
 #include "AspidHunter.h"
 #include "MonsterProjectile.h"
-#include "AspidHunterBullet.h"
 
 AAspidHunter::AAspidHunter()
 {
@@ -134,7 +133,7 @@ void AAspidHunter::CreateAttackLogicAndEffect()
 	}
 	bIsFire = true;
 
-	std::shared_ptr<AAspidHunterBullet> Projectile = GetWorld()->SpawnActor<AAspidHunterBullet>();
+	std::shared_ptr<AMonsterProjectile> Projectile = GetWorld()->SpawnActor<AMonsterProjectile>();
 	Projectile->SetZSort(EZOrder::MONSTER_SKILL_FRONT);
 	FVector Pos = GetActorLocation();
 	Projectile->ChangeAnimation("OrangeBullet", Pos);
@@ -150,7 +149,7 @@ void AAspidHunter::CreateAttackLogicAndEffect()
 	FVector KnightPos = AKnight::GetPawn()->GetActorLocation();
 	FVector Dir = KnightPos - ThisPos;
 	Dir.Normalize();
-	float Speed = 300.0f;
+	float Speed = 500.0f;
 	FVector Offset = Dir * Speed;
 
 	Projectile->AddLocation(this, Offset);
