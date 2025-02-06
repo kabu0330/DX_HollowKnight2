@@ -19,6 +19,14 @@ protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime)	override;
 
+	void FadeIn();
+	void CreateFade();
+	void FadeOut();
+	void FadeChange();
+	std::shared_ptr<class UImageWidget> Fade;
+	float4 FadeValue = FVector::ZERO;
+	float4 FadeDir = FVector::UNIT; // {1, 1, 1, 1}
+	UTimeEventComponent* TimeEventer = nullptr;
 private:
 
 };

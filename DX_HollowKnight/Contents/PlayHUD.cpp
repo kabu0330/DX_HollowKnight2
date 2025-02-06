@@ -504,7 +504,6 @@ void APlayHUD::FadeChange()
 	FadeValue.W += FadeDir.W * DeltaTime * Ratio;
 
 	Fade->ColorData.MulColor = FadeValue;
-	//Fade->ColorData.PlusColor = FadeValue;
 
 	if (0.0f >= Fade->ColorData.MulColor.W)
 	{
