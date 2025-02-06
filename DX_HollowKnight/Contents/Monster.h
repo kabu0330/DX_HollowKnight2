@@ -32,6 +32,11 @@ public:
 		return bIsLeft;
 	}
 
+	bool IsKnockback()
+	{
+		return bIsKnockback;
+	}
+
 	bool IsFlip()
 	{
 		return bIsFlip;
@@ -180,6 +185,7 @@ protected:
 	void SetCollisionEvent();
 	void OnBodyCollision(class UCollision* _This, class UCollision* _Other);
 	void Knockback();
+	bool bIsKnockback = false;
 
 	void DebugInput(float _DeltaTime);
 

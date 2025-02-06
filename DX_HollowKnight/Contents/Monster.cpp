@@ -364,12 +364,13 @@ void AMonster::ReverseForce(float _DeltaTime)
 	{
 		return;
 	}
-
+	bIsKnockback = true;
 	FVector Reverse = -Stat.GetKnockbackForce();
 	Reverse.Normalize();
 
 	if (50.0f >= Stat.GetKnockbackForce().Length())
 	{
+		bIsKnockback = false;
 		Stat.SetKnockbackDir(FVector::ZERO);
 	}
 
@@ -432,6 +433,7 @@ void AMonster::DeathAir(float _DeltaTime)
 			CurrentForce.Y = -3000.0f;
 		}
 		Stat.SetKnockbackForce(CurrentForce);
+
 		AddActorLocation(CurrentForce * _DeltaTime);
 	}
 }

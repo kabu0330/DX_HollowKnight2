@@ -229,15 +229,23 @@ void AKnight::ReverseForce(float _DeltaTime)
 		return;
 	}
 
+	bIsKnockback = true;
 	FVector Reverse = -Stat.GetKnockbackForce();
 	Reverse.Normalize();
 
-	Stat.AddKnockbackForce(Reverse * _DeltaTime * 500.0f);
-
 	if (50.0f >= Stat.GetKnockbackForce().Length())
 	{
+		bIsKnockback = false;
 		Stat.SetKnockbackDir(FVector::ZERO);
 	}
+
+	if (true == bIsWallHere)
+	{
+		return;
+	}
+
+	Stat.AddKnockbackForce(Reverse * _DeltaTime * 500.0f);
+
 }
 
 void AKnight::Knockback(float _DeltaTime)

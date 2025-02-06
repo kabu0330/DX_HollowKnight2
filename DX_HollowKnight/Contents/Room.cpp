@@ -235,12 +235,14 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, float _Speed, bool _Left
 
 	FVector CollisionPos = FVector::ZERO;
 	FVector CollisionHalfScale = FVector::ZERO;
+	bool bIsKnockback = false;
 
 	AKnight* Knight = dynamic_cast<AKnight*>(_Actor);
 	if (nullptr != Knight)
 	{
 		CollisionPos = Knight->GetPixelCollision()->GetWorldLocation();
 		CollisionHalfScale = Knight->GetPixelCollision()->GetWorldScale3D().Half();
+		bIsKnockback = Knight->IsKnockback();
 	}
 
 	AMonster* Monster = dynamic_cast<AMonster*>(_Actor);
@@ -248,6 +250,7 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, float _Speed, bool _Left
 	{
 		CollisionPos = Monster->GetPixelCollision()->GetWorldLocation();
 		CollisionHalfScale = Monster->GetPixelCollision()->GetWorldScale3D().Half();
+		bIsKnockback = Monster->IsKnockback();
 	}
 
 	float DeltaTime = UEngineCore::GetDeltaTime();
@@ -258,14 +261,29 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, float _Speed, bool _Left
 	FVector CollisionPoint = { CollisionPos.X + NextPos , CollisionPos.Y + 20.0f};
 
 	// 왼쪽, 오른쪽 방향 구분
-	if (true == _Left)
+	if (true == bIsKnockback)
 	{
-		CollisionPoint.X -= CollisionHalfScale.X;
+		if (true == _Left)
+		{
+			CollisionPoint.X += CollisionHalfScale.X;
+		}
+		else
+		{
+			CollisionPoint.X -= CollisionHalfScale.X;
+		}
 	}
 	else
 	{
-		CollisionPoint.X += CollisionHalfScale.X;
+		if (true == _Left)
+		{
+			CollisionPoint.X -= CollisionHalfScale.X;
+		}
+		else
+		{
+			CollisionPoint.X += CollisionHalfScale.X;
+		}
 	}
+
 
 	// 실수오차 문제 때문에
 	CollisionPoint.X = ::roundf(CollisionPoint.X);

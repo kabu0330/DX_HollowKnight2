@@ -45,6 +45,10 @@ public:
 	{
 		return bIsLeft;
 	}
+	bool IsKnockback()
+	{
+		return bIsKnockback;
+	}
 
 	void CheckEnterDoor(class UCollision* _This, class UCollision* _Target);
 	bool GetEnter()
@@ -162,6 +166,7 @@ private:
 	void ReverseForce(float _DeltaTime);
 	void Knockback(float _DeltaTime);
 	bool bIsOnGround = false; // 픽셀충돌로 true / false 검사
+	bool bIsKnockback = false;
 
 	// Move
 	void Move(float _DeltaTime);
