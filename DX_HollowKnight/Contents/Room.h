@@ -157,6 +157,13 @@ public:
 		}
 	}
 
+	static void SetBackgroundSound(std::string_view _SoundFile) // 보스전을 위해
+	{
+		Sound.Stop();
+		Sound = UEngineSound::Play(_SoundFile);
+		Sound.Loop(999);
+	}
+
 protected:
 	void Force(AActor* _Actor, float _DeltaTime);
 
@@ -176,7 +183,7 @@ private:
 
 	std::list<AMonster*> Monsters;
 
-	USoundPlayer Sound = USoundPlayer();
+	inline static USoundPlayer Sound = USoundPlayer();
 	USoundPlayer SoundWind = USoundPlayer();
 	std::string SoundName = "";
 	inline static std::string CurSoundName = "";

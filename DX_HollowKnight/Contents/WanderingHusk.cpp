@@ -24,7 +24,7 @@ void AWanderingHusk::SetStatus()
 	FStatusData Data;
 	Data.Velocity = 150.0f;
 	Data.InitVelocity = Data.Velocity;
-	Data.RunSpeed = Data.Velocity * 2.5f;
+	Data.RunSpeed = Data.Velocity * 3.0f;
 	Data.DashSpeed = Data.Velocity * 3.0f;
 	Data.MaxHp = 15;
 	Data.Hp = 15;

@@ -63,7 +63,11 @@ void AMonsterProjectile::ChangePixelCollisionAnimaion()
 	if (true == bIsPixelCollision)
 	{
 		BodyRenderer->ChangeAnimation("ShotImpact");
-
+		if (true == Collision->IsActive())
+		{
+			Sound = UEngineSound::Play("explosion_4_wet_original.wav");
+			Sound.SetVolume(0.4f);
+		}
 		Collision->SetActive(false);
 		if (true == BodyRenderer->IsCurAnimationEnd())
 		{

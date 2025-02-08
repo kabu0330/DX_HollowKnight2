@@ -13,9 +13,9 @@ AAspidHunter::~AAspidHunter()
 void AAspidHunter::BeginPlay()
 {
 	AMonster::BeginPlay();
-	IdleSound = "hatcher_fly_loop.wav";
-	StaticSound = "hatcher_fly_loop.wav";
-	AttackSound = "hatcher_fly_loop.wav";
+	IdleSound = "hatchling_fly_loop_1.wav";
+	StaticSound = "hatchling_fly_loop_1.wav";
+	AttackSound = "hatchling_charge.wav";
 	DeathSound = "hatchling_explode.wav";
 }
 
@@ -27,12 +27,12 @@ void AAspidHunter::Tick(float _DeltaTime)
 void AAspidHunter::SetStatus()
 {
 	FStatusData Data;
-	Data.Velocity = 0.0f;
+	Data.Velocity = 50.0f;
 	Data.InitVelocity = Data.Velocity;
 	Data.RunSpeed = Data.Velocity * 1.0f;
 	Data.DashSpeed = Data.Velocity * 1.0f;
 	Data.MaxHp = 15;
-	Data.Hp = 5;
+	Data.Hp = 15;
 	Data.MaxMp = 0;
 	Data.Mp = 0;
 	Data.Att = 1;
@@ -103,6 +103,8 @@ void AAspidHunter::CreateAnimation()
 
 void AAspidHunter::SetAttack(float _DeltaTime)
 {
+	SoundPlay(AttackSound);
+
 	SetAttackRendererOffset();
 	CheckDeath();
 	ActiveGravity();

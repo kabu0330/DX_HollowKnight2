@@ -1,6 +1,7 @@
 #pragma once
 #include "Monster.h"
 
+
 // Ό³Έν :
 class AFalseKnight : public AMonster
 {
@@ -23,6 +24,7 @@ public:
 	{
 		HeadHp += _Att;
 	}
+	void DamageSound() override;
 
 protected:
 	void BeginPlay() override;
@@ -38,6 +40,7 @@ protected:
 	int DeathCountValue = 2;
 
 private:
+
 	void BossPatternTimeElapsed(float _DeltaTime);
 	float JumpElapsed = 0.0f;
 	float JumpAttackElapsed = 0.0f;
@@ -57,6 +60,7 @@ private:
 	void EndFlashEffect(float _DeltaTime);
 
 	void CreateAttackLogicAndEffect();
+	bool bIsAttackEffect = false;
 	void CreateGroundImpack();
 	bool bIsOffsetAttack1Frame = false;
 	bool bISOffsetAttackRecovery1Fame = false;
@@ -69,7 +73,8 @@ private:
 	float BerserkAttackElapsed = 0.0f;
 	int DropObjectCount = 1;
 	int BerserkAttackCount = 0;
-	int BerserkAttackCountMax = 8;
+	int BerserkAttackCountMax = 10;
+	bool bIsBerserkVoice = false;
 
 	void CreateHeadRenderer();
 	class AFalseKnightHead* Head = nullptr;
@@ -80,13 +85,15 @@ private:
 	bool bIsInit = true;
 	bool bCanStunRecovery = false;
 	bool bIsDeathAir = false;
+	bool bIsStunVoice = false;
+	bool bIsStunGroundSound = false;
 
 	bool bIsDeath = false;
 
 	void CreateDeathEffect(float _DeltaTime);
 	void CreateDeathOrangeParticleEffect();
 	float DeathEffectTimeElapesd = 0.0f;
-	float DeathEffectEndTimeElapesd = 0.0f;
+	int DeathEffectCount = 1;
 private:
 	void SetIdle(float _DeltaTime) override;
 	void SetJumpAnticipate(float _DeltaTime) override;
@@ -116,5 +123,10 @@ private:
 
 	void SetDeathAir(float _DeltaTime);
 	void SetDeathLand(float _DeltaTime);
+
+	USoundPlayer PatternSound;
+	USoundPlayer BossVoice;
+	void BossPatternSound(std::string_view _SoundFile, float _Volume = 1.0f);
+	bool bIsGushingSound = false;
 };
 

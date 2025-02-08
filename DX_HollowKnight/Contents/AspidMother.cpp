@@ -17,6 +17,7 @@ void AAspidMother::BeginPlay()
 
 	IdleSound = "hatcher_fly_loop.wav";
 	StaticSound = "hatcher_fly_loop.wav";
+	AttackSound = "";
 	DeathSound = "hatchling_explode.wav";
 }
 
@@ -32,8 +33,8 @@ void AAspidMother::SetStatus()
 	Data.InitVelocity = Data.Velocity;
 	Data.RunSpeed = Data.Velocity * 1.0f;
 	Data.DashSpeed = Data.Velocity * 0.0f; // 공격 중에 안움직이려고
-	Data.MaxHp = 15;
-	Data.Hp = 15;
+	Data.MaxHp = 20;
+	Data.Hp = 20;
 	Data.MaxMp = 0;
 	Data.Mp = 0;
 	Data.Att = 1;
@@ -68,7 +69,7 @@ void AAspidMother::SetOffset()
 	FVector ImageSize = { 787.0f , 1813.0f };
 	FVector SpriteSize = { 160.0f, 180.0f };
 
-	DetectRange = { 600, 400 };
+	DetectRange = { 900, 1300 };
 	CollisionScale = SpriteSize;
 
 	RendererOffset = { 0.0f, 0.0f };
@@ -121,9 +122,6 @@ void AAspidMother::SetAttack(float _DeltaTime)
 		SpawnAspidHatchling();
 	}
 
-
-
-
 	AttackFrameElapsed += _DeltaTime;
 	//   피격시                        넉백이 적용되는 친구들은 모두 스킬 캔슬
 	if (true == Stat.IsBeingHit() && true == Stat.IsKnockbackable())
@@ -151,4 +149,13 @@ void AAspidMother::SpawnAspidHatchling()
 	Child->SetParentRoom(ParentRoom);
 	ParentRoom->GetMonstersRef().push_back(Child);
 
+}
+
+void AAspidMother::DeathPattern()
+{
+	if (false == bIsSpawn)
+	{
+		SpawnAspidHatchling();
+		SpawnAspidHatchling();
+	}
 }

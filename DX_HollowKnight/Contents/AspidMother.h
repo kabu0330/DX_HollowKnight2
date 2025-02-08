@@ -25,6 +25,7 @@ protected:
 private:
 	void SetAttack(float _DeltaTime) override;
 	void SpawnAspidHatchling();
+	void DeathPattern();
 
 	bool bIsSpawn = false;
 	float ChildZSort = 0.0f;

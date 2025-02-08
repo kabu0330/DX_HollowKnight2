@@ -1,5 +1,6 @@
 #pragma once
 #include "MonsterSkill.h"
+#include <EngineCore/TimeEventComponent.h>
 
 // Ό³Έν :
 class AFalseKnightHead : public AMonsterSkill
@@ -38,6 +39,8 @@ protected:
 	void CreateKnightHitEffect(class UCollision* _This, class UCollision* _Other);
 
 private:
+	USoundPlayer Sound;
+
 	void Release() override;
 	bool bCanRelease = false;
 	class AFalseKnight* Boss = nullptr;

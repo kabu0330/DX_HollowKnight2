@@ -12,6 +12,9 @@ AVengefly::~AVengefly()
 void AVengefly::BeginPlay()
 {
 	AMonster::BeginPlay();
+
+	IdleSound = "mosquito_fly_loop.wav";
+	StaticSound = "mosquito_fly_loop.wav";
 	AttackSound = "FlyBug_Notice.wav";
 }
 
@@ -23,12 +26,12 @@ void AVengefly::Tick(float _DeltaTime)
 void AVengefly::SetStatus()
 {
 	FStatusData Data;
-	Data.Velocity = 150.0f;
+	Data.Velocity = 200.0f;
 	Data.InitVelocity = Data.Velocity;
-	Data.RunSpeed = Data.Velocity * 3.5f;
+	Data.RunSpeed = Data.Velocity * 3.0f;
 	Data.DashSpeed = Data.Velocity * 3.0f;
 	Data.MaxHp = 15;
-	Data.Hp = 5;
+	Data.Hp = 8;
 	Data.MaxMp = 0;
 	Data.Mp = 0;
 	Data.Att = 1;
@@ -52,6 +55,8 @@ void AVengefly::SetStatus()
 	AttackDuration = AttackFrame * 12.0f;
 	AttackCooldown = 5.0f;
 
+
+
 	AttackRecoveryFrame = 0.1f;
 }
 
@@ -60,7 +65,7 @@ void AVengefly::SetOffset()
 	FVector ImageSize = { 603.0f , 799.0f };
 	FVector SpriteSize = { 110.0f, 140.0f };
 
-	DetectRange = { 600, 400 };
+	DetectRange = { 1200, 1000 };
 	CollisionScale = SpriteSize;
 
 	RendererOffset = { 0.0f, 0.0f };

@@ -304,6 +304,8 @@ void AMonster::SetDeathLand(float _DeltaTime)
 		SoundPlay(DeathSound);
 	}
 
+	DeathPattern();
+
 	//UEngineDebug::OutPutString("Monster FSM : Death");
 	bCanFly = false; // 하늘을 나는 애도 중력 적용 받도록
 	ActiveGravity();

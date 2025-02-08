@@ -12,6 +12,8 @@ AGruzzer::~AGruzzer()
 void AGruzzer::BeginPlay()
 {
 	AMonster::BeginPlay();
+	IdleSound = "fly_flying.wav";
+	StaticSound = "fly_flying.wav";
 	DeathSound = "hatchling_explode.wav";
 }
 
@@ -28,7 +30,7 @@ void AGruzzer::SetStatus()
 	Data.RunSpeed = Data.Velocity * 2.5f;
 	Data.DashSpeed = Data.Velocity * 3.0f;
 	Data.MaxHp = 15;
-	Data.Hp = 5;
+	Data.Hp = 8;
 	Data.MaxMp = 0;
 	Data.Mp = 0;
 	Data.Att = 1;

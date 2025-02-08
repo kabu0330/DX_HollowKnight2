@@ -24,7 +24,7 @@ void AHuskHornhead::SetStatus()
 	FStatusData Data;
 	Data.Velocity = 150.0f;
 	Data.InitVelocity = Data.Velocity;
-	Data.RunSpeed = Data.Velocity * 2.5f;
+	Data.RunSpeed = Data.Velocity * 4.5f;
 	Data.DashSpeed = Data.Velocity * 3.0f;
 	Data.MaxHp = 15;
 	Data.Hp = 5;
@@ -56,7 +56,7 @@ void AHuskHornhead::SetStatus()
 void AHuskHornhead::SetOffset()
 {
 	FVector ImageSize = { 2500.0f , 4000.0f };
-	FVector SpriteSize = { 128.0f, 200.0f };
+	FVector SpriteSize = { 148.0f, 200.0f };
 
 	RendererOffset = { 0.0f, -10.0f };
 	BodyCollisionOffset = { 0.0f, -20.0f };
@@ -114,7 +114,7 @@ void AHuskHornhead::CreateAttackLogicAndEffect()
 	bIsShowEffect = true;
 
 	std::shared_ptr<AMonsterSkill> Skill = GetWorld()->SpawnActor<AMonsterSkill>();
-
+	Skill->SetTargetActor(this);
 	Skill->SetCollisionTime(AttackDuration);
 
 	FVector CollisionScale = FVector(100, 50); 

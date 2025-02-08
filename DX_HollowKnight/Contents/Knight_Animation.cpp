@@ -104,8 +104,7 @@ void AKnight::CreateFireballEffect()
 	{
 		return;
 	}
-
-	Stat.AddMp(-33);
+	bIsFireballEffect = true;
 
 	std::shared_ptr<AKnightEffect> Effect = GetWorld()->SpawnActor<AKnightEffect>();
 	Effect->ChangeAnimation("Blast", GetActorLocation());
@@ -127,7 +126,7 @@ void AKnight::CreateFireballEffect()
 
 	Skill->GetRenderer()->SetMulColor({ 11.0f, 11.0f, 11.0f }, 0.1f);
 
-	bIsFireballEffect = true;
+
 
 	Sound.Stop();
 	Sound = UEngineSound::Play("hero_fireball.wav");

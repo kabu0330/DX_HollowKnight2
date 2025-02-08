@@ -29,7 +29,7 @@ void ACrawlid::SetStatus()
 	Data.RunSpeed = Data.Velocity * 2.5f;
 	Data.DashSpeed = Data.Velocity * 3.0f;
 	Data.MaxHp = 15;
-	Data.Hp = 10;
+	Data.Hp = 8;
 	Data.MaxMp = 0;
 	Data.Mp = 0;
 	Data.Att = 1;

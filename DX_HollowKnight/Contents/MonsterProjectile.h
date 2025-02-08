@@ -1,5 +1,6 @@
 #pragma once
 #include "MonsterSkill.h"
+#include <EnginePlatform/EngineSound.h>
 
 // Ό³Έν :
 class AMonsterProjectile : public AMonsterSkill
@@ -22,6 +23,6 @@ protected:
 private:
 	void Release() override;
 	void ChangePixelCollisionAnimaion();
-	
+	USoundPlayer Sound;
 };
 

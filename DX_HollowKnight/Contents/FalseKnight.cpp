@@ -16,6 +16,11 @@ AFalseKnight::~AFalseKnight()
 {
 }
 
+void AFalseKnight::DamageSound()
+{
+	Sound = UEngineSound::Play("false_knight_damage_armour.wav");
+}
+
 void AFalseKnight::BeginPlay()
 {
 	AMonster::BeginPlay();
@@ -60,7 +65,7 @@ void AFalseKnight::SetStatus()
 	MoveCooldown = 3.0f;
 
 	AttackFrame = 0.15f;// 매번 설정
-	AttackDuration = AttackFrame * 12.0f;
+	AttackDuration = AttackFrame * 3.0f;
 	AttackCooldown = 7.0f;
 
 	AttackRecoveryFrame = 0.2f;
@@ -93,10 +98,10 @@ void AFalseKnight::CreateAnimation()
 	SetName("FalseKnight");
 	std::string MonsterStr = "FalseKnight.png";
 	float IdleTime = 0.2f;
-	float JumpTime = 0.2f;
+	float JumpTime = 0.15f;
 	float RunnigTime = 0.1f;
-	float AttackAnticipateTime = 0.2f;
-	float DeathAirTime = 0.1f; // 날아가는 시간 조절에 따라서 자연스러움이 표현된다.
+	float AttackAnticipateTime = 0.15f;
+	float DeathAirTime = 0.12f; // 날아가는 시간 조절에 따라서 자연스러움이 표현된다.
 	float DeathTime = 0.08f;
 	float StunTime = 0.15f;
 	BodyRenderer->SetName("FalseKnight");
@@ -158,6 +163,7 @@ void AFalseKnight::ChangeStunAnimation()
 {
 	if (true == bIsStun)
 	{
+		BossVoice = UEngineSound::Play("Fknight_hit_01.wav");
 		FSM.ChangeState(EMonsterState::STUN);
 		return;
 	}
@@ -169,7 +175,7 @@ void AFalseKnight::BossPatternTimeElapsed(float _DeltaTime)
 	if (false == bCanJump)
 	{
 		JumpElapsed += _DeltaTime;
-		float Cooldown = 7.0f;
+		float Cooldown = 5.0f;
 		if (JumpElapsed >= Cooldown)
 		{
 			JumpElapsed = 0.0f;
@@ -193,7 +199,7 @@ void AFalseKnight::BossPatternTimeElapsed(float _DeltaTime)
 	if (true == bIsResting)
 	{
 		RestElapsed += _DeltaTime;
-		float Cooldown = 3.0f;
+		float Cooldown = 2.0f;
 		if (RestElapsed >= Cooldown)
 		{
 			RestElapsed = 0.0f;
@@ -266,6 +272,8 @@ void AFalseKnight::EndFlashEffect(float _DeltaTime)
 
 void AFalseKnight::SetIdle(float _DeltaTime)
 {
+	PlayStaticSound(""); // 다른 사운드들 초기화를 위해
+
 	ResetRendererOffset();
 
 	ChangeStunAnimation();
@@ -300,18 +308,30 @@ void AFalseKnight::SetIdle(float _DeltaTime)
 	{
 		FSM.ChangeState(EMonsterState::ATTACK_ANTICIPATE);
 	}
-	// 패턴 2. 점프, 3. 점프 공격
+	// 패턴 2. 점프, 3. 점프 공격 4. 광폭화 공격
 	if (true == IsPlayerNearby() && false == Stat.IsAttacking() && true == bCanJump) 
 	{
-		UEngineRandom Random;
-		float Result = Random.Randomfloat(-300.0f, 400.0f);
+		FVector Pos = GetActorLocation();
+		FVector CenterPos = { 12230, -8700 };
+		float Result = 0.0f;
+		if (Pos.X >= 12600.0f || Pos.X <= 11600.0f)
+		{
+			FVector TargetDirection = CenterPos - Pos;
+			FVector TargetDistance = TargetDirection;
+			float Distance = TargetDistance.Length() * 0.7f;
+			TargetDirection.Normalize();
+			Direction = TargetDirection;
+			Result = Distance;
+		}
+		else
+		{
+			UEngineRandom Random;
+			Result = Random.Randomfloat(-300.0f, 400.0f);
+		}
+
 		Stat.SetVelocity(Result);
+
 		FSM.ChangeState(EMonsterState::JUMP_ANTICIPATE);
-	}
-	// 패턴 4. 광폭화 공격
-	if (true == IsPlayerNearby() && false == Stat.IsAttacking() && true == bCanBerserkAttack && true == bIsBerserkMode)
-	{
-		FSM.ChangeState(EMonsterState::BERSERK_ATTACK_ANTICIPATE);
 	}
 }
 
@@ -325,20 +345,28 @@ void AFalseKnight::SetJumpAnticipate(float _DeltaTime)
 	bCanRotation = false;
 	bCanJump = false;
 
-	UEngineRandom Random;
-	int Result = Random.RandomInt(0, 1);
-	if (0 == Result)
+	if (true == bCanBerserkAttack && true == bIsBerserkMode)
 	{
 		ChangeNextState(EMonsterState::JUMP);
 	}
 	else
 	{
-		ChangeNextState(EMonsterState::JUMP_ATTACK_ANTICIPATE);
+		UEngineRandom Random;
+		int Result = Random.RandomInt(0, 1);
+		if (0 == Result)
+		{
+			ChangeNextState(EMonsterState::JUMP);
+		}
+		else
+		{
+			ChangeNextState(EMonsterState::JUMP_ATTACK_ANTICIPATE);
+		}
 	}
 }
 
 void AFalseKnight::SetJump(float _DeltaTime)
 {
+	SoundPlay("false_knight_jump.wav");
 	ActiveGravity();
 
 	ChangeStunAnimation();
@@ -360,6 +388,7 @@ void AFalseKnight::SetJump(float _DeltaTime)
 
 void AFalseKnight::SetLand(float _DeltaTime)
 {
+	BossPatternSound("false_knight_land.wav", 0.8f);
 	ActiveGravity();
 
 	ChangeStunAnimation();
@@ -367,11 +396,19 @@ void AFalseKnight::SetLand(float _DeltaTime)
 	JumpForce = 0.0f;
 	bIsResting = true; // 패턴과 패턴 간 쿨타임 적용
 
-	ChangeNextState(EMonsterState::IDLE);
+	if (true == bCanBerserkAttack && true == bIsBerserkMode)
+	{
+		ChangeNextState(EMonsterState::BERSERK_ATTACK_ANTICIPATE);
+	}
+	else
+	{
+		ChangeNextState(EMonsterState::IDLE);
+	}
 }
 
 void AFalseKnight::SetJumpAttackAnticipate(float _DeltaTime)
 {
+	SoundPlay("false_knight_jump.wav");
 	ActiveGravity();
 
 	ChangeStunAnimation();
@@ -409,6 +446,17 @@ void AFalseKnight::SetJumpAttack(float _DeltaTime)
 
 void AFalseKnight::CreateJumpAttackLogicAndEffect()
 {
+	if (true == bIsAttackEffect)
+	{
+		return;
+	}
+	bIsAttackEffect = true;
+
+	if (true == bIsBerserkMode)
+	{
+		BossVoice = UEngineSound::Play("False_Knight_Attack_New_05.wav");
+	}
+
 	// 컬리전 생성
 	std::shared_ptr<AMonsterSkill> Skill = GetWorld()->SpawnActor<AMonsterSkill>();
 
@@ -441,8 +489,11 @@ void AFalseKnight::CreateJumpAttackLogicAndEffect()
 
 void AFalseKnight::SetJumpAttackRecovery(float _DeltaTime)
 {
+	BossPatternSound("false_knight_land.wav", 0.8f);
+
 	ActiveGravity();
 
+	bIsAttackEffect = false;
 	ChangeStunAnimation();
 
 	FVector Offset = { 0.0f, 50.0f }; 
@@ -453,6 +504,8 @@ void AFalseKnight::SetJumpAttackRecovery(float _DeltaTime)
 
 void AFalseKnight::SetJumpAttackLand(float _DeltaTime)
 {
+	BossPatternSound("false_knight_land.wav", 0.8f);
+
 	ActiveGravity();
 
 	ChangeStunAnimation();
@@ -495,6 +548,11 @@ void AFalseKnight::SetAttack(float _DeltaTime)
 	}
 	if (false == bIsShowEffect) // 한 번만 공격 로직 호출
 	{
+		if (true == bIsBerserkMode)
+		{
+			BossVoice = UEngineSound::Play("False_Knight_Attack_New_01.wav");
+		}
+
 		TimeEventer->AddEndEvent(0.15f, [this]()
 			{
 				FVector Offset = { -160.0f, 20.0f };
@@ -520,6 +578,8 @@ void AFalseKnight::SetAttack(float _DeltaTime)
 // 공격 컬리전 생성
 void AFalseKnight::CreateAttackLogicAndEffect()
 {
+	PatternSound = UEngineSound::Play("false_knight_strike_ground.wav");
+
 	// 컬리전 생성
 	std::shared_ptr<AMonsterSkill> Skill = GetWorld()->SpawnActor<AMonsterSkill>();
 
@@ -598,7 +658,7 @@ void AFalseKnight::CreateDropObject()
 
 	std::random_device rd;
 	std::mt19937_64 RandomGen(rd() + static_cast<__int64>(DropObjectCount));
-	std::uniform_real_distribution<float> Dist(-ScreenSize.X * 1.5f, ScreenSize.X * 1.5f);
+	std::uniform_real_distribution<float> Dist(-ScreenSize.X * 1.0f, ScreenSize.X * 1.0f);
 	std::uniform_real_distribution<float> Dist2(-550.0f, -350.0f);
 
 	FVector Offset = FVector{ Dist(RandomGen), ScreenHalfSize.Y + 300.0f };
@@ -668,6 +728,13 @@ void AFalseKnight::SetBerserkAttackAnticipate(float _DeltaTime)
 
 void AFalseKnight::SetBerserkAttack(float _DeltaTime)
 {
+	if (false == bIsBerserkVoice)
+	{
+		BossVoice = UEngineSound::Play("False_knight_BerserkMode_voice.wav");
+		BossVoice.SetVolume(0.6f);
+		bIsBerserkVoice = true;
+	}
+
 	ActiveGravity();
 
 	ChangeStunAnimation();
@@ -765,6 +832,7 @@ void AFalseKnight::SetBerserkAttackRecovery(float _DeltaTime)
 
 	bIsShowEffect = false;
 	bIsOffsetAttack1Frame = false;
+
 	
 	if (BerserkAttackCount > BerserkAttackCountMax)
 	{
@@ -791,6 +859,7 @@ void AFalseKnight::SetBerserkAttackRecovery2(float _DeltaTime)
 
 	ChangeStunAnimation();
 
+	bIsBerserkVoice = false;
 	bIsResting = true; // 패턴과 패턴 간 쿨타임 적용
 	BerserkAttackCount = 0;
 	ResetRendererOffset();
@@ -800,6 +869,20 @@ void AFalseKnight::SetBerserkAttackRecovery2(float _DeltaTime)
 
 void AFalseKnight::SetStun(float _DeltaTime)
 {
+	if (false == bIsStunVoice)
+	{
+		BossVoice = UEngineSound::Play("boss_stun.wav");
+		BossVoice = UEngineSound::Play("False_Knight_Attack_New_03.wav");
+		bIsStunVoice = true;
+	}
+
+	JumpActionInitElapsed += _DeltaTime;
+	float JumpActionTime = 0.5f;
+	if (JumpActionInitElapsed <= JumpActionTime)
+	{
+		Jump(_DeltaTime);
+	}
+
 	ActiveGravity();
 
 	ResetRendererOffset();
@@ -822,6 +905,11 @@ void AFalseKnight::CreateStunEffect()
 	}
 	bIsStunEffect = true;
 
+	if (true == bIsBerserkMode)
+	{
+		BossVoice = UEngineSound::Play("False_Knight_Attack_New_05.wav");
+	}
+
 	AEffect* WhiteEffect = GetWorld()->SpawnActor<AEffect>().get();
 	WhiteEffect->SetZSort(static_cast<int>(EZOrder::MONSTER_SKILL_FRONT) - 6);
 	WhiteEffect->SetName("Stun White Effect");
@@ -834,6 +922,12 @@ void AFalseKnight::SetStunOpen(float _DeltaTime)
 {
 	ActiveGravity();
 	bIsStunEffect = false;
+
+	if (false == bIsStunGroundSound && true == bIsOnGround)
+	{
+		BossVoice = UEngineSound::Play("false_knight_land_1st_time.wav");
+		bIsStunGroundSound = true;
+	}
 
 	if (true == bIsInit) // 스턴 진입 최초 1회
 	{
@@ -873,6 +967,9 @@ void AFalseKnight::SetStunHit(float _DeltaTime)
 		if (0 >= DeathCountValue)
 		{
 			bIsDeathAir = true;
+			bIsStunGroundSound = false;
+			BossVoice = UEngineSound::Play("boss_final_hit.wav");
+			BossVoice = UEngineSound::Play("false_knight_damage_armour_final.wav");
 			FSM.ChangeState(EMonsterState::DEATH_AIR);
 			return;
 		}
@@ -897,6 +994,9 @@ void AFalseKnight::SetStunHit(float _DeltaTime)
 void AFalseKnight::SetStunRecovery(float _DeltaTime)
 {
 	ActiveGravity();
+
+	bIsStunVoice = false;
+	bIsStunGroundSound = false;
 
 	if (false == bIsDeathAir)
 	{
@@ -929,33 +1029,36 @@ void AFalseKnight::SetDeathAir(float _DeltaTime)
 	}
 	if (true == bIsOnGround && true == BodyRenderer->IsCurAnimationEnd())
 	{
-		TimeEventer->AddEvent(5.0f, std::bind(&AFalseKnight::CreateDeathEffect, this, std::placeholders::_1), [this]()
-			{
-				FSM.ChangeState(EMonsterState::DEATH_LAND);
-			});
+		if (false == bIsGushingSound)
+		{
+			PatternSound = UEngineSound::Play("boss_gushing.wav");
+			BossVoice = UEngineSound::Play("False_knight_Death_voice.wav");
+			BossVoice = UEngineSound::Play("false_knight_land_1st_time.wav");
+			bIsGushingSound = true;
+
+			TimeEventer->AddEvent(5.0f, std::bind(&AFalseKnight::CreateDeathEffect, this, std::placeholders::_1), [this]()
+				{
+					FSM.ChangeState(EMonsterState::DEATH_LAND);
+				});
+		}
 	}
 }
 
 void AFalseKnight::CreateDeathEffect(float _DeltaTime)
 {
-	if (4.5f <= DeathEffectEndTimeElapesd)
-	{
-		return;
-	}
-	DeathEffectEndTimeElapesd += _DeltaTime;
 	DeathEffectTimeElapesd += _DeltaTime;
-	float Cooldown = 0.3f;
+	float Cooldown = 0.15f;
 	if (DeathEffectTimeElapesd >= Cooldown)
 	{
-		CreateDeathOrangeParticleEffect();
+		UEngineDebug::OutPutString("데스 파티클 호출 횟수 : " + std::to_string(DeathEffectCount));
 		CreateDeathOrangeParticleEffect();
 		DeathEffectTimeElapesd = 0.0f;
-		DeathEffectEndTimeElapesd = 0.0f;
 	}	
 }
 
 void AFalseKnight::CreateDeathOrangeParticleEffect()
 {
+	++DeathEffectCount;
 	AParticle* ExplodeParticle = GetWorld()->SpawnActor<AParticle>().get();
 	FVector ActorPos = GetActorLocation();
 	ExplodeParticle->CreateParticle("Explode", 20, 0.01f, ActorPos);
@@ -976,9 +1079,26 @@ void AFalseKnight::CreateDeathOrangeParticleEffect()
 void AFalseKnight::SetDeathLand(float _DeltaTime)
 {
 	ActiveGravity();
-
+	if (false == bIsStunGroundSound && true == bIsOnGround)
+	{
+		BossVoice = UEngineSound::Play("false_knight_land_1st_time.wav");
+		bIsStunGroundSound = true;
+	}
 	if (true == bIsDeath) // 딱 한번만 호출
 	{
+		UEngineSound::AllSoundOff();
+		Sound = UEngineSound::Play("boss_explode_clean.wav");
+		Sound = UEngineSound::Play("boss_explode.wav");
+		TimeEventer->AddEndEvent(3.5f, [this]()
+			{
+				Sound = UEngineSound::Play("Boss Defeat.wav");
+			});
+		TimeEventer->AddEndEvent(26.0f, [this]()
+			{
+				ARoom::SetBackgroundSound("Crossroads.mp3");
+			});
+
+		
 		ResetRendererOffset();
 		FVector Offset = { 0.0f, -75.0f };
 		SetRendererOffset(Offset);
@@ -1001,5 +1121,15 @@ void AFalseKnight::SetDeathLand(float _DeltaTime)
 
 		bIsDeath = false;
 	}
+}
+
+void AFalseKnight::BossPatternSound(std::string_view _SoundFile, float _Volume)
+{
+	if (true == PatternSound.IsPlaying())
+	{
+		return;
+	}
+	PatternSound = UEngineSound::Play(_SoundFile);
+	PatternSound.SetVolume(_Volume);
 }
 

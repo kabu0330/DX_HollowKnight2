@@ -4,6 +4,7 @@
 #include "KnightSkill.h"
 #include "FightUnit.h"
 #include "KnightFireball.h"
+#include <EngineBase/EngineRandom.h>
 
 AFalseKnightHead::AFalseKnightHead()
 {
@@ -93,6 +94,17 @@ void AFalseKnightHead::Attack(UCollision* _This, UCollision* _Other)
 		Boss->GetFSM().ChangeState(EMonsterState::STUN_HIT);
 		bIsDamage = true;
 	}
+	UEngineRandom Random;
+	float Result = Random.RandomInt(0, 1);
+	if (0 == Result)
+	{
+		Sound = UEngineSound::Play("Fknight_hit_01.wav");
+	}
+	else
+	{
+		Sound = UEngineSound::Play("false_knight_head_damage_2.wav");
+	}
+
 
 }
 

@@ -183,9 +183,6 @@ void AEffect::SetPosition()
 			{
 				AddActorLocation(Speed * DeltaTime);
 			}
-
-
-			return;
 		}
 		else
 		{

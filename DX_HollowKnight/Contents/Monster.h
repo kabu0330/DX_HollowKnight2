@@ -94,6 +94,8 @@ public:
 
 	virtual void DamageLogic(int _KnightAtt) {};
 
+	virtual void DamageSound() {};
+
 protected:
 	// 반드시 자식 클래스가 재정의 해야하는 가상함수
 	void BeginPlay() override;
@@ -158,7 +160,7 @@ protected:
 	float ChasingDirectionElapsed = 0.0f;
 
 	// 전투
-	void Dash();
+	virtual void Dash();
 	void Jump(float _DeltaTime);
 	bool bCanAttack = true;
 	float AttackDuration = 0.2f; // 공격 지속시간.
@@ -177,6 +179,7 @@ protected:
 	float DeathSpriteOffset = -20.0f;
 	float DeathAirDistance = 400.0f;
 	bool bIsDeathDestroy = false; // 죽으면 디스트로이 할거냐
+	virtual void DeathPattern() {}
 
 	UStatusUnit Stat = UStatusUnit();
 	UTimeEventComponent* TimeEventer = nullptr;

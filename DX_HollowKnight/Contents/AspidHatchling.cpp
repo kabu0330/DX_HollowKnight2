@@ -12,6 +12,10 @@ AAspidHatchling::~AAspidHatchling()
 void AAspidHatchling::BeginPlay()
 {
 	AMonster::BeginPlay();
+
+	IdleSound = "hatchling_fly_loop_1.wav";
+	StaticSound = "hatchling_fly_loop_1.wav";
+	AttackSound = "";
 	DeathSound = "hatchling_explode.wav";
 }
 
