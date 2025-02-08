@@ -94,6 +94,10 @@ private:
 	void CreateDeathOrangeParticleEffect();
 	float DeathEffectTimeElapesd = 0.0f;
 	int DeathEffectCount = 1;
+
+	void InitSpawn();
+	bool bIsInitSpawn = true;
+
 private:
 	void SetIdle(float _DeltaTime) override;
 	void SetJumpAnticipate(float _DeltaTime) override;

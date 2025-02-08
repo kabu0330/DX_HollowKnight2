@@ -30,9 +30,20 @@ void AFalseKnight::BeginPlay()
 void AFalseKnight::Tick(float _DeltaTime) 
 {
 	AMonster::Tick(_DeltaTime);
+
+	InitSpawn();
+
 	BossPatternTimeElapsed(_DeltaTime);
 	StartFlashEffect(_DeltaTime);
 	EndFlashEffect(_DeltaTime);
+}
+
+void AFalseKnight::InitSpawn()
+{
+	if (false == bIsOnGround && true == bIsInitSpawn)
+	{
+		FSM.ChangeState(EMonsterState::JUMP);
+	}
 }
 
 void AFalseKnight::SetStatus()
@@ -373,16 +384,27 @@ void AFalseKnight::SetJump(float _DeltaTime)
 
 	Move(_DeltaTime);
 
-	JumpActionInitElapsed += _DeltaTime;
-	float JumpActionTime = 1.0f;
-	if (JumpActionInitElapsed <= JumpActionTime)
+	if (true == bIsInitSpawn)
 	{
-		Jump(_DeltaTime);
+		Stat.SetVelocity(0);
+		if (true == bIsOnGround)
+		{
+			FSM.ChangeState(EMonsterState::LAND);
+		}
 	}
-	else if (JumpActionInitElapsed >= JumpActionTime && true == bIsOnGround)
+	else if (true != bIsInitSpawn)
 	{
-		JumpActionInitElapsed = 0.0f;
-		FSM.ChangeState(EMonsterState::LAND);
+		float JumpActionTime = 1.0f;
+		JumpActionInitElapsed += _DeltaTime;
+		if (JumpActionInitElapsed <= JumpActionTime)
+		{
+			Jump(_DeltaTime);
+		}
+		else if (JumpActionInitElapsed >= JumpActionTime && true == bIsOnGround)
+		{
+			JumpActionInitElapsed = 0.0f;
+			FSM.ChangeState(EMonsterState::LAND);
+		}
 	}
 }
 
@@ -395,6 +417,13 @@ void AFalseKnight::SetLand(float _DeltaTime)
 
 	JumpForce = 0.0f;
 	bIsResting = true; // 패턴과 패턴 간 쿨타임 적용
+
+	// 최초 등장
+	if (true == bIsInitSpawn)
+	{
+		ARoom::SetBackgroundSound("False_Knight.mp3");
+	}
+	bIsInitSpawn = false;
 
 	if (true == bCanBerserkAttack && true == bIsBerserkMode)
 	{
@@ -1047,7 +1076,7 @@ void AFalseKnight::SetDeathAir(float _DeltaTime)
 void AFalseKnight::CreateDeathEffect(float _DeltaTime)
 {
 	DeathEffectTimeElapesd += _DeltaTime;
-	float Cooldown = 0.15f;
+	float Cooldown = 0.18f;
 	if (DeathEffectTimeElapesd >= Cooldown)
 	{
 		UEngineDebug::OutPutString("데스 파티클 호출 횟수 : " + std::to_string(DeathEffectCount));
@@ -1066,14 +1095,14 @@ void AFalseKnight::CreateDeathOrangeParticleEffect()
 	ExplodeParticle->SetRandomScale(0.8f, 1.3f);
 
 	AParticle* OrangeParticle = GetWorld()->SpawnActor<AParticle>().get();
-	OrangeParticle->CreateParticle("OrangeParticle", 20, 0.01f, ActorPos);
+	OrangeParticle->CreateParticle("OrangeParticle", 15, 0.01f, ActorPos);
 	OrangeParticle->SetRandomScale(0.5f, 1.0f);
 	OrangeParticle->SetDecayScale(true, 0.6f);
 	OrangeParticle->SetParticleOption(EParticleType::RANDOM, -1200.0f, 1200.0f);
 
-	//AParticle* Particle = GetWorld()->SpawnActor<AParticle>().get();
-	//Particle->CreateParticle("DefaultHitParticle", 10, 0.01f, ActorPos);
-	//Particle->SetParticleOption(EParticleType::RANDOM, -1200.0f, 1200.0f);
+	AParticle* Particle = GetWorld()->SpawnActor<AParticle>().get();
+	Particle->CreateParticle("DefaultHitParticle", 5, 0.01f, ActorPos);
+	Particle->SetParticleOption(EParticleType::RANDOM, -1200.0f, 1200.0f);
 }
 
 void AFalseKnight::SetDeathLand(float _DeltaTime)
