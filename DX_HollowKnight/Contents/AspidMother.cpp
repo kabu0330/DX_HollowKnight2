@@ -14,6 +14,10 @@ void AAspidMother::BeginPlay()
 {
 	AMonster::BeginPlay();
 	ChildZSort = GetActorLocation().Z;
+
+	IdleSound = "hatcher_fly_loop.wav";
+	StaticSound = "hatcher_fly_loop.wav";
+	DeathSound = "hatchling_explode.wav";
 }
 
 void AAspidMother::Tick(float _DeltaTime)
@@ -113,6 +117,7 @@ void AAspidMother::SetAttack(float _DeltaTime)
 	// 추가된 로직
 	if (false == bIsSpawn)
 	{
+		SoundPlay("hatcher_give_birth.wav");
 		SpawnAspidHatchling();
 	}
 

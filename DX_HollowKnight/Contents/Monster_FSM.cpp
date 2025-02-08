@@ -97,6 +97,8 @@ void AMonster::UpdateFSM(float _DeltaTime)
 void AMonster::SetIdle(float _DeltaTime)
 {
 	//UEngineDebug::OutPutString("Monster FSM : Idle");
+	PlayStaticSound(IdleSound);
+	
 
 	ResetRendererOffset();
 
@@ -134,9 +136,10 @@ void AMonster::SetWalk(float _DeltaTime)
 {
 	//UEngineDebug::OutPutString("Monster FSM : Walk");
 	SetWalkRendererOffset();
-
 	CheckDeath();
 	ActiveGravity();
+
+	PlayStaticSound(StaticSound);
 
 	if (false == bIsOnGround && false == bCanFly)
 	{
@@ -204,6 +207,7 @@ void AMonster::SetAttack(float _DeltaTime)
 	ActiveGravity();
 
 	Dash();
+	SoundPlay(AttackSound);
 
 	// 가상함수
 	CreateAttackLogicAndEffect();
@@ -262,6 +266,10 @@ void AMonster::SetHit(float _DeltaTime)
 
 void AMonster::SetDeathAir(float _DeltaTime)
 {
+	if (false == bCanFly)
+	{
+		SoundPlay(DeathSound);
+	}
 	//UEngineDebug::OutPutString("Monster FSM : Death Air");
 	Stat.SetKnockbackDir(FVector::ZERO);
 
@@ -291,6 +299,11 @@ void AMonster::SetDeathAir(float _DeltaTime)
 
 void AMonster::SetDeathLand(float _DeltaTime)
 {
+	if (true == bCanFly)
+	{
+		SoundPlay(DeathSound);
+	}
+
 	//UEngineDebug::OutPutString("Monster FSM : Death");
 	bCanFly = false; // 하늘을 나는 애도 중력 적용 받도록
 	ActiveGravity();

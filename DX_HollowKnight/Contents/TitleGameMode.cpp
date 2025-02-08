@@ -58,6 +58,7 @@ void ATitleGameMode::InitBackgroundSound()
 	TimeEventer->AddEndEvent(6.0f, [this]()
 		{
 			Sound = UEngineSound::Play("Title.mp3");
+			Sound.Loop(999);
 		});
 }
 

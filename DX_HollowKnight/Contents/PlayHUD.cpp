@@ -13,6 +13,7 @@ APlayHUD::APlayHUD()
 	Knight = AKnight::GetPawn();
 
 	TimeEventer = CreateDefaultSubObject<UTimeEventComponent>().get();
+	CreateFade();
 }
 
 APlayHUD::~APlayHUD()
@@ -28,7 +29,7 @@ void APlayHUD::BeginPlay()
 	InitKinghtHp = AKnight::GetPawn()->GetStatRef().GetMaxHp();
 	CreateSkillGaugeEffect();
 
-	CreateFade();
+	
 
 	//CreateGeo();
 	//CreateGeoCount();
@@ -243,6 +244,8 @@ void APlayHUD::UpdateSkillGauge()
 		{
 			SkillGauge->ChangeAnimation(V_UpToHalf);
 			NextAnimation(V_Half);
+			Sound = UEngineSound::Play("soul_pickup_1.wav");
+			Sound.SetVolume(0.3f);
 			return;
 		}
 		else if (3 == CurPhase) // 마나가 50에서 75이 됐다면
@@ -255,6 +258,8 @@ void APlayHUD::UpdateSkillGauge()
 		{
 			SkillGauge->ChangeAnimation(V_Full);
 			SkillGaugeEffect->SetActive(true);
+			Sound = UEngineSound::Play("soul_pickup_1.wav");
+			Sound.SetVolume(0.3f);
 			return;
 		}
 	}
@@ -461,19 +466,17 @@ void APlayHUD::CreateFade()
 {
 	Fade = CreateWidget<UImageWidget>(static_cast<int>(100000000), "Fade");
 	Fade->SetTexture("Fade.png", true, 1.0f);
-	Fade->SetActive(false);
+	Fade->SetActive(true);
 }
 
-void APlayHUD::FadeOut()
+void APlayHUD::FadeOut(float _Time, float _Power)
 {
 	Fade->SetActive(true);
 	FadeValue = FVector::ZERO;
-	FadeDir   = -FVector::UNIT;
-	FadeDir.W = -1.0f;
+	FadeDir = -FVector::UNIT;
+	FadeDir.W = -_Power;
 
-	// 2초간 FadeChange 함수 호출하고, 끝나면 Fade Active 끄고 MulColor도 원상복구한다.
-	// UI가 다 MulColor 값을 공유하는듯 하다. -2.0f 넘어가면 다른 UI도 지워진다.
-	TimeEventer->AddEvent(0.6f, std::bind(&APlayHUD::FadeChange, this), [this]()
+	TimeEventer->AddEvent(_Time, std::bind(&APlayHUD::FadeChange, this), [this]()
 		{
 			Fade->SetActive(false);
 			Fade->ColorData.MulColor = { 1.0f, 1.0f, 1.0f, 1.0f };

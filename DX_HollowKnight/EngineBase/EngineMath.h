@@ -30,13 +30,13 @@ public:
 	}
 
 	template <typename DataType>
-	DataType ClampMax(DataType value, DataType maxValue)
+	static DataType ClampMax(DataType value, DataType maxValue)
 	{
 		return (value > maxValue) ? maxValue : value;
 	}
 
 	template <typename DataType>
-	DataType ClampMin(DataType value, DataType minValue)
+	static DataType ClampMin(DataType value, DataType minValue)
 	{
 		return (value < minValue) ? minValue : value;
 	}

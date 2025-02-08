@@ -1,7 +1,10 @@
 #pragma once
 
 #include <EngineCore/PreCompile.h>
+
 #include <EngineBase/TimeEvent.h>
+#include <EnginePlatform/EngineSound.h>
+
 #include <EngineCore/SpriteRenderer.h>
 #include <EngineCore/DefaultSceneComponent.h>
 #include <EngineCore/CameraActor.h>

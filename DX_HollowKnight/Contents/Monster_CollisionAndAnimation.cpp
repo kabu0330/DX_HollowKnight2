@@ -282,3 +282,75 @@ void AMonster::ActiveGravity()
 	}
 }
 
+float AMonster::GetToPlayerDistance()
+{
+	FVector MonsterPos = GetActorLocation();
+	FVector KnightPos = AKnight::GetPawn()->GetActorLocation();
+	float Distance = ::abs(MonsterPos.Length() - KnightPos.Length());
+	return Distance;
+}
+
+void AMonster::PlayStaticSound(std::string_view _SoundFileName, float _MaxVolume , float _MaxDistance)
+{
+	bIsSoundStop = false;
+	bIsInitSound = false;
+
+	if ("" == _SoundFileName)
+	{
+		return;
+	}
+	float Distance = GetToPlayerDistance();
+	if (_MaxDistance > Distance)
+	{
+		float Volume = UEngineMath::ClampMin(100.0f / Distance, _MaxVolume);
+		Sound.SetVolume(Volume);
+		if (false == Sound.IsPlaying())
+		{
+			StaticSound = _SoundFileName;
+
+			Sound.Stop();
+			Sound = UEngineSound::Play(StaticSound);
+		}
+	}
+}
+
+void AMonster::SoundPlay(std::string_view _SoundFileName, bool _IsLoop, bool _PrevSoundStop, float _Volume)
+{
+	if ("" == _SoundFileName)
+	{
+		return;
+	}
+	if (true == bIsInitSound)
+	{
+		return;
+	}
+	if (true == _PrevSoundStop)
+	{
+		if (false == bIsSoundStop)
+		{
+			Sound.Stop();
+			bIsSoundStop = true;
+		}
+	}
+	if (true == _IsLoop)
+	{
+		if (false == Sound.IsPlaying())
+		{
+			Sound = UEngineSound::Play(_SoundFileName);
+			Sound.SetVolume(_Volume);
+
+			Sound.Loop(999);
+		}
+	}
+	else
+	{
+		Sound = UEngineSound::Play(_SoundFileName);
+		Sound.SetVolume(_Volume);
+		bIsInitSound = true;
+	}
+
+
+
+
+}
+

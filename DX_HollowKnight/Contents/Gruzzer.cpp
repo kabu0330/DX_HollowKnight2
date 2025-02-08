@@ -12,6 +12,7 @@ AGruzzer::~AGruzzer()
 void AGruzzer::BeginPlay()
 {
 	AMonster::BeginPlay();
+	DeathSound = "hatchling_explode.wav";
 }
 
 void AGruzzer::Tick(float _DeltaTime)

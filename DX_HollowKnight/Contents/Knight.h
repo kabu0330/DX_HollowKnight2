@@ -1,8 +1,9 @@
 #pragma once
 #include <EngineBase/FSMStateManager.h>
+#include <EnginePlatform/EngineSound.h>
 #include <EngineCore/Pawn.h>
-#include "Global.h"
 #include <EngineCore/TimeEventComponent.h>
+#include "Global.h"
 #include "StatusUnit.h"
 
 // 설명 : Player
@@ -192,6 +193,7 @@ private:
 	bool bCanDash = true;
 	bool bCanRotation = true; // 방향전환 여부, 대시 중에는 불가
 	float DashCooldownElapsed = 0.0f;
+	bool bIsDashEffect = false;
 	void ChangeDash();
 	void Dash();
 	void CreateDashEffect();
@@ -304,5 +306,9 @@ private:
 	// 픽셀충돌
 	void ActiveGravity();
 	void ActivePixelCollsion();
+
+	USoundPlayer Sound;
+	bool bIsSound = false;
+	bool bIsDeathSound = false;
 };
 

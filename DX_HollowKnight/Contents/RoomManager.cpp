@@ -47,6 +47,9 @@ void URoomManager::CreateRoom(AGameMode* _GameMode)
 	std::shared_ptr<ARoom> Crossroads6 = CreateRoom(CrossroadsStr6, CrossroadsStr6 + PNG, CrossroadsStr6 + BMP, { 4794, 1578 });
 	std::shared_ptr<ARoom> BossRoom = CreateRoom(FalseKnightRoom, FalseKnightRoom + PNG, FalseKnightRoom + BMP, { 3188, 1348 });
 
+	Dirtmouth->SetSound("Dirtmouth 1.wav");
+	Crossroads1->SetSound("Crossroads.mp3");
+
 	// 2. push_back
 	Rooms.reserve(8);
 	Rooms.push_back(Dirtmouth);

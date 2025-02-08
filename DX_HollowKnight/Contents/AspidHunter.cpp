@@ -13,6 +13,10 @@ AAspidHunter::~AAspidHunter()
 void AAspidHunter::BeginPlay()
 {
 	AMonster::BeginPlay();
+	IdleSound = "hatcher_fly_loop.wav";
+	StaticSound = "hatcher_fly_loop.wav";
+	AttackSound = "hatcher_fly_loop.wav";
+	DeathSound = "hatchling_explode.wav";
 }
 
 void AAspidHunter::Tick(float _DeltaTime)

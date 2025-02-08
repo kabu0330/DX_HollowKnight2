@@ -11,10 +11,20 @@
 
 void AKnight::CreateDashEffect()
 {
+	if (true == bIsDashEffect)
+	{
+		return;
+	}
+	bIsDashEffect = true;
+
 	std::shared_ptr<AKnightEffect> Effect2 = GetWorld()->SpawnActor<AKnightEffect>();
 	Effect2->ChangeAnimation("Dash_effect2",GetActorLocation());
 	Effect2->SetZSort(static_cast<int>(EZOrder::KNIGHT_SKILL_BACK) + 1);
 	Effect2->SetLocation(this, {200.0f, 0.0f, 0.0f}, {0.0f, 180.0f, 0.0f});
+
+
+	Sound.Stop();
+	Sound = UEngineSound::Play("hero_dash.wav");
 }
 
 void AKnight::CreateStunEffect()
@@ -36,6 +46,9 @@ void AKnight::CreateStunEffect()
 	Effect->SetLocation(this, Offest, Rotation);
 	TimeEventer->AddEndEvent(0.3f, std::bind(&KnightStunEffect::CreateStunImpactEffect, Effect));
 	bIsStunEffect = true;
+
+	Sound.Stop();
+	Sound = UEngineSound::Play("damage.wav");
 }
 
 
@@ -56,6 +69,9 @@ void AKnight::CreateFocusEffect()
 
 
 	bIsFocusEffect = true;
+
+	Sound.Stop();
+	Sound = UEngineSound::Play("focus_health_charging.wav");
 }
 
 void AKnight::CreateFocusEndEffect()
@@ -78,6 +94,8 @@ void AKnight::CreateFocusEndEffect()
 	Stat.AddMp(-33);
 
 	bIsFocusEndEffect = true;
+	Sound.Stop();
+	Sound = UEngineSound::Play("focus_health_heal.wav");
 }
 
 void AKnight::CreateFireballEffect()
@@ -86,6 +104,9 @@ void AKnight::CreateFireballEffect()
 	{
 		return;
 	}
+
+	Stat.AddMp(-33);
+
 	std::shared_ptr<AKnightEffect> Effect = GetWorld()->SpawnActor<AKnightEffect>();
 	Effect->ChangeAnimation("Blast", GetActorLocation());
 	FVector Offset = { -80.0f, 0.0f, 0.0f };
@@ -107,6 +128,9 @@ void AKnight::CreateFireballEffect()
 	Skill->GetRenderer()->SetMulColor({ 11.0f, 11.0f, 11.0f }, 0.1f);
 
 	bIsFireballEffect = true;
+
+	Sound.Stop();
+	Sound = UEngineSound::Play("hero_fireball.wav");
 }
 
 void AKnight::CreateSlashEffect()
@@ -122,6 +146,8 @@ void AKnight::CreateSlashEffect()
 	FVector Offset = FVector{ -120.0f, 0.0f };
 	SlashEffect->SetLocation(this, Offset);
 
+	Sound.Stop();
+	Sound = UEngineSound::Play("sword_1.wav");
 
 	return;
 }
@@ -139,6 +165,9 @@ void AKnight::CreateUpSlashEffect()
 	SlashEffect->SetLocation(this, Offset);
 	SlashEffect->EnableRotation(false); // 좌우반전에 따라 
 	bIsShowEffect = true;
+
+	Sound.Stop();
+	Sound = UEngineSound::Play("sword_1.wav");
 }
 
 void AKnight::CreateDownSlashEffect()
@@ -154,4 +183,7 @@ void AKnight::CreateDownSlashEffect()
 	SlashEffect->SetLocation(this, Offset);
 	SlashEffect->EnableRotation(false);
 	bIsShowEffect = true;
+
+	Sound.Stop();
+	Sound = UEngineSound::Play("sword_1.wav");
 }

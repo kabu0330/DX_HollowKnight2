@@ -12,6 +12,7 @@ AAspidHatchling::~AAspidHatchling()
 void AAspidHatchling::BeginPlay()
 {
 	AMonster::BeginPlay();
+	DeathSound = "hatchling_explode.wav";
 }
 
 void AAspidHatchling::Tick(float _DeltaTime)

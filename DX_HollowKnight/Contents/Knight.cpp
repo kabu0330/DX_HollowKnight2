@@ -444,6 +444,7 @@ void AKnight::RecoveryIdle()
 	Stat.SetStun(false);
 	Stat.SetKnockbackDistance(InitKnockbackDistance);
 
+	bIsSound = false;
 
 	//bIsStun = false;
 }
@@ -469,8 +470,6 @@ void AKnight::ChangeDash()
 
 void AKnight::Dash()
 {
-	CreateDashEffect();
-
 	float DeltaTime = UEngineCore::GetDeltaTime();
 	bCanRotation = false;
 	bIsDashing = true;
@@ -577,6 +576,9 @@ void AKnight::ChangeJumpAnimation()
 	{
 		if (UEngineInput::IsPress('Z'))
 		{
+			Sound.Stop();
+			Sound = UEngineSound::Play("jump.wav");
+			Sound.SetVolume(0.5f);
 			FSM.ChangeState(EKnightState::JUMP);
 			return;
 		}

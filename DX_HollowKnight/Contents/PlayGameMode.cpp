@@ -120,6 +120,9 @@ void APlayGameMode::SetBasePoint()
 
 void APlayGameMode::LevelChangeStart()
 {
+	APlayHUD* HUD = dynamic_cast<APlayHUD*>(GetWorld()->GetHUD());
+	HUD->FadeOut(3.0f, 0.5f);
+
 	Window = UEngineGUI::FindGUIWindow<UDebugWindowGUI>("DebugWindow");
 
 	if (nullptr == Window)

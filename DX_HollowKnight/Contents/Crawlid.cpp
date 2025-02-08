@@ -12,6 +12,8 @@ ACrawlid::~ACrawlid()
 void ACrawlid::BeginPlay()
 {
 	AMonster::BeginPlay();
+
+	StaticSound = "crawler.wav";
 }
 
 void ACrawlid::Tick(float _DeltaTime)

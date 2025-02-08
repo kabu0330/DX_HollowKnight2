@@ -1,5 +1,6 @@
 #pragma once
 #include <EngineBase/FSMStateManager.h>
+#include <EnginePlatform/EngineSound.h>
 #include <EngineCore/Actor.h>
 #include "Global.h"
 #include "StatusUnit.h"
@@ -375,6 +376,20 @@ protected:
 	void ActivePixelCollision();
 	void ActiveGravity();
 
+protected:
+	USoundPlayer Sound;
+	bool bIsSoundStop = false;
+	bool bIsInitSound = false;
 
+	float GetToPlayerDistance();
+
+	std::string StaticSound = "BugWalk.wav";
+	void PlayStaticSound(std::string_view _SoundFileName = "", float _MaxVolume = 0.5f, float _MaxDistance = 600.0f);
+
+	std::string IdleSound = "";
+	std::string AttackSound = "DashBugAttack.wav";
+	std::string DeathSound = "enemy_death_sword.wav";
+	void SoundPlay(std::string_view _SoundFileName, bool _IsLoop = false, bool _PrevSoundStop = true, float _Volume = 1.0f);
+	
 };
 

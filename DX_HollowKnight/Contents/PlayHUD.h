@@ -1,6 +1,7 @@
 #pragma once
 #include <EngineCore/HUD.h>
 #include <vector>
+#include <EnginePlatform/EngineSound.h>
 
 // Ό³Έν :
 class APlayHUD : public AHUD
@@ -17,7 +18,7 @@ public:
 	APlayHUD& operator=(APlayHUD&& _Other) noexcept = delete;
 
 	void FadeIn();
-
+	void FadeOut(float _Time = 0.6f, float _Power = 1.0f);
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime)	override;
@@ -75,10 +76,11 @@ private:
 
 
 	void CreateFade();
-	void FadeOut();
 	void FadeChange();
 	std::shared_ptr<class UImageWidget> Fade;
 	float4 FadeValue = FVector::ZERO;
 	float4 FadeDir = FVector::UNIT; // {1, 1, 1, 1}
+
+	USoundPlayer Sound;
 };
 

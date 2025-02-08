@@ -31,6 +31,7 @@ void UFightUnit::OnHit(AMonster* _Monster, int _Att)
 
 	Stat.SetStun(true);
 	Stat.SetBeingHit(true);
+	Sound = UEngineSound::Play("enemy_damage.wav");
 	//_Monster->GetFSMRef().ChangeState(EMonsterState::HIT);
 }
 

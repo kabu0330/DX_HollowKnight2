@@ -2,6 +2,7 @@
 #include "Knight.h"
 #include "Monster.h"
 #include "StatusUnit.h"
+#include <EnginePlatform/EngineSound.h>
 
 // 설명 : 전투관련 상호작용 함수 집합
 class UFightUnit
@@ -15,6 +16,8 @@ public:
 protected:
 
 private:
+	inline static USoundPlayer Sound = USoundPlayer();
+
 	// constrcuter destructer
 	UFightUnit();
 	~UFightUnit();

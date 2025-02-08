@@ -2,6 +2,7 @@
 #include <EngineCore/Actor.h>
 #include "Monster.h"
 #include <EnginePlatform/EngineWinImage.h>
+#include <EnginePlatform/EngineSound.h>
 
 // Ό³Έν :
 class ARoom : public AActor
@@ -81,6 +82,15 @@ public:
 		return Monsters;
 	}
 
+	USoundPlayer& GetSoundRef()
+	{
+		return Sound;
+	}
+
+	void SetSound(std::string_view _SoundName)
+	{
+		SoundName = _SoundName;
+	}
 
 	template<typename MonsterType>
 	AMonster* CreateMonster(FVector _Pos, bool _CanWorldPos = true)
@@ -165,5 +175,13 @@ private:
 	class ADoor* Door = nullptr;
 
 	std::list<AMonster*> Monsters;
+
+	USoundPlayer Sound = USoundPlayer();
+	USoundPlayer SoundWind = USoundPlayer();
+	std::string SoundName = "";
+	inline static std::string CurSoundName = "";
+	bool bIsSoundPlaying = false;
+	void SoundPlay();
+	
 };
 

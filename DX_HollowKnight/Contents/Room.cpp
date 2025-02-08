@@ -30,6 +30,7 @@ void ARoom::BeginPlay()
 void ARoom::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
+	SoundPlay();
 }
 
 void ARoom::CreateTexture(std::string_view _FileName, float _ScaleRatio)
@@ -77,7 +78,7 @@ void ARoom::CheckPixelCollisionWithGravity(AActor* _Actor, FVector _Offset)
 
 			while (true == IsOnGround(CollisionPoint1PixelUp))
 			{
-				Knight->AddRelativeLocation(FVector::UP);
+				Knight->AddRelativeLocation(FVector::UP * 3.0f);
 				CollisionPoint1PixelUp = GetPixelCollisionPoint(_Actor, _Offset + FVector::UP);
 			}
 		}
@@ -146,6 +147,7 @@ FVector ARoom::GetPixelCollisionPoint(AActor* _Actor, FVector _Offset)
 
 	return CollisionPoint;
 }
+
 
 bool ARoom::IsOnGround(FVector _Pos)
 {
@@ -223,6 +225,32 @@ void ARoom::Force(AActor* _Actor, float _DeltaTime)
 
 		Monster->SetGravityForce(GravityForce);
 		Monster->AddRelativeLocation(GravityForce * _DeltaTime);
+	}
+}
+
+void ARoom::SoundPlay()
+{
+	if ("" == SoundName)
+	{
+		return;
+	}
+	if (this != CurRoom)
+	{
+		return;
+	}
+	if (CurSoundName != SoundName)
+	{
+		UEngineSound::AllSoundStop();
+
+		if ("Dirtmouth" == GetName())
+		{
+			SoundWind = UEngineSound::Play("dirtmouth_wind_loop_a.wav");
+			Sound.Loop(999);
+		}
+		Sound = UEngineSound::Play(SoundName);
+		CurSoundName = SoundName;
+		Sound.Loop(999);
+		return;
 	}
 }
 

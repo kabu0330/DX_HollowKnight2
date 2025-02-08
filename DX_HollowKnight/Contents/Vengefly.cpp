@@ -12,6 +12,7 @@ AVengefly::~AVengefly()
 void AVengefly::BeginPlay()
 {
 	AMonster::BeginPlay();
+	AttackSound = "FlyBug_Notice.wav";
 }
 
 void AVengefly::Tick(float _DeltaTime)
@@ -24,7 +25,7 @@ void AVengefly::SetStatus()
 	FStatusData Data;
 	Data.Velocity = 150.0f;
 	Data.InitVelocity = Data.Velocity;
-	Data.RunSpeed = Data.Velocity * 2.5f;
+	Data.RunSpeed = Data.Velocity * 3.5f;
 	Data.DashSpeed = Data.Velocity * 3.0f;
 	Data.MaxHp = 15;
 	Data.Hp = 5;
