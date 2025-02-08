@@ -23,8 +23,7 @@ void UCollisionManager::CreateCollisionProfile(AGameMode* _GameMode)
 	_GameMode->GetWorld()->CreateCollisionProfile("MonsterHead");
 
 	// 기타 오브젝트
-	_GameMode->GetWorld()->CreateCollisionProfile("Object");
-	_GameMode->GetWorld()->CreateCollisionProfile("Platform");
+	_GameMode->GetWorld()->CreateCollisionProfile("Barrier");
 
 	// 워프
 	_GameMode->GetWorld()->CreateCollisionProfile("Door");
@@ -38,8 +37,8 @@ void UCollisionManager::LinkCollision(AGameMode* _GameMode)
 	_GameMode->GetWorld()->LinkCollisionProfile("Knight", "Door"); // 워프 키입력
 
 	// 발판
-	_GameMode->GetWorld()->LinkCollisionProfile("Platform", "Knight"); 
-	_GameMode->GetWorld()->LinkCollisionProfile("Platform", "Monster"); 
+	_GameMode->GetWorld()->LinkCollisionProfile("Barrier", "Knight"); 
+	_GameMode->GetWorld()->LinkCollisionProfile("Barrier", "Monster"); 
 
 	// 나이트 공격
 	_GameMode->GetWorld()->LinkCollisionProfile("KnightObject", "Monster"); 

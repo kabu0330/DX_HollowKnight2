@@ -37,12 +37,6 @@
     <ClInclude Include="MapEditorGameMode.h">
       <Filter>Level</Filter>
     </ClInclude>
-    <ClInclude Include="TestMapEditorMode.h">
-      <Filter>Test</Filter>
-    </ClInclude>
-    <ClInclude Include="TestMapObject.h">
-      <Filter>Test</Filter>
-    </ClInclude>
     <ClInclude Include="DebugWindowGUI.h">
       <Filter>ContentsSetting\GUI</Filter>
     </ClInclude>
@@ -103,9 +97,6 @@
     <ClInclude Include="TitleHUD.h">
       <Filter>Play\UI</Filter>
     </ClInclude>
-    <ClInclude Include="FogEffect.h">
-      <Filter>Global</Filter>
-    </ClInclude>
     <ClInclude Include="Monster.h">
       <Filter>Play\Monster\Base</Filter>
     </ClInclude>
@@ -157,6 +148,9 @@
     <ClInclude Include="FalseKnightHead.h">
       <Filter>Play\Monster\Boss</Filter>
     </ClInclude>
+    <ClInclude Include="Barrier.h">
+      <Filter>Play\Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -194,12 +188,6 @@
     </ClCompile>
     <ClCompile Include="MapEditorGameMode.cpp">
       <Filter>Level</Filter>
-    </ClCompile>
-    <ClCompile Include="TestMapEditorMode.cpp">
-      <Filter>Test</Filter>
-    </ClCompile>
-    <ClCompile Include="TestMapObject.cpp">
-      <Filter>Test</Filter>
     </ClCompile>
     <ClCompile Include="DebugWindowGUI.cpp">
       <Filter>ContentsSetting\GUI</Filter>
@@ -267,9 +255,6 @@
     <ClCompile Include="TitleHUD.cpp">
       <Filter>Play\UI</Filter>
     </ClCompile>
-    <ClCompile Include="FogEffect.cpp">
-      <Filter>Global</Filter>
-    </ClCompile>
     <ClCompile Include="Monster.cpp">
       <Filter>Play\Monster\Base</Filter>
     </ClCompile>
@@ -327,6 +312,9 @@
     <ClCompile Include="FalseKnightHead.cpp">
       <Filter>Play\Monster\Boss</Filter>
     </ClCompile>
+    <ClCompile Include="Barrier.cpp">
+      <Filter>Play\Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -346,9 +334,6 @@
     </Filter>
     <Filter Include="Play">
       <UniqueIdentifier>{90d40787-bd6c-4314-b86a-fd988ad3fbe1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Test">
-      <UniqueIdentifier>{06b144dd-98f6-449c-ada2-5305d26e33fd}</UniqueIdentifier>
     </Filter>
     <Filter Include="Level">
       <UniqueIdentifier>{58d3821e-f186-4e77-a861-8f16b9ad13ed}</UniqueIdentifier>

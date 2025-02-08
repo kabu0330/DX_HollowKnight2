@@ -229,6 +229,9 @@ void UContentsResource::LoadSprite()
 	UEngineSprite::CreateSpriteToMeta("GroundImapctEffect.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("BulletFire.png", ".smeta");
 
+
+	UEngineSprite::CreateSpriteToMeta("Barrier.png", ".smeta");
+
 }
 
 void UContentsResource::LoadShaderResource()
