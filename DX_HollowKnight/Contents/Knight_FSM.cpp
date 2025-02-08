@@ -120,7 +120,7 @@ void AKnight::SetJump(float _DeltaTime)
 	}
 }
 
-void AKnight::SetAirborn(float _DeltaTime)
+void AKnight::SetAirborne(float _DeltaTime)
 {
  	ActiveGravity();
 	Move(_DeltaTime);
@@ -379,7 +379,7 @@ void AKnight::SetFSM()
 	CreateState(EKnightState::IDLE_TO_RUN, &AKnight::SetIdleToRun, "IdleToRun");
 	CreateState(EKnightState::DASH, &AKnight::SetDash, "Dash");
 	CreateState(EKnightState::JUMP, &AKnight::SetJump, "Jump");
-	CreateState(EKnightState::AIRBORN, &AKnight::SetAirborn, "Airborn");
+	CreateState(EKnightState::AIRBORN, &AKnight::SetAirborne, "Airborn");
 	CreateState(EKnightState::LAND, &AKnight::SetLand, "Land");
 	CreateState(EKnightState::HARD_LAND, &AKnight::SetHardLand, "HardLand");
 

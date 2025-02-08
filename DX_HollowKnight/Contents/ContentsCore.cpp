@@ -50,9 +50,9 @@ void UContentsCore::CreateLevel()
 	UEngineCore::CreateLevel<APlayGameMode, AKnight, APlayHUD>("Play");
 	//UEngineCore::CreateLevel<AMapEditorGameMode, APawn, AHUD>("MapEditorMode");
 
-	//UEngineCore::OpenLevel("Title");
+	UEngineCore::OpenLevel("Title");
 	//UEngineCore::OpenLevel("MapEditor");
-	UEngineCore::OpenLevel("Play");
+	//UEngineCore::OpenLevel("Play");
 	//UEngineCore::OpenLevel("MapEditorMode");
 }
 

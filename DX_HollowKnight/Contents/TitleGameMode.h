@@ -1,6 +1,7 @@
 #pragma once
 #include <EngineCore/GameMode.h>
 #include <EnginePlatform/EngineSound.h>
+#include <EngineCore/TimeEventComponent.h>
 
 // Ό³Έν :
 class ATitleGameMode : public AGameMode
@@ -20,10 +21,16 @@ public:
 	void Tick(float _DeltaTime) override;
 	void LevelChangeStart() override;
 	void LevelChangeEnd() override;
+
+	void FadeEffect();
 protected:
+	void InitBackgroundSound();
+	void StartSound();
 
 private:
 	std::shared_ptr<class ATitleScene> TitleScene;
+	UTimeEventComponent* TimeEventer = nullptr;
 	USoundPlayer Sound;
+	class ATitleHUD* HUD = nullptr;
 };
 

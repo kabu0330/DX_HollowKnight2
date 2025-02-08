@@ -272,7 +272,7 @@ private:
 	void SetRunToIdle(float _DeltaTime);
 	void SetDash(float _DeltaTime);
 	void SetJump(float _DeltaTime);
-	void SetAirborn(float _DeltaTime);
+	void SetAirborne(float _DeltaTime);
 	void SetLand(float _DeltaTime);
 	void SetHardLand(float _DeltaTime);
 

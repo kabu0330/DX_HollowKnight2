@@ -1,6 +1,7 @@
 #pragma once
 #include <EngineCore/GameMode.h>
 #include "RoomManager.h"
+#include <EnginePlatform/EngineSound.h>
 
 // Ό³Έν :
 class APlayGameMode : public AGameMode
@@ -59,5 +60,7 @@ private:
 
 	std::shared_ptr<class UCollision> BasePointCollision = nullptr;
 	std::shared_ptr<class UDebugWindowGUI> Window = nullptr;
+
+	USoundPlayer Sound;
 };
 

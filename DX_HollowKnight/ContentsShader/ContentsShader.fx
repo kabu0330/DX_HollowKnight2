@@ -5,13 +5,9 @@ struct EngineVertex
     float4 COLOR : COLOR;
 };
 
-// 버텍스 쉐이더는 무조건 리턴값이 있어야 합니다.
-// 인풋어셈블러2로 넘길 값을 리턴해줘야하는데.
-// 이때도 규칙이 있습니다.
-
 struct VertexShaderOutPut
 {
-    float4 SVPOSITION : SV_POSITION; // 뷰포트행렬이 곱해지는 포지션입니다.
+    float4 SVPOSITION : SV_POSITION; 
     float4 UV : TEXCOORD; // 
     float4 COLOR : COLOR;
 };
@@ -19,16 +15,11 @@ struct VertexShaderOutPut
 // 상수버퍼를 사용하겠다.
 cbuffer FTransform : register(b0)
 {
-	// transformupdate는 
-	// 아래의 값들을 다 적용해서
-	// WVP를 만들어내는 함수이다.
-	// 변환용 벨류
     float4 Scale;
     float4 Rotation;
     float4 Qut;
     float4 Location;
 
-	// 릴리에티브 로컬
     float4 RelativeScale;
     float4 RelativeRotation;
     float4 RelativeQut;
