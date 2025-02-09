@@ -1,5 +1,6 @@
 #pragma once
 #include <EngineCore/Actor.h>
+#include <EnginePlatform/EngineSound.h>
 
 // Ό³Έν :
 class ABarrier : public AActor
@@ -27,6 +28,8 @@ private:
 	class UContentsRenderer* Renderer = nullptr;
 	class UCollision* Collision = nullptr;
 	class UTimeEventComponent* TimeEventer = nullptr;
+	USoundPlayer Sound;
+	bool bIsDestory = false;
 	float ZSort = 0.0f;
 	FVector Scale = FVector::ZERO;
 };

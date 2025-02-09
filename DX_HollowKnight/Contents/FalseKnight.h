@@ -102,6 +102,8 @@ private:
 	void InitSpawn();
 	bool bIsInitSpawn = true;
 
+	void SetBarrier(bool _Value);
+
 private:
 	void SetIdle(float _DeltaTime) override;
 	void SetJumpAnticipate(float _DeltaTime) override;

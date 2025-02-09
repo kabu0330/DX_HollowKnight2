@@ -166,6 +166,12 @@ public:
 
 	class ABarrier* CreateBarrier(FVector _Pos);
 
+	std::vector<class ABarrier*>& GetBarrier()
+	{
+		return Barriers;
+	}
+
+
 protected:
 	void Force(AActor* _Actor, float _DeltaTime);
 
@@ -174,6 +180,7 @@ private:
 	float GravityValue = 0.0f;
 
 	inline static ARoom* CurRoom = nullptr;
+	std::vector<class ABarrier*> Barriers;
 	UEngineWinImage PixelCollisionImage;
 	FVector Size = FVector::ZERO;
 	FVector LeftTopPos = FVector::ZERO;

@@ -7,6 +7,7 @@
 #include "ContentsRenderer.h"
 #include "PlayGameMode.h"
 #include "Particle.h"
+#include "Barrier.h"
 
 AFalseKnight::AFalseKnight()
 {
@@ -43,6 +44,15 @@ void AFalseKnight::InitSpawn()
 	if (false == bIsOnGround && true == bIsInitSpawn)
 	{
 		FSM.ChangeState(EMonsterState::JUMP);
+	}
+}
+
+void AFalseKnight::SetBarrier(bool _Value)
+{
+	std::vector<ABarrier*> Barriers = ParentRoom->GetBarrier();
+	for (ABarrier* Barrier : Barriers)
+	{
+		Barrier->SetActiveBarrier(_Value);
 	}
 }
 
@@ -429,6 +439,7 @@ void AFalseKnight::SetLand(float _DeltaTime)
 	if (true == bIsInitSpawn)
 	{
 		ARoom::SetBackgroundSound("False_Knight.mp3");
+		SetBarrier(true);
 	}
 	bIsInitSpawn = false;
 
@@ -1153,6 +1164,10 @@ void AFalseKnight::SetDeathLand(float _DeltaTime)
 		TimeEventer->AddEndEvent(3.5f, [this]()
 			{
 				Sound = UEngineSound::Play("Boss Defeat.wav");
+			});
+		TimeEventer->AddEndEvent(10.0f, [this]()
+			{
+				SetBarrier(false);
 			});
 		TimeEventer->AddEndEvent(26.0f, [this]()
 			{

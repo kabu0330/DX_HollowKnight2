@@ -172,6 +172,7 @@ ABarrier* ARoom::CreateBarrier(FVector _Pos)
 {
 	ABarrier* Barrier = GetWorld()->SpawnActor<ABarrier>().get();
 	Barrier->SetActorLocation(_Pos);
+	Barriers.push_back(Barrier);
 	return Barrier;
 }
 
