@@ -96,7 +96,20 @@ public:
 
 	virtual void DamageSound() {};
 
+	void SetBarrier(bool _bIsBarrier)
+	{
+		bIsBarrier = _bIsBarrier;
+	}
+	void GetBarrierPos(FVector _BarrierPos)
+	{
+		BarrierPos = _BarrierPos;
+	}
+
 protected:
+	bool bIsBarrier = false;
+	FVector BarrierPos = FVector::ZERO;
+
+
 	// 반드시 자식 클래스가 재정의 해야하는 가상함수
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;

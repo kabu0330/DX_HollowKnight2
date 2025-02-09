@@ -367,14 +367,22 @@ void AKnight::SetStun(float _DeltaTime)
 			BodyRenderer->ColorData.PlusColor = { 0.0f, 0.0f, 0.0f, 0.0f };
 		});
 
+	DeathCheck();
 
-	if (true == bIsOnGround)
+	if (true == Stat.IsDeath())
 	{
-		ChangeNextState(EKnightState::IDLE);
+		ChangeNextState(EKnightState::DEATH_DAMAGE);
 	}
 	else
 	{
-		ChangeNextState(EKnightState::AIRBORN);
+		if (true == bIsOnGround)
+		{
+			ChangeNextState(EKnightState::IDLE);
+		}
+		else
+		{
+			ChangeNextState(EKnightState::AIRBORN);
+		}
 	}
 }
 
@@ -403,12 +411,12 @@ void AKnight::SetDeathHead(float _DeltaTime)
 {
 	ActiveGravity();
 
-	AddActorRotation({ 0.0f, 0.0f, -5.0f * _DeltaTime });
+	AddActorRotation({ 0.0f, 0.0f, -2.0f * _DeltaTime });
 	BodyRenderer->SetRelativeLocation({ 0.0f, -20.0f, 0.0f });
 	if (false == bCanReset)
 	{
 		bCanReset = true;
-		TimeEventer->AddEndEvent(2.0f, std::bind(&AKnight::ResetLevel, this));
+		TimeEventer->AddEndEvent(8.0f, std::bind(&AKnight::ResetLevel, this));
 	}
 }
 

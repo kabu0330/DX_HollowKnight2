@@ -93,6 +93,15 @@ public:
 		return bIsWallHere;
 	}
 
+	void SetBarrier(bool _bIsBarrier)
+	{
+		bIsBarrier = _bIsBarrier;
+	}
+	void GetBarrierPos(FVector _BarrierPos)
+	{
+		BarrierPos = _BarrierPos;
+	}
+
 	void SetCeilHere(bool _Value)
 	{
 		bIsCeilHere = _Value;
@@ -147,6 +156,9 @@ protected:
 	void UpdateFSM(float _DeltaTime);
 
 private:
+	bool bIsBarrier = false;
+	FVector BarrierPos = FVector::ZERO;
+
 	// Stat
 	void SetStatus();
 	UStatusUnit Stat = UStatusUnit();
@@ -171,7 +183,6 @@ private:
 
 	// Move
 	void Move(float _DeltaTime);
-
 
 	// Jump : ZŰ
 	bool CanJump();

@@ -12,6 +12,7 @@
 #include "AspidHatchling.h"
 #include "AspidHunter.h"
 #include "FalseKnight.h"
+#include "Barrier.h"
 
 URoomManager::URoomManager()
 	: Rooms()
@@ -122,6 +123,11 @@ void URoomManager::CreateRoom(AGameMode* _GameMode)
 
 	Crossroads5->CreateDoor(DoorSize, RoomPos::Crossroads5Right, Crossroads5.get(), RoomPos::Crossroads5Right);
 
+
+	// 보스방 배리어
+
+	BossRoom->CreateBarrier(RoomPos::BossRoomBarrierLeft);
+	BossRoom->CreateBarrier(RoomPos::BossRoomBarrierRight);
 	
 	// ForgottenCrossroads1->CreateDoor({ 0, 0 }, ForgottenCrossroads1, {100, -100});
 
@@ -131,7 +137,7 @@ void URoomManager::CreateRoom(AGameMode* _GameMode)
 	ARoom::GetCurRoom();
 
 	//SetInitCurRoom(Dirtmouth.get());
-	//SetInitCurRoom(Crossroads2.get());
+
 
 	// 6. 몬스터 생성
 	Crossroads3->CreateMonster<AGruzzer>({ 4400, -5970 });

@@ -47,6 +47,7 @@ private:
 
 	float JumpActionInitElapsed = 0.0f;
 	bool bCanJumpAttack = false;
+	bool bIsLandSound = false;
 	
 	bool bIsResting = false;
 	float RestElapsed = 0.0f;
@@ -63,9 +64,11 @@ private:
 	bool bIsAttackEffect = false;
 	void CreateGroundImpack();
 	bool bIsOffsetAttack1Frame = false;
-	bool bISOffsetAttackRecovery1Fame = false;
+	bool bIsOffsetAttackRecovery1Fame = false;
+	bool bIsDoubleAttack = false;
 
 	void CreateJumpAttackLogicAndEffect();
+	
 
 	void CreateDropObject();
 	bool bIsBerserkMode = false; // 첫 스턴 전까진 광폭 상태가 아니다.
@@ -87,6 +90,7 @@ private:
 	bool bIsDeathAir = false;
 	bool bIsStunVoice = false;
 	bool bIsStunGroundSound = false;
+	bool bIsStunRecoveryVocie = false;
 
 	bool bIsDeath = false;
 

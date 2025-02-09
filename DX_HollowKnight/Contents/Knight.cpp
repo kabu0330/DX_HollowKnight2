@@ -17,6 +17,7 @@
 #include <math.h>
 #include "PlayHUD.h"
 
+
 AKnight* AKnight::MainPawn = nullptr;
 
 AKnight::AKnight()
@@ -61,8 +62,6 @@ void AKnight::Tick(float _DeltaTime)
 
 	ActivePixelCollsion();
 
-	DeathCheck();
-
 	SetCameraPos();
 	//CheckCameraPos();
 	//SetCameraLerp();
@@ -99,7 +98,6 @@ void AKnight::DeathCheck()
 			return;
 		}
 		Stat.SetDeath(true);
-		FSM.ChangeState(EKnightState::DEATH_DAMAGE);
 	}
 }
 
@@ -200,21 +198,36 @@ void AKnight::Move(float _DeltaTime)
 
 	CheckDirection();
 
-	if (UEngineInput::IsPress(VK_LEFT))
+	FVector MoveVector = FVector::ZERO;
+	FVector CurPos = GetActorLocation();
+	
+	if (true == UEngineInput::IsPress(VK_LEFT))
 	{
 		if (false == bIsWallHere)
 		{
-			//AddRelativeLocation(FVector{ -Velocity * _DeltaTime, 0.0f, 0.0f });
-			AddRelativeLocation(FVector{ -Stat.GetVelocity() * _DeltaTime, 0.0f, 0.0f });
+			MoveVector.X -= Stat.GetVelocity() * _DeltaTime;
 		}
-
 	}
-	if (UEngineInput::IsPress(VK_RIGHT))
+	if (true == UEngineInput::IsPress(VK_RIGHT))
 	{
 		if (false == bIsWallHere)
 		{
-			//AddRelativeLocation(FVector{ Velocity * _DeltaTime, 0.0f, 0.0f });
-			AddRelativeLocation(FVector{ Stat.GetVelocity() * _DeltaTime, 0.0f, 0.0f });
+			MoveVector.X += Stat.GetVelocity() * _DeltaTime;
+		}
+	}	
+
+	AddRelativeLocation(MoveVector);
+
+	if (true == bIsBarrier)
+	{
+		FVector Distance = BarrierPos - GetActorLocation();
+		if (Distance.X < 0) // 배리어가 왼쪽에 있다면
+		{
+			AddRelativeLocation({5.0f, 0.0f});
+		}
+		else
+		{
+			AddRelativeLocation({-5.0f, 0.0f});
 		}
 	}
 }
@@ -242,6 +255,12 @@ void AKnight::ReverseForce(float _DeltaTime)
 
 	if (true == bIsWallHere)
 	{
+		Stat.SetKnockbackDir(FVector::ZERO);
+		return;
+	}
+	if (true == bIsBarrier)
+	{
+		Stat.SetKnockbackDir(FVector::ZERO);
 		return;
 	}
 
@@ -478,6 +497,11 @@ void AKnight::Dash()
 
 	if (false == bIsWallHere)
 	{
+		if (true == bIsBarrier)
+		{
+			return;
+		}
+
 		if (true == bIsLeft)
 		{
 			AddRelativeLocation(FVector{ -Stat.GetVelocity() * DeltaTime, 0.0f, 0.0f });

@@ -378,6 +378,10 @@ void AMonster::ReverseForce(float _DeltaTime)
 	{
 		return;
 	}
+	if (true == bIsBarrier)
+	{
+		return;
+	}
 
 	Stat.AddKnockbackForce(Reverse * _DeltaTime * 500.0f);
 }
@@ -393,6 +397,10 @@ void AMonster::Knockback(float _DeltaTime)
 		return;
 	}
 	if (true == bIsWallHere)
+	{
+		return;
+	}
+	if (true == bIsBarrier)
 	{
 		return;
 	}
@@ -466,6 +474,19 @@ void AMonster::Move(float _DeltaTime)
 	FinalVelocity *= Direction;
 
 	AddActorLocation(FinalVelocity);
+
+	if (true == bIsBarrier)
+	{
+		FVector Distance = BarrierPos - GetActorLocation();
+		if (Distance.X < 0) // 배리어가 왼쪽에 있다면
+		{
+			AddRelativeLocation({ 5.0f, 0.0f });
+		}
+		else
+		{
+			AddRelativeLocation({ -5.0f, 0.0f });
+		}
+	}
 }
 
 void AMonster::DebugInput(float _DeltaTime)

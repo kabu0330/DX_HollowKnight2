@@ -15,10 +15,19 @@ public:
 	ABarrier& operator=(const ABarrier& _Other) = delete;
 	ABarrier& operator=(ABarrier&& _Other) noexcept = delete;
 
+	void SetActiveBarrier(bool _Value);
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
-private:
 
+	void Barrier(class UCollision* _This, class UCollision* _Other);
+	void BarrierEnd(class UCollision* _This, class UCollision* _Other);
+private:
+	class UContentsRenderer* Renderer = nullptr;
+	class UCollision* Collision = nullptr;
+	class UTimeEventComponent* TimeEventer = nullptr;
+	float ZSort = 0.0f;
+	FVector Scale = FVector::ZERO;
 };
 

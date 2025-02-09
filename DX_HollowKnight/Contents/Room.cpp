@@ -5,6 +5,7 @@
 #include "PlayGameMode.h"
 #include "Monster.h"
 #include "Door.h"
+#include "Barrier.h"
 
 ARoom::ARoom()
 {
@@ -165,6 +166,13 @@ bool ARoom::IsOnGround(FVector _Pos)
 	{
 		return false;
 	}
+}
+
+ABarrier* ARoom::CreateBarrier(FVector _Pos)
+{
+	ABarrier* Barrier = GetWorld()->SpawnActor<ABarrier>().get();
+	Barrier->SetActorLocation(_Pos);
+	return Barrier;
 }
 
 void ARoom::Force(AActor* _Actor, float _DeltaTime)

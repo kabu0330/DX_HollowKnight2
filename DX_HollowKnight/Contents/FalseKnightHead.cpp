@@ -95,7 +95,7 @@ void AFalseKnightHead::Attack(UCollision* _This, UCollision* _Other)
 		bIsDamage = true;
 	}
 	UEngineRandom Random;
-	float Result = Random.RandomInt(0, 1);
+	int Result = Random.RandomInt(0, 1);
 	if (0 == Result)
 	{
 		Sound = UEngineSound::Play("Fknight_hit_01.wav");

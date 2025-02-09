@@ -164,6 +164,8 @@ public:
 		Sound.Loop(999);
 	}
 
+	class ABarrier* CreateBarrier(FVector _Pos);
+
 protected:
 	void Force(AActor* _Actor, float _DeltaTime);
 

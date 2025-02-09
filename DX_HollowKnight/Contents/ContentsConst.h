@@ -49,6 +49,9 @@ public:
 	inline static FVector Crossroads3Bot = { 3780, -11080 };
 	inline static FVector Crossroads3BotWarpPoint = { 4760, -5860 };
 
+
+	inline static FVector BossRoomBarrierLeft = { 11150, -8200 };
+	inline static FVector BossRoomBarrierRight = { 13130, -8200 };
 };
 
 class InitPos
