@@ -29,10 +29,9 @@ void APlayHUD::BeginPlay()
 	InitKinghtHp = AKnight::GetPawn()->GetStatRef().GetMaxHp();
 	CreateSkillGaugeEffect();
 
-	
+	CreateBossText();
 
 	//CreateGeo();
-	//CreateGeoCount();
 }
 
 void APlayHUD::Tick(float _DeltaTime)
@@ -87,7 +86,6 @@ void APlayHUD::NextAnimation(std::string_view _Name)
 	bIsNextAnimation = true; // Tick에서 현재 재생중인 애니메이션이 종료되었는지 검사해라.
 	NextAnimName = _Name; // 현재 재생중인 애니메이션이 끝나면 이 이름의 애니메이션으로 바꿔라.
 }
-
 
 void APlayHUD::InitSkillGaugeFrame()
 {
@@ -450,16 +448,20 @@ void APlayHUD::CreateGeo()
 	GeoUI->SetWorldLocation({ -ScreenSize.X * GeoPosX,  ScreenSize.Y * GeoPosY });
 	GeoUI->SetTexture("012-04-088.png", true, 0.9f);
 }
-
-void APlayHUD::CreateGeoCount()
+\
+void APlayHUD::CreateBossText()
 {
-	GeoCount = CreateWidget<UFontWidget>(static_cast<int>(EUIOrder::BACK), "GeoCount");
+	BossText = CreateWidget<UFontWidget>(static_cast<int>(EUIOrder::BACK), "GeoCount");
 
-	float GeoPosX = SkillGaugeFramePosX - 0.07f;
-	float GeoPosY = SkillGaugeFramePosY - 0.035f;
-	GeoCount->SetWorldLocation({ -ScreenSize.X * GeoPosX,  ScreenSize.Y * GeoPosY });
-	GeoCount->SetFont("NotoSerifCJKsc-Regular", 40.0f, UColor::WHITE);
-	GeoCount->SetText("95");
+	BossText->SetWorldLocation({ ScreenSize.X * 0.17f,  ScreenSize.Y * - 0.3f });
+	BossText->SetFont("NotoSerifCJKsc-Regular", 60.0f, UColor::WHITE);
+	BossText->SetText("거짓된 기사");
+	BossText->SetActive(false);
+}
+
+void APlayHUD::SetActiveBossText(bool _Value)
+{
+	BossText->SetActive(_Value);
 }
 
 void APlayHUD::CreateFade()

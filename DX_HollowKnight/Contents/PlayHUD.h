@@ -19,6 +19,8 @@ public:
 
 	void FadeIn();
 	void FadeOut(float _Time = 0.6f, float _Power = 1.0f);
+	void SetActiveBossText(bool _Value);
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime)	override;
@@ -28,6 +30,7 @@ protected:
 
 	void NextAnimation(std::string_view _Name);
 	std::string NextAnimName = "";
+
 private:
 	FVector ScreenSize = FVector::ZERO;
 	FVector HalfSize = FVector::ZERO;
@@ -71,8 +74,9 @@ private:
 	
 
 	void CreateGeo();
-	void CreateGeoCount();
-	std::shared_ptr<class UFontWidget> GeoCount = nullptr;
+	//void CreateGeoCount();
+	void CreateBossText();
+	std::shared_ptr<class UFontWidget> BossText = nullptr;
 
 
 	void CreateFade();

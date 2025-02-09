@@ -8,6 +8,7 @@
 #include "PlayGameMode.h"
 #include "Particle.h"
 #include "Barrier.h"
+#include "PlayHUD.h"
 
 AFalseKnight::AFalseKnight()
 {
@@ -26,6 +27,9 @@ void AFalseKnight::BeginPlay()
 {
 	AMonster::BeginPlay();
 	CreateHeadRenderer();
+	AHUD* HUD = GetWorld()->GetHUD();
+	PlayHUD = dynamic_cast<APlayHUD*>(HUD);
+
 	SetActive(false);
 }
 
@@ -440,6 +444,11 @@ void AFalseKnight::SetLand(float _DeltaTime)
 	{
 		ARoom::SetBackgroundSound("False_Knight.mp3");
 		SetBarrier(true);
+		PlayHUD->SetActiveBossText(true);
+		TimeEventer->AddEndEvent(5.0f, [this]()
+			{
+				PlayHUD->SetActiveBossText(false);
+			});
 	}
 	bIsInitSpawn = false;
 

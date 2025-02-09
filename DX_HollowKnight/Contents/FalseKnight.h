@@ -138,5 +138,6 @@ private:
 	USoundPlayer BossVoice;
 	void BossPatternSound(std::string_view _SoundFile, float _Volume = 1.0f);
 	bool bIsGushingSound = false;
+	class APlayHUD* PlayHUD = nullptr;
 };
 
