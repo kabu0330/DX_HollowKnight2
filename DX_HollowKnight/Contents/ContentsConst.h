@@ -6,7 +6,7 @@ class RoomPos
 public:
 	// 흙의 마을에서 잊혀진 교차로로
 	inline static FVector FromDirtmouth = { 9300, -3408 }; // 월드좌표
-	inline static FVector ToCrossroads1 = { 9284, -5495 }; 
+	inline static FVector ToCrossroads1 = { 9350, -4000 }; 
 
 	// 잊혀진 교차로에서 다시 마을로
 	inline static FVector FromCrossroads1 = { 9384, -5595 };
@@ -57,7 +57,8 @@ public:
 class InitPos
 {
 public:
+	inline static FVector KnightInitPos = { 600, -1300 };
 	inline static FVector Dirtmouth_well = { 9000, -3000 };
-	inline static FVector CrossroadsEntrance = { 9390, -5500 };
+	inline static FVector CrossroadsEntrance = { 9390, -5000 };
 	inline static FVector BossRoom = { 11800, -8000 };
 };

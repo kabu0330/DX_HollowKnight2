@@ -26,7 +26,7 @@ void AVengefly::Tick(float _DeltaTime)
 void AVengefly::SetStatus()
 {
 	FStatusData Data;
-	Data.Velocity = 200.0f;
+	Data.Velocity = 250.0f;
 	Data.InitVelocity = Data.Velocity;
 	Data.RunSpeed = Data.Velocity * 3.0f;
 	Data.DashSpeed = Data.Velocity * 3.0f;

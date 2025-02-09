@@ -66,6 +66,11 @@ public:
 		return FSM;
 	}
 
+	void SetCanMove(bool _bCanMove)
+	{
+		bCanMove = _bCanMove;
+	}
+
 
 public:
 	// 픽셀 충돌 디버그
@@ -122,6 +127,11 @@ public:
 	UCollision* GetPixelCollision()
 	{
 		return PixelCollision.get();
+	}
+
+	void SetHardLand(bool _Value)
+	{
+		bIsHardLand = _Value;
 	}
 
 	float GetJumpForce()
@@ -312,6 +322,11 @@ private:
 
 	void CheckDirection();
 	bool bIsLeft = true;
+	bool bIsHardLand = false;
+	float MinAirborneTrigger = 100.0f;
+	bool bIsLand = false;
+	bool bWasHardLanding = false;
+	bool bCanMove = true; // 수동 조작, 워프 이동 차단용
 
 
 	// 픽셀충돌

@@ -43,6 +43,8 @@ public:
 		return bIsFlip;
 	}
 
+	virtual void DamageEvent() {}
+
 	UContentsRenderer* GetRenderer() const
 	{
 		return BodyRenderer.get();

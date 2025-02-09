@@ -61,7 +61,7 @@ enum class EKnightState
 	RUN_TO_IDLE,
 	DASH,
 	JUMP,
-	AIRBORN,
+	AIRBORNE,
 	LAND,
 	HARD_LAND,
 

@@ -24,5 +24,6 @@ protected:
 
 private:
 	void SetAttackAnticipate(float _DeltaTime) override {} // 공격 안함
+	void DamageEvent() override;
 };
 

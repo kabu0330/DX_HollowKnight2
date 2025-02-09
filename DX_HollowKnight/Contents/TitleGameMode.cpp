@@ -41,21 +41,58 @@ void ATitleGameMode::Tick(float _DeltaTime)
 
 void ATitleGameMode::LevelChangeStart()
 {
+
 }
 
 void ATitleGameMode::LevelChangeEnd()
 {
-	HUD->FadeIn();
-	TimeEventer->AddEndEvent(3.0f, []()
+	TimeEventer->AddEndEvent(0.5f, [this]()
+		{
+			Volume -= 0.2f;
+			Sound.SetVolume(Volume);
+		});
+	TimeEventer->AddEndEvent(1.0f, [this]()
+		{
+			Volume -= 0.1f;
+			Sound.SetVolume(Volume);
+		});
+	TimeEventer->AddEndEvent(1.5f, [this]()
+		{
+			Volume -= 0.1f;
+			Sound.SetVolume(Volume);
+		});
+	TimeEventer->AddEndEvent(2.0f, [this]()
+		{
+			Volume -= 0.1f;
+			Sound.SetVolume(Volume);
+		});
+	TimeEventer->AddEndEvent(2.5f, [this]()
+		{
+			Volume -= 0.1f;
+			Sound.SetVolume(Volume);
+		});
+	TimeEventer->AddEndEvent(3.0f, [this]()
+		{
+			Volume -= 0.1f;
+			Sound.SetVolume(Volume);
+		});
+	TimeEventer->AddEndEvent(3.5f, [this]()
+		{
+			Volume -= 0.1f;
+			Sound.SetVolume(Volume);
+		});
+	TimeEventer->AddEndEvent(4.0f, []()
 		{
 			UEngineSound::AllSoundStop();
 			UEngineCore::OpenLevel("Play");
 		});
+	
+
 }
 
 void ATitleGameMode::InitBackgroundSound()
 {
-	TimeEventer->AddEndEvent(6.0f, [this]()
+	TimeEventer->AddEndEvent(5.0f, [this]()
 		{
 			Sound = UEngineSound::Play("Title.mp3");
 			Sound.Loop(999);
@@ -77,14 +114,31 @@ void ATitleGameMode::FadeEffect()
 		{
 			HUD->FadeOut();
 		});
+	TimeEventer->AddEndEvent(8.0f, [this]()
+		{
+			bCanNextMode = true;
+		});
 }
 
 void ATitleGameMode::StartSound()
 {
-	if (UEngineInput::IsDown(VK_SPACE))
+	if (false == bCanNextMode)
 	{
-		Sound = UEngineSound::Play("ui_button_confirm.wav");
-		LevelChangeEnd();
+		return;
+	}
+	if (true == bIsSpace)
+	{
+		return;
+	}
+	if (true == UEngineInput::IsDown(VK_SPACE))
+	{
+		bIsSpace = true;
+		ButtonSound = UEngineSound::Play("ui_button_confirm.wav");
+		HUD->FadeIn();
+		TimeEventer->AddEndEvent(1.0f, [this]()
+			{
+				LevelChangeEnd();
+			});
 	}
 }
 

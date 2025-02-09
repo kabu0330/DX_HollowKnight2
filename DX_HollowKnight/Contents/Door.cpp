@@ -69,6 +69,7 @@ void ADoor::Warp(UCollision* _Actor1, UCollision* _Actor2)
 
 	APlayHUD::GetHUD()->SetActiveClimbText(false);
 	Knight->GetCollision()->SetActive(false);
+	Knight->SetCanMove(false);
 	bIsDoorEnter = true;
 	TimeEventer->AddEndEvent(0.05f, [this]()
 		{
@@ -83,11 +84,12 @@ void ADoor::Warp(UCollision* _Actor1, UCollision* _Actor2)
 			Knight->SetCameraPos();
 		});
 
-	TimeEventer->AddEndEvent(1.5f, std::bind(&ADoor::ActiveKnightCollision, this));
+	TimeEventer->AddEndEvent(0.5f, std::bind(&ADoor::ActiveKnightCollision, this));
 }
 
 void ADoor::ActiveKnightCollision()
 {
 	Knight->GetCollision()->SetActive(true);
+	Knight->SetCanMove(true);
 }
 

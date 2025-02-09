@@ -15,10 +15,20 @@ void AKnight::SetIdle(float _DeltaTime)
 
 	if (UEngineInput::IsPress(VK_LEFT) || UEngineInput::IsPress(VK_RIGHT))
 	{
-		FSM.ChangeState(EKnightState::IDLE_TO_RUN);
-		return;
+		if (false == bIsOnGround)
+		{
+			Sound.Stop();
+			FSM.ChangeState(EKnightState::AIRBORNE);
+			return;
+		}
+		else
+		{
+			FSM.ChangeState(EKnightState::IDLE_TO_RUN);
+			return;
+		}
 	}
 
+	
 	ChangeJumpAnimation();  // 점프
 	ChangeDash(); // 대시
 
@@ -38,10 +48,17 @@ void AKnight::SetRun(float _DeltaTime)
 	bCanRotation = true;
 	Stat.SetBeingHit(false);
 
+	if (false == bIsOnGround && false == bIsLand && false == bWasHardLanding && MinAirborneTrigger != GravityForce.Length())
+	{
+		Sound.Stop();
+		ChangeNextState(EKnightState::AIRBORNE);
+		return;
+	}
+
 	if (UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT))
 	{
 		Sound.Stop();
-		FSM.ChangeState(EKnightState::RUN_TO_IDLE);
+		FSM.ChangeState(EKnightState::IDLE_TO_RUN);
 		return;
 	}
 
@@ -73,6 +90,14 @@ void AKnight::SetIdleToRun(float _DeltaTime)
 
 	CastFireball(); 
 
+
+	if (UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT))
+	{
+		Sound.Stop();
+		FSM.ChangeState(EKnightState::IDLE);
+		return;
+	}
+
 	if (false == Sound.IsPlaying())
 	{
 		Sound = UEngineSound::Play("run.wav");
@@ -92,6 +117,7 @@ void AKnight::SetRunToIdle(float _DeltaTime)
 	bIsDashing = false; // 이 동작으로 돌아와야만 대시 상태가 해제된 것으로 판단
 	Stat.SetBeingHit(false);
 	bIsDashEffect = false;
+
 
 	ChangeNextState(EKnightState::IDLE);
 
@@ -117,11 +143,12 @@ void AKnight::SetJump(float _DeltaTime)
 	Move(_DeltaTime);
 
 	bCanRotation = true;
+	bIsLand = false;
 
 	ChangeDash(); // 대시
 	CastFireball();
 
-	ChangeAttackAnimation(EKnightState::AIRBORN); // 공중 공격
+	ChangeAttackAnimation(EKnightState::AIRBORNE); // 공중 공격
 
 
 	if (true == bIsOnGround)
@@ -130,8 +157,8 @@ void AKnight::SetJump(float _DeltaTime)
 	}
 	else
 	{
-		ChangeNextState(EKnightState::AIRBORN);
-		ChangeAttackAnimation(EKnightState::AIRBORN);
+		ChangeNextState(EKnightState::AIRBORNE);
+		ChangeAttackAnimation(EKnightState::AIRBORNE);
 	}
 }
 
@@ -147,38 +174,57 @@ void AKnight::SetAirborne(float _DeltaTime)
 	ChangeDash(); // 대시
 	CastFireball();
 
-	ChangeAttackAnimation(EKnightState::AIRBORN); // 공중 공격
+	ChangeAttackAnimation(EKnightState::AIRBORNE); // 공중 공격
 
-	if (true == bIsOnGround)
+	if (true == bIsOnGround && false == bIsHardLand)
 	{
 		FSM.ChangeState(EKnightState::LAND);
+	}
+	else if (true == bIsOnGround && true == bIsHardLand)
+	{
+		FSM.ChangeState(EKnightState::HARD_LAND);
 	}
 }
 
 void AKnight::SetLand(float _DeltaTime)
 {
-	ActiveGravity();
-	Move(_DeltaTime);
-	Stat.SetBeingHit(false);
-
-	float InitJumpForce = 600.0f;
-	JumpForce = InitJumpForce;
-
-
-	if (false == Sound.IsPlaying())
+	if (true != bWasHardLanding)
 	{
-		if (false == bIsSound)
+		ActiveGravity();
+		Move(_DeltaTime);
+		Stat.SetBeingHit(false);
+
+		float InitJumpForce = 600.0f;
+		JumpForce = InitJumpForce;
+		bIsLand = true;
+		TimeEventer->AddEndEvent(0.5f, [this]()
+			{
+				bIsLand = false;
+			});
+
+		if (false == Sound.IsPlaying())
 		{
-			Sound.Stop();
-			bIsSound = true;
-			Sound = UEngineSound::Play("land.wav");
-			Sound.SetVolume(0.5f);
+			if (false == bIsSound)
+			{
+				Sound.Stop();
+				bIsSound = true;
+				Sound = UEngineSound::Play("land.wav");
+				Sound.SetVolume(0.5f);
+			}
 		}
+
+		if (UEngineInput::IsFree(VK_LEFT) && UEngineInput::IsFree(VK_RIGHT))
+		{
+			FSM.ChangeState(EKnightState::RUN_TO_IDLE);
+			return;
+		}
+
+		ChangeAttackAnimation(EKnightState::IDLE); // 공중 공격
+
+		ChangeNextState(EKnightState::IDLE);
 	}
 
-	ChangeAttackAnimation(EKnightState::IDLE); // 공중 공격
-
-	ChangeNextState(EKnightState::IDLE);
+	FSM.ChangeState(EKnightState::IDLE);
 }
 
 void AKnight::SetHardLand(float _DeltaTime)
@@ -186,6 +232,23 @@ void AKnight::SetHardLand(float _DeltaTime)
 	ActiveGravity();
 	float InitJumpForce = 600.0f;
 	JumpForce = InitJumpForce;
+	bIsHardLand = false;
+	bWasHardLanding = true;
+	TimeEventer->AddEndEvent(0.5f, [this]()
+		{
+			bWasHardLanding = false;
+		});
+
+	if (false == Sound.IsPlaying())
+	{
+		if (false == bIsSound)
+		{
+			Sound.Stop();
+			bIsSound = true;
+			Sound = UEngineSound::Play("hero_land_hard.wav");
+			Sound.SetVolume(0.5f);
+		}
+	}
 
 	ChangeNextState(EKnightState::IDLE);
 }
@@ -203,7 +266,7 @@ void AKnight::SetDash(float _DeltaTime)
 	}
 	else
 	{
-		ChangeNextState(EKnightState::AIRBORN);
+		ChangeNextState(EKnightState::AIRBORNE);
 		return;
 	}
 
@@ -311,7 +374,7 @@ void AKnight::SetFireballCast(float _DeltaTime)
 	}
 	else
 	{
-		ChangeNextState(EKnightState::AIRBORN);
+		ChangeNextState(EKnightState::AIRBORNE);
 	}
 }
 
@@ -381,7 +444,7 @@ void AKnight::SetStun(float _DeltaTime)
 		}
 		else
 		{
-			ChangeNextState(EKnightState::AIRBORN);
+			ChangeNextState(EKnightState::AIRBORNE);
 		}
 	}
 }
@@ -412,11 +475,12 @@ void AKnight::SetDeathHead(float _DeltaTime)
 	ActiveGravity();
 
 	AddActorRotation({ 0.0f, 0.0f, -2.0f * _DeltaTime });
-	BodyRenderer->SetRelativeLocation({ 0.0f, -20.0f, 0.0f });
+	BodyRenderer->SetRelativeLocation({ 0.0f, -25.0f, 0.0f });
 	if (false == bCanReset)
 	{
 		bCanReset = true;
 		TimeEventer->AddEndEvent(8.0f, std::bind(&AKnight::ResetLevel, this));
+	
 	}
 }
 
@@ -429,7 +493,7 @@ void AKnight::SetFSM()
 	CreateState(EKnightState::IDLE_TO_RUN, &AKnight::SetIdleToRun, "IdleToRun");
 	CreateState(EKnightState::DASH, &AKnight::SetDash, "Dash");
 	CreateState(EKnightState::JUMP, &AKnight::SetJump, "Jump");
-	CreateState(EKnightState::AIRBORN, &AKnight::SetAirborne, "Airborn");
+	CreateState(EKnightState::AIRBORNE, &AKnight::SetAirborne, "Airborn");
 	CreateState(EKnightState::LAND, &AKnight::SetLand, "Land");
 	CreateState(EKnightState::HARD_LAND, &AKnight::SetHardLand, "HardLand");
 

@@ -27,7 +27,7 @@ void AHuskHornhead::SetStatus()
 	Data.RunSpeed = Data.Velocity * 4.5f;
 	Data.DashSpeed = Data.Velocity * 3.0f;
 	Data.MaxHp = 15;
-	Data.Hp = 5;
+	Data.Hp = 15;
 	Data.MaxMp = 0;
 	Data.Mp = 0;
 	Data.Att = 1;

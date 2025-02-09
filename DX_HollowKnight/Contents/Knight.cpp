@@ -36,6 +36,7 @@ AKnight::AKnight()
 	//SetActorLocation({ 1100.0f, -3000.0f });
 	//SetActorLocation(InitPos::Dirtmouth_well);
 	SetActorLocation(InitPos::CrossroadsEntrance);
+	SetActorLocation(InitPos::KnightInitPos);
 	//SetActorLocation({9911, -5450});
 	//SetActorLocation({13900, -5360}); // ¿ÞÂÊ
 	//SetActorLocation({14800, -5360}); // ¿À¸¥ÂÊ
@@ -108,6 +109,8 @@ void AKnight::ResetLevel()
 	TimeEventer->AddEndEvent(0.5f, [this]()
 		{
 			UEngineCore::ResetLevel<APlayGameMode, AKnight, APlayHUD>("Play");
+			UEngineSound::AllSoundOff();
+			
 		});
 
 }
@@ -448,6 +451,10 @@ bool AKnight::CanMove()
 		return false;
 	}
 	if (true == bIsDashing)
+	{
+		return false;
+	}
+	if (false == bCanMove)
 	{
 		return false;
 	}

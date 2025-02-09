@@ -101,7 +101,7 @@ void APlayGameMode::SetActiveRoom()
 
 void APlayGameMode::ShowPrompt()
 {
-	float Time = 0.0f;
+	float Time = 3.0f;
 	float Gap = 2.0f;
 	float ShowGap = 5.0f;
 	
@@ -171,6 +171,8 @@ void APlayGameMode::SetBasePoint()
 
 void APlayGameMode::LevelChangeStart()
 {
+	UEngineSound::AllSoundOff();
+	Sound = UEngineSound::Play("Dirtmouth 1.wav");
 	APlayHUD* HUD = dynamic_cast<APlayHUD*>(GetWorld()->GetHUD());
 	HUD->FadeOut(3.0f, 0.5f);
 
@@ -182,6 +184,11 @@ void APlayGameMode::LevelChangeStart()
 	}
 
 	Window->SetActive(true);
+}
+
+void APlayGameMode::LevelChangeEnd()
+{
+	
 }
 
 APlayGameMode::~APlayGameMode()

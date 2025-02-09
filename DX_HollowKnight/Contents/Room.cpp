@@ -26,7 +26,7 @@ void ARoom::BeginPlay()
 {
 	AActor::BeginPlay();
 
-	if ("FalseKnightRoom" == GetName() && this == CurRoom)
+	if ("FalseKnightRoom" == GetName())
 	{
 		Collision = CreateDefaultSubObject<UCollision>().get();
 		Collision->SetupAttachment(RootComponent);
@@ -207,7 +207,9 @@ void ARoom::Force(AActor* _Actor, float _DeltaTime)
 		return;
 	}
 	float GravityValue = 1200.0f;
-	float GravityForceMax = 2000.0f;
+	float GravityMaxValue = 1500.0f;
+	FVector PrevForce = FVector::ZERO;
+	FVector GravityForceMax = FVector::DOWN * GravityMaxValue;
 
 	AKnight* Knight = dynamic_cast<AKnight*>(_Actor);
 	if (nullptr != Knight)
@@ -215,6 +217,7 @@ void ARoom::Force(AActor* _Actor, float _DeltaTime)
 		FVector GravityForce = Knight->GetGravityForce();
 		if (false == Knight->IsOnGround())
 		{
+			PrevForce = GravityForce;
 			GravityForce += FVector::DOWN * GravityValue * _DeltaTime;
 		}
 		else
@@ -222,9 +225,10 @@ void ARoom::Force(AActor* _Actor, float _DeltaTime)
 			GravityForce = FVector::ZERO;
 		}
 
-		if (GravityForceMax <= GravityForce.Y)
+		if (abs(GravityForceMax.Y) <= abs(GravityForce.Y))
 		{
-			GravityForce = FVector::DOWN * GravityForceMax * _DeltaTime;
+			GravityForce = PrevForce;
+			Knight->SetHardLand(true);
 		}
 
 		Knight->SetGravityForce(GravityForce);
@@ -253,7 +257,7 @@ void ARoom::Force(AActor* _Actor, float _DeltaTime)
 
 		if (GravityValue <= GravityForce.Y)
 		{
-			GravityForce = FVector::DOWN * GravityForceMax * _DeltaTime;
+			GravityForce = FVector::DOWN * GravityMaxValue * _DeltaTime;
 		}
 
 		Monster->SetGravityForce(GravityForce);

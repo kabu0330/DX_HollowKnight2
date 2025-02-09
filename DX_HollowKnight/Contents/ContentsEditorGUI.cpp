@@ -2,7 +2,7 @@
 #include "ContentsEditorGUI.h"
 #include "EngineCore/EngineCore.h"
 #include "EngineCore/EngineGUI.h"
-
+#include "EnginePlatform/EngineSound.h"
 
 UContentsEditorGUI::UContentsEditorGUI()
 {
@@ -20,6 +20,7 @@ void UContentsEditorGUI::OnGUI()
 	{
 		if (ImGui::Button(Pair.first.c_str()))
 		{
+			UEngineSound::AllSoundOff();
 			UEngineCore::OpenLevel(Pair.first);
 		}
 	}

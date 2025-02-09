@@ -12,7 +12,10 @@ AMonster::AMonster()
 	RootComponent = Default;
 
 	// Renderer
-	ZSort = static_cast<float>(EZOrder::MONSTER);
+	UEngineRandom Random;
+	Random.SetSeed(reinterpret_cast<__int64>(this));
+	float Result = Random.Randomfloat(0.0f, 99.9f);
+	ZSort = static_cast<float>(EZOrder::MONSTER) + Result;
 	BodyRenderer = CreateDefaultSubObject<UContentsRenderer>();
 	BodyRenderer->SetupAttachment(RootComponent);
 	BodyRenderer->SetAutoScaleRatio(1.0f);
@@ -29,7 +32,7 @@ void AMonster::SetStatus()
 	Data.RunSpeed = Data.Velocity * 2.5f;
 	Data.DashSpeed = Data.Velocity * 3.0f;
 	Data.MaxHp = 20;
-	Data.Hp = 5;
+	Data.Hp = 15;
 	Data.MaxMp = 0;
 	Data.Mp = 0;
 	Data.Att = 1;
@@ -401,6 +404,10 @@ void AMonster::Knockback(float _DeltaTime)
 		return;
 	}
 	if (true == bIsBarrier)
+	{
+		return;
+	}
+	if (false == Stat.IsKnockbackable())
 	{
 		return;
 	}

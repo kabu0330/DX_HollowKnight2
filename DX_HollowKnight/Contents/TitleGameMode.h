@@ -31,6 +31,10 @@ private:
 	std::shared_ptr<class ATitleScene> TitleScene;
 	UTimeEventComponent* TimeEventer = nullptr;
 	USoundPlayer Sound;
+	USoundPlayer ButtonSound;
+	float Volume = 1.0f;
+	bool bCanNextMode = false;
+	bool bIsSpace = false;
 	class ATitleHUD* HUD = nullptr;
 };
 

@@ -21,6 +21,7 @@ public:
 	void Tick(float _DeltaTime);
 
 	void LevelChangeStart() override;
+	void LevelChangeEnd() override;
 
 	static FVector MousePos;
 	static FVector KnightPos;

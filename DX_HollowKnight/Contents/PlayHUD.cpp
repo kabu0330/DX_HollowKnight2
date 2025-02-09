@@ -469,9 +469,9 @@ void APlayHUD::SetActiveBossText(bool _Value)
 void APlayHUD::CreateClimbText()
 {
 	ClimbText = CreateWidget<UFontWidget>(static_cast<int>(EUIOrder::BACK), "ClimbText");
-	ClimbText->SetWorldLocation({ -ScreenSize.X * 0.03f,  ScreenSize.Y * 0.09f });
-	ClimbText->SetFont("NotoSerifCJKsc-Regular", 25.0f, UColor::WHITE);
-	ClimbText->SetText("오르기");
+	ClimbText->SetWorldLocation({ -ScreenSize.X * 0.035f,  ScreenSize.Y * 0.09f });
+	ClimbText->SetFont("NotoSerifCJKsc-Regular", 23.0f, UColor::WHITE);
+	ClimbText->SetText("올라가기");
 	ClimbText->SetActive(false);
 }
 

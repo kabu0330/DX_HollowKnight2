@@ -35,7 +35,7 @@ void ACrawlid::SetStatus()
 	Data.Att = 1;
 	Data.SpellAtt = 2;
 	Data.bIsKnockbackable = true;
-	Data.KnockbackDistance = 300.0f;
+	Data.KnockbackDistance = 150.0f;
 	Data.Geo = 0;
 	Stat.CreateStatus(&Data);
 
@@ -66,7 +66,7 @@ void ACrawlid::SetOffset()
 	CollisionScale = SpriteSize;
 	DetectRange = { 0, 0 };
 
-	DeathSpriteOffset = 0.0f;
+	DeathSpriteOffset = -15.0f;
 	DeathAirDistance = 300.0f;
 
 	WalkRendererOffset = { 0.0f, 0.0f };
@@ -90,4 +90,14 @@ void ACrawlid::CreateAnimation()
 
 	BodyRenderer->ChangeAnimation("Idle");
 }
+
+void ACrawlid::DamageEvent()
+{
+	//Stat.SetVelocity(0.0f);
+	//TimeEventer->AddEndEvent(0.3f, [this]()
+	//	{
+	//		Stat.SetVelocity(100.0f);
+	//	});
+}
+
 
