@@ -104,8 +104,6 @@ void AFalseKnightHead::Attack(UCollision* _This, UCollision* _Other)
 	{
 		Sound = UEngineSound::Play("false_knight_head_damage_2.wav");
 	}
-
-
 }
 
 void AFalseKnightHead::CreateKnightHitEffect(UCollision* _This, UCollision* _Other)

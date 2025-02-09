@@ -2,6 +2,7 @@
 #include "Door.h"
 #include "Room.h"
 #include <EngineCore/TimeEventComponent.h>
+#include "PlayHUD.h"
 
 ADoor::ADoor()
 {
@@ -18,6 +19,10 @@ ADoor::ADoor()
 	//BodyCollision->SetCollisionType(ECollisionType::AABB);
 
 	BodyCollision->SetCollisionStay(std::bind(&ADoor::Warp, this, std::placeholders::_1, std::placeholders::_2));
+	BodyCollision->SetCollisionEnd([](UCollision* _Actor1, UCollision* _Actor2)
+		{
+			APlayHUD::GetHUD()->SetActiveClimbText(false);
+		});
 
 	TimeEventer = CreateDefaultSubObject<UTimeEventComponent>();
 }
@@ -53,6 +58,7 @@ void ADoor::Warp(UCollision* _Actor1, UCollision* _Actor2)
 {
 	if (true == bIsDoor)
 	{
+		APlayHUD::GetHUD()->SetActiveClimbText(true);
 		AActor* Actor = _Actor2->GetActor();
 		AKnight* Knight = dynamic_cast<AKnight*>(Actor);
 		if (nullptr == Knight || false == Knight->GetEnter())
@@ -61,6 +67,7 @@ void ADoor::Warp(UCollision* _Actor1, UCollision* _Actor2)
 		}
 	}
 
+	APlayHUD::GetHUD()->SetActiveClimbText(false);
 	Knight->GetCollision()->SetActive(false);
 	bIsDoorEnter = true;
 	TimeEventer->AddEndEvent(0.05f, [this]()
@@ -81,8 +88,6 @@ void ADoor::Warp(UCollision* _Actor1, UCollision* _Actor2)
 
 void ADoor::ActiveKnightCollision()
 {
-
-
 	Knight->GetCollision()->SetActive(true);
 }
 

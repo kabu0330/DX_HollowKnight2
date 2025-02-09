@@ -40,7 +40,7 @@ AKnight::AKnight()
 	//SetActorLocation({13900, -5360}); // ¿ÞÂÊ
 	//SetActorLocation({14800, -5360}); // ¿À¸¥ÂÊ
 	//SetActorLocation({1100, -2950});
-	SetActorLocation({11800, -8000});
+	//SetActorLocation({11800, -8000});
 
 	// Debug
 	BodyRenderer->BillboardOn();

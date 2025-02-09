@@ -8,6 +8,7 @@
 
 APlayHUD::APlayHUD()
 {
+	HUD = this;
 	ScreenSize = UEngineCore::GetScreenScale();
 	HalfSize = ScreenSize * 0.5f;
 	Knight = AKnight::GetPawn();
@@ -30,6 +31,8 @@ void APlayHUD::BeginPlay()
 	CreateSkillGaugeEffect();
 
 	CreateBossText();
+	CreateFleur();
+	CreateClimbText();
 
 	//CreateGeo();
 }
@@ -451,9 +454,9 @@ void APlayHUD::CreateGeo()
 \
 void APlayHUD::CreateBossText()
 {
-	BossText = CreateWidget<UFontWidget>(static_cast<int>(EUIOrder::BACK), "GeoCount");
+	BossText = CreateWidget<UFontWidget>(static_cast<int>(EUIOrder::BACK), "BossText");
 
-	BossText->SetWorldLocation({ ScreenSize.X * 0.17f,  ScreenSize.Y * - 0.3f });
+	BossText->SetWorldLocation({ ScreenSize.X * 0.17f,  ScreenSize.Y * - 0.35f });
 	BossText->SetFont("NotoSerifCJKsc-Regular", 60.0f, UColor::WHITE);
 	BossText->SetText("거짓된 기사");
 	BossText->SetActive(false);
@@ -462,6 +465,60 @@ void APlayHUD::CreateBossText()
 void APlayHUD::SetActiveBossText(bool _Value)
 {
 	BossText->SetActive(_Value);
+}
+
+void APlayHUD::CreateClimbText()
+{
+	ClimbText = CreateWidget<UFontWidget>(static_cast<int>(EUIOrder::BACK), "ClimbText");
+
+	ClimbText->SetWorldLocation({ -ScreenSize.X * 0.03f,  ScreenSize.Y * 0.09f });
+	ClimbText->SetFont("NotoSerifCJKsc-Regular", 25.0f, UColor::WHITE);
+	ClimbText->SetText("오르기");
+	ClimbText->SetActive(false);
+}
+
+void APlayHUD::CreateFleur()
+{
+	std::string FleurTop = "fleurTop";
+	std::string FleurBot = "fleurBot";
+	float FrameTime = 0.05f;
+	float PosX = 0.0f;
+	float PosY = 0.1f;
+
+	TextTopFleur = CreateWidget<UImageWidget>(static_cast<int>(EUIOrder::BACK), "TextTopFleur");
+	TextTopFleur->SetWorldLocation({ -ScreenSize.X * PosX,  ScreenSize.Y * PosY });
+	TextTopFleur->CreateAnimation(FleurTop, FleurTop, 0, 5, FrameTime * 1.5f, false);
+	TextTopFleur->CreateAnimation("NONE", FleurTop, 0, 0, FrameTime * 1.5f, false);
+	TextTopFleur->SetAutoScaleRatio(0.2f);
+	TextTopFleur->ChangeAnimation(FleurTop);
+
+	TexBotFleur = CreateWidget<UImageWidget>(static_cast<int>(EUIOrder::BACK), "TexBotFleur");
+	TexBotFleur->SetWorldLocation({ -ScreenSize.X * PosX,  (ScreenSize.Y * PosY)  - 50.0f});
+	TexBotFleur->CreateAnimation(FleurBot, FleurBot, 0, 8, FrameTime, false);
+	TexBotFleur->CreateAnimation("NONE", FleurBot, 0, 0, FrameTime, false);
+	TexBotFleur->SetAutoScaleRatio(0.4f);
+	TexBotFleur->ChangeAnimation(FleurBot);
+
+	TextTopFleur->SetActive(false);
+	TexBotFleur->SetActive(false);
+}
+
+void APlayHUD::SetActiveClimbText(bool _Value)
+{
+	ClimbText->SetActive(_Value);
+	TextTopFleur->SetActive(_Value);
+	TexBotFleur->SetActive(_Value);
+
+	if (true == _Value)
+	{
+		TextTopFleur->ChangeAnimation("FleurTop");
+		TexBotFleur->ChangeAnimation("fleurBot");
+	}
+	if (false == _Value)
+	{
+		TextTopFleur->ChangeAnimation("NONE");
+		TexBotFleur->ChangeAnimation("NONE");
+	}
 }
 
 void APlayHUD::CreateFade()

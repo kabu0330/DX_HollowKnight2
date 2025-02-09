@@ -20,6 +20,17 @@ public:
 	void FadeIn();
 	void FadeOut(float _Time = 0.6f, float _Power = 1.0f);
 	void SetActiveBossText(bool _Value);
+	void SetActiveClimbText(bool _Value);
+
+	static APlayHUD* GetHUD()
+	{
+		if (nullptr == HUD)
+		{
+			return nullptr;
+		}
+		return HUD;
+	}
+
 
 protected:
 	void BeginPlay() override;
@@ -32,6 +43,8 @@ protected:
 	std::string NextAnimName = "";
 
 private:
+	inline static APlayHUD* HUD = nullptr;
+
 	FVector ScreenSize = FVector::ZERO;
 	FVector HalfSize = FVector::ZERO;
 	class AKnight* Knight = nullptr;
@@ -77,6 +90,13 @@ private:
 	//void CreateGeoCount();
 	void CreateBossText();
 	std::shared_ptr<class UFontWidget> BossText = nullptr;
+
+	void CreateClimbText();
+	std::shared_ptr<class UFontWidget> ClimbText = nullptr;
+	
+	void CreateFleur();
+	std::shared_ptr<class UImageWidget> TextTopFleur = nullptr;
+	std::shared_ptr<class UImageWidget> TexBotFleur = nullptr;
 
 
 	void CreateFade();

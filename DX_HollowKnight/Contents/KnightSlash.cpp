@@ -42,6 +42,11 @@ void AKnightSlash::CreateHitEffect(UCollision* _This, UCollision* _Other)
 {
 	UEngineDebug::OutPutString("SlashAttack");
 
+	if (nullptr == Knight)
+	{
+		return;
+	}
+
 	AKnightEffect* Effect = GetWorld()->SpawnActor<AKnightEffect>().get();
 	Effect->SetName("SlashAttack");
 	Effect->SetZSort(static_cast<int>(EZOrder::KNIGHT_SKILL_FRONT) - 50);

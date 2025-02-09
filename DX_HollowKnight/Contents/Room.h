@@ -185,7 +185,7 @@ private:
 
 	inline static ARoom* CurRoom = nullptr;
 	std::vector<class ABarrier*> Barriers;
-	class UCollision* Collision;
+	class UCollision* Collision = nullptr;
 	UEngineWinImage PixelCollisionImage;
 	FVector Size = FVector::ZERO;
 	FVector LeftTopPos = FVector::ZERO;

@@ -34,10 +34,10 @@ protected:
 	void CreateAnimation() override;
 
 	void DamageLogic(int _KnightAtt) override;
-	int PhaseHp = 15;
+	int PhaseHp = 75;
 	int HeadHp = 40;
 
-	int DeathCountValue = 2;
+	int DeathCountValue = 3;
 
 private:
 

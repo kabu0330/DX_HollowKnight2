@@ -191,6 +191,8 @@ void UContentsResource::LoadResourceDirectory()
 	LoadContentsResource("Image/UI/V_UpTo3Quarter");
 	LoadContentsResource("Image/UI/V_UpToHalf");
 	LoadContentsResource("Image/UI/V_UpToQuarter");
+	LoadContentsResource("Image/UI/fleurBot");
+	LoadContentsResource("Image/UI/fleurTop");
 
 
 }

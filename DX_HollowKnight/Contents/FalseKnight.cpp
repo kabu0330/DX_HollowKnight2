@@ -522,7 +522,7 @@ void AFalseKnight::CreateJumpAttackLogicAndEffect()
 	Skill->SetCollisionTime(0.1f);
 	Skill->SetParentMonster(this); // 좌우 반전 적용을 위해
 
-	FVector CollisionScale = FVector(200, 200);
+	FVector CollisionScale = FVector(250, 300);
 	Skill->SetCollisionScale(CollisionScale);
 
 	// 이펙트 생성
@@ -652,7 +652,7 @@ void AFalseKnight::CreateAttackLogicAndEffect()
 	Skill->SetCollisionTime(0.1f);
 	Skill->SetParentMonster(this); // 좌우 반전 적용을 위해
 
-	FVector CollisionScale = FVector(150, 150);
+	FVector CollisionScale = FVector(250, 300);
 	Skill->SetCollisionScale(CollisionScale);
 
 	// 이펙트 생성
@@ -1045,6 +1045,7 @@ void AFalseKnight::SetStunHit(float _DeltaTime)
 			bIsStunGroundSound = false;
 			BossVoice = UEngineSound::Play("boss_final_hit.wav");
 			BossVoice = UEngineSound::Play("false_knight_damage_armour_final.wav");
+			JumpActionInitElapsed = 0.0f;
 			FSM.ChangeState(EMonsterState::DEATH_AIR);
 			return;
 		}
@@ -1142,7 +1143,7 @@ void AFalseKnight::CreateDeathOrangeParticleEffect()
 	++DeathEffectCount;
 	AParticle* ExplodeParticle = GetWorld()->SpawnActor<AParticle>().get();
 	FVector ActorPos = GetActorLocation();
-	ExplodeParticle->CreateParticle("Explode", 20, 0.01f, ActorPos);
+	ExplodeParticle->CreateParticle("Explode", 30, 0.01f, ActorPos);
 	ExplodeParticle->SetParticleOption(EParticleType::RANDOM, -1200.0f, 1200.0f);
 	ExplodeParticle->SetRandomScale(0.8f, 1.3f);
 

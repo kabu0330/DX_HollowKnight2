@@ -16,8 +16,6 @@ ARoom::ARoom()
 	BackgroundRenderer = CreateDefaultSubObject<UContentsRenderer>();
 	BackgroundRenderer->SetName("Background");
 	BackgroundRenderer->SetupAttachment(RootComponent);
-
-
 }
 
 ARoom::~ARoom()
@@ -92,10 +90,10 @@ ADoor* ARoom::CreateDoor(FVector _DoorScale, FVector _InitPos, ARoom* _TargetRoo
 void ARoom::CheckPixelCollisionWithGravity(AActor* _Actor, FVector _Offset)
 {
 	float DeltaTime = UEngineCore::GetDeltaTime();
+	FVector TwoPixelUp = FVector::UP * 2.0f;
 
 	FVector CollisionPoint = GetPixelCollisionPoint(_Actor, _Offset);
-	FVector CollisionPoint1PixelUp = GetPixelCollisionPoint(_Actor, _Offset + FVector::UP);
-
+	FVector CollisionPoint2PixelUp = GetPixelCollisionPoint(_Actor, _Offset + TwoPixelUp);
 	AKnight* Knight = dynamic_cast<AKnight*>(_Actor);
 	if (nullptr != Knight)
 	{
@@ -103,10 +101,10 @@ void ARoom::CheckPixelCollisionWithGravity(AActor* _Actor, FVector _Offset)
 		{
 			Knight->SetOnGround(true);
 
-			while (true == IsOnGround(CollisionPoint1PixelUp))
+			while (true == IsOnGround(CollisionPoint2PixelUp))
 			{
-				Knight->AddRelativeLocation(FVector::UP * 3.0f);
-				CollisionPoint1PixelUp = GetPixelCollisionPoint(_Actor, _Offset + FVector::UP);
+				Knight->AddRelativeLocation(TwoPixelUp);
+				CollisionPoint2PixelUp = GetPixelCollisionPoint(_Actor, _Offset + TwoPixelUp);
 			}
 		}
 		else
@@ -123,11 +121,11 @@ void ARoom::CheckPixelCollisionWithGravity(AActor* _Actor, FVector _Offset)
 			Monster->SetOnGround(true);
 			if (true == Monster->CanFly())
 			{
-				while (true == IsOnGround(CollisionPoint1PixelUp))
+				while (true == IsOnGround(CollisionPoint2PixelUp))
 				{
-					Monster->AddRelativeLocation(FVector::UP);
+					Monster->AddRelativeLocation(TwoPixelUp);
 					{
-						CollisionPoint1PixelUp = GetPixelCollisionPoint(_Actor, _Offset + FVector::UP);
+						CollisionPoint2PixelUp = GetPixelCollisionPoint(_Actor, _Offset + TwoPixelUp);
 					}
 				}
 			}
@@ -224,7 +222,7 @@ void ARoom::Force(AActor* _Actor, float _DeltaTime)
 			GravityForce = FVector::ZERO;
 		}
 
-		if (GravityForceMax <= GravityForce.Length())
+		if (GravityForceMax <= GravityForce.Y)
 		{
 			GravityForce = FVector::DOWN * GravityForceMax * _DeltaTime;
 		}
@@ -253,7 +251,7 @@ void ARoom::Force(AActor* _Actor, float _DeltaTime)
 			GravityForce = FVector::ZERO;
 		}
 
-		if (GravityValue <= GravityForce.Length())
+		if (GravityValue <= GravityForce.Y)
 		{
 			GravityForce = FVector::DOWN * GravityForceMax * _DeltaTime;
 		}
