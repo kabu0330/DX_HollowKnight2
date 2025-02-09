@@ -21,6 +21,11 @@ public:
 	void FadeOut(float _Time = 0.6f, float _Power = 1.0f);
 	void SetActiveBossText(bool _Value);
 	void SetActiveClimbText(bool _Value);
+	void ActiveFalsePrompt();
+	void ActiveDashPrompt();
+	void ActiveFireballPrompt();
+	void ActiveFocusPrompt();
+	void ActiveJumpPrompt();
 
 	static APlayHUD* GetHUD()
 	{
@@ -98,6 +103,10 @@ private:
 	std::shared_ptr<class UImageWidget> TextTopFleur = nullptr;
 	std::shared_ptr<class UImageWidget> TexBotFleur = nullptr;
 
+	void CreatePrompt();
+	void ActiveTruePrompt();
+	std::shared_ptr<class UImageWidget> ImagePrompt = nullptr;
+	std::shared_ptr<class UFontWidget> TextPrompt = nullptr;
 
 	void CreateFade();
 	void FadeChange();

@@ -56,6 +56,10 @@ private:
 
 	void SetActiveRoom();
 
+	void ShowPrompt();
+
+	std::shared_ptr<class UTimeEventComponent> TimeEventer;
+
 	URoomManager Rooms = URoomManager();
 
 	std::shared_ptr<class UCollision> BasePointCollision = nullptr;

@@ -4,6 +4,7 @@
 #include <EnginePlatform/EngineInput.h>
 #include <EngineCore/CameraActor.h>
 #include <EngineCore/EngineCamera.h>
+#include <EngineCore/TimeEventComponent.h>
 #include <EngineCore/EngineGUIWindow.h>
 #include <EngineCore/EngineGUI.h>
 #include <EngineCore/imgui.h>
@@ -13,6 +14,7 @@
 #include "RoomManager.h"
 #include "DebugWindowGUI.h"
 #include "PlayHUD.h"
+
 
 FVector APlayGameMode::MousePos = { 0.0f, 0.0f, 0.0f };
 FVector APlayGameMode::KnightPos = { 0.0f, 0.0f, 0.0f };
@@ -97,11 +99,60 @@ void APlayGameMode::SetActiveRoom()
 	}
 }
 
+void APlayGameMode::ShowPrompt()
+{
+	float Time = 0.0f;
+	float Gap = 2.0f;
+	float ShowGap = 5.0f;
+	
+	Time += Gap;
+	TimeEventer->AddEndEvent(Time, []()
+		{
+			APlayHUD::GetHUD()->ActiveJumpPrompt();
+		});
+	Time += ShowGap;
+	TimeEventer->AddEndEvent(Time, []()
+		{
+			APlayHUD::GetHUD()->ActiveFalsePrompt();
+		});
+	Time += Gap;
+	TimeEventer->AddEndEvent(Time, []()
+		{
+			APlayHUD::GetHUD()->ActiveDashPrompt();
+		});
+	Time += ShowGap;
+	TimeEventer->AddEndEvent(Time, []()
+		{
+			APlayHUD::GetHUD()->ActiveFalsePrompt();
+		});
+	Time += Gap;
+	TimeEventer->AddEndEvent(Time, []()
+		{
+			APlayHUD::GetHUD()->ActiveFireballPrompt();
+		});
+	Time += ShowGap;
+	TimeEventer->AddEndEvent(Time, []()
+		{
+			APlayHUD::GetHUD()->ActiveFalsePrompt();
+		});
+	Time += Gap;
+	TimeEventer->AddEndEvent(Time, []()
+		{
+			APlayHUD::GetHUD()->ActiveFocusPrompt();
+		});
+	Time += ShowGap;
+	TimeEventer->AddEndEvent(Time, []()
+		{
+			APlayHUD::GetHUD()->ActiveFalsePrompt();
+		});
+}
+
 void APlayGameMode::BeginPlay()
 {
 	AActor::BeginPlay();
 	SetBasePoint(); // 원점 0, 0 표기
-
+	TimeEventer = CreateDefaultSubObject<UTimeEventComponent>();
+	ShowPrompt();
 }
 
 void APlayGameMode::SetBasePoint()

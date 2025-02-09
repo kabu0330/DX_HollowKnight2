@@ -33,7 +33,7 @@ void APlayHUD::BeginPlay()
 	CreateBossText();
 	CreateFleur();
 	CreateClimbText();
-
+	CreatePrompt();
 	//CreateGeo();
 }
 
@@ -455,7 +455,6 @@ void APlayHUD::CreateGeo()
 void APlayHUD::CreateBossText()
 {
 	BossText = CreateWidget<UFontWidget>(static_cast<int>(EUIOrder::BACK), "BossText");
-
 	BossText->SetWorldLocation({ ScreenSize.X * 0.17f,  ScreenSize.Y * - 0.35f });
 	BossText->SetFont("NotoSerifCJKsc-Regular", 60.0f, UColor::WHITE);
 	BossText->SetText("거짓된 기사");
@@ -470,7 +469,6 @@ void APlayHUD::SetActiveBossText(bool _Value)
 void APlayHUD::CreateClimbText()
 {
 	ClimbText = CreateWidget<UFontWidget>(static_cast<int>(EUIOrder::BACK), "ClimbText");
-
 	ClimbText->SetWorldLocation({ -ScreenSize.X * 0.03f,  ScreenSize.Y * 0.09f });
 	ClimbText->SetFont("NotoSerifCJKsc-Regular", 25.0f, UColor::WHITE);
 	ClimbText->SetText("오르기");
@@ -519,6 +517,63 @@ void APlayHUD::SetActiveClimbText(bool _Value)
 		TextTopFleur->ChangeAnimation("NONE");
 		TexBotFleur->ChangeAnimation("NONE");
 	}
+}
+
+void APlayHUD::CreatePrompt()
+{
+	float PosX = 0.1f;
+	float PosY = -0.4f;
+	ImagePrompt = CreateWidget<UImageWidget>(static_cast<int>(EUIOrder::BACK), "ImagePrompt");
+	ImagePrompt->SetWorldLocation({ -ScreenSize.X * PosX,  ScreenSize.Y * PosY });
+	ImagePrompt->SetTexture("Dash_Prompt.png", true, 0.5f);
+	ImagePrompt->SetAutoScaleRatio(0.5f);
+	ImagePrompt->SetActive(false);
+
+	TextPrompt = CreateWidget<UFontWidget>(static_cast<int>(EUIOrder::BACK), "TextPrompt");
+	TextPrompt->SetWorldLocation({ ScreenSize.X * PosX,  ScreenSize.Y * PosY + 15.0f });
+	TextPrompt->SetFont("NotoSerifCJKsc-Regular", 40.0f, UColor::WHITE);
+	TextPrompt->SetText("C키");
+	TextPrompt->SetActive(false);
+}
+
+void APlayHUD::ActiveFalsePrompt()
+{
+	ImagePrompt->SetActive(false);
+	TextPrompt->SetActive(false);
+}
+
+void APlayHUD::ActiveTruePrompt()
+{
+	ImagePrompt->SetActive(true);
+	TextPrompt->SetActive(true);
+}
+
+void APlayHUD::ActiveDashPrompt()
+{
+	ActiveTruePrompt();
+	ImagePrompt->SetTexture("Dash_Prompt.png", true, 0.5f);
+	TextPrompt->SetText("C키");
+}
+
+void APlayHUD::ActiveFireballPrompt()
+{
+	ActiveTruePrompt();
+	ImagePrompt->SetTexture("Fireball_prompt.png", true, 0.5f);
+	TextPrompt->SetText("A키");
+}
+
+void APlayHUD::ActiveFocusPrompt()
+{
+	ActiveTruePrompt();
+	ImagePrompt->SetTexture("Focus_prompt_temp.png", true, 0.5f);
+	TextPrompt->SetText("A키 꾸욱~");
+}
+
+void APlayHUD::ActiveJumpPrompt()
+{
+	ActiveTruePrompt();
+	ImagePrompt->SetTexture("Wall_Jump_Prompt.png", true, 0.5f);
+	TextPrompt->SetText("Z키");
 }
 
 void APlayHUD::CreateFade()
