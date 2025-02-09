@@ -24,6 +24,7 @@ void UCollisionManager::CreateCollisionProfile(AGameMode* _GameMode)
 
 	// 기타 오브젝트
 	_GameMode->GetWorld()->CreateCollisionProfile("Barrier");
+	_GameMode->GetWorld()->CreateCollisionProfile("BossSpawnTrigger");
 
 	// 워프
 	_GameMode->GetWorld()->CreateCollisionProfile("Door");
@@ -39,6 +40,7 @@ void UCollisionManager::LinkCollision(AGameMode* _GameMode)
 	// 발판
 	_GameMode->GetWorld()->LinkCollisionProfile("Barrier", "Knight"); 
 	_GameMode->GetWorld()->LinkCollisionProfile("Barrier", "Monster"); 
+	_GameMode->GetWorld()->LinkCollisionProfile("BossSpawnTrigger", "Knight"); 
 
 	// 나이트 공격
 	_GameMode->GetWorld()->LinkCollisionProfile("KnightObject", "Monster"); 

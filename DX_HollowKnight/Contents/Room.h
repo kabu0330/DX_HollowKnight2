@@ -138,13 +138,17 @@ public:
 		}
 		if (true != Monsters.empty())
 		{
-			for (AMonster* Monster : Monsters)
+			if ("FalseKnightRoom" != GetName())
 			{
-				Monster->SetActive(_Value);
+				for (AMonster* Monster : Monsters)
+				{
+					Monster->SetActive(_Value);
+				}
 			}
 		}
 		this->SetActive(_Value);
 	}
+
 	void CheckActiveRoom()
 	{
 		if (this != CurRoom)
@@ -174,13 +178,14 @@ public:
 
 protected:
 	void Force(AActor* _Actor, float _DeltaTime);
-
+	void BossSpawn(class UCollision* _This, class UCollision* _Other);
 private:
 	inline static bool bActiveGravity = false;
 	float GravityValue = 0.0f;
 
 	inline static ARoom* CurRoom = nullptr;
 	std::vector<class ABarrier*> Barriers;
+	class UCollision* Collision;
 	UEngineWinImage PixelCollisionImage;
 	FVector Size = FVector::ZERO;
 	FVector LeftTopPos = FVector::ZERO;

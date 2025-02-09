@@ -16,6 +16,8 @@ ARoom::ARoom()
 	BackgroundRenderer = CreateDefaultSubObject<UContentsRenderer>();
 	BackgroundRenderer->SetName("Background");
 	BackgroundRenderer->SetupAttachment(RootComponent);
+
+
 }
 
 ARoom::~ARoom()
@@ -26,7 +28,31 @@ void ARoom::BeginPlay()
 {
 	AActor::BeginPlay();
 
+	if ("FalseKnightRoom" == GetName() && this == CurRoom)
+	{
+		Collision = CreateDefaultSubObject<UCollision>().get();
+		Collision->SetupAttachment(RootComponent);
+		Collision->SetCollisionProfileName("Door");
+		float ZSort = static_cast<float>(EZOrder::BACKGROUND);
+		Collision->GetTransformRef().Location.Z = ZSort;
+		FVector CollisionScale = FVector(500, 900);
+		Collision->SetScale3D(CollisionScale);
+		Collision->SetWorldLocation({ 12200, -7900 });
+		if (nullptr != Collision)
+		{
+			Collision->SetCollisionEnter(std::bind(&ARoom::BossSpawn, this, std::placeholders::_1, std::placeholders::_2));
+		}
+	}
  }
+
+void ARoom::BossSpawn(UCollision* _This, UCollision* _Other)
+{
+	Collision->SetActive(false);
+	for (AMonster* Monster : Monsters)
+	{
+		Monster->SetActive(true);
+	}
+}
 
 void ARoom::Tick(float _DeltaTime)
 {

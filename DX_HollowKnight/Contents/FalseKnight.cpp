@@ -26,6 +26,7 @@ void AFalseKnight::BeginPlay()
 {
 	AMonster::BeginPlay();
 	CreateHeadRenderer();
+	SetActive(false);
 }
 
 void AFalseKnight::Tick(float _DeltaTime) 
@@ -33,7 +34,6 @@ void AFalseKnight::Tick(float _DeltaTime)
 	AMonster::Tick(_DeltaTime);
 
 	InitSpawn();
-
 	BossPatternTimeElapsed(_DeltaTime);
 	StartFlashEffect(_DeltaTime);
 	EndFlashEffect(_DeltaTime);
