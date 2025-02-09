@@ -202,7 +202,6 @@ void AKnight::Move(float _DeltaTime)
 	CheckDirection();
 
 	FVector MoveVector = FVector::ZERO;
-	FVector CurPos = GetActorLocation();
 	
 	if (true == UEngineInput::IsPress(VK_LEFT))
 	{
