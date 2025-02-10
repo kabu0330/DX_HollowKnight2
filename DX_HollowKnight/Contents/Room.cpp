@@ -323,7 +323,7 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, float _Speed, bool _Left
 	float NextPos = _Speed * DeltaTime;
 	CollisionPos -= LeftTopPos;
 
-	FVector CollisionPoint = { CollisionPos.X + NextPos , CollisionPos.Y + 20.0f};
+	FVector CollisionPoint = { CollisionPos.X + NextPos , CollisionPos.Y + 10.0f};
 
 	// 왼쪽, 오른쪽 방향 구분
 	if (true == bIsKnockback)
