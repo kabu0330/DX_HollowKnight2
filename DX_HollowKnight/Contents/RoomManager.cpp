@@ -131,11 +131,18 @@ void URoomManager::CreateRoom(AGameMode* _GameMode)
 	// ForgottenCrossroads1->CreateDoor({ 0, 0 }, ForgottenCrossroads1, {100, -100});
 
 	// 5. 시작 위치 중력 설정 : 문과 충돌해야만 픽셀충돌 맵이 지정되기 때문에 여기서 강제로 설정 필요한 경우 사용
-	//SetInitCurRoom(Crossroads1.get());
-	//SetInitCurRoom(BossRoom.get());
+
 	ARoom::GetCurRoom();
 
+#ifdef _DEBUG
+	//SetInitCurRoom(Crossroads1.get());
+	//SetInitCurRoom(Crossroads1.get());
+	SetInitCurRoom(BossRoom.get());
+#else
 	SetInitCurRoom(Dirtmouth.get());
+#endif // _DEBUG
+
+
 
 
 	// 6. 몬스터 생성
@@ -156,8 +163,8 @@ void URoomManager::CreateRoom(AGameMode* _GameMode)
 	Crossroads4->CreateMonster<AWanderingHusk>({ 23520, -5350 });
 	Crossroads4->CreateMonster<AHuskHornhead>({ 22300, -5350 });
 
-	Crossroads6->CreateMonster<AVengefly>({ 9070, -7850 });
-	Crossroads6->CreateMonster<AVengefly>({ 7780, -7240 });
+	Crossroads6->CreateMonster<AVengefly>({ 9070, -8000 });
+	Crossroads6->CreateMonster<AVengefly>({ 7780, -7700 });
 	Crossroads6->CreateMonster<AHuskHornhead>({ 8100, -8290 });
 	Crossroads6->CreateMonster<ACrawlid>({ 8720, -8350 });
 	Crossroads6->CreateMonster<ACrawlid>({ 7200, -8400 });

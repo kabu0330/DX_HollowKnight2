@@ -69,7 +69,7 @@ void AAspidMother::SetOffset()
 	FVector ImageSize = { 787.0f , 1813.0f };
 	FVector SpriteSize = { 160.0f, 180.0f };
 
-	DetectRange = { 900, 1300 };
+	DetectRange = { 1100, 1500 };
 	CollisionScale = SpriteSize;
 
 	RendererOffset = { 0.0f, 0.0f };

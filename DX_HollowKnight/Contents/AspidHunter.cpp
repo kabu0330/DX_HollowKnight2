@@ -66,7 +66,7 @@ void AAspidHunter::SetOffset()
 	FVector ImageSize = { 713.0f , 410.0f };
 	FVector SpriteSize = { 80.0f, 80.0f };
 
-	DetectRange = { 1000, 1000 };
+	DetectRange = { 1200, 1100 };
 	CollisionScale = SpriteSize;
 
 	RendererOffset = { 0.0f, 0.0f };

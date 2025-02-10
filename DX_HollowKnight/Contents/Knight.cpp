@@ -33,15 +33,16 @@ AKnight::AKnight()
 	CreateCollision();
 	SetStatus();
 
-	//SetActorLocation({ 1100.0f, -3000.0f });
-	//SetActorLocation(InitPos::Dirtmouth_well);
-	SetActorLocation(InitPos::CrossroadsEntrance);
-	SetActorLocation(InitPos::KnightInitPos);
+#ifdef _DEBUG
 	//SetActorLocation({9911, -5450});
-	//SetActorLocation({13900, -5360}); // 哭率
-	//SetActorLocation({14800, -5360}); // 坷弗率
-	//SetActorLocation({1100, -2950});
-	//SetActorLocation({11800, -8000});
+//SetActorLocation({13900, -5360}); // 哭率
+//SetActorLocation({14800, -5360}); // 坷弗率
+//SetActorLocation({1100, -2950});
+	SetActorLocation({ 11600, -8000 });
+#else
+	SetActorLocation(InitPos::KnightInitPos);
+#endif // _DEBUG
+
 
 	// Debug
 	BodyRenderer->BillboardOn();

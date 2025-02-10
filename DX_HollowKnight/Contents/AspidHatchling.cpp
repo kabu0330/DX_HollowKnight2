@@ -66,8 +66,8 @@ void AAspidHatchling::SetOffset()
 	FVector ImageSize = { 713.0f , 410.0f };
 	FVector SpriteSize = { 80.0f, 80.0f };
 
-	DetectRange = { 1000, 1000 };
-	CollisionScale = SpriteSize;
+	DetectRange = { 1200, 1200 };
+	CollisionScale = SpriteSize + FVector(-20.0f, -20.0f);
 
 	RendererOffset = { 0.0f, 0.0f };
 	BodyCollisionOffset = { 0.0f, 0.0f };

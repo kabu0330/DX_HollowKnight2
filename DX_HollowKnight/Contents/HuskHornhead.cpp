@@ -107,26 +107,26 @@ void AHuskHornhead::CreateCollision()
 
 void AHuskHornhead::CreateAttackLogicAndEffect()
 {
-	if (true == bIsShowEffect)
-	{
-		return;
-	}
-	bIsShowEffect = true;
+	//if (true == bIsShowEffect)
+	//{
+	//	return;
+	//}
+	//bIsShowEffect = true;
 
-	std::shared_ptr<AMonsterSkill> Skill = GetWorld()->SpawnActor<AMonsterSkill>();
-	Skill->SetTargetActor(this);
-	Skill->SetCollisionTime(AttackDuration);
+	//std::shared_ptr<AMonsterSkill> Skill = GetWorld()->SpawnActor<AMonsterSkill>();
+	//Skill->SetTargetActor(this);
+	//Skill->SetCollisionTime(AttackDuration);
 
-	FVector CollisionScale = FVector(100, 50); 
-	Skill->SetCollisionScale(CollisionScale);
-	FVector Offset = FVector{ -50.0f, -25.0f };
-	if (true == bIsLeft)
-	{
-		Skill->SetLocation(this, { Offset.X, Offset.Y });
-	}
-	else
-	{
-		Skill->SetLocation(this, { -Offset.X, Offset.Y });
-	}
+	//FVector CollisionScale = FVector(100, 50); 
+	//Skill->SetCollisionScale(CollisionScale);
+	//FVector Offset = FVector{ -50.0f, -25.0f };
+	//if (true == bIsLeft)
+	//{
+	//	Skill->SetLocation(this, { Offset.X, Offset.Y });
+	//}
+	//else
+	//{
+	//	Skill->SetLocation(this, { -Offset.X, Offset.Y });
+	//}
 }
 

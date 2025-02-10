@@ -50,46 +50,21 @@ void UContentsCore::CreateLevel()
 	UEngineCore::CreateLevel<APlayGameMode, AKnight, APlayHUD>("Play");
 	//UEngineCore::CreateLevel<AMapEditorGameMode, APawn, AHUD>("MapEditorMode");
 
+#ifdef _DEBUG
+	UEngineCore::OpenLevel("Play");
+#else
 	UEngineCore::OpenLevel("Title");
-	//UEngineCore::OpenLevel("MapEditor");
-	//UEngineCore::OpenLevel("Play");
+#endif // _DEBUG
 	//UEngineCore::OpenLevel("MapEditorMode");
 }
 
 void UContentsCore::EngineTick(float _DeltaTime)
 {
-	CheckInput();
-	SwitchGameMode();
 }
 
 void UContentsCore::EngineEnd()
 {
 
-}
-
-void UContentsCore::CheckInput()
-{
-	//for (int i = 0; i < 4; i++)
-	//{
-	//	if (true == UEngineInput::IsDown('1' + i))
-	//	{
-	//		Select = i + 1;
-	//		break;
-	//	}
-	//}
-}
-
-void UContentsCore::SwitchGameMode()
-{
-	//switch (Select)
-	//{
-	//case 0:
-	//{
-	//	break;
-	//}
-	//default:
-	//	break;
-	//}
 }
 
 UContentsCore::UContentsCore()
