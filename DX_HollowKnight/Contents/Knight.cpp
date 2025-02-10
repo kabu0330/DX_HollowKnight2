@@ -279,7 +279,13 @@ void AKnight::Knockback(float _DeltaTime)
 	}
 	if (FVector::ZERO != Stat.GetKnockbackForce())
 	{
-		AddActorLocation(Stat.GetKnockbackForce() * _DeltaTime);
+		ARoom* Room = ARoom::GetCurRoom();
+		bool Result = Room->CheckPixelCollisionWithWall(this, Stat.GetKnockbackForce().X, !bIsLeft);
+		if (false == Result)
+		{
+			AddActorLocation(Stat.GetKnockbackForce() * _DeltaTime);
+		}
+
 	}
 }
 

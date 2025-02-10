@@ -413,9 +413,13 @@ void AMonster::Knockback(float _DeltaTime)
 	}
 	if (FVector::ZERO != Stat.GetKnockbackForce())
 	{
+		ARoom* Room = ARoom::GetCurRoom();
+		bool Result = Room->CheckPixelCollisionWithWall(this, Stat.GetKnockbackForce().X, !bIsLeft);
+		if (false == Result)
+		{
+		
+		}
 		AddActorLocation(Stat.GetKnockbackForce() * _DeltaTime);
-		FVector Result = Stat.GetKnockbackForce() * _DeltaTime;
-		int a = 0;
 	}
 }
 

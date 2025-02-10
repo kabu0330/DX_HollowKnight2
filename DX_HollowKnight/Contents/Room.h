@@ -43,6 +43,7 @@ public:
 	// 중력과 벽
 	void CheckPixelCollisionWithGravity(AActor* _Actor, FVector _Offset);
 	void CheckPixelCollisionWithWall(AActor* _Actor, float _Speed, bool _Left, FVector _Offset);
+	bool CheckPixelCollisionWithWall(AActor* _Actor, float _Speed, bool _Left); // 넉백 상황
 	void CheckPixelCollisionWithCeil(AActor* _Actor, class UContentsRenderer* _Renderer, float _Speed, bool _Left, FVector _Offset);
 	bool IsOnGround(FVector _Pos);
 	FVector GetPixelCollisionPoint(AActor* _Actor, FVector _Offset);

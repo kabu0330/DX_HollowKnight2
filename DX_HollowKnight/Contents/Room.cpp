@@ -385,6 +385,102 @@ void ARoom::CheckPixelCollisionWithWall(AActor* _Actor, float _Speed, bool _Left
 	}
 }
 
+bool ARoom::CheckPixelCollisionWithWall(AActor* _Actor, float _Speed, bool _Left)
+{
+	if (true == bActiveGravity)
+	{
+		return false;
+	}
+
+	FVector CollisionPos = FVector::ZERO;
+	FVector CollisionHalfScale = FVector::ZERO;
+	bool bIsKnockback = false;
+
+	AKnight* Knight = dynamic_cast<AKnight*>(_Actor);
+	if (nullptr != Knight)
+	{
+		CollisionPos = Knight->GetPixelCollision()->GetWorldLocation();
+		CollisionHalfScale = Knight->GetPixelCollision()->GetWorldScale3D().Half();
+		bIsKnockback = Knight->IsKnockback();
+	}
+
+	AMonster* Monster = dynamic_cast<AMonster*>(_Actor);
+	if (nullptr != Monster)
+	{
+		CollisionPos = Monster->GetPixelCollision()->GetWorldLocation();
+		CollisionHalfScale = Monster->GetPixelCollision()->GetWorldScale3D().Half();
+		bIsKnockback = Monster->IsKnockback();
+	}
+
+	float DeltaTime = UEngineCore::GetDeltaTime();
+
+	float NextPos = _Speed * DeltaTime;
+	CollisionPos -= LeftTopPos;
+
+	FVector CollisionPoint = { CollisionPos.X + NextPos , CollisionPos.Y + 20.0f };
+
+	// 왼쪽, 오른쪽 방향 구분
+	if (true == bIsKnockback)
+	{
+		if (true == _Left)
+		{
+			CollisionPoint.X += CollisionHalfScale.X;
+		}
+		else
+		{
+			CollisionPoint.X -= CollisionHalfScale.X;
+		}
+	}
+	else
+	{
+		if (true == _Left)
+		{
+			CollisionPoint.X -= CollisionHalfScale.X;
+		}
+		else
+		{
+			CollisionPoint.X += CollisionHalfScale.X;
+		}
+	}
+
+
+	// 실수오차 문제 때문에
+	CollisionPoint.X = ::roundf(CollisionPoint.X);
+	CollisionPoint.Y = ::roundf(CollisionPoint.Y);
+
+	UColor CollisionColor = PixelCollisionImage.GetColor({ CollisionPoint.X, -CollisionPoint.Y }); // y축 반전
+
+	if (nullptr != Knight)
+	{
+		if (CollisionColor == UColor::YELLOW || CollisionColor == UColor::BLACK || CollisionColor == UColor::RED)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	if (nullptr != Monster)
+	{
+		if (CollisionColor == UColor::YELLOW || CollisionColor == UColor::BLACK || CollisionColor == UColor::RED)
+		{
+			return true;
+		}
+		else if (CollisionColor == UColor::WHITE)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+
 void ARoom::CheckPixelCollisionWithCeil(AActor* _Actor, UContentsRenderer* _Renderer, float _Speed, bool _Left, FVector _Offset)
 {
 	if (true == bActiveGravity)
