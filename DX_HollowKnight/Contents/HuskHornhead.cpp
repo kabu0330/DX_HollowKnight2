@@ -62,7 +62,7 @@ void AHuskHornhead::SetOffset()
 	BodyCollisionOffset = { 0.0f, -20.0f };
 
 	CollisionScale = { 100, 150 };
-	DetectRange = { 700, 50 };
+	DetectRange = { 1100, 50 };
 
 	DeathSpriteOffset = -50.0f;
 	DeathAirDistance = 300.0f;

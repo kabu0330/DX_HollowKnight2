@@ -163,8 +163,7 @@ void URoomManager::CreateRoom(AGameMode* _GameMode)
 	Crossroads4->CreateMonster<AWanderingHusk>({ 23520, -5350 });
 	Crossroads4->CreateMonster<AHuskHornhead>({ 22300, -5350 });
 
-	Crossroads6->CreateMonster<AVengefly>({ 9070, -8000 });
-	Crossroads6->CreateMonster<AVengefly>({ 7780, -7700 });
+	Crossroads6->CreateMonster<AVengefly>({ 9070, -8100 });
 	Crossroads6->CreateMonster<AHuskHornhead>({ 8100, -8290 });
 	Crossroads6->CreateMonster<ACrawlid>({ 8720, -8350 });
 	Crossroads6->CreateMonster<ACrawlid>({ 7200, -8400 });

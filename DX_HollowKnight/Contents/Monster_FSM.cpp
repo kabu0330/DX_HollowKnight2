@@ -183,10 +183,20 @@ void AMonster::SetAttackAnticipate(float _DeltaTime)
 	CheckDeath();
 	ActiveGravity();
 
+	if (true == bCanFly)
+	{
+		bCanRotation = true;
+		GetDirectionToPlayer(); // chasing이 true라면 추적
+		CheckDirection(); // 좌우 반전 적용
+	}
+	else
+	{
+		bCanRotation = false;
+	}
 
 	Stat.SetAttacking(true);
 	bCanAttack = false;
-	bCanRotation = false;
+
 	if (true == Stat.IsBeingHit() && true == Stat.IsKnockbackable())
 	{
 		bIsFirstIdle = true; // Idle로 돌아갈때 반드시 넣어주기

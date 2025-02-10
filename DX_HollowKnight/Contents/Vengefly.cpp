@@ -26,7 +26,7 @@ void AVengefly::Tick(float _DeltaTime)
 void AVengefly::SetStatus()
 {
 	FStatusData Data;
-	Data.Velocity = 250.0f;
+	Data.Velocity = 180.0f;
 	Data.InitVelocity = Data.Velocity;
 	Data.RunSpeed = Data.Velocity * 3.0f;
 	Data.DashSpeed = Data.Velocity * 3.0f;
@@ -54,8 +54,6 @@ void AVengefly::SetStatus()
 	AttackFrame = 0.15f;// 매번 설정
 	AttackDuration = AttackFrame * 12.0f;
 	AttackCooldown = 5.0f;
-
-
 
 	AttackRecoveryFrame = 0.1f;
 }
@@ -92,7 +90,7 @@ void AVengefly::CreateAnimation()
 	BodyRenderer->CreateAnimation("Walk", MonsterStr, 0, 4, RunnigTime);
 	BodyRenderer->CreateAnimation("AttackAnticipate", MonsterStr, 7, 10, AttackAnticipateTime);
 	BodyRenderer->CreateAnimation("Attack", MonsterStr, 11, 14, AttackFrame);
-	BodyRenderer->CreateAnimation("AttackRecovery", MonsterStr, 14, 14, AttackRecoveryFrame, false);
+	BodyRenderer->CreateAnimation("AttackRecovery", MonsterStr, 0, 4, AttackRecoveryFrame);
 	BodyRenderer->CreateAnimation("DeathAir", MonsterStr, 15, 16, DeathAirTime);
 	BodyRenderer->CreateAnimation("DeathLand", MonsterStr, 17, 17, DeathTime, false);
 

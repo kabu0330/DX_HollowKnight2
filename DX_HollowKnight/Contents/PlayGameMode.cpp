@@ -101,9 +101,9 @@ void APlayGameMode::SetActiveRoom()
 
 void APlayGameMode::ShowPrompt()
 {
-	float Time = 3.0f;
-	float Gap = 2.0f;
-	float ShowGap = 5.0f;
+	float Time = 1.5f;
+	float Gap = 1.5f;
+	float ShowGap = 4.0f;
 	
 	Time += Gap;
 	TimeEventer->AddEndEvent(Time, []()
