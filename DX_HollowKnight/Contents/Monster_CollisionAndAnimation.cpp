@@ -2,6 +2,7 @@
 #include "Monster.h"
 #include "FightUnit.h"
 #include "Particle.h"
+#include <EngineBase/EngineRandom.h>
 
 void AMonster::CreateAnimation()
 {
@@ -39,11 +40,13 @@ void AMonster::CreateHitOrangeEffect()
 
 	AEffect* HitOrange = GetWorld()->SpawnActor<AEffect>().get();
 	HitOrange->ChangeAnimation("HitOrange", ActorPos);
-	HitOrange->SetZSort(EZOrder::HIT_LIGHT_EFFECT);
+	UEngineRandom Random;
+	float Result = Random.Randomfloat(0.0f, 20.0f);
+	HitOrange->SetZSort(static_cast<float>(EZOrder::HIT_LIGHT_EFFECT) + Result);
 	HitOrange->GetRenderer()->SetAlpha(0.3f);
 	HitOrange->SetAlphaFadeInFadeOut(1.5f, 0.7f);
-	HitOrange->SetLocation(this);
 	HitOrange->SetScale(5.0f);
+	HitOrange->SetLocation(this);
 }
 
 void AMonster::SetCollisionEvent()

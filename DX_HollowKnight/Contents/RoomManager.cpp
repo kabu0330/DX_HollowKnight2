@@ -152,29 +152,29 @@ void URoomManager::CreateRoom(AGameMode* _GameMode)
 	Crossroads3->CreateMonster<AGruzzer>({ 3730, -9870 });
 	Crossroads3->CreateMonster<AGruzzer>({ 4620, -6700 });
 
-	Crossroads1->CreateMonster<AWanderingHusk>({ 11270, -5800 });
+	//Crossroads1->CreateMonster<AWanderingHusk>({ 11270, -5800 });
 	Crossroads1->CreateMonster<AWanderingHusk>({ 9000, -6000 });
-	Crossroads1->CreateMonster<ACrawlid>({ 7000, -5940 });
+	Crossroads1->CreateMonster<ACrawlid>({ 7000, -5930 });
 
 	Crossroads2->CreateMonster<AAspidHunter>({ 14300, -5200 });
 	Crossroads2->CreateMonster<AAspidHunter>({ 16700, -5200 });
 
 	Crossroads4->CreateMonster<AWanderingHusk>({ 19550, -5350 });
-	Crossroads4->CreateMonster<AWanderingHusk>({ 23520, -5350 });
-	Crossroads4->CreateMonster<AHuskHornhead>({ 22300, -5350 });
+	Crossroads4->CreateMonster<AWanderingHusk>({ 23000, -5350 });
+	Crossroads4->CreateMonster<AHuskHornhead>({ 22000, -5350 });
 
 	Crossroads6->CreateMonster<AVengefly>({ 9070, -8100 });
-	Crossroads6->CreateMonster<AHuskHornhead>({ 8100, -8290 });
+	//Crossroads6->CreateMonster<AHuskHornhead>({ 8100, -8290 });
 	Crossroads6->CreateMonster<ACrawlid>({ 8720, -8350 });
 	Crossroads6->CreateMonster<ACrawlid>({ 7200, -8400 });
 
 	BossRoom->CreateMonster<AFalseKnight>({ 12200, -7300 });
 
-	Crossroads5->CreateMonster<AAspidMother>({ 19700, -8060 });
-	Crossroads5->CreateMonster<AAspidMother>({ 20300, -8100 });
+	//Crossroads5->CreateMonster<AAspidMother>({ 19700, -8260 });
+	Crossroads5->CreateMonster<AAspidMother>({ 20300, -8260 });
 	//Crossroads5->CreateMonster<ALeapingHusk>({ 16730, -8300 });
-	Crossroads5->CreateMonster<AHuskHornhead>({ 17000, -8300 });
-	Crossroads5->CreateMonster<ACrawlid>({ 16730, -8300 });
+	//Crossroads5->CreateMonster<AHuskHornhead>({ 17000, -8300 });
+	Crossroads5->CreateMonster<ACrawlid>({ 17000, -8300 });
 
 
 

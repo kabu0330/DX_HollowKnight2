@@ -105,6 +105,7 @@ void AKnight::CreateFireballEffect()
 		return;
 	}
 	bIsFireballEffect = true;
+	Stat.AddMp(-33);
 
 	std::shared_ptr<AKnightEffect> Effect = GetWorld()->SpawnActor<AKnightEffect>();
 	Effect->ChangeAnimation("Blast", GetActorLocation());
