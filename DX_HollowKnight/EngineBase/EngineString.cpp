@@ -56,7 +56,7 @@ std::string UEngineString::AnsiToUTF8(std::string_view _Name)
 
 std::string UEngineString::UniCodeToUTF8(std::wstring_view _Text)
 {
-	// UTF8 = 알수는 텍스트라고 나옵니다.
+	// UTF8 = 알수는 텍스트라고 온다.
 	// 어 이거 잘못된거 아니야?
 	// 1~4로 글자표현
 

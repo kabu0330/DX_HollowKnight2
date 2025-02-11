@@ -4,8 +4,7 @@
 #include "RenderUnit.h"
 #include <set>
 
-// 설명 : 어떤 랜더링이든 할수 잇는 구조로 만들겠다.
-// 랜더링이란 랜더러만 하는게 아닙니다. 3D
+// 설명 : 
 class UCollision : public USceneComponent
 {
 public:
@@ -30,8 +29,6 @@ public:
 
 	void SetRadius(float _Value);
 
-	// vector인게 왜 vector로 하냐
-	// unreal에서 vector
 	ENGINEAPI bool CollisionCheck(std::string_view _OtherName, std::vector<UCollision*>& _Vector);
 
 	ENGINEAPI bool CollisionCheck(std::string_view _OtherName, FVector _NextPos, std::vector<UCollision*>& _Vector);
@@ -76,7 +73,7 @@ private:
 	// 최초 충돌
 	std::function<void(UCollision*, UCollision*)> Enter;
 
-	// 지속 충돌 <= 언리얼은 이게 없습니다.
+	// 지속 충돌 
 	std::function<void(UCollision*, UCollision*)> Stay;
 
 	// 충돌 끝.

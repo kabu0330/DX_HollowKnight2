@@ -3,7 +3,7 @@
 #include "EngineDataStruct.h"
 #include "RenderUnit.h"
 
-// 설명 : 랜더러를 겸한다고 생각하고
+// 설명 :
 class UWidget : public UObject, public UTransformObject
 {
 	friend AHUD;
@@ -45,7 +45,7 @@ private:
 	std::function<void()> Down;
 	std::function<void()> Up;
 
-	// 플레이스 먼트 new 할때 사용할 녀석이므로 초기화를 하면 안된다.
+	// 플레이스먼트 new 할때 사용할 녀석이므로 초기화를 하면 안된다.
 	class AHUD* HUD;
 
 };

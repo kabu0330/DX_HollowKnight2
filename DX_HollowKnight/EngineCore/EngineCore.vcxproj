@@ -179,7 +179,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="EngineCoreDebug.h" />
     <ClInclude Include="EngineDataStruct.h" />
     <ClInclude Include="EngineDepthStencilState.h" />
     <ClInclude Include="EngineDeviceBuffer.h" />
@@ -245,7 +244,6 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="EngineCoreDebug.cpp" />
     <ClCompile Include="EngineDepthStencilState.cpp" />
     <ClCompile Include="EngineDeviceBuffer.cpp" />
     <ClCompile Include="EngineFont.cpp" />

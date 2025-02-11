@@ -34,7 +34,6 @@ void UTransformObject::SetupAttachment(UTransformObject* _Parent)
 void UTransformObject::TransformUpdate()
 {
 	ParentMatrixCheck();
-	// 나의 트랜스폼 업데이트는 일단 한다.
 	Transform.TransformUpdate(IsAbsolute);
 
 	for (UTransformObject* Child : Childs)
@@ -47,11 +46,10 @@ void UTransformObject::TransformUpdate()
 
 void UTransformObject::CameraTransUpdate(UEngineCamera* _Camera)
 {
-	// 쉽게 말하면 트랜스폼 
-	// 트랜스폼은 랜더러가 가지고 있습니다.
+	// 트랜스폼은 렌더러가 가지고 있다.
 	FTransform& CameraTrans = _Camera->GetTransformRef();
 	FTransform& RendererTrans = GetTransformRef();
-	//	// 랜더러는 월드 뷰 프로젝트를 다 세팅받았고
+	// 랜더러는 월드 뷰 프로젝트를 다 세팅받았고
 	RendererTrans.View = CameraTrans.View;
 	RendererTrans.Projection = CameraTrans.Projection;
 	RendererTrans.WVP = RendererTrans.World * RendererTrans.View * RendererTrans.Projection;

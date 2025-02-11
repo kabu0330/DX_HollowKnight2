@@ -70,13 +70,6 @@ public:
 	}
 };
 
-// Render가 2개 만들었다.
-// Renderer1
-// 빨갛게 그리고 싶다.
-// 
-// Renderer2
-// 노랗게 그리고 싶어.
-
 // 설명 : 
 class UEngineShaderResources
 {

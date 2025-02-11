@@ -8,9 +8,9 @@
 #include <objidl.h>
 #include <gdiplus.h>
 
-// $(WindowsSDK_LibraryPath_x64) <= 여기 경로안에 들어있는 라이브러리 입니다.
+// $(WindowsSDK_LibraryPath_x64) <= 여기 경로안에 들어있는 라이브러리
 
-// 이미지용 window기본 라이브러리가 2가지가 있습니다.
+// 이미지용 window기본 라이브러리가 2가지
 // BMP 확장용 라이브러리
 #pragma comment(lib, "Msimg32.lib")
 
@@ -23,8 +23,6 @@ UEngineWinImage::UEngineWinImage()
 
 UEngineWinImage::~UEngineWinImage()
 {
-	// 윈도우 만들어준 메모리라도 릭은 안되겠지만
-	// 왠만하면 내가 명시적으로 지워주는것을 선호합니다.
 	if (nullptr != hBitMap)
 	{
 		DeleteObject(hBitMap);
@@ -36,7 +34,6 @@ UEngineWinImage::~UEngineWinImage()
 		DeleteDC(ImageDC);
 		ImageDC = nullptr;
 	}
-
 }
 
 void UEngineWinImage::Create(UEngineWinImage* _TargetImage,  FVector _Scale)
@@ -59,7 +56,7 @@ void UEngineWinImage::Create(UEngineWinImage* _TargetImage,  FVector _Scale)
 	// 붓
 	HDC NewImageDC = CreateCompatibleDC(_TargetImage->GetDC());
 
-	// 윈도우가 정하기를 붓과 도화지를 한쌍으로 안엮으면 못그림.
+	// 윈도우가 정하기를 붓과 도화지를 한쌍으로 안엮으면 못 그림.
 	// 붓을 만들기만 해도  1, 1 이미지랑 연결해 놓는다. window 
 
 	// 붓과 도화지를 연결하는 작업을 거쳐야 한다.

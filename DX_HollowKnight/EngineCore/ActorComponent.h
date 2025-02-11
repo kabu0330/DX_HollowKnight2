@@ -1,9 +1,6 @@
 #pragma once
 #include <EngineBase/Object.h>
 
-// C
-// #include <memory.h>
-// C++
 #include <memory>
 
 // 설명 :
@@ -43,7 +40,6 @@ public:
 protected:
 
 private:
-
 	// 액터에 들어갈수 있다. 개념
 	class AActor* Actor;
 };

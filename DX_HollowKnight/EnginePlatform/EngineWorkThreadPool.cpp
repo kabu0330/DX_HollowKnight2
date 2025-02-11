@@ -32,8 +32,6 @@ void UEngineWorkThreadPool::WorkQueue(std::function<void()> _Work)
 	// 쓰레드풀을 만들때는 이게 가장 핵심 함수이다.
 	// IOCP 쓰레드중 가장 적절한 쓰레드를 깨워라.
 	PostQueuedCompletionStatus(IOCPHandle, static_cast<DWORD>(EThreadStatus::Work), reinterpret_cast<ULONG_PTR>(NewWork), nullptr);
-
-	// 이걸 하면 
 }
 
 void UEngineWorkThreadPool::Initialize(std::string_view ThreadName /*= "WorkThread"*/, int Count /*= 0*/)
@@ -53,8 +51,6 @@ void UEngineWorkThreadPool::Initialize(std::string_view ThreadName /*= "WorkThre
 	// IOCP의 핵심함수인
 	// CreateIoCompletionPort 윈도우야 나 이제부터 쓰레드 관리할래 
 	// IOCP 쓰고 싶어.
-	// 이건 2가지 의미가 있습니다.
-	// 최초 아무것도 넣지
 
 	// 나이제 IOCP 시작하고 싶어
 	// IOCP 관리핸들 만들어줘.

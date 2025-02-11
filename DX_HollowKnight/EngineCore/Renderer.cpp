@@ -64,18 +64,7 @@ void URenderer::Render(UEngineCamera* _Camera, float _DeltaTime)
 
 URenderUnit& URenderer::CreateRenderUnit()
 {
-	//URenderUnit NewRenderUnit;
-	//URenderUnit Arr[10];
-	//Arr[9] = NewRenderUnit;
-	//Units.push_back(NewRenderUnit);
-
-	// emplace_back에 대해서 알아봅시다.
-	// 내부에서 Placement new를 통해서 복사를 안해도 되게 최적화를 해주는 문법입니다.
-	// 14부터 지원되는 것으로 알고 있습니다.
-	// Arr[9];
-	// new(&Arr[9]) URenderUnit();
-
- 	URenderUnit& NewUnit = Units.emplace_back();
+ 	URenderUnit& NewUnit = Units.emplace_back(); // 내부에서 placement new를 통해 복사를 안해도 되게 최적화 해주는 문법
 	NewUnit.ParentRenderer = this;
 	return NewUnit;
 }

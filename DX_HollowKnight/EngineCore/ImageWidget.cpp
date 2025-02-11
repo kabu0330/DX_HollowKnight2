@@ -91,7 +91,6 @@ void UImageWidget::Tick(float _DeltaTime)
 
 		}
 
-
 		CurIndex = Indexs[CurAnimation->CurIndex];
 
 		if (nullptr != EventAnimation)
@@ -102,7 +101,6 @@ void UImageWidget::Tick(float _DeltaTime)
 			}
 		}
 	}
-
 }
 
 
@@ -122,7 +120,6 @@ void UImageWidget::CreateAnimation(std::string_view _AnimationName, std::string_
 			Times.push_back(Time);
 			++_Start;
 		}
-
 	}
 	else
 	{
@@ -134,7 +131,6 @@ void UImageWidget::CreateAnimation(std::string_view _AnimationName, std::string_
 			++_End;
 		}
 	}
-
 
 	CreateAnimation(_AnimationName, _SpriteName, Indexs, Times, _Loop);
 }
@@ -251,7 +247,6 @@ void UImageWidget::SetAnimationEvent(std::string_view _AnimationName, int _Frame
 	}
 
 	ChangeAnimation->Events[_Frame] += _Function;
-
 }
 
 UImageWidget::FrameAnimation* UImageWidget::FindAnimation(std::string_view _AnimationName)

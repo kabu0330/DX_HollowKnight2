@@ -245,4 +245,11 @@ void UEngineGraphicDevice::MaterialInit()
 		Mat->SetPixelShader("EngineTargetMergeShader.fx");
 		Mat->SetDepthStencilState("TargetMerge"); // 언제나 화면에 나오는 누구도 이녀석의 앞을 가릴수 없어.
 	}
+
+	{
+		std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("WidgetMaterial");
+		Mat->SetVertexShader("EngineSpriteShader.fx");
+		Mat->SetPixelShader("EngineSpriteShader.fx");
+		Mat->SetDepthStencilState("UIDepth");
+	}
 }

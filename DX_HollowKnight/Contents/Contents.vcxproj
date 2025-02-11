@@ -327,7 +327,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="TitleLogo.h" />
     <ClInclude Include="TitleScene.h">
       <SubType>
       </SubType>
@@ -512,7 +511,6 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="TitleLogo.cpp" />
     <ClCompile Include="TitleScene.cpp">
       <SubType>
       </SubType>

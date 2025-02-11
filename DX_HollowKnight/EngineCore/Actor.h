@@ -2,7 +2,6 @@
 #include "SceneComponent.h"
 #include <EngineCore/EngineCore.h>
 
-// 기하구조를 이야기해 봅시다.
 // 설명 :
 // 언리얼에서 Actor는 절대 트랜스폼을 가지지 않는다.
 class AActor : public UObject
@@ -20,16 +19,12 @@ public:
 	AActor& operator=(const AActor& _Other) = delete;
 	AActor& operator=(AActor&& _Other) noexcept = delete;
 
-	// 시점함수는 엔진이 실행시켜주는 겁니다.
-	// 직접호출하는 일은 있으면 안됩니다.
 	ENGINEAPI virtual void BeginPlay();
 	ENGINEAPI virtual void Tick(float _DeltaTime);
 
 	virtual void LevelChangeStart() {}
 	virtual void LevelChangeEnd() {}
 
-
-	// 이녀석 꽤 많이 
 	template<typename ComponentType>
 	inline std::shared_ptr<ComponentType> CreateDefaultSubObject()
 	{
@@ -39,7 +34,6 @@ public:
 		{
 			MSGASSERT("액터 컴포넌트를 상속받지 않은 클래스를 CreateDefaultSubObject하려고 했습니다.");
 			return nullptr;
-			// static_assert
 		}
 
 		size_t Size = sizeof(ComponentType);
@@ -215,8 +209,7 @@ private:
 	// 자기 자식들도 알게 된다.
 	std::list<std::shared_ptr<AActor>> ChildList;
 
-	// 초기화 하면 안됩니다.
-	// 스폰액터 방식이 변경되었으니까.
+	// 스폰액터 방식이 변경되었으니까. 초기화 안한다.
 	ULevel* World;
 
 	std::list<std::shared_ptr<class UActorComponent>> ActorComponentList;

@@ -7,8 +7,6 @@
 #pragma comment(lib, "FW1FontWrapper.lib")
 #endif
 
-// dll이므로 여기에다 둘겁니다.
-// 이 팩토리를 먼저 만들고
 IFW1Factory* FontFactory = nullptr;
 
 class UFontFactoryCreator
