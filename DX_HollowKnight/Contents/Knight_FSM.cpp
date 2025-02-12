@@ -355,10 +355,6 @@ void AKnight::SetFocusEnd(float _DeltaTime)
 
 void AKnight::SetFireballAntic(float _DeltaTime)
 {
-	if (22 > Stat.GetMp())
-	{
-		return;
-	}
 	bCanRotation = false;
 	ChangeNextState(EKnightState::FIREBALL_CAST);
 }

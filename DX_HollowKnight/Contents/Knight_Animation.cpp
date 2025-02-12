@@ -58,6 +58,8 @@ void AKnight::CreateFocusEffect()
 	{
 		return;
 	}
+	Stat.AddMp(-33);
+
 	std::shared_ptr<AKnightEffect> FocusEffect = GetWorld()->SpawnActor<AKnightEffect>();
 	FocusEffect->ChangeAnimation("FocusEffect", GetActorLocation());
 	FVector Offest = { 5.0f, 30.0f, 0.0f };
@@ -91,7 +93,6 @@ void AKnight::CreateFocusEndEffect()
 	BurstEffect->GetRenderer()->SetMulColor({ 11.0f, 11.0f, 11.0f }, 0.1f);
 
 	Stat.AddHp(1);
-	Stat.AddMp(-33);
 
 	bIsFocusEndEffect = true;
 	Sound.Stop();
@@ -105,7 +106,6 @@ void AKnight::CreateFireballEffect()
 		return;
 	}
 	bIsFireballEffect = true;
-	Stat.AddMp(-33);
 
 	std::shared_ptr<AKnightEffect> Effect = GetWorld()->SpawnActor<AKnightEffect>();
 	Effect->ChangeAnimation("Blast", GetActorLocation());

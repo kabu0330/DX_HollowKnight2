@@ -297,15 +297,15 @@ void APlayHUD::UpdateSkillGauge()
 
 ESkillGauge APlayHUD::SwitchToEnumSkillGauge(int _Value)
 {
-	if (25 > _Value)
+	if (22 > _Value)
 	{
 		return ESkillGauge::EMPTY;
 	}
-	else if (50 > _Value)
+	else if (55 > _Value)
 	{
 		return ESkillGauge::QUARTER;
 	}
-	else if (75 > _Value)
+	else if (77 > _Value)
 	{
 		return ESkillGauge::HALF;
 	}
