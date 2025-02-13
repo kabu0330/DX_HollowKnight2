@@ -9,7 +9,6 @@
 
 UWidget::UWidget()
 {
-
 }
 
 UWidget::~UWidget()
@@ -23,9 +22,7 @@ void UWidget::Tick(float _DeltaTime)
 	FVector WorldPos = CameraActor->ScreenMousePosToWorldPos();
 	FTransform Transform;
 	Transform.WorldLocation = WorldPos;
-	// Transform.GetCollisionData()
 	
-	// 충돌체 없어도 됩니다.
 	if (true == FTransform::PointToRect(Transform, GetTransformRef()))
 	{
 		if (nullptr != Hover)
@@ -48,10 +45,7 @@ void UWidget::Tick(float _DeltaTime)
 				Up();
 			}
 		}
-
 	};
-
-
 }
 
 void UWidget::Render(UEngineCamera* Camera, float _DeltaTime)

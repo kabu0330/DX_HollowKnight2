@@ -13,9 +13,6 @@
     <ClInclude Include="PlayGameMode.h">
       <Filter>Level</Filter>
     </ClInclude>
-    <ClInclude Include="TitleLogo.h">
-      <Filter>Title</Filter>
-    </ClInclude>
     <ClInclude Include="Global.h">
       <Filter>Global</Filter>
     </ClInclude>
@@ -164,9 +161,6 @@
     </ClCompile>
     <ClCompile Include="TitleGameMode.cpp">
       <Filter>Level</Filter>
-    </ClCompile>
-    <ClCompile Include="TitleLogo.cpp">
-      <Filter>Title</Filter>
     </ClCompile>
     <ClCompile Include="Global.cpp">
       <Filter>Global</Filter>

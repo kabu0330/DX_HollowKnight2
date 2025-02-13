@@ -265,13 +265,6 @@ void UContentsResource::LoadShaderResource()
 		Mat->SetDepthStencilState("CollisionDebugDepth");
 		Mat->SetRasterizerState("CollisionDebugRas");
 	}
-
-	{
-		std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("WidgetMaterial");
-		Mat->SetVertexShader("EngineSpriteShader.fx");
-		Mat->SetPixelShader("EngineSpriteShader.fx");
-		Mat->SetDepthStencilState("UIDepth");
-	}
 }
 
 UContentsResource::UContentsResource()

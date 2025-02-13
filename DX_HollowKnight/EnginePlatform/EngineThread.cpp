@@ -21,7 +21,7 @@ void UEngineThread::ThreadBaseFunction(UEngineThread* _Thread)
 
 	_Thread->ThreadFunction();
 
-	// 쓰레드로 실행된 함수 내에서만 이름을 바꿀수가 있습니다.
+	// 쓰레드로 실행된 함수 내에서만 이름을 바꿀 수가 있다.
 }
 
 bool UEngineThread::Start(std::string _Name, std::function<void()> _Function)

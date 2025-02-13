@@ -18,7 +18,6 @@ UCollision::~UCollision()
 {
 	for (UCollision* Other : CollisionCheckSet)
 	{
-		// 너한테서 나를 빼야해를 하고 죽습니다.
 		Other->CollisionCheckSet.erase(this);
 	}
 }
@@ -52,9 +51,6 @@ bool UCollision::CollisionCheck(std::string_view _OtherName, std::vector<UCollis
 		return false;
 	}
 
-	// 절대 네버 절대 안된다.
-	// std::list<std::shared_ptr<class UCollision>> Group = Collision[_OtherName];
-
 	std::list<std::shared_ptr<class UCollision>>& Group = Collision[UpperName];
 
 	for (std::shared_ptr<class UCollision>& OtherCol : Group)
@@ -84,9 +80,6 @@ bool UCollision::CollisionCheck(std::string_view _OtherName, FVector _NextPos, s
 		MSGASSERT("존재하지 않는 그룹과 충돌할수 없습니다" + std::string(UpperName));
 		return false;
 	}
-
-	// 절대 네버 절대 안된다.
-	// std::list<std::shared_ptr<class UCollision>> Group = Collision[_OtherName];
 
 	FTransform NextTransform = Transform;
 
@@ -164,7 +157,6 @@ void UCollision::SetCollisionStay(std::function<void(UCollision*, UCollision*)> 
 	ULevel* Level = GetActor()->GetWorld();
 	std::shared_ptr<UCollision> ThisPtr = GetThis<UCollision>();
 
-	// 중간에 프로파일 네임을 바꾸거나. 이러면 문제가 생길수 있다.
 	Level->CheckCollisions[GetCollisionProfileName()].push_back(ThisPtr);
 }
 
@@ -203,10 +195,7 @@ void UCollision::CollisionEventCheck(std::shared_ptr<UCollision> _Other)
 		{
 
 			// 없는데 충돌은 최초충돌 
-			// 전에는 한쪽만 기억하고 있었다.
-			// 플레이어가             몬스터를 기억하는 것 <= ex) 어 이녀석이랑 나랑 충돌했네
 			CollisionCheckSet.insert(_Other.get());
-			// 몬스터는 플레이어를 기억합니다.
 			_Other->CollisionCheckSet.insert(this);
 			if (nullptr != Enter)
 			{
@@ -231,7 +220,6 @@ void UCollision::CollisionEventCheck(std::shared_ptr<UCollision> _Other)
 				End(this, _Other.get());
 			}
 
-			// 무조건 가독성과 사용성
 			CollisionCheckSet.erase(_Other.get());
 			_Other->CollisionCheckSet.erase(this);
 		}
@@ -249,7 +237,6 @@ void UCollision::DebugRender(UEngineCamera* _Camera, float _DeltaTime)
 
 	FTransform& CameraTrans = _Camera->GetTransformRef();
 	FTransform& RendererTrans = GetTransformRef();
-	//	// 랜더러는 월드 뷰 프로젝트를 다 세팅받았고
 	RendererTrans.View = CameraTrans.View;
 	RendererTrans.Projection = CameraTrans.Projection;
 	RendererTrans.WVP = RendererTrans.World * RendererTrans.View * RendererTrans.Projection;
@@ -257,10 +244,7 @@ void UCollision::DebugRender(UEngineCamera* _Camera, float _DeltaTime)
 	Unit.SetMesh("Rect");
 	Unit.SetMaterial("CollisionDebugMaterial");
 
-
 	Unit.ConstantBufferLinkData("FTransform", GetTransformRef());
-
-
 	Unit.ConstantBufferLinkData("OutColor", DebugColor);
 
 	Unit.Render(_Camera, _DeltaTime);

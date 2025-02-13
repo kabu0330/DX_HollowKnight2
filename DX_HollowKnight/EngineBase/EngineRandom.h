@@ -51,48 +51,11 @@ public:
 		return RandomCreate.operator()(MtGen);
 	}
 
-
 protected:
 
 private:
-	// std 랜덤은
-	// 제네레이터를 시작으로 합니다.
 
-	// 기본적으로 타임에 의한 시드로 세팅
-	// 만들면서 new 시드 넣어줍니다.
 	std::mt19937_64 MtGen = std::mt19937_64(time(nullptr));
 
 	//std::well512
 };
-
-//
-//class MapCreator
-//{
-//	virtual void MapCreate()
-//	{
-//
-//	}
-//};
-//
-//class RandomMapGenerator
-//{
-//public:
-//	void CreateRandomMap(MapCreator* );
-//};
-//
-//class CaveMapCreator : public MapCreator
-//{
-//	virtual void MapCreate()
-//	{
-//
-//	}
-//};
-//
-//
-//class RoomMapCreator : public MapCreator
-//{
-//	virtual void MapCreate()
-//	{
-//
-//	}
-//};

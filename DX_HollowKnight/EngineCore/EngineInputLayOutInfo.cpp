@@ -172,7 +172,6 @@ void UEngineInputLayOutInfo::AddInputLayout(
 	Data.InputSlot = _InputSlot;
 	Data.AlignedByteOffset = Offset;
 	Offset += FormatSize(_Format);
-	// 인스턴싱하면
 	Data.InstanceDataStepRate = _InstanceDataStepRate;
 
 	InputLayOutData.push_back(Data);

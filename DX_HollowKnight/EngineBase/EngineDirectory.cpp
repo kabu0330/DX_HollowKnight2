@@ -7,7 +7,6 @@
 UEngineDirectory::UEngineDirectory()
 	: UEnginePath()
 {
-	// 만들어지면 현재로 
 }
 
 UEngineDirectory::UEngineDirectory(std::string_view _Path)

@@ -2,8 +2,7 @@
 #include <thread>
 #include <functional>
 
-// 설명 : 언리얼 방식은 아닙니다.
-// 언리얼에서 네이티브 쓰레들르 사용하려면 Run 뭐시기 였어요 녀석을 사용해야 한다.
+// 설명 : 
 class UEngineThread
 {
 public:

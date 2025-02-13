@@ -18,32 +18,6 @@ void UFontRenderer::SetFont(std::string_view _Value, float _Scale, UColor _Color
 	Scale = _Scale;
 	Color = _Color;
 	Flag = _Flag;
-	// class shared_ptr
-	// {
-	//     UEngineFont* Ptr;
-	//  
-	//	UEngineFont* Get()
-	//  {
-	//		return Ptr;
-	//  }
-	// }
-
-	// template<Typename PtrType>
-	// class shared_ptr
-	// {
-	//     PtrType* Ptr;
-	//  
-	//	PtrType* Get()
-	//  {
-	//		return Ptr;
-	//  }
-	// }
-
-	// 쉐어드 ptr은 문제가 뭡니까?
-	// 1. 안지워져 
-	// 2. 순환참조
-
-
 }
 
 void UFontRenderer::Render(UEngineCamera* _Camera, float _DeltaTime)

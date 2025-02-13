@@ -42,6 +42,6 @@ void UEngineDepthStencilState::ResCreate(const D3D11_DEPTH_STENCIL_DESC& _Value)
 
 void UEngineDepthStencilState::Setting()
 {
-	// Omset 최종 픽셀테스트에 영향을 줍니다. 
+	// Omset 최종 픽셀테스트에 영향을 준다.
 	UEngineCore::GetDevice().GetContext()->OMSetDepthStencilState(State.Get(), 0);
 }

@@ -41,8 +41,8 @@ void AMonster::CreateHitOrangeEffect()
 	AEffect* HitOrange = GetWorld()->SpawnActor<AEffect>().get();
 	HitOrange->ChangeAnimation("HitOrange", ActorPos);
 	UEngineRandom Random;
-	float Result = Random.Randomfloat(0.0f, 20.0f);
-	HitOrange->SetZSort(static_cast<float>(EZOrder::HIT_LIGHT_EFFECT) + Result);
+	int Result = Random.RandomInt(0, 49);
+	HitOrange->SetZSort(static_cast<int>(EZOrder::HIT_LIGHT_EFFECT) + Result);
 	HitOrange->GetRenderer()->SetAlpha(0.3f);
 	HitOrange->SetAlphaFadeInFadeOut(1.5f, 0.7f);
 	HitOrange->SetScale(5.0f);

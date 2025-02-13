@@ -3,8 +3,7 @@
 #include "EngineSprite.h"
 #include "RenderUnit.h"
 
-// 설명 : 어떤 랜더링이든 할수 잇는 구조로 만들겠다.
-// 랜더링이란 랜더러만 하는게 아닙니다. 3D
+// 설명 : 
 class URenderer : public USceneComponent
 {
 	friend class UEngineCamera;

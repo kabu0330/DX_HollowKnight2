@@ -81,7 +81,6 @@ void UTimeEventComponent::ComponentTick(float _DeltaTime)
 			TimeEvent.CurTime = 0.0f;
 		}
 	}
-
 }
 
 

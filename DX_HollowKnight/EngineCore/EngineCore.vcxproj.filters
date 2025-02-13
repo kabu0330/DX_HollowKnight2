@@ -82,9 +82,6 @@
     <ClInclude Include="SpriteRenderer.h">
       <Filter>04_Object\Component\Contents</Filter>
     </ClInclude>
-    <ClInclude Include="EngineCoreDebug.h">
-      <Filter>01_Debug</Filter>
-    </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>07_Resources\Mesh</Filter>
     </ClInclude>
@@ -257,9 +254,6 @@
     </ClCompile>
     <ClCompile Include="EngineGraphicDevice_Resources.cpp">
       <Filter>05_Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="EngineCoreDebug.cpp">
-      <Filter>01_Debug</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
       <Filter>07_Resources\Mesh</Filter>

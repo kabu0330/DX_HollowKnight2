@@ -4,7 +4,6 @@
 
 AHUD::AHUD()
 {
-
 }
 
 AHUD::~AHUD()
@@ -28,8 +27,6 @@ void AHUD::UIRender(UEngineCamera* _Camera, float _DeltaTime)
 		}
 	}
 
-
-
 	for (std::pair<const int, std::list<std::shared_ptr<class UWidget>>> WidgetPair : Widgets)
 	{
 		std::list<std::shared_ptr<class UWidget>>& WidgetList = WidgetPair.second;
@@ -44,5 +41,4 @@ void AHUD::UIRender(UEngineCamera* _Camera, float _DeltaTime)
 			Widget->Render(_Camera, _DeltaTime);
 		}
 	}
-
 }
