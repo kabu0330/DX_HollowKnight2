@@ -26,6 +26,7 @@ public:
 	void ActiveFireballPrompt();
 	void ActiveFocusPrompt();
 	void ActiveJumpPrompt();
+	void ActiveSlashPrompt();
 
 	static APlayHUD* GetHUD()
 	{

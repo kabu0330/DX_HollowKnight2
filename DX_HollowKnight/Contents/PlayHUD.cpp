@@ -576,6 +576,13 @@ void APlayHUD::ActiveJumpPrompt()
 	TextPrompt->SetText("ZŰ");
 }
 
+void APlayHUD::ActiveSlashPrompt()
+{
+	ActiveTruePrompt();
+	ImagePrompt->SetTexture("Slash_Prompt.png", true, 0.4f);
+	TextPrompt->SetText("XŰ");
+}
+
 void APlayHUD::CreateFade()
 {
 	Fade = CreateWidget<UImageWidget>(static_cast<int>(100000000), "Fade");

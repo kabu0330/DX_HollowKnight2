@@ -101,7 +101,7 @@ void APlayGameMode::SetActiveRoom()
 
 void APlayGameMode::ShowPrompt()
 {
-	float Time = 1.5f;
+	float Time = 1.0f;
 	float Gap = 1.5f;
 	float ShowGap = 4.0f;
 	
@@ -119,6 +119,16 @@ void APlayGameMode::ShowPrompt()
 	TimeEventer->AddEndEvent(Time, []()
 		{
 			APlayHUD::GetHUD()->ActiveDashPrompt();
+		});
+	Time += ShowGap;
+	TimeEventer->AddEndEvent(Time, []()
+		{
+			APlayHUD::GetHUD()->ActiveFalsePrompt();
+		});
+	Time += Gap;
+	TimeEventer->AddEndEvent(Time, []()
+		{
+			APlayHUD::GetHUD()->ActiveSlashPrompt();
 		});
 	Time += ShowGap;
 	TimeEventer->AddEndEvent(Time, []()
