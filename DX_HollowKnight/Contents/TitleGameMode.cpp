@@ -85,8 +85,6 @@ void ATitleGameMode::LevelChangeEnd()
 			UEngineSound::AllSoundStop();
 			UEngineCore::OpenLevel("Play");
 		});
-	
-
 }
 
 void ATitleGameMode::InitBackgroundSound()

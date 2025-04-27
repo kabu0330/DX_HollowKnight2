@@ -48,14 +48,12 @@ void UContentsCore::CreateLevel()
 {
 	UEngineCore::CreateLevel<ATitleGameMode, APawn, ATitleHUD>("Title");
 	UEngineCore::CreateLevel<APlayGameMode, AKnight, APlayHUD>("Play");
-	//UEngineCore::CreateLevel<AMapEditorGameMode, APawn, AHUD>("MapEditorMode");
 
 #ifdef _DEBUG
 	UEngineCore::OpenLevel("Play");
 #else
 	UEngineCore::OpenLevel("Title");
 #endif // _DEBUG
-	//UEngineCore::OpenLevel("MapEditorMode");
 }
 
 void UContentsCore::EngineTick(float _DeltaTime)
