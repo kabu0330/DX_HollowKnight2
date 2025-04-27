@@ -16,7 +16,6 @@ ADoor::ADoor()
 	BodyCollision->GetTransformRef().Location.Z = ZSort;
 	Scale = FVector(200, 100);
 	BodyCollision->SetScale3D(Scale);
-	//BodyCollision->SetCollisionType(ECollisionType::AABB);
 
 	BodyCollision->SetCollisionStay(std::bind(&ADoor::Warp, this, std::placeholders::_1, std::placeholders::_2));
 	BodyCollision->SetCollisionEnd([](UCollision* _Actor1, UCollision* _Actor2)

@@ -10,15 +10,13 @@ UEngineSampler::~UEngineSampler()
 {
 }
 
-
-
 std::shared_ptr<UEngineSampler> UEngineSampler::Create(std::string_view _Name, const D3D11_SAMPLER_DESC& _Value)
 {
 	std::string UpperName = ToUpperName(_Name);
 
 	if (true == Contains(UpperName))
 	{
-		MSGASSERT("이미 로드한 텍스처를 도 로드하려고 했습니다." + UpperName);
+		MSGASSERT("이미 로드한 텍스처를 다시 로드하려고 했습니다." + UpperName);
 		return nullptr;
 	}
 
@@ -28,7 +26,6 @@ std::shared_ptr<UEngineSampler> UEngineSampler::Create(std::string_view _Name, c
 
 	return NewRes;
 }
-
 
 void UEngineSampler::ResCreate(const D3D11_SAMPLER_DESC& _Value)
 {

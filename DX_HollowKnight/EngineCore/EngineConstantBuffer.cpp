@@ -83,7 +83,6 @@ void UEngineConstantBuffer::ChangeData(void* _Data, UINT _Size)
 
 void UEngineConstantBuffer::Setting(EShaderType _Type, UINT _BindIndex)
 {
-	// 같은 상수버퍼를 
 	ID3D11Buffer* ArrPtr[1] = { Buffer.Get() };
 
 	switch (_Type)

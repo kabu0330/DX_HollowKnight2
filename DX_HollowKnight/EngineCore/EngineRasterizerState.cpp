@@ -15,7 +15,7 @@ std::shared_ptr<UEngineRasterizerState> UEngineRasterizerState::Create(std::stri
 
 	if (true == Contains(UpperName))
 	{
-		MSGASSERT("이미 로드한 텍스처를 도 로드하려고 했습니다." + UpperName);
+		MSGASSERT("이미 로드한 텍스처를 다시 로드하려고 했습니다." + UpperName);
 		return nullptr;
 	}
 

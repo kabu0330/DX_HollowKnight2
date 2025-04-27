@@ -19,6 +19,7 @@ public:
 	virtual void CreateHitEffect(class UCollision* _This, class UCollision* _Other);
 	void CreateWhiteHitParticleEffect(class UCollision* _This, class UCollision* _Other);
 	void CreateDamagedEffect(class UCollision* _This, class UCollision* _Other);
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
@@ -31,9 +32,6 @@ protected:
 
 	virtual void KnightKnockback(FVector _KnockbackDir);
 	virtual void MonsterKnockback(class UCollision* _Other, FVector _KnockbackDir);
-
-
-
 
 private:
 	FVector KnightPos = { 0.0f, 0.0f, 0.0f };

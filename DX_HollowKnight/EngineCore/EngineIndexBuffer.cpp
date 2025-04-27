@@ -15,7 +15,7 @@ std::shared_ptr<UEngineIndexBuffer> UEngineIndexBuffer::Create(std::string_view 
 
 	if (true == Contains(UpperName))
 	{
-		MSGASSERT("이미 로드한 텍스처를 도 로드하려고 했습니다." + UpperName);
+		MSGASSERT("이미 로드한 텍스처를 다시 로드하려고 했습니다." + UpperName);
 		return nullptr;
 	}
 
@@ -41,7 +41,7 @@ void UEngineIndexBuffer::ResCreate(const void* _InitData, size_t _Size, size_t _
 	}
 	else
 	{
-		MSGASSERT("이런 인덱스 포맷은 지원하지 않습니다.");
+		MSGASSERT("해당 인덱스 포맷은 지원하지 않습니다.");
 	}
 
 	BufferInfo.ByteWidth = static_cast<UINT>(_Size * _Count);

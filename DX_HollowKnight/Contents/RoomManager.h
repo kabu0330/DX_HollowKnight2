@@ -17,16 +17,6 @@ public:
 
 	void CreateRoom(class AGameMode* _GameMode);
 
-	//std::vector<ARoom*>& GetRoomsRef()
-	//{
-	//	std::vector<ARoom*> NewRooms;
-	//	for (int i = 0; i < Rooms.size(); i++)
-	//	{
-	//		NewRooms.push_back(Rooms[i].get());
-	//	}
-	//	return NewRooms;
-	//}
-
 	std::vector<std::shared_ptr<ARoom>> GetRoomsRef()
 	{
 		return Rooms;

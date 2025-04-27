@@ -2,8 +2,7 @@
 #include "SceneComponent.h"
 #include <EngineCore/EngineCore.h>
 
-// 설명 :
-// 언리얼에서 Actor는 절대 트랜스폼을 가지지 않는다.
+// 설명 : 
 class AActor : public UObject
 {
 	friend class ULevel;
@@ -209,7 +208,6 @@ private:
 	// 자기 자식들도 알게 된다.
 	std::list<std::shared_ptr<AActor>> ChildList;
 
-	// 스폰액터 방식이 변경되었으니까. 초기화 안한다.
 	ULevel* World;
 
 	std::list<std::shared_ptr<class UActorComponent>> ActorComponentList;

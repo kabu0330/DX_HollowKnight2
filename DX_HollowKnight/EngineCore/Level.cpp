@@ -140,14 +140,8 @@ void ULevel::Render(float _DeltaTime)
 		Camera.second->Tick(_DeltaTime); // View 행렬과 Projection 행렬 계산
 		Camera.second->GetCameraComponent()->Render(_DeltaTime);
 
-		// 특정 카메라만 포스트 이펙트
-		// Camera.second->PostEffect();
-
 		Camera.second->GetCameraComponent()->CameraTarget->MergeTo(LastRenderTarget); // 렌더링 파이프라인으로
 	}
-
-	// 여기서 하면 화면 전체 포스트 이펙트 적용
-	// LastRenderTarget->PostEffect(); 
 
 	if (true == Cameras.contains(static_cast<int>(EEngineCameraType::UICamera))) // UI카메라는 따로 렌더를 돌려준다.
 	{
@@ -263,8 +257,6 @@ void ULevel::ChangeCollisionProfileName(std::string_view _ProfileName, std::stri
 
 void ULevel::Collision(float _DeltaTime)
 {
-	// Monster Player 충돌체크 해야 한다.
-	
 	for (std::pair<const std::string, std::list<std::string>>& Links : CollisionLinks)
 	{
 		const std::string& LeftProfile = Links.first;
@@ -317,9 +309,6 @@ void ULevel::Release(float _DeltaTime)
 					continue;
 				}
 
-				// 랜더러는 지울 필요가 없습니다.
-				// (*RenderStartIter) 누가 지울 권한을 가졌느냐.
-				// 컴포넌트의 메모리를 삭제할수 권한은 오로지 액터만 가지고 있다.
 				StartIter = List.erase(StartIter);
 			}
 		}

@@ -175,8 +175,6 @@ public:
 		float LeftLen = _Left.Length();
 		float RightLen = _Right.Length();
 
-		// LeftLen* RightLen* cosf(angle);
-
 		return _Left.X * _Right.X + _Left.Y * _Right.Y + _Left.Z * _Right.Z;
 	}
 
@@ -437,7 +435,6 @@ public:
 		return X == _Other.X && Y == _Other.Y && Z == _Other.Z;
 	}
 
-	// float은 비교가 굉장히 위험
 	// const가 붙은 함수에서는 const가 붙은 함수 호출할수 없다.
 	bool EqualToInt(TVector _Other) const
 	{

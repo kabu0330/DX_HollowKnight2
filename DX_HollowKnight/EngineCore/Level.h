@@ -99,7 +99,6 @@ public:
 		{
 			MSGASSERT("액터를 상속받지 않은 클래스를 SpawnActor하려고 했습니다.");
 			return nullptr;
-			// static_assert
 		}
 
 		char* ActorMemory = new char[sizeof(ActorType)];
@@ -109,13 +108,11 @@ public:
 		ActorPtr->World = this;
 
 		ActorType* NewPtr = reinterpret_cast<ActorType*>(ActorMemory);
-		// 레벨먼저 세팅하고
-		// 플레이스먼트 new 
+
 		std::shared_ptr<ActorType> NewActor(NewPtr = new(ActorMemory) ActorType());
 
 		ActorPtr->SetName(_Name);
 
-		// 컴파일러는 그걸 모른다.
 		BeginPlayList.push_back(NewActor);
 
 		return NewActor;
@@ -132,8 +129,6 @@ public:
 
 	ENGINEAPI void LinkCollisionProfile(std::string_view _LeftProfileName, std::string_view _RightProfileName);
 
-	// 맵 에디터를 위해서 레벨에서 현재 가지고 있는 액터를 모두 알려준다.
-	// 단, 복사로 던져준다. 에디터는 최적화를 신경쓰고 만들지는 않는다.
 	template<typename ConvertType>
 	ENGINEAPI std::list<std::shared_ptr<ConvertType>> GetAllActorListByClass()
 	{

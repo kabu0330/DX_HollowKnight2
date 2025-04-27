@@ -183,7 +183,7 @@ void UEngineTexture::CreateShaderResourceView()
 {
 	if (S_OK != UEngineCore::GetDevice().GetDevice()->CreateShaderResourceView(Texture2D.Get(), nullptr, &SRV))
 	{
-		MSGASSERT("깊이버퍼 생성에 실패했습니다..");
+		MSGASSERT("셰이더 리소스 뷰 생성에 실패했습니다.");
 		return;
 	}
 }
@@ -191,7 +191,7 @@ void UEngineTexture::CreateDepthStencilView()
 {
 	if (S_OK != UEngineCore::GetDevice().GetDevice()->CreateDepthStencilView(Texture2D.Get(), nullptr, &DSV))
 	{
-		MSGASSERT("깊이버퍼 생성에 실패했습니다..");
+		MSGASSERT("뎁스 스텐실 뷰 생성에 실패했습니다.");
 		return;
 	}
 }

@@ -27,7 +27,6 @@ protected:
 
 private:
 	Microsoft::WRL::ComPtr<IFW1FontWrapper> Font;
-	// IFW1FontWrapper* Font;
 	void ResLoad(std::string_view _Path);
 };
 

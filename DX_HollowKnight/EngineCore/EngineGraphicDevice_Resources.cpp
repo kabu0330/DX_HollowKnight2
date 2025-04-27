@@ -176,22 +176,12 @@ void UEngineGraphicDevice::BlendInit()
 {
 	D3D11_BLEND_DESC Desc = {0};
 
-	// 자동으로 알파부분을 
-	// 알파가 0.0f 색상부분을 알아서 안그리게 도와주는 기능
-	// 굉장히 많이 느려져서 그냥 내가 다 처리하는게 더 빨랐다.
-
 	Desc.AlphaToCoverageEnable = false;			// 멀티샘플링 알파 커버리지
 	Desc.IndependentBlendEnable = true;			// 각 렌더 타겟별로 블렌딩 여부를 결정
 	Desc.RenderTarget[0].BlendEnable = true;	// 블렌딩 활성화
 	Desc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL; // RGBA 모두 출력
 
 	Desc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD; // 색상 추가 연산자 '+'
-	// 알파블랜드의 기본 공식
-	// SrcColor 1.0, 0.0f, 0.0f, 0.8f; * 0.8f 0.8f 0.8f 0.8f
-	
-	// SrcColor 0.0, 0.0f, 1.0f, 1.0f; * 1 - 0.8f,  1 - 0.8f, 1 - 0.8f, 1 - 0.8f
-
-	// 알베도컬러 SrcColor 옵션 SrcFactor  BlendOp  DestColor  옵션 DestFactor  
 
 	Desc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;			// 소스 알파값 사용
 	Desc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;		// 대상 알파값 반전 사용 (1 - 소스 알파값) = 대상 알파값

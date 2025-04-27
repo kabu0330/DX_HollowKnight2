@@ -143,8 +143,6 @@ void URoomManager::CreateRoom(AGameMode* _GameMode)
 #endif // _DEBUG
 
 
-
-
 	// 6. 몬스터 생성
 	Crossroads3->CreateMonster<AGruzzer>({ 4400, -5970 });
 	Crossroads3->CreateMonster<AGruzzer>({ 2940, -7700 });
@@ -175,9 +173,6 @@ void URoomManager::CreateRoom(AGameMode* _GameMode)
 	//Crossroads5->CreateMonster<ALeapingHusk>({ 16730, -8300 });
 	//Crossroads5->CreateMonster<AHuskHornhead>({ 17000, -8300 });
 	Crossroads5->CreateMonster<ACrawlid>({ 17000, -8300 });
-
-
-
 }
 
 std::shared_ptr<ARoom> URoomManager::CreateRoom(std::string_view _RoomName, std::string_view _BackgroundName, std::string_view _PixelCollisionName, FVector _Size, float _ScaleRatio/* = 1.0f*/)

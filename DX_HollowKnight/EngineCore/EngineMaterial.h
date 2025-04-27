@@ -63,7 +63,5 @@ private:
 	std::shared_ptr<UEngineDepthStencilState> DepthState;
 
 	D3D11_PRIMITIVE_TOPOLOGY TOPOLOGY = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
-	// UEngineCore::GetDevice().GetContext()->IASetPrimitiveTopology(Topology);
-	
 };
 

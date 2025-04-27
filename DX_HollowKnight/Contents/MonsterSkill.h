@@ -41,7 +41,5 @@ private:
 	void Knockback();
 
 	void Release() override;
-
-
 };
 

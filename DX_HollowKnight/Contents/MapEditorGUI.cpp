@@ -25,10 +25,6 @@ enum class ESpawnList
 
 void MapEditorGUI::OnGUI()
 {
-	//float DeltaTime = UEngineCore::GetDeltaTime();
-	//std::string DeltaTimeText = "FPS : " + std::to_string(static_cast<int>(1.0f / DeltaTime));
-	//ImGui::Text(DeltaTimeText.c_str());
-
 	Sprite = UEngineSprite::Find<UEngineSprite>("MapObjectResources");
 	if (nullptr == Sprite)
 	{

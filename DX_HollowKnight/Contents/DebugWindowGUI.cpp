@@ -18,7 +18,6 @@ void UDebugWindowGUI::OnGUI()
 	if (true == ImGui::Button("FreeCameraOn"))
 	{
 		GetWorld()->GetMainCamera()->FreeCameraSwitch();
-
 	}
 
 	GetFrame();
