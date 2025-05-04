@@ -62,7 +62,7 @@ private:
 
 	void CreateAttackLogicAndEffect();
 	bool bIsAttackEffect = false;
-	void CreateGroundImpack();
+	void CreateGroundImpact();
 	bool bIsOffsetAttack1Frame = false;
 	bool bIsOffsetAttackRecovery1Fame = false;
 	bool bIsDoubleAttack = false;
