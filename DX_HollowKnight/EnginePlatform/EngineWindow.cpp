@@ -2,16 +2,8 @@
 #include "EngineWindow.h"
 #include <EngineBase/EngineDebug.h>
 
-// 멀티플랫폼으로 짜려면
-//#ifdef _WINDOWS
-//#include <Windows.h>
-//#elseif _리눅스
-//
-//#elseif 안드로이드
-//#endif 
-
 HINSTANCE UEngineWindow::hInstance = nullptr;
-std::map<std::string, WNDCLASSEXA> UEngineWindow::WindowClasss;
+std::map<std::string, WNDCLASSEXA> UEngineWindow::WindowClasses;
 std::map<HWND, UEngineWindow*> UEngineWindow::AllWindows;
 std::function<bool(HWND, UINT, WPARAM, LPARAM)> UEngineWindow::CustomProc = nullptr;
 int WindowCount = 0;
@@ -62,7 +54,6 @@ LRESULT CALLBACK UEngineWindow::WndProc(HWND hWnd, UINT message, WPARAM wParam, 
         {
             AllWindows[hWnd]->IsFocusValue = true;
         }
-        // UEngineDebug::OutPutString("SetFocus");
     }
     break;
     case WM_KILLFOCUS:
@@ -71,7 +62,6 @@ LRESULT CALLBACK UEngineWindow::WndProc(HWND hWnd, UINT message, WPARAM wParam, 
         {
             AllWindows[hWnd]->IsFocusValue = false;
         }
-        // UEngineDebug::OutPutString("KillFocus");
     }
     break;
     case WM_DESTROY:
@@ -150,8 +140,8 @@ int UEngineWindow::WindowMessageLoop(std::function<void()> _StartFunction, std::
 
 void UEngineWindow::CreateWindowClass(const WNDCLASSEXA& _Class)
 {
-    std::map<std::string, WNDCLASSEXA>::iterator EndIter = WindowClasss.end();
-    std::map<std::string, WNDCLASSEXA>::iterator FindIter = WindowClasss.find(std::string(_Class.lpszClassName));
+    std::map<std::string, WNDCLASSEXA>::iterator EndIter = WindowClasses.end();
+    std::map<std::string, WNDCLASSEXA>::iterator FindIter = WindowClasses.find(std::string(_Class.lpszClassName));
 
     if (EndIter != FindIter)
     {
@@ -161,7 +151,7 @@ void UEngineWindow::CreateWindowClass(const WNDCLASSEXA& _Class)
 
     RegisterClassExA(&_Class);
 
-    WindowClasss.insert(std::pair{ _Class.lpszClassName, _Class });
+    WindowClasses.insert(std::pair{ _Class.lpszClassName, _Class });
 }
 
 UEngineWindow::UEngineWindow() 
@@ -185,7 +175,7 @@ void UEngineWindow::Create(std::string_view _TitleName, std::string_view _ClassN
         return;
     }
 
-    if (false == WindowClasss.contains(_ClassName.data()))
+    if (false == WindowClasses.contains(_ClassName.data()))
     {
         MSGASSERT(std::string(_ClassName) + " 등록하지 않은 클래스로 윈도우창을 만들려고 했습니다");
         return;

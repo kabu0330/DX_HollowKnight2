@@ -623,7 +623,7 @@ void AFalseKnight::SetAttack(float _DeltaTime)
 				FVector Offset = { -160.0f, 20.0f };
 				SetRendererOffset(Offset);
 				CreateAttackLogicAndEffect();
-				TimeEventer->AddEndEvent(0.3f, std::bind(&AFalseKnight::CreateGroundImpack, this));
+				TimeEventer->AddEndEvent(0.3f, std::bind(&AFalseKnight::CreateGroundImpact, this));
 				CreateDropObject();
 				CreateDropObject();
 				CreateDropObject();
@@ -675,7 +675,7 @@ void AFalseKnight::CreateAttackLogicAndEffect()
 	}	
 }
 
-void AFalseKnight::CreateGroundImpack()
+void AFalseKnight::CreateGroundImpact()
 {
 	// 그라운드 웨이브(이동하는 충격파) 생성
 	std::shared_ptr<AMonsterSkill> GroundWave = GetWorld()->SpawnActor<AMonsterSkill>();

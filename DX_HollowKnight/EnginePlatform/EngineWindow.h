@@ -7,7 +7,6 @@
 
 #include <EngineBase/EngineMath.h>
 
-
 // 설명 :
 class UEngineWindow
 {
@@ -80,12 +79,11 @@ private:
 	// 헤더쪽에서 초기화하는 방법
 	inline static bool LoopActive = true;
 
-	ENGINEAPI static std::map<std::string, WNDCLASSEXA> WindowClasss;
+	ENGINEAPI static std::map<std::string, WNDCLASSEXA> WindowClasses;
 
 	ENGINEAPI static std::map<HWND, UEngineWindow*> AllWindows;
 
 	bool IsFocusValue = false;
-
 
 	FVector WindowSize;
 	HWND WindowHandle = nullptr;

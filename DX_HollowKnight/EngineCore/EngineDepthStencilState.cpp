@@ -10,15 +10,13 @@ UEngineDepthStencilState::~UEngineDepthStencilState()
 {
 }
 
-
-
 std::shared_ptr<UEngineDepthStencilState> UEngineDepthStencilState::Create(std::string_view _Name, const D3D11_DEPTH_STENCIL_DESC& _Value)
 {
 	std::string UpperName = ToUpperName(_Name);
 
 	if (true == Contains(UpperName))
 	{
-		MSGASSERT("이미 로드한 텍스처를 도 로드하려고 했습니다." + UpperName);
+		MSGASSERT("이미 로드한 텍스처를 다시 로드하려고 했습니다." + UpperName);
 		return nullptr;
 	}
 
@@ -42,6 +40,5 @@ void UEngineDepthStencilState::ResCreate(const D3D11_DEPTH_STENCIL_DESC& _Value)
 
 void UEngineDepthStencilState::Setting()
 {
-	// Omset 최종 픽셀테스트에 영향을 준다.
 	UEngineCore::GetDevice().GetContext()->OMSetDepthStencilState(State.Get(), 0);
 }

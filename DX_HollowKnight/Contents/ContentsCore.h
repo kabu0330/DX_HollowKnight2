@@ -23,10 +23,7 @@ protected:
 private:
 	void SetWindowSize(UEngineInitData& _Data);
 
-
 	void CreateLevel();
-	//void LoadContentsResource(std::string_view _Path);
-
 
 };
 

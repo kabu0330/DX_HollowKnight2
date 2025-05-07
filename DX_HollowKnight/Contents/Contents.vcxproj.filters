@@ -31,13 +31,7 @@
     <ClInclude Include="ContentsEditorGUI.h">
       <Filter>ContentsSetting\GUI</Filter>
     </ClInclude>
-    <ClInclude Include="MapEditorGameMode.h">
-      <Filter>Level</Filter>
-    </ClInclude>
     <ClInclude Include="DebugWindowGUI.h">
-      <Filter>ContentsSetting\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="MapEditorGUI.h">
       <Filter>ContentsSetting\GUI</Filter>
     </ClInclude>
     <ClInclude Include="ContentsResource.h">
@@ -66,12 +60,6 @@
     </ClInclude>
     <ClInclude Include="Door.h">
       <Filter>Play\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="Background.h">
-      <Filter>Play\MapEditor</Filter>
-    </ClInclude>
-    <ClInclude Include="MapObject.h">
-      <Filter>Play\MapEditor</Filter>
     </ClInclude>
     <ClInclude Include="KnightSkill.h">
       <Filter>Global\Knight\Skill</Filter>
@@ -180,13 +168,7 @@
     <ClCompile Include="ContentsEditorGUI.cpp">
       <Filter>ContentsSetting\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="MapEditorGameMode.cpp">
-      <Filter>Level</Filter>
-    </ClCompile>
     <ClCompile Include="DebugWindowGUI.cpp">
-      <Filter>ContentsSetting\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="MapEditorGUI.cpp">
       <Filter>ContentsSetting\GUI</Filter>
     </ClCompile>
     <ClCompile Include="ContentsResource.cpp">
@@ -218,12 +200,6 @@
     </ClCompile>
     <ClCompile Include="Door.cpp">
       <Filter>Play\Map</Filter>
-    </ClCompile>
-    <ClCompile Include="Background.cpp">
-      <Filter>Play\MapEditor</Filter>
-    </ClCompile>
-    <ClCompile Include="MapObject.cpp">
-      <Filter>Play\MapEditor</Filter>
     </ClCompile>
     <ClCompile Include="Knight_Animation.cpp">
       <Filter>Global\Knight</Filter>
@@ -352,9 +328,6 @@
     </Filter>
     <Filter Include="Play\Map">
       <UniqueIdentifier>{984de52d-cd76-4f19-8dcb-bfa33fefa2cc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Play\MapEditor">
-      <UniqueIdentifier>{b1501c4b-3474-4292-923d-b04a0b5a6cb4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Global\Knight\Skill">
       <UniqueIdentifier>{b7206834-6b8c-4154-b91a-056981c7e22e}</UniqueIdentifier>

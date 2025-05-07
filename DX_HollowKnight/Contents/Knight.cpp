@@ -691,6 +691,11 @@ void AKnight::DebugInput(float _DeltaTime)
 		Stat.AddHp(1);
 	}
 
+	if (UEngineInput::IsDown('S'))
+	{
+		Stat.AddMp(99);
+	}
+
 	float ZValue = BodyRenderer->GetTransformRef().RelativeLocation.Z;
 	int a = 0;
 

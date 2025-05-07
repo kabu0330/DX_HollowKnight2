@@ -153,28 +153,16 @@ void URenderUnit::SetMaterial(std::string_view _Name)
 
 	MaterialResourcesCheck();
 
-	// UEngineConstantBufferRes Res;
 
 	if (nullptr != Mesh)
 	{
 		InputLayOutCreate();
 
 	}
-
-
 }
 
 void URenderUnit::Render(class UEngineCamera* _Camera, float _DeltaTime)
 {
-	//	ShaderResSetting();
-	
-	//for (std::pair<EShaderType, UEngineShaderResources>& ShaderRes : Resources)
-	//{
-	//	UEngineShaderResources& Res = ShaderRes.second;
-	//	Res.Setting();
-	//}
-	
-
 	for (std::pair<const EShaderType, UEngineShaderResources>& Pair : Resources)
 	{
 		Pair.second.Setting();

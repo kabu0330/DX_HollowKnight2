@@ -32,7 +32,6 @@ public:
 		return InfoPtr;
 	}
 
-
 protected:
 	void ResCreate(const void* _InitData, size_t _VertexSize, size_t _VertexCount);
 

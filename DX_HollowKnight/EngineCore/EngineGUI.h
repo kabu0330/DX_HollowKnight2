@@ -1,11 +1,10 @@
 #pragma once
 
 #include "imgui.h"
-// impl단어를 보면 기존 기능에서 확장된 기능들을 의미하는 경우가 많다.
 #include "imgui_impl_dx11.h"
 #include "imgui_impl_win32.h"
 
-// 설명 :
+// 설명 : IMGUI를 래핑한 클래스
 class UEngineGUI
 {
 public:
@@ -63,6 +62,5 @@ protected:
 
 private:
 	static inline std::map<std::string, std::shared_ptr<class UEngineGUIWindow>> Windows;
-
 };
 

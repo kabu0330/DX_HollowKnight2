@@ -12,7 +12,6 @@ public:
 	static void OnHit(AMonster* _Monster, int _Att);
 	static void RecoverMp(int _Mp);
 
-
 protected:
 
 private:

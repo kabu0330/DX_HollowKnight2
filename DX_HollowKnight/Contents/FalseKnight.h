@@ -62,7 +62,7 @@ private:
 
 	void CreateAttackLogicAndEffect();
 	bool bIsAttackEffect = false;
-	void CreateGroundImpack();
+	void CreateGroundImpact();
 	bool bIsOffsetAttack1Frame = false;
 	bool bIsOffsetAttackRecovery1Fame = false;
 	bool bIsDoubleAttack = false;
@@ -108,7 +108,7 @@ private:
 	void SetIdle(float _DeltaTime) override;
 	void SetJumpAnticipate(float _DeltaTime) override;
 	void SetJump(float _DeltaTime) override;
-	void SetLand(float _DeltaTime);
+	void SetLand(float _DeltaTime) override;
 
 	void SetJumpAttackAnticipate(float _DeltaTime) override;
 	void SetJumpAttack(float _DeltaTime) override;
@@ -131,8 +131,8 @@ private:
 	void SetStunHit(float _DeltaTime) override;
 	void SetStunRecovery(float _DeltaTime) override;
 
-	void SetDeathAir(float _DeltaTime);
-	void SetDeathLand(float _DeltaTime);
+	void SetDeathAir(float _DeltaTime) override;
+	void SetDeathLand(float _DeltaTime) override;
 
 	USoundPlayer PatternSound;
 	USoundPlayer BossVoice;

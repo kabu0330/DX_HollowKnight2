@@ -193,7 +193,6 @@ private:
 
 	std::shared_ptr<class UContentsRenderer> PixelCollisionTexture;
 	std::shared_ptr<class UContentsRenderer> BackgroundRenderer;
-	//class UCollision* Trap = nullptr;
 	class ADoor* Door = nullptr;
 
 	std::list<AMonster*> Monsters;

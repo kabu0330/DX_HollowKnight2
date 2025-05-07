@@ -173,10 +173,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Background.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="Barrier.h">
       <SubType>
       </SubType>
@@ -268,18 +264,6 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="LeapingHusk.h" />
-    <ClInclude Include="MapEditorGameMode.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="MapEditorGUI.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="MapObject.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="Monster.h">
       <SubType>
       </SubType>
@@ -344,10 +328,6 @@
     <ClCompile Include="AspidHatchling.cpp" />
     <ClCompile Include="AspidHunter.cpp" />
     <ClCompile Include="AspidMother.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Background.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -441,18 +421,6 @@
     </ClCompile>
     <ClCompile Include="Knight_FSM.cpp" />
     <ClCompile Include="LeapingHusk.cpp" />
-    <ClCompile Include="MapEditorGameMode.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="MapEditorGUI.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="MapObject.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="Monster.cpp">
       <SubType>
       </SubType>

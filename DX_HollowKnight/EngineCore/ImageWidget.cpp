@@ -4,7 +4,6 @@
 
 UImageWidget::UImageWidget()
 {
-	// 기하구조를 가진 녀석이라는 것을 알려준다.
 	RenderUnit.TransformObject = this;
 	RenderUnit.SetMesh("Rect");
 	RenderUnit.SetMaterial("WidgetMaterial");

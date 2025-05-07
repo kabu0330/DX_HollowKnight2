@@ -26,9 +26,6 @@ void UEngineResources::PushRes(std::shared_ptr<UEngineResources> _Res, const std
 		return;
 	}
 
-	// 텍스처
-	// 머티리얼
-
 	_Res->SetName(UpperName); // 텍스처 이름
 	_Res->Path = _Path; // 텍스처 경로
 	ResMap[_Info.data()].insert({UpperName, _Res }); // 자료형을 기준으로 다시, 텍스처 이름을 기준으로 텍스처 데이터를 저장

@@ -24,7 +24,6 @@ ABarrier::ABarrier()
 	Scale = FVector(35, 400);
 	Collision->SetScale3D(Scale);
 	Collision->SetActive(false);
-	//BodyCollision->SetCollisionType(ECollisionType::AABB);
 
 	Collision->SetCollisionStay(std::bind(&ABarrier::Barrier, this, std::placeholders::_1, std::placeholders::_2));
 	Collision->SetCollisionEnd(std::bind(&ABarrier::BarrierEnd, this, std::placeholders::_1, std::placeholders::_2));

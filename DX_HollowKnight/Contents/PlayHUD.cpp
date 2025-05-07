@@ -111,10 +111,6 @@ void APlayHUD::CreateSkillGaugeFrame()
 {
 	SkillGaugeFrame->SetActive(true);
 
-	//SkillGaugeFrame->SetDownEvent([]()
-	//	{
-	//		UEngineDebug::OutPutString("Click");
-	//	});
 }
 
 void APlayHUD::CheckKnightHp()
