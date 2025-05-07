@@ -5,26 +5,26 @@
 
 ATitleScene::ATitleScene()
 {
-	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
+	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubobject<UDefaultSceneComponent>();
 	RootComponent = Default;
 
-	BackgroundRenderer = CreateDefaultSubObject<UContentsRenderer>();
+	BackgroundRenderer = CreateDefaultSubobject<UContentsRenderer>();
 	BackgroundRenderer->SetupAttachment(RootComponent);
 	BackgroundRenderer->SetTexture("main.bmp", true, 0.67f);
 	BackgroundRenderer->SetRelativeLocation({ 0.0f, 0.0f, 1000.0f });
 
-	TitleLogo = CreateDefaultSubObject<UContentsRenderer>();
+	TitleLogo = CreateDefaultSubobject<UContentsRenderer>();
 	TitleLogo->SetupAttachment(RootComponent);
 	TitleLogo->SetTexture("TitleLogo.png", true, 0.6f);
 	FVector ScreenSize = UEngineCore::GetScreenScale();
 	TitleLogo->SetRelativeLocation({ 0.0f, ScreenSize.Y * 0.25f , 999.0f });
 
-	CreditsLogo = CreateDefaultSubObject<UContentsRenderer>();
+	CreditsLogo = CreateDefaultSubobject<UContentsRenderer>();
 	CreditsLogo->SetupAttachment(RootComponent);
 	CreditsLogo->SetTexture("creditslogo.png", true, 0.4f);
 	CreditsLogo->SetRelativeLocation({ ScreenSize.X * 0.3f, ScreenSize.Y * -0.27f , 999.0f });
 
-	StartLogo = CreateDefaultSubObject<UContentsRenderer>();
+	StartLogo = CreateDefaultSubobject<UContentsRenderer>();
 	StartLogo->SetupAttachment(RootComponent);
 	StartLogo->SetTexture("Start.png", true, 0.6f);
 	StartLogo->SetRelativeLocation({ 0.0f, ScreenSize.Y * -0.18f , 999.0f });

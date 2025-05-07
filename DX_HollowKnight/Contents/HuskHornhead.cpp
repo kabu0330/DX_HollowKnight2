@@ -98,7 +98,7 @@ void AHuskHornhead::CreateAnimation()
 void AHuskHornhead::CreateCollision()
 {
 	// Collision
-	BodyCollision = CreateDefaultSubObject<UCollision>();
+	BodyCollision = CreateDefaultSubobject<UCollision>();
 	BodyCollision->SetupAttachment(RootComponent);
 	BodyCollision->SetScale3D(CollisionScale);
 	BodyCollision->SetWorldLocation({ BodyCollisionOffset.X, BodyCollisionOffset.Y, ZSort });

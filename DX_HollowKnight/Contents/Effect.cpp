@@ -5,12 +5,12 @@ AEffect::AEffect()
 {
 	SetName("AEffect");
 
-	TimeEventer = CreateDefaultSubObject<UTimeEventComponent>().get();
+	TimeEventer = CreateDefaultSubobject<UTimeEventComponent>().get();
 
-	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
+	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubobject<UDefaultSceneComponent>();
 	RootComponent = Default;
 
-	BodyRenderer = CreateDefaultSubObject<UContentsRenderer>();
+	BodyRenderer = CreateDefaultSubobject<UContentsRenderer>();
 	BodyRenderer->SetupAttachment(RootComponent);
 	BodyRenderer->SetAutoScaleRatio(1.0f);
 	ZSort = static_cast<float>(EZOrder::KNIGHT_SKILL_FRONT);

@@ -8,7 +8,7 @@
 AMonster::AMonster()
 {
 	SetName("Monster");
-	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
+	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubobject<UDefaultSceneComponent>();
 	RootComponent = Default;
 
 	// Renderer
@@ -16,12 +16,12 @@ AMonster::AMonster()
 	Random.SetSeed(reinterpret_cast<__int64>(this));
 	float Result = Random.Randomfloat(0.0f, 99.9f);
 	ZSort = static_cast<float>(EZOrder::MONSTER) + Result;
-	BodyRenderer = CreateDefaultSubObject<UContentsRenderer>();
+	BodyRenderer = CreateDefaultSubobject<UContentsRenderer>();
 	BodyRenderer->SetupAttachment(RootComponent);
 	BodyRenderer->SetAutoScaleRatio(1.0f);
 	BodyRenderer->BillboardOn();
 
-	TimeEventer = CreateDefaultSubObject<UTimeEventComponent>().get();
+	TimeEventer = CreateDefaultSubobject<UTimeEventComponent>().get();
 }
 
 void AMonster::SetStatus()

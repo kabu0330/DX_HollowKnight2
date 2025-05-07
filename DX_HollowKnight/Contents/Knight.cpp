@@ -25,9 +25,9 @@ AKnight::AKnight()
 	SetName("AKnight");
 	MainPawn = this;
 
-	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
+	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubobject<UDefaultSceneComponent>();
 	RootComponent = Default;
-	TimeEventer = CreateDefaultSubObject<UTimeEventComponent>().get();
+	TimeEventer = CreateDefaultSubobject<UTimeEventComponent>().get();
 
 	CreateRenderer();
 	CreateCollision();
@@ -151,7 +151,7 @@ void AKnight::ActivePixelCollsion()
 
 void AKnight::CreatePixelCollision()
 {
-	PixelCollision = CreateDefaultSubObject<UCollision>();
+	PixelCollision = CreateDefaultSubobject<UCollision>();
 	//std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
 	PixelCollision->SetupAttachment(RootComponent);
 	PixelCollision->SetScale3D({ 70, 5 });
@@ -769,7 +769,7 @@ void AKnight::ChangeAttackAnimation(EKnightState _PrevState)
 
 void AKnight::CreateCollision()
 {
-	BodyCollision = CreateDefaultSubObject<UCollision>();
+	BodyCollision = CreateDefaultSubobject<UCollision>();
 	BodyCollision->SetupAttachment(RootComponent);
 	BodyCollision->SetCollisionProfileName("Knight");
 	BodyCollision->SetScale3D({ 60.0f, 130.0f });

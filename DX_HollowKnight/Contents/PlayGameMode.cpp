@@ -160,16 +160,16 @@ void APlayGameMode::BeginPlay()
 {
 	AActor::BeginPlay();
 	SetBasePoint(); // 원점 0, 0 표기
-	TimeEventer = CreateDefaultSubObject<UTimeEventComponent>();
+	TimeEventer = CreateDefaultSubobject<UTimeEventComponent>();
 	ShowPrompt();
 }
 
 void APlayGameMode::SetBasePoint()
 { 
-	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
+	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubobject<UDefaultSceneComponent>();
 	RootComponent = Default;
 
-	BasePointCollision = CreateDefaultSubObject<UCollision>();
+	BasePointCollision = CreateDefaultSubobject<UCollision>();
 	BasePointCollision->SetupAttachment(RootComponent);
 	BasePointCollision->SetCollisionProfileName("Door");
 	float ZSort = static_cast<float>(EZOrder::BACKGROUND);

@@ -88,7 +88,7 @@ void AWanderingHusk::CreateAnimation()
 void AWanderingHusk::CreateCollision()
 {
 	// Collision
-	BodyCollision = CreateDefaultSubObject<UCollision>();
+	BodyCollision = CreateDefaultSubobject<UCollision>();
 	BodyCollision->SetupAttachment(RootComponent);
 	BodyCollision->SetScale3D({ 106, 127 });
 	BodyCollision->SetWorldLocation({ BodyCollisionOffset.X, BodyCollisionOffset.Y, ZSort });

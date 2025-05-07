@@ -6,10 +6,10 @@
 
 ADoor::ADoor()
 {
-	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
+	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubobject<UDefaultSceneComponent>();
 	RootComponent = Default;
 
-	BodyCollision = CreateDefaultSubObject<UCollision>();
+	BodyCollision = CreateDefaultSubobject<UCollision>();
 	BodyCollision->SetupAttachment(RootComponent);
 	BodyCollision->SetCollisionProfileName("Door");
 	float ZSort = static_cast<float>(EZOrder::BACKGROUND);
@@ -23,7 +23,7 @@ ADoor::ADoor()
 			APlayHUD::GetHUD()->SetActiveClimbText(false);
 		});
 
-	TimeEventer = CreateDefaultSubObject<UTimeEventComponent>();
+	TimeEventer = CreateDefaultSubobject<UTimeEventComponent>();
 }
 
 ADoor::~ADoor()

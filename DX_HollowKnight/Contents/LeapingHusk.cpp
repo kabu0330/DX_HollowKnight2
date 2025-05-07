@@ -96,7 +96,7 @@ void ALeapingHusk::CreateAnimation()
 void ALeapingHusk::CreateCollision()
 {
 	// Collision
-	BodyCollision = CreateDefaultSubObject<UCollision>();
+	BodyCollision = CreateDefaultSubobject<UCollision>();
 	BodyCollision->SetupAttachment(RootComponent);
 	BodyCollision->SetScale3D(CollisionScale);
 	BodyCollision->SetWorldLocation({ BodyCollisionOffset.X, BodyCollisionOffset.Y, ZSort });

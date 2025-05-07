@@ -111,7 +111,7 @@ void AMonster::Knockback()
 void AMonster::CreateCollision()
 {
 	// Collision
-	BodyCollision = CreateDefaultSubObject<UCollision>();
+	BodyCollision = CreateDefaultSubobject<UCollision>();
 	BodyCollision->SetupAttachment(RootComponent);
 	BodyCollision->SetScale3D(CollisionScale);
 	BodyCollision->SetWorldLocation({ BodyCollisionOffset.X, BodyCollisionOffset.Y, ZSort });
@@ -239,7 +239,7 @@ void AMonster::SetAttackRendererOffset()
 
 void AMonster::CreateDetectCollision()
 {
-	DetectCollision = CreateDefaultSubObject<UCollision>();
+	DetectCollision = CreateDefaultSubobject<UCollision>();
 	DetectCollision->SetupAttachment(RootComponent);
 	DetectCollision->SetScale3D(DetectRange);
 	DetectCollision->SetWorldLocation({ BodyCollisionOffset.X, BodyCollisionOffset.Y, ZSort });
@@ -249,7 +249,7 @@ void AMonster::CreateDetectCollision()
 
 void AMonster::CreateCenterPoint()
 {
-	CenterPoint = CreateDefaultSubObject<UCollision>();
+	CenterPoint = CreateDefaultSubobject<UCollision>();
 	CenterPoint->SetupAttachment(RootComponent);
 	CenterPoint->SetScale3D({ 10, 10 });
 	CenterPoint->SetWorldLocation({ BodyCollisionOffset.X, BodyCollisionOffset.Y, ZSort });
@@ -259,7 +259,7 @@ void AMonster::CreateCenterPoint()
 
 void AMonster::CreatePixelCollision()
 {
-	PixelCollision = CreateDefaultSubObject<UCollision>();
+	PixelCollision = CreateDefaultSubobject<UCollision>();
 	PixelCollision->SetupAttachment(RootComponent);
 	PixelCollision->SetCollisionProfileName("MonsterPoint");
 	PixelCollision->SetScale3D({ CollisionScale.X, 5.0f });

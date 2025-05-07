@@ -3,7 +3,7 @@
 
 void AKnight::CreateRenderer()
 {
-	BodyRenderer = CreateDefaultSubObject<UContentsRenderer>();
+	BodyRenderer = CreateDefaultSubobject<UContentsRenderer>();
 	BodyRenderer->SetName("Knight");
 	BodyRenderer->SetupAttachment(RootComponent);
 	BodyRenderer->SetAutoScaleRatio(1.0f);

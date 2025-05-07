@@ -9,7 +9,7 @@ ATitleHUD::ATitleHUD()
 	CreateFade();
 	CreateCreditsLogo();
 
-	TimeEventer = CreateDefaultSubObject<UTimeEventComponent>().get();
+	TimeEventer = CreateDefaultSubobject<UTimeEventComponent>().get();
 }
 
 ATitleHUD::~ATitleHUD()

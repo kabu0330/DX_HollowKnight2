@@ -16,7 +16,7 @@ ATitleGameMode::ATitleGameMode()
 	std::shared_ptr<ACameraActor> Camera = GetWorld()->GetMainCamera();
 	Camera->SetActorLocation({0.0f, 0.0f, -1000.0f, 1.0f});
 
-	TimeEventer = CreateDefaultSubObject<UTimeEventComponent>().get();
+	TimeEventer = CreateDefaultSubobject<UTimeEventComponent>().get();
 }
 
 ATitleGameMode::~ATitleGameMode()

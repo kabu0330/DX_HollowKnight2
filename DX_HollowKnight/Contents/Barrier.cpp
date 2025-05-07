@@ -5,19 +5,19 @@ ABarrier::ABarrier()
 {
 	SetName("ABarrier");
 
-	TimeEventer = CreateDefaultSubObject<UTimeEventComponent>().get();
+	TimeEventer = CreateDefaultSubobject<UTimeEventComponent>().get();
 
-	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
+	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubobject<UDefaultSceneComponent>();
 	RootComponent = Default;
 
-	Renderer = CreateDefaultSubObject<UContentsRenderer>().get();
+	Renderer = CreateDefaultSubobject<UContentsRenderer>().get();
 	Renderer->SetupAttachment(RootComponent);
 	Renderer->SetAutoScaleRatio(1.0f);
 	ZSort = static_cast<float>(EZOrder::BARRIER);
 	Renderer->SetRelativeLocation({ 0.0f, 200.0f });
 	Renderer->SetWorldLocation({ 0.0f, 0.0f, ZSort });
 
-	Collision = CreateDefaultSubObject<UCollision>().get();
+	Collision = CreateDefaultSubobject<UCollision>().get();
 	Collision->SetupAttachment(RootComponent);
 	Collision->SetCollisionProfileName("Barrier");
 	Collision->GetTransformRef().Location.Z = ZSort;

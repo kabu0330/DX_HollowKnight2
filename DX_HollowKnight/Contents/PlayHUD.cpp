@@ -13,7 +13,7 @@ APlayHUD::APlayHUD()
 	HalfSize = ScreenSize * 0.5f;
 	Knight = AKnight::GetPawn();
 
-	TimeEventer = CreateDefaultSubObject<UTimeEventComponent>().get();
+	TimeEventer = CreateDefaultSubobject<UTimeEventComponent>().get();
 	CreateFade();
 }
 

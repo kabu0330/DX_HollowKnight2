@@ -25,7 +25,7 @@ public:
 	virtual void LevelChangeEnd() {}
 
 	template<typename ComponentType>
-	inline std::shared_ptr<ComponentType> CreateDefaultSubObject()
+	inline std::shared_ptr<ComponentType> CreateDefaultSubobject()
 	{
 		static_assert(std::is_base_of_v<UActorComponent, ComponentType>, "액터 컴포넌트를 상속받지 않은 클래스를 CreateDefaultSubObject하려고 했습니다.");
 

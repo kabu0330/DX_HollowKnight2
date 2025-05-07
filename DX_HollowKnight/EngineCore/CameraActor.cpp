@@ -5,7 +5,7 @@
 
 ACameraActor::ACameraActor()
 {
-	CameraComponent = CreateDefaultSubObject<UEngineCamera>();
+	CameraComponent = CreateDefaultSubobject<UEngineCamera>();
 	RootComponent = CameraComponent;
 }
 

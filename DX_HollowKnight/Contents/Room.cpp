@@ -10,10 +10,10 @@
 ARoom::ARoom()
 {
 	// 항상 DefaultSceneComponent는 생성자에서만. BeginPlay에서는 만들 수 없다.
-	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
+	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubobject<UDefaultSceneComponent>();
 	RootComponent = Default;
 
-	BackgroundRenderer = CreateDefaultSubObject<UContentsRenderer>();
+	BackgroundRenderer = CreateDefaultSubobject<UContentsRenderer>();
 	BackgroundRenderer->SetName("Background");
 	BackgroundRenderer->SetupAttachment(RootComponent);
 }
@@ -28,7 +28,7 @@ void ARoom::BeginPlay()
 
 	if ("FalseKnightRoom" == GetName())
 	{
-		Collision = CreateDefaultSubObject<UCollision>().get();
+		Collision = CreateDefaultSubobject<UCollision>().get();
 		Collision->SetupAttachment(RootComponent);
 		Collision->SetCollisionProfileName("Door");
 		float ZSort = static_cast<float>(EZOrder::BACKGROUND);
