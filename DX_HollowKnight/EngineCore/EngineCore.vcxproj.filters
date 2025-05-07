@@ -448,7 +448,6 @@
     <None Include="ThirdParty\DirectxTex\Inc\DirectXTex.inl">
       <Filter>06_ThirdParty\DirectxTex\Inc</Filter>
     </None>
-    <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="ThirdParty\DirectxTex\Release\DirectXTex_Release.lib">

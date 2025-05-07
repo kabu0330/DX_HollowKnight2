@@ -11,7 +11,7 @@
 class AMonster : public AActor
 {
 public:
-	// constrcuter destructer
+	// constructer destructer
 	AMonster();
 	~AMonster() {};
 

@@ -40,7 +40,9 @@
     <ClCompile Include="EngineDelegate.cpp">
       <Filter>08_Event</Filter>
     </ClCompile>
-    <ClCompile Include="EngineRandom.cpp" />
+    <ClCompile Include="EngineRandom.cpp">
+      <Filter>09_Random</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -85,7 +87,9 @@
     <ClInclude Include="EngineDelegate.h">
       <Filter>08_Event</Filter>
     </ClInclude>
-    <ClInclude Include="EngineRandom.h" />
+    <ClInclude Include="EngineRandom.h">
+      <Filter>09_Random</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="00_Precompile">
@@ -114,6 +118,9 @@
     </Filter>
     <Filter Include="06_String">
       <UniqueIdentifier>{8cb8d0a6-7860-4bf7-b7a9-54335ff7e5ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="09_Random">
+      <UniqueIdentifier>{c8d99e03-477b-4026-8d02-5e213bab3696}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

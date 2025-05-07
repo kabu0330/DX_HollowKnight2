@@ -566,7 +566,7 @@ void AKnight::CastFireball()
 	}
 	if (UEngineInput::IsUp('A'))
 	{
-		Stat.AddMp(-33);
+		//Stat.AddMp(-33);
 		FSM.ChangeState(EKnightState::FIREBALL_ANTIC);
 		return;
 	}
