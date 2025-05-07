@@ -19,6 +19,7 @@ AKnightFireball::~AKnightFireball()
 void AKnightFireball::BeginPlay()
 {
 	AKnightSkill::BeginPlay();
+	UFightUnit::RecoverMp(-33);
 }
 
 void AKnightFireball::Tick(float _DeltaTime)
@@ -83,7 +84,6 @@ void AKnightFireball::Attack(UCollision* _This, UCollision* _Other)
 	{
 		int KnightAtt = Knight->GetStatRef().GetSpellAtt();
 		UFightUnit::OnHit(Monster, KnightAtt);
-		UFightUnit::RecoverMp(-33);
 		Monster->DamageLogic(KnightAtt);
 
 		int MonsterHp = Monster->GetStatRef().GetHp();
