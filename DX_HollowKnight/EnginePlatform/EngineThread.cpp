@@ -26,7 +26,6 @@ void UEngineThread::ThreadBaseFunction(UEngineThread* _Thread)
 
 bool UEngineThread::Start(std::string _Name, std::function<void()> _Function)
 {
-	// 아직 ThreadInst 지금 돌고 있는 쓰레드라거 안된다.
 	if (true == ThreadInst.joinable())
 	{
 		return false;

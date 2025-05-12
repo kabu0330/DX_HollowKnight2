@@ -102,7 +102,6 @@ void UEngineWorkThreadPool::ThreadQueueFunction(HANDLE _IOCPHandle, UEngineWorkT
 		// 마지막 인자는 1000의 시간이 지나면 그냥 아무일 없어도 일어나
 		// GetQueuedCompletionStatus(_IOCPHandle, &Byte, &Ptr, &OverPtr, 1000);
 
-		// 종료될수 있나요 없나요?
 		GetQueuedCompletionStatus(_IOCPHandle, &Byte, &Ptr, &OverPtr, INFINITE);
 
 		if (-1 == Byte)
