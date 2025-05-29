@@ -8,7 +8,6 @@
 class ARoom : public AActor
 {
 public:
-	// constrcuter destructer
 	ARoom();
 	~ARoom();
 

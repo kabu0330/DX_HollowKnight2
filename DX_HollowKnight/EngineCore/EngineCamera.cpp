@@ -58,7 +58,6 @@ void UEngineCamera::Render(float _DetlaTime)
 
 		if (true == RendererZSort[RenderGroup.first]) // Z Sort
 		{
-			// 둘의 z값이 완전히 겹쳐있을때는 답이 없다.
 			// 크기 비교해서 크기가 더 작은쪽을 왼쪽으로 옮긴다.
 			RenderList.sort([](std::shared_ptr<URenderer>& _Left, std::shared_ptr<URenderer>& _Right)
 				{
@@ -87,7 +86,6 @@ void UEngineCamera::Release(float _DeltaTime)
 		std::list<std::shared_ptr<URenderer>>::iterator StartIter = RenderList.begin();
 		std::list<std::shared_ptr<URenderer>>::iterator EndIter = RenderList.end();
 
-		// 언리얼은 중간에 삭제할수 없어.
 		for (; StartIter != EndIter; )
 		{
 			if (false == (*StartIter)->IsDestroy()) // Destory가 false면 삭제하지 않는다.

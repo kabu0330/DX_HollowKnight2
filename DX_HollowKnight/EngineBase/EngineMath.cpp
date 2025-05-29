@@ -40,7 +40,6 @@ public:
 // 데이터 영역
 CollisionFunctionInit Inst = CollisionFunctionInit();
 
-
 FVector FQuat::QuaternionToEulerDeg() const
 {
 	return QuaternionToEulerRad() * UEngineMath::R2D;

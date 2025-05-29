@@ -35,15 +35,8 @@ private:
 class UEngineSound 
 {
 public:
-	// constrcuter destructer
 	ENGINEAPI UEngineSound();
 	ENGINEAPI ~UEngineSound();
-
-	// delete Function
-	UEngineSound(const UEngineSound& _Other) = delete;
-	UEngineSound(UEngineSound&& _Other) noexcept = delete;
-	UEngineSound& operator=(const UEngineSound& _Other) = delete;
-	UEngineSound& operator=(UEngineSound&& _Other) noexcept = delete;
 
 	ENGINEAPI static void Load(std::string_view _Path);
 	ENGINEAPI static void Load(std::string_view _Name, std::string_view _Path);
@@ -67,5 +60,12 @@ private:
 	FMOD::Sound* SoundHandle;
 
 	ENGINEAPI bool ResLoad(std::string_view _Path);
+
+private:
+	// delete Function
+	UEngineSound(const UEngineSound& _Other) = delete;
+	UEngineSound(UEngineSound&& _Other) noexcept = delete;
+	UEngineSound& operator=(const UEngineSound& _Other) = delete;
+	UEngineSound& operator=(UEngineSound&& _Other) noexcept = delete;
 };
 

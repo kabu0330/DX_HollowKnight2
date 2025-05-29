@@ -30,10 +30,8 @@ void UEngineGraphicDevice::DepthStencilInit()
 		D3D11_DEPTH_STENCIL_DESC Desc = { 0 };
 		Desc.DepthEnable = true;
 		Desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-		// 깊이값이 더 작으면 통과시켜
 		Desc.DepthFunc = D3D11_COMPARISON_LESS;
 		Desc.StencilEnable = false;
-		// Desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
 
 		UEngineDepthStencilState::Create("BaseDepth", Desc);
 	}
@@ -42,10 +40,8 @@ void UEngineGraphicDevice::DepthStencilInit()
 		D3D11_DEPTH_STENCIL_DESC Desc = { 0 };
 		Desc.DepthEnable = false;
 		Desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-		// 깊이값이 더 작으면 통과시켜
 		Desc.DepthFunc = D3D11_COMPARISON_LESS;
 		Desc.StencilEnable = false;
-		// Desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
 
 		UEngineDepthStencilState::Create("UIDepth", Desc);
 	}
@@ -56,7 +52,6 @@ void UEngineGraphicDevice::DepthStencilInit()
 		Desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
 		Desc.DepthFunc = D3D11_COMPARISON_ALWAYS;
 		Desc.StencilEnable = false;
-		// Desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
 
 		UEngineDepthStencilState::Create("CollisionDebugDepth", Desc);
 	}
@@ -67,7 +62,6 @@ void UEngineGraphicDevice::DepthStencilInit()
 		Desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
 		Desc.DepthFunc = D3D11_COMPARISON_ALWAYS;
 		Desc.StencilEnable = false;
-		// Desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
 
 		UEngineDepthStencilState::Create("TargetMerge", Desc);
 	}
@@ -86,13 +80,7 @@ void UEngineGraphicDevice::TextureInit()
 		SampInfo.BorderColor[2] = 0.0f;
 		SampInfo.BorderColor[3] = 0.0f;
 
-		// SampInfo.ComparisonFunc = D3D11_COMPARISON_NEVER;
-		// Lod라고 불리는 것은 z값이 얼마나 멀어지면 얼마나 대충 색깔 빼올거냐. 
-		// SampInfo.MaxLOD = 0.0f;
-		// SampInfo.MinLOD = 0.0f;
-
 		UEngineSampler::Create("WRAPSampler", SampInfo);
-
 
 	{
 		UEngineDirectory Dir;
@@ -166,7 +154,6 @@ void UEngineGraphicDevice::MeshInit()
 	{
 		UMesh::Create("Rect");
 
-		// FullRect 포스트 프로세싱용 화면 전체크기 만한 메시를 제작.
 		UMesh::Create("FullRect", "FullRect", "Rect");
 	}
 
@@ -233,7 +220,7 @@ void UEngineGraphicDevice::MaterialInit()
 		std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("TargetMerge");
 		Mat->SetVertexShader("EngineTargetMergeShader.fx");
 		Mat->SetPixelShader("EngineTargetMergeShader.fx");
-		Mat->SetDepthStencilState("TargetMerge"); // 언제나 화면에 나오는 누구도 이녀석의 앞을 가릴수 없어.
+		Mat->SetDepthStencilState("TargetMerge"); 
 	}
 
 	{

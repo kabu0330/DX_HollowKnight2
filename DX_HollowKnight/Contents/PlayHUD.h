@@ -7,7 +7,6 @@
 class APlayHUD : public AHUD
 {
 public:
-	// constrcuter destructer
 	APlayHUD();
 	~APlayHUD();
 
@@ -102,7 +101,7 @@ private:
 	
 	void CreateFleur();
 	std::shared_ptr<class UImageWidget> TextTopFleur = nullptr;
-	std::shared_ptr<class UImageWidget> TexBotFleur = nullptr;
+	std::shared_ptr<class UImageWidget> TextBotFleur = nullptr;
 
 	void CreatePrompt();
 	void ActiveTruePrompt();

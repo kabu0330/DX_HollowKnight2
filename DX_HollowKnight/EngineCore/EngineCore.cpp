@@ -11,7 +11,6 @@
 #include "Level.h"
 #include "GameInstance.h"
 
-// EngineCore.dll에 생성된 메모리여야 하므로 cpp 파일에서 Getter 함수를 구현한다. 헤더에서 구현하니 복사된 메모리를 참조하더라.
 UEngineGraphicDevice& UEngineCore::GetDevice()
 {
 	return GEngine->Device;
@@ -72,7 +71,6 @@ void UEngineCore::LoadContents(std::string_view _DllName)
 	Dir.MoveParentToDirectory("Build");
 	Dir.Move("bin/x64");
 
-	// 빌드 상황에 따라서 경로 변경
 #ifdef _DEBUG
 	Dir.Move("Debug");
 #else
@@ -111,7 +109,6 @@ void UEngineCore::EngineStart(HINSTANCE _Instance, std::string_view _DllName)
 {
 	UEngineDebug::LeakCheck();
 
-	// 지역변수로 생성하여 프로그램이 종료되기 전에 먼저 메모리가 정리되도록하여 static으로 인한 메모리 누수 문제를 이 방법으로 대체한다.
 	UEngineCore EngineCore;
 
 	GEngine = &EngineCore;
@@ -126,31 +123,23 @@ void UEngineCore::EngineStart(HINSTANCE _Instance, std::string_view _DllName)
 		[]()
 		{
 			UEngineSound::Init();
-			// UEngineDebug::StartConsole();
-			
-			// 1. 그래픽카드 정보를 가져와서 Device와 Context를 생성하고
+
 			GEngine->Device.CreateDeviceAndContext();
 
-			// 2. 윈도우 초기 세팅값 및 컨텐츠 리소스를 로드하고
 			GEngine->Core->EngineStart(GEngine->Data);
 			
-			// 3. 윈도우 크기를 조절하고
 			GEngine->MainWindow.SetWindowPosAndScale(GEngine->Data.WindowPos, GEngine->Data.WindowSize);
 
-			// 4. 윈도우 크기 정보를 바탕으로 백버퍼를 생성한다.
 			GEngine->Device.CreateBackBuffer(GEngine->MainWindow);
 
-			// 5. IMGUI 로드
 			UEngineGUI::Init();
 		},
 		[]()
 		{
-			// 게임 실행
 			EngineFrame();
 		},
 		[]()
 		{
-			// 게임 종료 시, 딱 한번만 호출
 			EngineEnd();
 		});	
 }
@@ -194,7 +183,6 @@ void UEngineCore::EngineFrame()
 	{
 		GEngine->CurLevel = nullptr;
 		GEngine->IsCurLevelReset = false;
-		// 이제 리셋한 정보를 담은 NextLevel이 아래 과정을 거쳐 CurLevel이 된다.
 	}
 
 	if (nullptr != GEngine->NextLevel) // 레벨체인지할 Level이 존재하면

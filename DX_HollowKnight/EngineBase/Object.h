@@ -7,18 +7,9 @@
 class UObject : public std::enable_shared_from_this<UObject>, public ISerializeObject
 {
 public:
-	// constrcuter destructer
 	ENGINEAPI UObject();
+	ENGINEAPI virtual ~UObject(); // 자식 소멸자 호출 지원!
 
-	// 혹여나 자식들의 소멸자가 호출 안되는 경우를 막기위에서
-	// 가상함수 테이블을 만들 것이므로 왠만하면 자식쪽의 소멸자가 호출안되는 경우는 없을 것이다.
-	ENGINEAPI virtual ~UObject();
-
-	// delete Function
-	UObject(const UObject& _Other) = delete;
-	UObject(UObject&& _Other) noexcept = delete;
-	UObject& operator=(const UObject& _Other) = delete;
-	UObject& operator=(UObject&& _Other) noexcept = delete;
 
 	template<typename ChildPtrType>
 	std::shared_ptr<ChildPtrType> GetThis()
@@ -148,5 +139,12 @@ private:
 	std::string Name;
 
 	bool IsDebugValue = false;
+
+private:
+	// delete Function
+	UObject(const UObject& _Other) = delete;
+	UObject(UObject&& _Other) noexcept = delete;
+	UObject& operator=(const UObject& _Other) = delete;
+	UObject& operator=(UObject&& _Other) noexcept = delete;
 };
 

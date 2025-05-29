@@ -15,15 +15,8 @@ public:
 class UTimeEventComponent : public UActorComponent
 {
 public:
-	// constrcuter destructer
 	ENGINEAPI UTimeEventComponent();
 	ENGINEAPI ~UTimeEventComponent();
-
-	// delete Function
-	UTimeEventComponent(const UTimeEventComponent& _Other) = delete;
-	UTimeEventComponent(UTimeEventComponent&& _Other) noexcept = delete;
-	UTimeEventComponent& operator=(const UTimeEventComponent& _Other) = delete;
-	UTimeEventComponent& operator=(UTimeEventComponent&& _Other) noexcept = delete;
 
 	//                      5초 가 지나면                        5초동안만 이 함수를 업데이트해라
 	ENGINEAPI void AddEvent(float _Time, std::function<void(float, float)> _TimeUpdateEvent, std::function<void()> _TimeEndEvent, bool _Loop = false);
@@ -39,5 +32,12 @@ protected:
 
 private:
 	std::list<FTimeEvent> Events;
+
+private:
+	// delete Function
+	UTimeEventComponent(const UTimeEventComponent& _Other) = delete;
+	UTimeEventComponent(UTimeEventComponent&& _Other) noexcept = delete;
+	UTimeEventComponent& operator=(const UTimeEventComponent& _Other) = delete;
+	UTimeEventComponent& operator=(UTimeEventComponent&& _Other) noexcept = delete;
 };
 

@@ -5,7 +5,6 @@
 class AGameMode : public AActor
 {
 public:
-	// constrcuter destructer
 	ENGINEAPI AGameMode();
 	ENGINEAPI ~AGameMode();
 

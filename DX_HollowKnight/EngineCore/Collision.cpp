@@ -135,7 +135,6 @@ void UCollision::SetCollisionEnter(std::function<void(UCollision*, UCollision*)>
 	ULevel* Level = GetActor()->GetWorld();
 	std::shared_ptr<UCollision> ThisPtr = GetThis<UCollision>();
 
-	// 중간에 프로파일 네임을 바꾸거나. 이러면 문제가 생길수 있다.
 	Level->CheckCollisions[GetCollisionProfileName()].push_back(ThisPtr);
 }
 
@@ -189,12 +188,8 @@ void UCollision::CollisionEventCheck(std::shared_ptr<UCollision> _Other)
 
 	if (true == FTransform::Collision(CollisionType, Transform, _Other->CollisionType, _Other->Transform))
 	{
-		// 충돌 했다.
-		// 충돌 했는데 너 내가 왜 몰라?
 		if (false ==  CollisionCheckSet.contains(_Other.get()))
 		{
-
-			// 없는데 충돌은 최초충돌 
 			CollisionCheckSet.insert(_Other.get());
 			_Other->CollisionCheckSet.insert(this);
 			if (nullptr != Enter)
@@ -204,7 +199,6 @@ void UCollision::CollisionEventCheck(std::shared_ptr<UCollision> _Other)
 		}
 		else 
 		{
-			// 충돌을 했는데 전에 나랑 부딪친적이 있다.
 			if (nullptr != Stay)
 			{
 				Stay(this, _Other.get());

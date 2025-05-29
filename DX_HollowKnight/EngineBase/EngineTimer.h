@@ -5,15 +5,8 @@
 class UEngineTimer
 {
 public:
-	// constrcuter destructer
 	ENGINEAPI UEngineTimer();
 	ENGINEAPI ~UEngineTimer();
-
-	// delete Function
-	UEngineTimer(const UEngineTimer& _Other) = delete;
-	UEngineTimer(UEngineTimer&& _Other) noexcept = delete;
-	UEngineTimer& operator=(const UEngineTimer& _Other) = delete;
-	UEngineTimer& operator=(UEngineTimer&& _Other) noexcept = delete;
 
 	ENGINEAPI void TimeCheck();
 
@@ -66,5 +59,12 @@ private:
 	double DeltaTime = 0.0;
 	float fDeltaTime = 0.0f;
 	float TimeScale = 1.0f;
+
+private:
+	// delete Function
+	UEngineTimer(const UEngineTimer& _Other) = delete;
+	UEngineTimer(UEngineTimer&& _Other) noexcept = delete;
+	UEngineTimer& operator=(const UEngineTimer& _Other) = delete;
+	UEngineTimer& operator=(UEngineTimer&& _Other) noexcept = delete;
 };
 

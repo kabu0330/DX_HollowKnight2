@@ -292,7 +292,6 @@ void ULevel::Release(float _DeltaTime)
 	}
 
 	{
-		// 충돌체 릴리즈
 		for (std::pair<const std::string, std::list<std::shared_ptr<UCollision>>>& Group : Collisions)
 		{
 			std::list<std::shared_ptr<UCollision>>& List = Group.second;
@@ -300,7 +299,6 @@ void ULevel::Release(float _DeltaTime)
 			std::list<std::shared_ptr<UCollision>>::iterator StartIter = List.begin();
 			std::list<std::shared_ptr<UCollision>>::iterator EndIter = List.end();
 
-			// 언리얼은 중간에 삭제할수 없어.
 			for (; StartIter != EndIter; )
 			{
 				if (false == (*StartIter)->IsDestroy())
@@ -320,13 +318,10 @@ void ULevel::Release(float _DeltaTime)
 		std::list<std::shared_ptr<AActor>>::iterator StartIter = List.begin();
 		std::list<std::shared_ptr<AActor>>::iterator EndIter = List.end();
 
-		// 언리얼은 중간에 삭제할수 없어.
 		for (; StartIter != EndIter; )
 		{
 			if (nullptr != (*StartIter)->Parent)
 			{
-				// 부모가 있는 애는 어차피 부모가 다 tick
-				// 레벨이 돌려줄필요가 없어졌다.
 				StartIter = List.erase(StartIter);
 				continue;
 			}

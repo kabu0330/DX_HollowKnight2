@@ -7,7 +7,6 @@
 class AEffect : public AActor
 {
 public:
-	// constrcuter destructer
 	AEffect();
 	~AEffect();
 

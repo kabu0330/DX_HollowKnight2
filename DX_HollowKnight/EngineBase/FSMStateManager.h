@@ -7,15 +7,8 @@
 class UFSMStateManager
 {
 public:
-	// constrcuter destructer
 	UFSMStateManager()	{	}
 	~UFSMStateManager()	{	}
-
-	// delete Function
-	UFSMStateManager(const UFSMStateManager& _Other) = delete;
-	UFSMStateManager(UFSMStateManager&& _Other) noexcept = delete;
-	UFSMStateManager& operator=(const UFSMStateManager& _Other) = delete;
-	UFSMStateManager& operator=(UFSMStateManager&& _Other) noexcept = delete;
 
 	class FSMState
 	{
@@ -89,5 +82,12 @@ private:
 	FSMState* CurState = nullptr;
 	FSMState* PrevState = nullptr;
 	std::map<int, FSMState> States;
+
+private:
+	// delete Function
+	UFSMStateManager(const UFSMStateManager& _Other) = delete;
+	UFSMStateManager(UFSMStateManager&& _Other) noexcept = delete;
+	UFSMStateManager& operator=(const UFSMStateManager& _Other) = delete;
+	UFSMStateManager& operator=(UFSMStateManager&& _Other) noexcept = delete;
 };
 

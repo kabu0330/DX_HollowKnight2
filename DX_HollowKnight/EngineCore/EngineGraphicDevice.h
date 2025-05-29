@@ -15,15 +15,8 @@
 class UEngineGraphicDevice
 {
 public:
-	// constrcuter destructer
 	ENGINEAPI UEngineGraphicDevice();
 	ENGINEAPI ~UEngineGraphicDevice();
-
-	// delete Function
-	UEngineGraphicDevice(const UEngineGraphicDevice& _Other) = delete;
-	UEngineGraphicDevice(UEngineGraphicDevice&& _Other) noexcept = delete;
-	UEngineGraphicDevice& operator=(const UEngineGraphicDevice& _Other) = delete;
-	UEngineGraphicDevice& operator=(UEngineGraphicDevice&& _Other) noexcept = delete;
 
 	void CreateDeviceAndContext();
 	void CreateBackBuffer(const UEngineWindow& _Window);
@@ -60,11 +53,7 @@ private:
 
 	Microsoft::WRL::ComPtr<IDXGISwapChain> SwapChain = nullptr;
 
-	// πÈπˆ∆€ ≈∏∞Ÿ = πÈπˆ∆€ ≈ÿΩ∫√≥ + ±Ì¿Ã ≈ÿΩ∫√≥ + ∑ª¥ı ≈∏∞Ÿ ∫‰ 
 	std::shared_ptr<class UEngineRenderTarget> BackBufferTarget;
-	//Microsoft::WRL::ComPtr<ID3D11Texture2D> DXBackBufferTexture = nullptr;
-	//Microsoft::WRL::ComPtr<ID3D11RenderTargetView> RTV = nullptr;
-	//std::shared_ptr<class UEngineTexture> DepthTex;
 
 	
 	ENGINEAPI void DefaultResourcesInit();
@@ -76,5 +65,12 @@ private:
 	ENGINEAPI void RasterizerStateInit();
 	ENGINEAPI void TextureInit();
 	ENGINEAPI void DepthStencilInit();
+
+private:
+	// delete Function
+	UEngineGraphicDevice(const UEngineGraphicDevice& _Other) = delete;
+	UEngineGraphicDevice(UEngineGraphicDevice&& _Other) noexcept = delete;
+	UEngineGraphicDevice& operator=(const UEngineGraphicDevice& _Other) = delete;
+	UEngineGraphicDevice& operator=(UEngineGraphicDevice&& _Other) noexcept = delete;
 };
 

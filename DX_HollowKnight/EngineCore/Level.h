@@ -10,19 +10,10 @@ class ULevel : public UObject
 	friend class UEngineCore;
 
 public:
-	// constrcuter destructer
 	ENGINEAPI ULevel();
 	ENGINEAPI ~ULevel();
 
-	// delete Function
-	ULevel(const ULevel& _Other) = delete;
-	ULevel(ULevel&& _Other) noexcept = delete;
-	ULevel& operator=(const ULevel& _Other) = delete;
-	ULevel& operator=(ULevel&& _Other) noexcept = delete;
-
-	// 내가 이제 실행되는 레벨이 되었을때
 	void LevelChangeStart();
-	// 내가 교체 당했을때
 	void LevelChangeEnd();
 
 	template<typename Type>
@@ -193,5 +184,12 @@ private:
 	std::map<int, std::list<std::shared_ptr<class UWidget>>> Widgets;
 
 	ENGINEAPI void InitLevel(AGameMode* _GameMode, APawn* _Pawn, AHUD* _HUD);
+
+private:
+	// delete Function
+	ULevel(const ULevel& _Other) = delete;
+	ULevel(ULevel&& _Other) noexcept = delete;
+	ULevel& operator=(const ULevel& _Other) = delete;
+	ULevel& operator=(ULevel&& _Other) noexcept = delete;
 };
 

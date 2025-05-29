@@ -5,7 +5,6 @@
 class APawn : public AActor
 {
 public:
-	// constrcuter destructer
 	ENGINEAPI APawn();
 	ENGINEAPI ~APawn();
 

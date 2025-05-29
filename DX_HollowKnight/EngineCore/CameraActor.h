@@ -6,15 +6,8 @@
 class ACameraActor : public AActor
 {
 public:
-	// constrcuter destructer
 	ENGINEAPI ACameraActor();
 	ENGINEAPI ~ACameraActor();
-
-	// delete Function
-	ACameraActor(const ACameraActor& _Other) = delete;
-	ACameraActor(ACameraActor&& _Other) noexcept = delete;
-	ACameraActor& operator=(const ACameraActor& _Other) = delete;
-	ACameraActor& operator=(ACameraActor&& _Other) noexcept = delete;
 
 	ENGINEAPI std::shared_ptr<class UEngineCamera> GetCameraComponent()
 	{
@@ -66,5 +59,12 @@ private:
 	FVector ScreenPos;
 	FVector PrevScreenPos;
 	float RotSpeed = 360.0f;
+
+private:
+	// delete Function
+	ACameraActor(const ACameraActor& _Other) = delete;
+	ACameraActor(ACameraActor&& _Other) noexcept = delete;
+	ACameraActor& operator=(const ACameraActor& _Other) = delete;
+	ACameraActor& operator=(ACameraActor&& _Other) noexcept = delete;
 };
 

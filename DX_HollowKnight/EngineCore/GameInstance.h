@@ -4,7 +4,6 @@
 class UGameInstance
 {
 public:
-	// constrcuter destructer
 	ENGINEAPI UGameInstance();
 	ENGINEAPI virtual ~UGameInstance();
 

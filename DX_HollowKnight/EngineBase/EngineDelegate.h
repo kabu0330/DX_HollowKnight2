@@ -5,7 +5,6 @@
 class EngineDelegate
 {
 public:
-	// constrcuter destructer
 	ENGINEAPI EngineDelegate();
 	ENGINEAPI EngineDelegate(std::function<void()> _Function)
 	{

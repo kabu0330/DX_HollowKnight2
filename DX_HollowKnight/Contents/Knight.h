@@ -205,9 +205,9 @@ private:
 	// Slash : X키
 	bool bIsShowEffect = false;
 	float AttackCooldownElapsed = 0.0f;
-	void CreateSlashEffect();
-	void CreateUpSlashEffect();
-	void CreateDownSlashEffect();
+	void SpawnSlash();
+	void SpawnUpSlash();
+	void SpawnDownSlash();
 
 	// Dash : C키
 	bool bIsDashing = false;
@@ -217,22 +217,22 @@ private:
 	bool bIsDashEffect = false;
 	void ChangeDash();
 	void Dash();
-	void CreateDashEffect();
+	void SpawnDash();
 
 	// Spell : A키
 	bool bIsFireballEffect = false;
 	void CastFireball();
-	void CreateFireballEffect();
+	void SpawnFireball();
 	bool bIsFocusEffect = false;
 	void CastFocus();
-	void CreateFocusEffect();
+	void SpawnFocus();
 	bool bIsFocusEndEffect = false;
-	void CreateFocusEndEffect();
+	void SpawnFocusEnd();
 
 	// 피격 : 스턴
 	bool bIsStunEffect = false;
 	float InitKnockbackDistance = 0.0f;
-	void CreateStunEffect();
+	void SpawnStunEffect();
 
 private:
 	// 디버그

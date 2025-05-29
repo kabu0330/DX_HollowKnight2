@@ -9,7 +9,7 @@
 #include "KnightFireball.h"
 #include "KnightStunEffect.h"
 
-void AKnight::CreateDashEffect()
+void AKnight::SpawnDash()
 {
 	if (true == bIsDashEffect)
 	{
@@ -27,7 +27,7 @@ void AKnight::CreateDashEffect()
 	Sound = UEngineSound::Play("hero_dash.wav");
 }
 
-void AKnight::CreateStunEffect()
+void AKnight::SpawnStunEffect()
 {
 	if (true == bIsStunEffect)
 	{
@@ -52,7 +52,7 @@ void AKnight::CreateStunEffect()
 }
 
 
-void AKnight::CreateFocusEffect()
+void AKnight::SpawnFocus()
 {
 	if (true == bIsFocusEffect)
 	{
@@ -76,7 +76,7 @@ void AKnight::CreateFocusEffect()
 	Sound = UEngineSound::Play("focus_health_charging.wav");
 }
 
-void AKnight::CreateFocusEndEffect()
+void AKnight::SpawnFocusEnd()
 {
 	if (true == bIsFocusEndEffect)
 	{
@@ -99,7 +99,7 @@ void AKnight::CreateFocusEndEffect()
 	Sound = UEngineSound::Play("focus_health_heal.wav");
 }
 
-void AKnight::CreateFireballEffect()
+void AKnight::SpawnFireball()
 {
 	if (true == bIsFireballEffect)
 	{
@@ -133,7 +133,7 @@ void AKnight::CreateFireballEffect()
 	Sound = UEngineSound::Play("hero_fireball.wav");
 }
 
-void AKnight::CreateSlashEffect()
+void AKnight::SpawnSlash()
 {
 	if (true == bIsShowEffect)
 	{
@@ -152,7 +152,7 @@ void AKnight::CreateSlashEffect()
 	return;
 }
 
-void AKnight::CreateUpSlashEffect()
+void AKnight::SpawnUpSlash()
 {
 	if (true == bIsShowEffect)
 	{
@@ -170,7 +170,7 @@ void AKnight::CreateUpSlashEffect()
 	Sound = UEngineSound::Play("sword_1.wav");
 }
 
-void AKnight::CreateDownSlashEffect()
+void AKnight::SpawnDownSlash()
 {
 	if (true == bIsShowEffect)
 	{

@@ -42,27 +42,13 @@ void UEngineWinImage::Create(UEngineWinImage* _TargetImage,  FVector _Scale)
 	{
 		MSGASSERT("Main windowDC를 넣지않고 이미지를 생성하려고 했습니다");
 		return;
-	}
-
-	
+	}	
 	
 	HBITMAP NewBitmap = static_cast<HBITMAP>(CreateCompatibleBitmap(_TargetImage->GetDC(), _Scale.iX(), _Scale.iY()));
 
-	// 이미지 그자체
-	// 이미지를 수정할수 있는 권한 HDC
-	// 이미지의 데이터 권한 HBITMAP
-	// HDC<=>HBITMAP 이 합쳐져서 이미지와 이미지를 수정하는 권한이 연결되는 개념
-
-	// 붓
 	HDC NewImageDC = CreateCompatibleDC(_TargetImage->GetDC());
 
-	// 윈도우가 정하기를 붓과 도화지를 한쌍으로 안엮으면 못 그림.
-	// 붓을 만들기만 해도  1, 1 이미지랑 연결해 놓는다. window 
-
-	// 붓과 도화지를 연결하는 작업을 거쳐야 한다.
 	HBITMAP OldBitMap = static_cast<HBITMAP>(SelectObject(NewImageDC, NewBitmap));
-	// OldBitMap 1, 1 크기의 이미지
-	// 가만히 내버려두면 leck
 	DeleteObject(OldBitMap);
 
 	hBitMap = NewBitmap;
@@ -84,7 +70,6 @@ void UEngineWinImage::CopyToBit(UEngineWinImage* _TargetImage, const FTransform&
 	FVector LeftTop = _Trans.ZAxisCenterLeftTop();
 	FVector RightBot = _Trans.ZAxisCenterRightBottom();
 
-	// 이미지 
 	BitBlt(
 		TargetDC,
 		LeftTop.iX(),
@@ -96,28 +81,13 @@ void UEngineWinImage::CopyToBit(UEngineWinImage* _TargetImage, const FTransform&
 		0,
 		SRCCOPY);
 
-	// SRCCOPY 카피할때 
-
 	FVector Vector;
 }
 
 void UEngineWinImage::CopyToTrans(UEngineWinImage* _TargetImage, const FTransform& _RenderTrans, const FTransform& _LTImageTrans, UColor _Color /*= UColor(255, 0, 255, 255)*/)
 {
-	
 	HDC CopyDC = ImageDC;
 	HDC TargetDC = _TargetImage->ImageDC;
-
-    //_In_ HDC hdcDest, 여기에다가 카피해라
-    //_In_ int xoriginDest, 그려지는 위치
-    //_In_ int yoriginDest, 그려지는 위치
-    //_In_ int wDest, 그려지는 크기
-    //_In_ int hDest, 그려지는 크기
-    //_In_ HDC hdcSrc, 복사될 이미지 => 여러분들이 로드한 이미지
-    //_In_ int xoriginSrc, 이미지 이부분 
-    //_In_ int yoriginSrc, int X
-    //_In_ int wSrc,
-    //_In_ int hSrc,
-    //_In_ UINT crTransparent
 
 	FVector LeftTop = _RenderTrans.ZAxisCenterLeftTop();
 
@@ -176,23 +146,16 @@ void UEngineWinImage::Load(UEngineWinImage* _TargetImage, std::string_view _Path
 
 	if (".PNG" == UpperExt)
 	{
-		// 로드까지만 GDI Plus를 이용 랜더링은 
-		// WInapi함수를 사용하는 개념으로 간다./
-		
-		// GDIPLus용 핸들을 표현할때 
 		ULONG_PTR gidplustoken = 0;
 
-		// GDI plus를 사용하기 위한 인풋
 		Gdiplus::GdiplusStartupInput StartupInput;
 		Gdiplus::GdiplusStartup(&gidplustoken, &StartupInput, nullptr);
 
 
 		std::wstring WidePath = UEngineString::AnsiToUnicode(_Path);
 
-		// 경로 넣어주면 이미지 로딩해주는 함수
 		Gdiplus::Image* pImage = Gdiplus::Image::FromFile(WidePath.c_str());
 
-		// 복사본을 생성하고 거기에서 bitmap 부분을 뽑아내는 방식
 		Gdiplus::Bitmap* pBitMap = reinterpret_cast<Gdiplus::Bitmap*>(pImage->Clone());
 
 		Gdiplus::Status stat = pBitMap->GetHBITMAP(Gdiplus::Color(0, 0, 0, 0), &NewBitmap);
@@ -203,7 +166,6 @@ void UEngineWinImage::Load(UEngineWinImage* _TargetImage, std::string_view _Path
 			return;
 		}
 
-		// 
 		delete pBitMap;
 		delete pImage;
 	}
@@ -219,7 +181,6 @@ void UEngineWinImage::Load(UEngineWinImage* _TargetImage, std::string_view _Path
 		return;
 	}
 
-	// 붓
 	HDC NewImageDC = nullptr;
 
 	if (nullptr != _TargetImage)

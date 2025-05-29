@@ -5,15 +5,8 @@
 class UEngineRandom
 {
 public:
-	// constrcuter destructer
 	UEngineRandom() {}
 	~UEngineRandom() {}
-
-	// delete Function
-	UEngineRandom(const UEngineRandom& _Other) = delete;
-	UEngineRandom(UEngineRandom&& _Other) noexcept = delete;
-	UEngineRandom& operator=(const UEngineRandom& _Other) = delete;
-	UEngineRandom& operator=(UEngineRandom&& _Other) noexcept = delete;
 
 	void SetSeed(__int64 _Seed)
 	{
@@ -58,4 +51,11 @@ private:
 	std::mt19937_64 MtGen = std::mt19937_64(time(nullptr));
 
 	//std::well512
+
+private:
+	// delete Function
+	UEngineRandom(const UEngineRandom& _Other) = delete;
+	UEngineRandom(UEngineRandom&& _Other) noexcept = delete;
+	UEngineRandom& operator=(const UEngineRandom& _Other) = delete;
+	UEngineRandom& operator=(UEngineRandom&& _Other) noexcept = delete;
 };

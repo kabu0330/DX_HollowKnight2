@@ -6,15 +6,8 @@
 class UFontWidget : public UWidget
 {
 public:
-	// constrcuter destructer
 	ENGINEAPI UFontWidget();
 	ENGINEAPI ~UFontWidget();
-
-	// delete Function
-	UFontWidget(const UFontWidget& _Other) = delete;
-	UFontWidget(UFontWidget&& _Other) noexcept = delete;
-	UFontWidget& operator=(const UFontWidget& _Other) = delete;
-	UFontWidget& operator=(UFontWidget&& _Other) noexcept = delete;
 
 	void Tick(float _DeltaTime) override;
 
@@ -35,5 +28,12 @@ private:
 	float Scale = 20.0f;
 	UColor Color = UColor::BLACK;
 	FW1_TEXT_FLAG Flag = FW1_TEXT_FLAG::FW1_LEFT;
+
+private:
+	// delete Function
+	UFontWidget(const UFontWidget& _Other) = delete;
+	UFontWidget(UFontWidget&& _Other) noexcept = delete;
+	UFontWidget& operator=(const UFontWidget& _Other) = delete;
+	UFontWidget& operator=(UFontWidget&& _Other) noexcept = delete;
 };
 

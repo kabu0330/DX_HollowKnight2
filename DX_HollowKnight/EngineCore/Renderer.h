@@ -9,15 +9,8 @@ class URenderer : public USceneComponent
 	friend class UEngineCamera;
 
 public:
-	// constrcuter destructer
 	ENGINEAPI URenderer();
 	ENGINEAPI ~URenderer();
-
-	// delete Function
-	URenderer(const URenderer& _Other) = delete;
-	URenderer(URenderer&& _Other) noexcept = delete;
-	URenderer& operator=(const URenderer& _Other) = delete;
-	URenderer& operator=(URenderer&& _Other) noexcept = delete;
 
 	ENGINEAPI void SetOrder(int _Order);
 	ENGINEAPI void BeginPlay() override;
@@ -34,5 +27,12 @@ private:
 
 public:
 	std::vector<URenderUnit> Units;
+
+private:
+	// delete Function
+	URenderer(const URenderer& _Other) = delete;
+	URenderer(URenderer&& _Other) noexcept = delete;
+	URenderer& operator=(const URenderer& _Other) = delete;
+	URenderer& operator=(URenderer&& _Other) noexcept = delete;
 };
 

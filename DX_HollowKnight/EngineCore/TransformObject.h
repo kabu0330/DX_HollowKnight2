@@ -4,15 +4,8 @@
 class UTransformObject 
 {
 public:
-	// constrcuter destructer
 	ENGINEAPI UTransformObject();
 	ENGINEAPI virtual ~UTransformObject();
-
-	// delete Function
-	UTransformObject(const UTransformObject& _Other) = delete;
-	UTransformObject(UTransformObject&& _Other) noexcept = delete;
-	UTransformObject& operator=(const UTransformObject& _Other) = delete;
-	UTransformObject& operator=(UTransformObject&& _Other) noexcept = delete;
 
 	void AddRelativeLocation(const FVector& _Value)
 	{
@@ -67,7 +60,6 @@ public:
 		TransformUpdate();
 	}
 
-	// local
 	void SetRelativeScale3D(const FVector& _Value)
 	{
 		Transform.Scale = _Value;
@@ -110,5 +102,12 @@ protected:
 	FTransform Transform;
 	void ParentMatrixCheck();
 	std::list<UTransformObject*> Childs;
+
+private:
+	// delete Function
+	UTransformObject(const UTransformObject& _Other) = delete;
+	UTransformObject(UTransformObject&& _Other) noexcept = delete;
+	UTransformObject& operator=(const UTransformObject& _Other) = delete;
+	UTransformObject& operator=(UTransformObject&& _Other) noexcept = delete;
 };
 

@@ -9,15 +9,8 @@ class UActorComponent : public UObject
 	friend class AActor;
 
 public:
-	// constrcuter destructer
 	ENGINEAPI UActorComponent();
 	ENGINEAPI ~UActorComponent();
-
-	// delete Function
-	UActorComponent(const UActorComponent& _Other) = delete;
-	UActorComponent(UActorComponent&& _Other) noexcept = delete;
-	UActorComponent& operator=(const UActorComponent& _Other) = delete;
-	UActorComponent& operator=(UActorComponent&& _Other) noexcept = delete;
 
 	template<typename ConvertType>
 	ConvertType* GetActor()
@@ -40,7 +33,13 @@ public:
 protected:
 
 private:
-	// 액터에 들어갈수 있다. 개념
 	class AActor* Actor;
+
+private:
+	// delete Function
+	UActorComponent(const UActorComponent& _Other) = delete;
+	UActorComponent(UActorComponent&& _Other) noexcept = delete;
+	UActorComponent& operator=(const UActorComponent& _Other) = delete;
+	UActorComponent& operator=(UActorComponent&& _Other) noexcept = delete;
 };
 

@@ -8,15 +8,8 @@ class AActor : public UObject
 	friend class ULevel;
 
 public:
-	// constrcuter destructer
 	ENGINEAPI AActor();
 	ENGINEAPI ~AActor();
-
-	// delete Function
-	AActor(const AActor& _Other) = delete;
-	AActor(AActor&& _Other) noexcept = delete;
-	AActor& operator=(const AActor& _Other) = delete;
-	AActor& operator=(AActor&& _Other) noexcept = delete;
 
 	ENGINEAPI virtual void BeginPlay();
 	ENGINEAPI virtual void Tick(float _DeltaTime);
@@ -43,14 +36,11 @@ public:
 		ComPtr->Actor = this;
 
 		ComponentType* NewPtr = reinterpret_cast<ComponentType*>(ComMemory);
-		// 레벨먼저 세팅하고
-		// 플레이스먼트 new 
+
 		std::shared_ptr<ComponentType> NewCom(new(ComMemory) ComponentType());
 
 		AllComponentList.push_back(NewCom);
 
-		// 내가 그냥 ActorComponent
-		// 내가 그냥 SceneComponent
 		if (std::is_base_of_v<UActorComponent, ComponentType> 
 			&& !std::is_base_of_v<USceneComponent, ComponentType>)
 		{
@@ -203,9 +193,7 @@ protected:
 	std::shared_ptr<class USceneComponent> RootComponent = nullptr;
 
 private:
-	// 누구의 자식인지도 알고 
 	AActor* Parent = nullptr;
-	// 자기 자식들도 알게 된다.
 	std::list<std::shared_ptr<AActor>> ChildList;
 
 	ULevel* World;
@@ -214,5 +202,12 @@ private:
 
 	// 레퍼런스 카운트 유지용 자료구조.
 	std::list<std::shared_ptr<class UActorComponent>> AllComponentList;
+
+private:
+	// delete Function
+	AActor(const AActor& _Other) = delete;
+	AActor(AActor&& _Other) noexcept = delete;
+	AActor& operator=(const AActor& _Other) = delete;
+	AActor& operator=(AActor&& _Other) noexcept = delete;
 };
 

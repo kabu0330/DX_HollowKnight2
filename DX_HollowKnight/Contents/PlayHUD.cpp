@@ -486,32 +486,32 @@ void APlayHUD::CreateFleur()
 	TextTopFleur->SetAutoScaleRatio(0.2f);
 	TextTopFleur->ChangeAnimation(FleurTop);
 
-	TexBotFleur = CreateWidget<UImageWidget>(static_cast<int>(EUIOrder::BACK), "TexBotFleur");
-	TexBotFleur->SetWorldLocation({ -ScreenSize.X * PosX,  (ScreenSize.Y * PosY)  - 50.0f});
-	TexBotFleur->CreateAnimation(FleurBot, FleurBot, 0, 8, FrameTime, false);
-	TexBotFleur->CreateAnimation("NONE", FleurBot, 0, 0, FrameTime, false);
-	TexBotFleur->SetAutoScaleRatio(0.4f);
-	TexBotFleur->ChangeAnimation(FleurBot);
+	TextBotFleur = CreateWidget<UImageWidget>(static_cast<int>(EUIOrder::BACK), "TextBotFleur");
+	TextBotFleur->SetWorldLocation({ -ScreenSize.X * PosX,  (ScreenSize.Y * PosY)  - 50.0f});
+	TextBotFleur->CreateAnimation(FleurBot, FleurBot, 0, 8, FrameTime, false);
+	TextBotFleur->CreateAnimation("NONE", FleurBot, 0, 0, FrameTime, false);
+	TextBotFleur->SetAutoScaleRatio(0.4f);
+	TextBotFleur->ChangeAnimation(FleurBot);
 
 	TextTopFleur->SetActive(false);
-	TexBotFleur->SetActive(false);
+	TextBotFleur->SetActive(false);
 }
 
 void APlayHUD::SetActiveClimbText(bool _Value)
 {
 	ClimbText->SetActive(_Value);
 	TextTopFleur->SetActive(_Value);
-	TexBotFleur->SetActive(_Value);
+	TextBotFleur->SetActive(_Value);
 
 	if (true == _Value)
 	{
 		TextTopFleur->ChangeAnimation("FleurTop");
-		TexBotFleur->ChangeAnimation("fleurBot");
+		TextBotFleur->ChangeAnimation("fleurBot");
 	}
 	if (false == _Value)
 	{
 		TextTopFleur->ChangeAnimation("NONE");
-		TexBotFleur->ChangeAnimation("NONE");
+		TextBotFleur->ChangeAnimation("NONE");
 	}
 }
 

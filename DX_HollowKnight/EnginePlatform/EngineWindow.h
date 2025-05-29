@@ -15,16 +15,8 @@ public:
 	ENGINEAPI static void CreateWindowClass(const WNDCLASSEXA& _Class);
 	ENGINEAPI static int WindowMessageLoop(std::function<void()> _StartFunction, std::function<void()> _FrameFunction, std::function<void()> _EndFunction = nullptr);
 	
-
-	// constrcuter destructer
 	ENGINEAPI UEngineWindow();
 	ENGINEAPI ~UEngineWindow();
-
-	// delete Function
-	UEngineWindow(const UEngineWindow& _Other) = delete;
-	UEngineWindow(UEngineWindow&& _Other) noexcept = delete;
-	UEngineWindow& operator=(const UEngineWindow& _Other) = delete;
-	UEngineWindow& operator=(UEngineWindow&& _Other) noexcept = delete;
 
 	ENGINEAPI void Create(std::string_view _TitleName, std::string_view _ClassName = "Default");
 	ENGINEAPI void Open(std::string_view _TitleName = "Window");
@@ -87,6 +79,13 @@ private:
 
 	FVector WindowSize;
 	HWND WindowHandle = nullptr;
+
+private:
+	// delete Function
+	UEngineWindow(const UEngineWindow& _Other) = delete;
+	UEngineWindow(UEngineWindow&& _Other) noexcept = delete;
+	UEngineWindow& operator=(const UEngineWindow& _Other) = delete;
+	UEngineWindow& operator=(UEngineWindow&& _Other) noexcept = delete;
 };
 
 

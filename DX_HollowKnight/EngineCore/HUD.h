@@ -7,15 +7,8 @@ class AHUD : public AActor
 {
 	friend class ULevel;
 public:
-	// constrcuter destructer
 	ENGINEAPI AHUD();
 	ENGINEAPI ~AHUD();
-
-	// delete Function
-	AHUD(const AHUD& _Other) = delete;
-	AHUD(AHUD&& _Other) noexcept = delete;
-	AHUD& operator=(const AHUD& _Other) = delete;
-	AHUD& operator=(AHUD&& _Other) noexcept = delete;
 
 	template<typename WidgetType>
 	std::shared_ptr<WidgetType> CreateWidget(int _ZOrder, std::string_view _Name = "NONE")
@@ -52,5 +45,12 @@ private:
 	std::map<int, std::list<std::shared_ptr<class UWidget>>> Widgets;
 
 	void UIRender(UEngineCamera* _Camera, float _DeltaTime);
+
+private:
+	// delete Function
+	AHUD(const AHUD& _Other) = delete;
+	AHUD(AHUD&& _Other) noexcept = delete;
+	AHUD& operator=(const AHUD& _Other) = delete;
+	AHUD& operator=(AHUD&& _Other) noexcept = delete;
 };
 

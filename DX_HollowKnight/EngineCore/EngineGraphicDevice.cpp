@@ -33,7 +33,7 @@ IDXGIAdapter* UEngineGraphicDevice::GetHighPerFormanceAdapter()
         return nullptr;
     }
 
-    unsigned __int64 MaxVideoMemory = 0; // 최고성능의 기준을 VRAM으로 정했다. 누가? 프로그래머가.
+    unsigned __int64 MaxVideoMemory = 0; 
     IDXGIAdapter* ResultAdapter = nullptr;  // 가장 성능 좋은 그래픽카드 정보를 담을 객체
 
     // 그래픽카드를 열거하여 가장 성능이 좋은 그래픽카드를 선택하겠다.

@@ -5,7 +5,6 @@
 class UEnginePath
 {
 public:
-	// constrcuter destructer
 	ENGINEAPI UEnginePath();
 	ENGINEAPI UEnginePath(std::string_view _Path);
 	ENGINEAPI UEnginePath(std::filesystem::path _Path);

@@ -64,7 +64,7 @@ void URenderer::Render(UEngineCamera* _Camera, float _DeltaTime)
 
 URenderUnit& URenderer::CreateRenderUnit()
 {
- 	URenderUnit& NewUnit = Units.emplace_back(); // 내부에서 placement new를 통해 복사를 안해도 되게 최적화 해주는 문법
+ 	URenderUnit& NewUnit = Units.emplace_back(); 
 	NewUnit.ParentRenderer = this;
 	return NewUnit;
 }

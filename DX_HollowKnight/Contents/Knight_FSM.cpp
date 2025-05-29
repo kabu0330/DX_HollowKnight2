@@ -257,7 +257,7 @@ void AKnight::SetDash(float _DeltaTime)
 {
 	Dash();
 
-	CreateDashEffect();
+	SpawnDash();
 
 	if (true == IsOnGround())
 	{
@@ -281,7 +281,7 @@ void AKnight::SetSlash(float _DeltaTime)
 	bCanRotation = true; // 회전 허용
 	bIsShowEffect;
 
-	CreateSlashEffect();
+	SpawnSlash();
 	ChangePrevState();
 }
 
@@ -290,7 +290,7 @@ void AKnight::SetUpSlash(float _DeltaTime)
 	ActiveGravity();
 	Move(_DeltaTime);
 
-	CreateUpSlashEffect();
+	SpawnUpSlash();
 	ChangePrevState();
 }
 
@@ -299,7 +299,7 @@ void AKnight::SetDownSlash(float _DeltaTime)
 	ActiveGravity();
 	Move(_DeltaTime);
 
-	CreateDownSlashEffect();
+	SpawnDownSlash();
 	ChangePrevState();
 }
 
@@ -324,7 +324,7 @@ void AKnight::SetFocus(float _DeltaTime)
 void AKnight::SetFocusGet(float _DeltaTime)
 {
 	ActiveGravity();
-	CreateFocusEffect();
+	SpawnFocus();
 
 	if (UEngineInput::IsUp('A'))
 	{
@@ -338,7 +338,7 @@ void AKnight::SetFocusGet(float _DeltaTime)
 void AKnight::SetFocusEnd(float _DeltaTime)
 {
 	ActiveGravity();
-	CreateFocusEndEffect();
+	SpawnFocusEnd();
 	bIsFocusEndEffect = true;
 
 	if (UEngineInput::IsPress('A'))
@@ -362,7 +362,7 @@ void AKnight::SetFireballAntic(float _DeltaTime)
 void AKnight::SetFireballCast(float _DeltaTime)
 {
 	bCanRotation = false;
-	CreateFireballEffect(); // 이펙트 발사
+	SpawnFireball(); // 이펙트 발사
 
 	if (true == bIsOnGround)
 	{
@@ -417,7 +417,7 @@ void AKnight::SetStun(float _DeltaTime)
 	// 뒤로 밀려나고
 
 	// 이펙트 출력
-	CreateStunEffect();
+	SpawnStunEffect();
 
 	APlayGameMode::GetPauseRef() = true;
 	TimeEventer->AddEndEvent(0.3f, [this]()

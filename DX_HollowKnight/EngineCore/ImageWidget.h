@@ -6,7 +6,6 @@
 // Ό³Έν :
 class UImageWidget : public UWidget
 {
-	// Animation
 public:
 	class FrameAnimation
 	{
@@ -55,7 +54,6 @@ private:
 	FrameAnimation* CurAnimation = nullptr;
 	std::map<std::string, FrameAnimation> FrameAnimations;
 public:
-	// constrcuter destructer
 	ENGINEAPI UImageWidget();
 	ENGINEAPI ~UImageWidget();
 

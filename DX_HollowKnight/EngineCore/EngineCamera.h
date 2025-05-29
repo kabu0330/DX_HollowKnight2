@@ -5,27 +5,15 @@
 #include "SceneComponent.h"
 #include "EngineEnums.h"
 
-// MinimapCamera;
-// PlayerCamera
-// PlayCamera
-// UICamera
-
-// 설명 : 뷰포트 설정, View / Projection 행렬 갱신, 렌더랑
+// 설명 : 뷰포트 설정, View / Projection 행렬 갱신, 렌더링
 class UEngineCamera : public USceneComponent
 {
 	friend class ULevel;
 	friend class ACameraActor;
 
 public:
-	// constrcuter destructer
 	ENGINEAPI UEngineCamera();
 	ENGINEAPI ~UEngineCamera();
-
-	// delete Function
-	UEngineCamera(const UEngineCamera& _Other) = delete;
-	UEngineCamera(UEngineCamera&& _Other) noexcept = delete;
-	UEngineCamera& operator=(const UEngineCamera& _Other) = delete;
-	UEngineCamera& operator=(UEngineCamera&& _Other) noexcept = delete;
 
 	ENGINEAPI void BeginPlay() override;
 
@@ -77,9 +65,14 @@ private:
 
 	// 렌더 타겟을 카메라가 가진다.
 	std::shared_ptr<class UEngineRenderTarget> CameraTarget = nullptr;
-	// std::shared_ptr<class UEngineRenderTarget> LightTarget;
-	// std::shared_ptr<class UEngineRenderTarget> ShadowTarget;
 
 	void ChangeRenderGroup(int _PrevGroupOrder, std::shared_ptr<URenderer> _Renderer);
+
+private:
+	// delete Function
+	UEngineCamera(const UEngineCamera& _Other) = delete;
+	UEngineCamera(UEngineCamera&& _Other) noexcept = delete;
+	UEngineCamera& operator=(const UEngineCamera& _Other) = delete;
+	UEngineCamera& operator=(UEngineCamera&& _Other) noexcept = delete;
 };
 
