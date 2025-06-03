@@ -6,15 +6,8 @@
 class AMonsterProjectile : public AMonsterSkill
 {
 public:
-	// constrcuter destructer
 	AMonsterProjectile();
 	~AMonsterProjectile();
-
-	// delete Function
-	AMonsterProjectile(const AMonsterProjectile& _Other) = delete;
-	AMonsterProjectile(AMonsterProjectile&& _Other) noexcept = delete;
-	AMonsterProjectile& operator=(const AMonsterProjectile& _Other) = delete;
-	AMonsterProjectile& operator=(AMonsterProjectile&& _Other) noexcept = delete;
 
 protected:
 	void BeginPlay() override;
@@ -24,5 +17,12 @@ private:
 	void Release() override;
 	void ChangePixelCollisionAnimaion();
 	USoundPlayer Sound;
+
+private:
+	// delete Function
+	AMonsterProjectile(const AMonsterProjectile& _Other) = delete;
+	AMonsterProjectile(AMonsterProjectile&& _Other) noexcept = delete;
+	AMonsterProjectile& operator=(const AMonsterProjectile& _Other) = delete;
+	AMonsterProjectile& operator=(AMonsterProjectile&& _Other) noexcept = delete;
 };
 

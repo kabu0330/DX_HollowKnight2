@@ -11,12 +11,6 @@ public:
 	ARoom();
 	~ARoom();
 
-	// delete Function
-	ARoom(const ARoom& _Other) = delete;
-	ARoom(ARoom&& _Other) noexcept = delete;
-	ARoom& operator=(const ARoom& _Other) = delete;
-	ARoom& operator=(ARoom&& _Other) noexcept = delete;
-
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
@@ -203,5 +197,12 @@ private:
 	bool bIsSoundPlaying = false;
 	void SoundPlay();
 	
+
+private:
+	// delete Function
+	ARoom(const ARoom& _Other) = delete;
+	ARoom(ARoom&& _Other) noexcept = delete;
+	ARoom& operator=(const ARoom& _Other) = delete;
+	ARoom& operator=(ARoom&& _Other) noexcept = delete;
 };
 

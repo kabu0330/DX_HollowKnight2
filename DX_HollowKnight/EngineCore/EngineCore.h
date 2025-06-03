@@ -110,7 +110,6 @@ private:
 
 	ENGINEAPI static void SetGameInstance(std::shared_ptr<UGameInstance> _Inst);
 
-	// constrcuter destructer
 	ENGINEAPI UEngineCore();
 	ENGINEAPI virtual ~UEngineCore();
 };

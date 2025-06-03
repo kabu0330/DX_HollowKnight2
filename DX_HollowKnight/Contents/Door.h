@@ -5,15 +5,8 @@
 class ADoor : public AActor
 {
 public:
-	// constrcuter destructer
 	ADoor();
 	~ADoor();
-
-	// delete Function
-	ADoor(const ADoor& _Other) = delete;
-	ADoor(ADoor&& _Other) noexcept = delete;
-	ADoor& operator=(const ADoor& _Other) = delete;
-	ADoor& operator=(ADoor&& _Other) noexcept = delete;
 
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
@@ -49,5 +42,12 @@ private:
 	bool bIsDoor = true;
 
 	class AKnight* Knight = nullptr;
+
+private:
+	// delete Function
+	ADoor(const ADoor& _Other) = delete;
+	ADoor(ADoor&& _Other) noexcept = delete;
+	ADoor& operator=(const ADoor& _Other) = delete;
+	ADoor& operator=(ADoor&& _Other) noexcept = delete;
 };
 

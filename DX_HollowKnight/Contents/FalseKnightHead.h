@@ -6,15 +6,8 @@
 class AFalseKnightHead : public AMonsterSkill
 {
 public:
-	// constrcuter destructer
 	AFalseKnightHead();
 	~AFalseKnightHead();
-
-	// delete Function
-	AFalseKnightHead(const AFalseKnightHead& _Other) = delete;
-	AFalseKnightHead(AFalseKnightHead&& _Other) noexcept = delete;
-	AFalseKnightHead& operator=(const AFalseKnightHead& _Other) = delete;
-	AFalseKnightHead& operator=(AFalseKnightHead&& _Other) noexcept = delete;
 
 	void SetRelease()
 	{
@@ -45,5 +38,12 @@ private:
 	bool bCanRelease = false;
 	class AFalseKnight* Boss = nullptr;
 	bool bIsDamage = false;
+
+private:
+	// delete Function
+	AFalseKnightHead(const AFalseKnightHead& _Other) = delete;
+	AFalseKnightHead(AFalseKnightHead&& _Other) noexcept = delete;
+	AFalseKnightHead& operator=(const AFalseKnightHead& _Other) = delete;
+	AFalseKnightHead& operator=(AFalseKnightHead&& _Other) noexcept = delete;
 };
 

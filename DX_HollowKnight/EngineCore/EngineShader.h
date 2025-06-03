@@ -9,15 +9,8 @@ class UEngineShader
 	friend class UEngineVertexShader;
 
 public:
-	// constrcuter destructer
 	UEngineShader();
 	~UEngineShader();
-
-	// delete Function
-	UEngineShader(const UEngineShader& _Other) = delete;
-	UEngineShader(UEngineShader&& _Other) noexcept = delete;
-	UEngineShader& operator=(const UEngineShader& _Other) = delete;
-	UEngineShader& operator=(UEngineShader&& _Other) noexcept = delete;
 
 	ENGINEAPI static void ReflectionCompile(UEngineFile& _File);
 
@@ -39,5 +32,10 @@ protected:
 	void ShaderResCheck();
 
 private:
+	// delete Function
+	UEngineShader(const UEngineShader& _Other) = delete;
+	UEngineShader(UEngineShader&& _Other) noexcept = delete;
+	UEngineShader& operator=(const UEngineShader& _Other) = delete;
+	UEngineShader& operator=(UEngineShader&& _Other) noexcept = delete;
 };
 

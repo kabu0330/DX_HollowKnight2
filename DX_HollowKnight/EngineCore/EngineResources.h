@@ -7,15 +7,8 @@
 class UEngineResources : public UObject
 {
 public:
-	// constrcuter destructer
 	UEngineResources() {}
 	~UEngineResources()	{}
-
-	// delete Function
-	UEngineResources(const UEngineResources& _Other) = delete;
-	UEngineResources(UEngineResources&& _Other) noexcept = delete;
-	UEngineResources& operator=(const UEngineResources& _Other) = delete;
-	UEngineResources& operator=(UEngineResources&& _Other) noexcept = delete;
 
 	static std::string ToUpperName(std::string_view _Name)
 	{
@@ -65,6 +58,13 @@ private:
 	//                               텍스처                aaaa.png       데이터
 	//                               버텍스버퍼             Box             데이터
 	ENGINEAPI static inline std::map<std::string, std::map<std::string, std::shared_ptr<UEngineResources>>> ResMap;
+
+private:
+	// delete Function
+	UEngineResources(const UEngineResources& _Other) = delete;
+	UEngineResources(UEngineResources&& _Other) noexcept = delete;
+	UEngineResources& operator=(const UEngineResources& _Other) = delete;
+	UEngineResources& operator=(UEngineResources&& _Other) noexcept = delete;
 };
 
 

@@ -16,8 +16,6 @@ public:
 	ENGINEAPI void BeginPlay() override;
 	ENGINEAPI virtual void Render(UEngineCamera* _Camera, float _DeltaTime);
 
-
-
 	ENGINEAPI URenderUnit& GetRenderUnit(UINT  _Index = 0);
 	ENGINEAPI URenderUnit& CreateRenderUnit();
 	ENGINEAPI void SetMesh(std::string_view _Name, UINT _Index = 0);

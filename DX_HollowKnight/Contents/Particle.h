@@ -27,15 +27,8 @@ enum class EParticleType
 class AParticle : public AActor
 {
 public:
-	// constrcuter destructer
 	AParticle();
 	~AParticle();
-
-	// delete Function
-	AParticle(const AParticle& _Other) = delete;
-	AParticle(AParticle&& _Other) noexcept = delete;
-	AParticle& operator=(const AParticle& _Other) = delete;
-	AParticle& operator=(AParticle&& _Other) noexcept = delete;
 
 	void CreateParticle(std::string_view _EffectName, int _MaxParticles, float _SpawnRate, const FVector& _EmitterPosition)
 	{
@@ -101,5 +94,13 @@ private:
 
 	int Count = 0;
 	inline static float ZOrder = 0.0f;
+
+	
+private:
+	// delete Function
+	AParticle(const AParticle& _Other) = delete;
+	AParticle(AParticle&& _Other) noexcept = delete;
+	AParticle& operator=(const AParticle& _Other) = delete;
+	AParticle& operator=(AParticle&& _Other) noexcept = delete;
 };
 

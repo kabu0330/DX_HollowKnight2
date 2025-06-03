@@ -10,12 +10,6 @@ public:
 	APlayHUD();
 	~APlayHUD();
 
-	// delete Function
-	APlayHUD(const APlayHUD& _Other) = delete;
-	APlayHUD(APlayHUD&& _Other) noexcept = delete;
-	APlayHUD& operator=(const APlayHUD& _Other) = delete;
-	APlayHUD& operator=(APlayHUD&& _Other) noexcept = delete;
-
 	void FadeIn();
 	void FadeOut(float _Time = 0.6f, float _Power = 1.0f);
 	void SetActiveBossText(bool _Value);
@@ -115,5 +109,13 @@ private:
 	float4 FadeDir = FVector::UNIT; // {1, 1, 1, 1}
 
 	USoundPlayer Sound;
+
+
+private:
+	// delete Function
+	APlayHUD(const APlayHUD& _Other) = delete;
+	APlayHUD(APlayHUD&& _Other) noexcept = delete;
+	APlayHUD& operator=(const APlayHUD& _Other) = delete;
+	APlayHUD& operator=(APlayHUD&& _Other) noexcept = delete;
 };
 

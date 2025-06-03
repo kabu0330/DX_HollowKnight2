@@ -6,15 +6,8 @@
 class ABarrier : public AActor
 {
 public:
-	// constrcuter destructer
 	ABarrier();
 	~ABarrier();
-
-	// delete Function
-	ABarrier(const ABarrier& _Other) = delete;
-	ABarrier(ABarrier&& _Other) noexcept = delete;
-	ABarrier& operator=(const ABarrier& _Other) = delete;
-	ABarrier& operator=(ABarrier&& _Other) noexcept = delete;
 
 	void SetActiveBarrier(bool _Value);
 
@@ -32,5 +25,12 @@ private:
 	bool bIsDestory = false;
 	float ZSort = 0.0f;
 	FVector Scale = FVector::ZERO;
+
+private:
+	// delete Function
+	ABarrier(const ABarrier& _Other) = delete;
+	ABarrier(ABarrier&& _Other) noexcept = delete;
+	ABarrier& operator=(const ABarrier& _Other) = delete;
+	ABarrier& operator=(ABarrier&& _Other) noexcept = delete;
 };
 

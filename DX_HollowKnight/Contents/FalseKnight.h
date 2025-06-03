@@ -6,15 +6,8 @@
 class AFalseKnight : public AMonster
 {
 public:
-	// constrcuter destructer
 	AFalseKnight();
 	~AFalseKnight();
-
-	// delete Function
-	AFalseKnight(const AFalseKnight& _Other) = delete;
-	AFalseKnight(AFalseKnight&& _Other) noexcept = delete;
-	AFalseKnight& operator=(const AFalseKnight& _Other) = delete;
-	AFalseKnight& operator=(AFalseKnight&& _Other) noexcept = delete;
 
 	UFSMStateManager& GetFSM()
 	{
@@ -139,5 +132,13 @@ private:
 	void BossPatternSound(std::string_view _SoundFile, float _Volume = 1.0f);
 	bool bIsGushingSound = false;
 	class APlayHUD* PlayHUD = nullptr;
+
+
+private:
+	// delete Function
+	AFalseKnight(const AFalseKnight& _Other) = delete;
+	AFalseKnight(AFalseKnight&& _Other) noexcept = delete;
+	AFalseKnight& operator=(const AFalseKnight& _Other) = delete;
+	AFalseKnight& operator=(AFalseKnight&& _Other) noexcept = delete;
 };
 

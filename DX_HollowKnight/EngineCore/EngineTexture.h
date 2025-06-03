@@ -14,15 +14,8 @@ class UEngineTexture : public UEngineResources
 	friend class UEngineRenderTarget;
 
 public:
-	// constrcuter destructer
 	ENGINEAPI UEngineTexture();
 	ENGINEAPI ~UEngineTexture();
-
-	// delete Function
-	UEngineTexture(const UEngineTexture& _Other) = delete;
-	UEngineTexture(UEngineTexture&& _Other) noexcept = delete;
-	UEngineTexture& operator=(const UEngineTexture& _Other) = delete;
-	UEngineTexture& operator=(UEngineTexture&& _Other) noexcept = delete;
 
 	static std::shared_ptr<UEngineTexture> Load(std::string_view _Path)
 	{
@@ -79,4 +72,11 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> RTV = nullptr; // 텍스처를 쉐이더 세팅할수 있는권한
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> DSV = nullptr; // 텍스처를 쉐이더 세팅할수 있는권한
 	D3D11_TEXTURE2D_DESC Desc;
+
+private:
+	// delete Function
+	UEngineTexture(const UEngineTexture& _Other) = delete;
+	UEngineTexture(UEngineTexture&& _Other) noexcept = delete;
+	UEngineTexture& operator=(const UEngineTexture& _Other) = delete;
+	UEngineTexture& operator=(UEngineTexture&& _Other) noexcept = delete;
 };

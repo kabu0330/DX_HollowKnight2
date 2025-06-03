@@ -8,15 +8,8 @@
 class UEngineRenderTarget : public UEngineResources
 {
 public:
-	// constrcuter destructer
 	UEngineRenderTarget();
 	~UEngineRenderTarget();
-
-	// delete Function
-	UEngineRenderTarget(const UEngineRenderTarget& _Other) = delete;
-	UEngineRenderTarget(UEngineRenderTarget&& _Other) noexcept = delete;
-	UEngineRenderTarget& operator=(const UEngineRenderTarget& _Other) = delete;
-	UEngineRenderTarget& operator=(UEngineRenderTarget&& _Other) noexcept = delete;
 
 	// 백버퍼의 렌더 타겟을 제외한 나머지 렌더 타겟을 만드는 함수
 	ENGINEAPI void CreateTarget(float4 _Scale, float4 _ClearColor = float4::NONE, DXGI_FORMAT _Format = DXGI_FORMAT::DXGI_FORMAT_R32G32B32A32_FLOAT);
@@ -53,5 +46,12 @@ private:
 	std::shared_ptr<class UEngineTexture> DepthTexture;
 
 	URenderUnit TargetUnit;
+
+private:
+	// delete Function
+	UEngineRenderTarget(const UEngineRenderTarget& _Other) = delete;
+	UEngineRenderTarget(UEngineRenderTarget&& _Other) noexcept = delete;
+	UEngineRenderTarget& operator=(const UEngineRenderTarget& _Other) = delete;
+	UEngineRenderTarget& operator=(UEngineRenderTarget&& _Other) noexcept = delete;
 };
 

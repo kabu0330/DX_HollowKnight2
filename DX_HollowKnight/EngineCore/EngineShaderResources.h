@@ -73,10 +73,7 @@ public:
 // Ό³Έν : 
 class UEngineShaderResources
 {
-	// 
-
 public:
-	// constrcuter destructer
 	UEngineShaderResources();
 	~UEngineShaderResources();
 

@@ -4,15 +4,8 @@
 class UEngineInputLayOutInfo
 {
 public:
-	// constrcuter destructer
 	ENGINEAPI UEngineInputLayOutInfo();
 	ENGINEAPI ~UEngineInputLayOutInfo();
-
-	// delete Function
-	UEngineInputLayOutInfo(const UEngineInputLayOutInfo& _Other) = delete;
-	UEngineInputLayOutInfo(UEngineInputLayOutInfo&& _Other) noexcept = delete;
-	UEngineInputLayOutInfo& operator=(const UEngineInputLayOutInfo& _Other) = delete;
-	UEngineInputLayOutInfo& operator=(UEngineInputLayOutInfo&& _Other) noexcept = delete;
 
 
 	ENGINEAPI void AddInputLayout(
@@ -33,5 +26,12 @@ protected:
 
 private:
 	int Offset = 0;
+
+private:
+	// delete Function
+	UEngineInputLayOutInfo(const UEngineInputLayOutInfo& _Other) = delete;
+	UEngineInputLayOutInfo(UEngineInputLayOutInfo&& _Other) noexcept = delete;
+	UEngineInputLayOutInfo& operator=(const UEngineInputLayOutInfo& _Other) = delete;
+	UEngineInputLayOutInfo& operator=(UEngineInputLayOutInfo&& _Other) noexcept = delete;
 };
 

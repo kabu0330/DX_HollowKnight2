@@ -5,7 +5,6 @@
 class ALeapingHusk : public AMonster
 {
 public:
-	// constrcuter destructer
 	ALeapingHusk();
 	~ALeapingHusk();
 

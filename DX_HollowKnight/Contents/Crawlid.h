@@ -5,7 +5,6 @@
 class ACrawlid : public AMonster
 {
 public:
-	// constrcuter destructer
 	ACrawlid();
 	~ACrawlid();
 

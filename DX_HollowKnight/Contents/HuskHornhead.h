@@ -5,7 +5,6 @@
 class AHuskHornhead : public AMonster
 {
 public:
-	// constrcuter destructer
 	AHuskHornhead();
 	~AHuskHornhead();
 

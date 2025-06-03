@@ -5,15 +5,8 @@
 class ATitleHUD : public AHUD
 {
 public:
-	// constrcuter destructer
 	ATitleHUD();
 	~ATitleHUD();
-
-	// delete Function
-	ATitleHUD(const ATitleHUD& _Other) = delete;
-	ATitleHUD(ATitleHUD&& _Other) noexcept = delete;
-	ATitleHUD& operator=(const ATitleHUD& _Other) = delete;
-	ATitleHUD& operator=(ATitleHUD&& _Other) noexcept = delete;
 
 	void FadeIn();
 	void FadeInAndOut();
@@ -41,7 +34,12 @@ protected:
 	float4 CreditsFadeDir = FVector::UNIT; 
 
 	UTimeEventComponent* TimeEventer = nullptr;
-private:
 
+private:
+	// delete Function
+	ATitleHUD(const ATitleHUD& _Other) = delete;
+	ATitleHUD(ATitleHUD&& _Other) noexcept = delete;
+	ATitleHUD& operator=(const ATitleHUD& _Other) = delete;
+	ATitleHUD& operator=(ATitleHUD&& _Other) noexcept = delete;
 };
 

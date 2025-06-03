@@ -395,9 +395,6 @@
     <Filter Include="07_Resources">
       <UniqueIdentifier>{f44ad2df-9292-4705-aa1f-9cca10d1056d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04_Object\Render">
-      <UniqueIdentifier>{f0fc40e5-8297-44dc-ae31-6620bca09549}</UniqueIdentifier>
-    </Filter>
     <Filter Include="07_Resources\Buffer">
       <UniqueIdentifier>{099f2c83-2650-4681-9bbf-09c9625b50f1}</UniqueIdentifier>
     </Filter>
@@ -442,6 +439,9 @@
     </Filter>
     <Filter Include="04_Object\UI">
       <UniqueIdentifier>{5c644b65-9af3-4291-93e6-26e0a070c8ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04_Object\Render">
+      <UniqueIdentifier>{f0fc40e5-8297-44dc-ae31-6620bca09549}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

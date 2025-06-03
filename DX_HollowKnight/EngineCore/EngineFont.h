@@ -7,15 +7,8 @@
 class UEngineFont : public UEngineResources
 {
 public:
-	// constrcuter destructer
 	UEngineFont();
 	~UEngineFont();
-
-	// delete Function
-	UEngineFont(const UEngineFont& _Other) = delete;
-	UEngineFont(UEngineFont&& _Other) noexcept = delete;
-	UEngineFont& operator=(const UEngineFont& _Other) = delete;
-	UEngineFont& operator=(UEngineFont&& _Other) noexcept = delete;
 
 	ENGINEAPI static std::shared_ptr<UEngineFont> Load(std::string_view _Name, std::string_view _Path);
 
@@ -28,5 +21,12 @@ protected:
 private:
 	Microsoft::WRL::ComPtr<IFW1FontWrapper> Font;
 	void ResLoad(std::string_view _Path);
+
+private:
+	// delete Function
+	UEngineFont(const UEngineFont& _Other) = delete;
+	UEngineFont(UEngineFont&& _Other) noexcept = delete;
+	UEngineFont& operator=(const UEngineFont& _Other) = delete;
+	UEngineFont& operator=(UEngineFont&& _Other) noexcept = delete;
 };
 

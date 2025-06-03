@@ -5,7 +5,6 @@
 class AAspidMother : public AMonster
 {
 public:
-	// constrcuter destructer
 	AAspidMother();
 	~AAspidMother();
 

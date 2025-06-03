@@ -8,7 +8,6 @@
 class URenderUnit
 {
 public:
-	// constrcuter destructer
 	URenderUnit();
 	~URenderUnit();
 

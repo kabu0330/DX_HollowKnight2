@@ -5,15 +5,8 @@
 class URoomManager
 {
 public:
-	// constrcuter destructer
 	URoomManager();
 	~URoomManager();
-
-	// delete Function
-	URoomManager(const URoomManager& _Other) = delete;
-	URoomManager(URoomManager&& _Other) noexcept = delete;
-	URoomManager& operator=(const URoomManager& _Other) = delete;
-	URoomManager& operator=(URoomManager&& _Other) noexcept = delete;
 
 	void CreateRoom(class AGameMode* _GameMode);
 
@@ -41,5 +34,12 @@ private:
 
 	class ARoom* PrevRoom = nullptr;
 	std::vector<std::shared_ptr<ARoom>> Rooms;
+
+private:
+	// delete Function
+	URoomManager(const URoomManager& _Other) = delete;
+	URoomManager(URoomManager&& _Other) noexcept = delete;
+	URoomManager& operator=(const URoomManager& _Other) = delete;
+	URoomManager& operator=(URoomManager&& _Other) noexcept = delete;
 };
 

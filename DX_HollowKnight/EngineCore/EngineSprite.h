@@ -10,15 +10,8 @@
 class UEngineSprite : public UEngineResources
 {
 public:
-	// constrcuter destructer
 	UEngineSprite();
 	~UEngineSprite();
-
-	// delete Function
-	UEngineSprite(const UEngineSprite& _Other) = delete;
-	UEngineSprite(UEngineSprite&& _Other) noexcept = delete;
-	UEngineSprite& operator=(const UEngineSprite& _Other) = delete;
-	UEngineSprite& operator=(UEngineSprite&& _Other) noexcept = delete;
 
 
 	ENGINEAPI static std::shared_ptr<UEngineSprite> CreateSpriteToFolder(std::string_view _Path)
@@ -59,6 +52,13 @@ protected:
 private:
 	std::vector<UEngineTexture*> SpriteTexture;
 	std::vector<FSpriteData> SpriteDatas;
+
+private:
+	// delete Function
+	UEngineSprite(const UEngineSprite& _Other) = delete;
+	UEngineSprite(UEngineSprite&& _Other) noexcept = delete;
+	UEngineSprite& operator=(const UEngineSprite& _Other) = delete;
+	UEngineSprite& operator=(UEngineSprite&& _Other) noexcept = delete;
 
 };
 

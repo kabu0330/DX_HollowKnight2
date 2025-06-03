@@ -17,7 +17,6 @@ protected:
 private:
 	inline static USoundPlayer Sound = USoundPlayer();
 
-	// constrcuter destructer
 	UFightUnit();
 	~UFightUnit();
 

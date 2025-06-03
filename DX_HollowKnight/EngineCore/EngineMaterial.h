@@ -9,15 +9,8 @@
 class UEngineMaterial : public UEngineResources
 {
 public:
-	// constrcuter destructer
 	UEngineMaterial();
 	~UEngineMaterial();
-
-	// delete Function
-	UEngineMaterial(const UEngineMaterial& _Other) = delete;
-	UEngineMaterial(UEngineMaterial&& _Other) noexcept = delete;
-	UEngineMaterial& operator=(const UEngineMaterial& _Other) = delete;
-	UEngineMaterial& operator=(UEngineMaterial&& _Other) noexcept = delete;
 
 	ENGINEAPI static std::shared_ptr<UEngineMaterial> Create(std::string_view _Name);
 
@@ -63,5 +56,12 @@ private:
 	std::shared_ptr<UEngineDepthStencilState> DepthState;
 
 	D3D11_PRIMITIVE_TOPOLOGY TOPOLOGY = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+
+private:
+	// delete Function
+	UEngineMaterial(const UEngineMaterial& _Other) = delete;
+	UEngineMaterial(UEngineMaterial&& _Other) noexcept = delete;
+	UEngineMaterial& operator=(const UEngineMaterial& _Other) = delete;
+	UEngineMaterial& operator=(UEngineMaterial&& _Other) noexcept = delete;
 };
 

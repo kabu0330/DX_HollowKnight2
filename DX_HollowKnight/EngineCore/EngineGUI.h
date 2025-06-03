@@ -8,15 +8,10 @@
 class UEngineGUI
 {
 public:
-	// constrcuter destructer
 	UEngineGUI();
 	~UEngineGUI();
 
-	// delete Function
-	UEngineGUI(const UEngineGUI& _Other) = delete;
-	UEngineGUI(UEngineGUI&& _Other) noexcept = delete;
-	UEngineGUI& operator=(const UEngineGUI& _Other) = delete;
-	UEngineGUI& operator=(UEngineGUI&& _Other) noexcept = delete;
+
 
 	static void Init();
 	static void Release();
@@ -62,5 +57,12 @@ protected:
 
 private:
 	static inline std::map<std::string, std::shared_ptr<class UEngineGUIWindow>> Windows;
+
+private:
+	// delete Function
+	UEngineGUI(const UEngineGUI& _Other) = delete;
+	UEngineGUI(UEngineGUI&& _Other) noexcept = delete;
+	UEngineGUI& operator=(const UEngineGUI& _Other) = delete;
+	UEngineGUI& operator=(UEngineGUI&& _Other) noexcept = delete;
 };
 

@@ -10,12 +10,6 @@ public:
 	AEffect();
 	~AEffect();
 
-	// delete Function
-	AEffect(const AEffect& _Other) = delete;
-	AEffect(AEffect&& _Other) noexcept = delete;
-	AEffect& operator=(const AEffect& _Other) = delete;
-	AEffect& operator=(AEffect&& _Other) noexcept = delete;
-
 	class UContentsRenderer* GetRenderer()
 	{
 		return BodyRenderer.get();
@@ -179,5 +173,13 @@ protected:
 	// ÇÈ¼¿ Ãæµ¹
 	bool bIsPixelCollision = false;
 	class ARoom* ParentRoom = nullptr;
+
+
+private:
+	// delete Function
+	AEffect(const AEffect& _Other) = delete;
+	AEffect(AEffect&& _Other) noexcept = delete;
+	AEffect& operator=(const AEffect& _Other) = delete;
+	AEffect& operator=(AEffect&& _Other) noexcept = delete;
 };
 

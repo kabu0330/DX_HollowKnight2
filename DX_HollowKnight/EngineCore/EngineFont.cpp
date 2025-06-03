@@ -74,7 +74,6 @@ void UEngineFont::ResLoad(std::string_view _Path)
 		MSGASSERT("폰트 생성 실패");
 		return;
 	}
-	
 }
 
 void UEngineFont::FontDraw(const std::string& _Text, float _FontScale, const FVector& _Pos, const UColor& _Color /*= FVector::BLACK*/, FW1_TEXT_FLAG Flag /*= FW1_LEFT*/)

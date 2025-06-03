@@ -5,7 +5,6 @@
 class AGruzzer : public AMonster
 {
 public:
-	// constrcuter destructer
 	AGruzzer();
 	~AGruzzer();
 

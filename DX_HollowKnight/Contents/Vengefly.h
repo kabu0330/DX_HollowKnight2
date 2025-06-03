@@ -5,7 +5,6 @@
 class AVengefly : public AMonster
 {
 public:
-	// constrcuter destructer
 	AVengefly();
 	~AVengefly();
 

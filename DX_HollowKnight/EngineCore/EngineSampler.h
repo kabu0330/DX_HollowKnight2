@@ -6,15 +6,8 @@
 class UEngineSampler : public UEngineResources
 {
 public:
-	// constrcuter destructer
 	UEngineSampler();
 	~UEngineSampler();
-
-	// delete Function
-	UEngineSampler(const UEngineSampler& _Other) = delete;
-	UEngineSampler(UEngineSampler&& _Other) noexcept = delete;
-	UEngineSampler& operator=(const UEngineSampler& _Other) = delete;
-	UEngineSampler& operator=(UEngineSampler&& _Other) noexcept = delete;
 
 	static std::shared_ptr<UEngineSampler> Create(std::string_view _Name, const D3D11_SAMPLER_DESC& _Value);
 
@@ -28,5 +21,11 @@ protected:
 private:
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> State = nullptr;
 
+private:
+	// delete Function
+	UEngineSampler(const UEngineSampler& _Other) = delete;
+	UEngineSampler(UEngineSampler&& _Other) noexcept = delete;
+	UEngineSampler& operator=(const UEngineSampler& _Other) = delete;
+	UEngineSampler& operator=(UEngineSampler&& _Other) noexcept = delete;
 };
 

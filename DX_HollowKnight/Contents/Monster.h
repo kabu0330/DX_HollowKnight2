@@ -11,15 +11,8 @@
 class AMonster : public AActor
 {
 public:
-	// constructer destructer
 	AMonster();
 	~AMonster() {};
-
-	// delete Function
-	AMonster(const AMonster& _Other) = delete;
-	AMonster(AMonster&& _Other) noexcept = delete;
-	AMonster& operator=(const AMonster& _Other) = delete;
-	AMonster& operator=(AMonster&& _Other) noexcept = delete;
 
 	bool IsPause();
 	void SetPause();
@@ -409,5 +402,12 @@ protected:
 	std::string DeathSound = "enemy_death_sword.wav";
 	void SoundPlay(std::string_view _SoundFileName, bool _IsLoop = false, bool _PrevSoundStop = true, float _Volume = 1.0f);
 	
+
+private:
+	// delete Function
+	AMonster(const AMonster& _Other) = delete;
+	AMonster(AMonster&& _Other) noexcept = delete;
+	AMonster& operator=(const AMonster& _Other) = delete;
+	AMonster& operator=(AMonster&& _Other) noexcept = delete;
 };
 

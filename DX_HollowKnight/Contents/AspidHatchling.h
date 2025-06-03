@@ -5,7 +5,6 @@
 class AAspidHatchling : public AMonster
 {
 public:
-	// constrcuter destructer
 	AAspidHatchling();
 	~AAspidHatchling();
 

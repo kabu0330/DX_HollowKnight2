@@ -6,15 +6,8 @@
 class AKnightSkill : public ASkill
 {
 public:
-	// constrcuter destructer
 	AKnightSkill();
 	~AKnightSkill();
-
-	// delete Function
-	AKnightSkill(const AKnightSkill& _Other) = delete;
-	AKnightSkill(AKnightSkill&& _Other) noexcept = delete;
-	AKnightSkill& operator=(const AKnightSkill& _Other) = delete;
-	AKnightSkill& operator=(AKnightSkill&& _Other) noexcept = delete;
 
 	virtual void CreateHitEffect(class UCollision* _This, class UCollision* _Other);
 	void CreateWhiteHitParticleEffect(class UCollision* _This, class UCollision* _Other);
@@ -37,5 +30,12 @@ private:
 	FVector KnightPos = { 0.0f, 0.0f, 0.0f };
 	bool bIsParticle = false;
 	inline static int Count = 0;
+
+private:
+	// delete Function
+	AKnightSkill(const AKnightSkill& _Other) = delete;
+	AKnightSkill(AKnightSkill&& _Other) noexcept = delete;
+	AKnightSkill& operator=(const AKnightSkill& _Other) = delete;
+	AKnightSkill& operator=(AKnightSkill&& _Other) noexcept = delete;
 };
 

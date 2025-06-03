@@ -5,15 +5,8 @@
 class AMonsterSkill : public ASkill
 {
 public:
-	// constrcuter destructer
 	AMonsterSkill();
 	~AMonsterSkill();
-
-	// delete Function
-	AMonsterSkill(const AMonsterSkill& _Other) = delete;
-	AMonsterSkill(AMonsterSkill&& _Other) noexcept = delete;
-	AMonsterSkill& operator=(const AMonsterSkill& _Other) = delete;
-	AMonsterSkill& operator=(AMonsterSkill&& _Other) noexcept = delete;
 
 	void SetCollisionTime(float _AttackTime)
 	{
@@ -41,5 +34,12 @@ private:
 	void Knockback();
 
 	void Release() override;
+
+private:
+	// delete Function
+	AMonsterSkill(const AMonsterSkill& _Other) = delete;
+	AMonsterSkill(AMonsterSkill&& _Other) noexcept = delete;
+	AMonsterSkill& operator=(const AMonsterSkill& _Other) = delete;
+	AMonsterSkill& operator=(AMonsterSkill&& _Other) noexcept = delete;
 };
 

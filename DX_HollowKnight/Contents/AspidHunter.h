@@ -5,7 +5,6 @@
 class AAspidHunter : public AMonster
 {
 public:
-	// constrcuter destructer
 	AAspidHunter();
 	~AAspidHunter();
 

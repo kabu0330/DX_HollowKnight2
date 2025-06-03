@@ -32,15 +32,8 @@ struct FStatusData
 class UStatusUnit
 {
 public:
-	// constrcuter destructer
 	UStatusUnit();
 	~UStatusUnit();
-
-	// delete Function
-	UStatusUnit(const UStatusUnit& _Other) = delete;
-	UStatusUnit(UStatusUnit&& _Other) noexcept = delete;
-	UStatusUnit& operator=(const UStatusUnit& _Other) = delete;
-	UStatusUnit& operator=(UStatusUnit&& _Other) noexcept = delete;
 
 	bool CreateStatus(FStatusData* _Data);
 
@@ -272,5 +265,13 @@ private:
 	
 	// ¿Á»≠
 	int Geo = 0;
+
+
+private:
+	// delete Function
+	UStatusUnit(const UStatusUnit& _Other) = delete;
+	UStatusUnit(UStatusUnit&& _Other) noexcept = delete;
+	UStatusUnit& operator=(const UStatusUnit& _Other) = delete;
+	UStatusUnit& operator=(UStatusUnit&& _Other) noexcept = delete;
 };
 

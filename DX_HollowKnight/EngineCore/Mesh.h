@@ -6,15 +6,8 @@
 class UMesh : public UEngineResources
 {
 public:
-	// constrcuter destructer
 	UMesh();
 	~UMesh();
-
-	// delete Function
-	UMesh(const UMesh& _Other) = delete;
-	UMesh(UMesh&& _Other) noexcept = delete;
-	UMesh& operator=(const UMesh& _Other) = delete;
-	UMesh& operator=(UMesh&& _Other) noexcept = delete;
 
 	static std::shared_ptr<UMesh> Create(std::string_view _Name)
 	{
@@ -38,6 +31,13 @@ protected:
 private:
 	std::shared_ptr<UEngineVertexBuffer> VertexBuffer;
 	std::shared_ptr<UEngineIndexBuffer> IndexBuffer;
+
+private:
+	// delete Function
+	UMesh(const UMesh& _Other) = delete;
+	UMesh(UMesh&& _Other) noexcept = delete;
+	UMesh& operator=(const UMesh& _Other) = delete;
+	UMesh& operator=(UMesh&& _Other) noexcept = delete;
 
 };
 
