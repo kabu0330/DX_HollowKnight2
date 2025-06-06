@@ -47,30 +47,30 @@ ULevel::~ULevel()
 	Cameras.clear();
 }
 
-void ULevel::LevelChangeStart()
+void ULevel::StartLevel()
 {
 	for (std::shared_ptr<class AActor> Actor : BeginPlayList)
 	{
-		Actor->LevelChangeStart();
+		Actor->StartLevel();
 	}
 
 
 	for (std::shared_ptr<class AActor> Actor : AllActorList)
 	{
-		Actor->LevelChangeStart();
+		Actor->StartLevel();
 	}
 }
 
-void ULevel::LevelChangeEnd()
+void ULevel::EndLevel()
 {
 	for (std::shared_ptr<class AActor> Actor : BeginPlayList)
 	{
-		Actor->LevelChangeEnd();
+		Actor->EndLevel();
 	}
 
 	for (std::shared_ptr<class AActor> Actor : AllActorList)
 	{
-		Actor->LevelChangeEnd();
+		Actor->EndLevel();
 	}
 }
 

@@ -18,7 +18,7 @@ public:
 	ENGINEAPI UEngineGraphicDevice();
 	ENGINEAPI ~UEngineGraphicDevice();
 
-	void CreateDeviceAndContext();
+	void SetupRenderingPipeline();
 	void CreateBackBuffer(const UEngineWindow& _Window);
 
 	IDXGIAdapter* GetHighPerFormanceAdapter();

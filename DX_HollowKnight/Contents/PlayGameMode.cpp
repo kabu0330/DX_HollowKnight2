@@ -178,7 +178,7 @@ void APlayGameMode::SetBasePoint()
 	BasePointCollision->SetDebugColor({1.0f, 0.0f, 0.0f, 1.0f });
 }
 
-void APlayGameMode::LevelChangeStart()
+void APlayGameMode::StartLevel()
 {
 	UEngineSound::AllSoundOff();
 	Sound = UEngineSound::Play("Dirtmouth 1.wav");
@@ -195,7 +195,7 @@ void APlayGameMode::LevelChangeStart()
 	Window->SetActive(true);
 }
 
-void APlayGameMode::LevelChangeEnd()
+void APlayGameMode::EndLevel()
 {
 	
 }

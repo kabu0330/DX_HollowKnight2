@@ -18,7 +18,7 @@ public:
 	void Tick(float _DeltaTime);
 	void CheckInput(float _DeltaTime);
 
-	void LevelChangeStart() override;
+	void StartLevel() override;
 
 	static std::shared_ptr<class AMapObject>& GetMapObject()
 	{

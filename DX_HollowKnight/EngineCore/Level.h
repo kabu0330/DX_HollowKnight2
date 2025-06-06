@@ -13,8 +13,8 @@ public:
 	ENGINEAPI ULevel();
 	ENGINEAPI ~ULevel();
 
-	void LevelChangeStart();
-	void LevelChangeEnd();
+	void StartLevel();
+	void EndLevel();
 
 	template<typename Type>
 	Type* GetGameMode()

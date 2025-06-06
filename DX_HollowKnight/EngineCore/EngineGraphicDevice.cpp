@@ -80,7 +80,7 @@ IDXGIAdapter* UEngineGraphicDevice::GetHighPerFormanceAdapter()
     return ResultAdapter;
 }
 
-void UEngineGraphicDevice::CreateDeviceAndContext()
+void UEngineGraphicDevice::SetupRenderingPipeline()
 {
     MainAdapter = GetHighPerFormanceAdapter(); // 제일 좋은 성능의 그래픽카드 정보를 MainAdapter에 저장한다.
 

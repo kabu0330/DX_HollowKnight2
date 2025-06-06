@@ -38,12 +38,12 @@ void ATitleGameMode::Tick(float _DeltaTime)
 	StartSound();
 }
 
-void ATitleGameMode::LevelChangeStart()
+void ATitleGameMode::StartLevel()
 {
 
 }
 
-void ATitleGameMode::LevelChangeEnd()
+void ATitleGameMode::EndLevel()
 {
 	TimeEventer->AddEndEvent(0.5f, [this]()
 		{
@@ -134,7 +134,7 @@ void ATitleGameMode::StartSound()
 		HUD->FadeIn();
 		TimeEventer->AddEndEvent(1.0f, [this]()
 			{
-				LevelChangeEnd();
+				EndLevel();
 			});
 	}
 }

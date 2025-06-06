@@ -13,8 +13,8 @@ public:
 	void BeginPlay();
 	void Tick(float _DeltaTime);
 
-	void LevelChangeStart() override;
-	void LevelChangeEnd() override;
+	void StartLevel() override;
+	void EndLevel() override;
 
 	static FVector MousePos;
 	static FVector KnightPos;

@@ -58,7 +58,7 @@ UEngineCore::~UEngineCore()
 {
 }
 
-void UEngineCore::WindowInit(HINSTANCE _Instance)
+void UEngineCore::InitWindow(HINSTANCE _Instance)
 {
 	UEngineWindow::EngineWindowInit(_Instance);
 	GEngine->MainWindow.Open("MainWindow");
@@ -115,7 +115,7 @@ void UEngineCore::EngineStart(HINSTANCE _Instance, std::string_view _DllName)
 
 	GEngine->ThreadPool.Initialize();
 
-	WindowInit(_Instance);
+	InitWindow(_Instance);
 
 	LoadContents(_DllName);
 
@@ -124,7 +124,7 @@ void UEngineCore::EngineStart(HINSTANCE _Instance, std::string_view _DllName)
 		{
 			UEngineSound::Init();
 
-			GEngine->Device.CreateDeviceAndContext();
+			GEngine->Device.SetupRenderingPipeline();
 
 			GEngine->Core->EngineStart(GEngine->Data);
 			
@@ -189,12 +189,12 @@ void UEngineCore::EngineFrame()
 	{
 		if (nullptr != GEngine->CurLevel) // 현재 레벨이 종료되면서 할 일이 있으면 마무리 하고
 		{
-			GEngine->CurLevel->LevelChangeEnd();
+			GEngine->CurLevel->EndLevel();
 		}
 
 		GEngine->CurLevel = GEngine->NextLevel; // 레벨을 바꾼다.
 
-		GEngine->CurLevel->LevelChangeStart(); // 새로운 레벨에서 처음 세팅할 작업을 먼저 진행하고
+		GEngine->CurLevel->StartLevel(); // 새로운 레벨에서 처음 세팅할 작업을 먼저 진행하고
 		GEngine->NextLevel = nullptr; // NextLevel 포인터의 역할은 다했다.
 		GEngine->Timer.TimeStart(); // 델타 타임도 처음부터 다시 갱신한다. 혹시 모를 오류가 있을까봐
 	}

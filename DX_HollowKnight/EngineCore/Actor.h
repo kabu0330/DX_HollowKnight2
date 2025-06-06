@@ -14,8 +14,8 @@ public:
 	ENGINEAPI virtual void BeginPlay();
 	ENGINEAPI virtual void Tick(float _DeltaTime);
 
-	virtual void LevelChangeStart() {}
-	virtual void LevelChangeEnd() {}
+	virtual void StartLevel() {}
+	virtual void EndLevel() {}
 
 	template<typename ComponentType>
 	inline std::shared_ptr<ComponentType> CreateDefaultSubobject()
