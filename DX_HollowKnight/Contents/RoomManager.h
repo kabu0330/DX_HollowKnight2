@@ -24,6 +24,8 @@ public:
 		PrevRoom = _Room;
 	}
 
+	void SetActivate(bool _Value);
+
 protected:
 
 private:

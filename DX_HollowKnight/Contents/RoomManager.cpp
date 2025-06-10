@@ -175,6 +175,14 @@ void URoomManager::CreateRoom(AGameMode* _GameMode)
 	Crossroads5->CreateMonster<ACrawlid>({ 17000, -8300 });
 }
 
+void URoomManager::SetActivate(bool _Value)
+{
+	for (std::shared_ptr<ARoom> Room : Rooms)
+	{
+		Room->SetRoomActive(_Value);
+	}
+}
+
 std::shared_ptr<ARoom> URoomManager::CreateRoom(std::string_view _RoomName, std::string_view _BackgroundName, std::string_view _PixelCollisionName, FVector _Size, float _ScaleRatio/* = 1.0f*/)
 {
 	std::string RoomName = _RoomName.data();

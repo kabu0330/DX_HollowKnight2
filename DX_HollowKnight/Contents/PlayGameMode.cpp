@@ -75,6 +75,11 @@ void APlayGameMode::CheckInfo()
 
 void APlayGameMode::SetActiveRoom()
 {
+	if (true == GetWorld()->GetMainCamera()->IsFreeCamera())
+	{
+		return;
+	}
+
 	ARoom* PrevRoom = Rooms.GetPrevRoom();
 	ARoom* CurRoom = ARoom::GetCurRoom();
 	if (PrevRoom != CurRoom)

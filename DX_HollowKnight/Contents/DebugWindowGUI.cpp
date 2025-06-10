@@ -5,6 +5,7 @@
 #include "PlayGameMode.h"
 #include "Room.h"
 #include "EnginePlatform/EngineInput.h"
+#include <EngineCore/EngineRenderTarget.h>
 
 UDebugWindowGUI::UDebugWindowGUI()
 {
@@ -24,6 +25,15 @@ void UDebugWindowGUI::OnGUI()
 	if (UEngineInput::IsDown(VK_F8))
 	{
 		GetWorld()->GetMainCamera()->FreeCameraSwitch();
+		if (true == GetWorld()->GetMainCamera()->IsFreeCamera())
+		{
+			GetWorld()->GetGameMode<APlayGameMode>()->GetRoomsRef().SetActivate(true);
+			GetWorld()->GetLastRenderTarget()->SetClearColor(float4(0.0f, 0.0f, 1.0f, 1.0f));
+		}	
+		else
+		{
+			GetWorld()->GetLastRenderTarget()->SetClearColor(float4(0.0f, 0.0f, 0.0f, 1.0f));
+		}
 	}
 
 	GetFrame();

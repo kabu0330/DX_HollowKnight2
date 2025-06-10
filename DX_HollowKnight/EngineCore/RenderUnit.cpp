@@ -168,28 +168,19 @@ void URenderUnit::Render(class UEngineCamera* _Camera, float _DeltaTime)
 		Pair.second.Setting();
 	}
 
-	//	InputAssembler1Setting();
 	Mesh->GetVertexBuffer()->Setting();
-
-	//	VertexShaderSetting();
 	Material->GetVertexShader()->Setting();
 	
-	//	InputAssembler2Setting();
 	Mesh->GetIndexBuffer()->Setting();
 	Material->PrimitiveTopologySetting();
 
 	UEngineCore::GetDevice().GetContext()->IASetInputLayout(InputLayOut.Get());
 
-	//	RasterizerSetting();
 	Material->GetRasterizerState()->Setting();
 
-	//	PixelShaderSetting();
 	Material->GetPixelShader()->Setting();
 
-	//	OutPutMergeSetting();
-	// ·£´õÅ¸°ÙÀÌ ¹Ù²ï´Ù.
 	Material->GetBlend()->Setting();
-
 	Material->GetDepthStencilState()->Setting();
 
 	UEngineCore::GetDevice().GetContext()->DrawIndexed(Mesh->GetIndexBuffer()->GetIndexCount(), 0, 0);

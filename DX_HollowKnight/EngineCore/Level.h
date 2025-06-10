@@ -156,6 +156,11 @@ public:
 		return List;
 	}
 
+	ENGINEAPI class UEngineRenderTarget* GetLastRenderTarget()
+	{
+		return LastRenderTarget.get();
+	}
+
 protected:
 
 private:
