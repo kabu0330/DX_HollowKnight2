@@ -44,7 +44,7 @@ public:
 		if (std::is_base_of_v<UActorComponent, ComponentType> 
 			&& !std::is_base_of_v<USceneComponent, ComponentType>)
 		{
-			ActorComponentList.push_back(NewCom);
+			AllActorComponents.push_back(NewCom);
 		}
 		else if(!std::is_base_of_v<UActorComponent, ComponentType>
 			&& !std::is_base_of_v<USceneComponent, ComponentType>)
@@ -198,7 +198,7 @@ private:
 
 	ULevel* World;
 
-	std::list<std::shared_ptr<class UActorComponent>> ActorComponentList;
+	std::list<std::shared_ptr<class UActorComponent>> AllActorComponents;
 
 	// 레퍼런스 카운트 유지용 자료구조.
 	std::list<std::shared_ptr<class UActorComponent>> AllComponentList;

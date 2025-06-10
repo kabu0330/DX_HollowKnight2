@@ -23,7 +23,7 @@ void AActor::BeginPlay()
 		RootComponent->BeginPlay();
 	}
 
-	for (std::shared_ptr<class UActorComponent>& ActorComponent : ActorComponentList)
+	for (std::shared_ptr<class UActorComponent>& ActorComponent : AllActorComponents)
 	{
 		ActorComponent->BeginPlay();
 	}
@@ -44,7 +44,7 @@ void AActor::Tick(float _DeltaTime)
 			RootComponent->ComponentTick(_DeltaTime);
 		}
 	}
-	for (std::shared_ptr<class UActorComponent> ActorComponent : ActorComponentList)
+	for (std::shared_ptr<class UActorComponent> ActorComponent : AllActorComponents)
 	{
 		if (false == ActorComponent->IsActive())
 		{

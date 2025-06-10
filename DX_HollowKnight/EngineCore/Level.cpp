@@ -43,7 +43,7 @@ ULevel::ULevel()
 ULevel::~ULevel()
 {
 	BeginPlayList.clear();
-	AllActorList.clear();
+	AllActors.clear();
 	Cameras.clear();
 }
 
@@ -55,7 +55,7 @@ void ULevel::StartLevel()
 	}
 
 
-	for (std::shared_ptr<class AActor> Actor : AllActorList)
+	for (std::shared_ptr<class AActor> Actor : AllActors)
 	{
 		Actor->StartLevel();
 	}
@@ -68,7 +68,7 @@ void ULevel::EndLevel()
 		Actor->EndLevel();
 	}
 
-	for (std::shared_ptr<class AActor> Actor : AllActorList)
+	for (std::shared_ptr<class AActor> Actor : AllActors)
 	{
 		Actor->EndLevel();
 	}
@@ -104,11 +104,11 @@ void ULevel::Tick(float _DeltaTime)
 			continue;
 		}
 
-		AllActorList.push_back(CurActor); // BeginPlay가 호출된 Actor만 Tick이 도는 ActorList에 들어간다.
+		AllActors.push_back(CurActor); // BeginPlay가 호출된 Actor만 Tick이 도는 ActorList에 들어간다.
 	}
 
 	// BeginPlay가 호출된 Actor
-	for (std::shared_ptr<AActor> CurActor : AllActorList)
+	for (std::shared_ptr<AActor> CurActor : AllActors)
 	{
 		if (false == CurActor->IsActive()) // 비활성화된 Actor는 Tick을 돌리지 않는다.
 		{
@@ -313,7 +313,7 @@ void ULevel::Release(float _DeltaTime)
 	}
 
 	{
-		std::list<std::shared_ptr<AActor>>& List = AllActorList;
+		std::list<std::shared_ptr<AActor>>& List = AllActors;
 
 		std::list<std::shared_ptr<AActor>>::iterator StartIter = List.begin();
 		std::list<std::shared_ptr<AActor>>::iterator EndIter = List.end();

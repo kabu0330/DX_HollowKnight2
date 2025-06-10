@@ -61,10 +61,6 @@ void APlayGameMode::CheckDebugInput()
 	{
 		ARoom::SwitchDebugActiveGravity();
 	}
-	if (UEngineInput::IsDown('P'))
-	{
-		GetWorld()->GetMainCamera()->FreeCameraSwitch();
-	}
 	if (UEngineInput::IsDown(VK_F4))
 	{
 		UEngineCore::ResetLevel<APlayGameMode, AKnight, APlayHUD>("Play");

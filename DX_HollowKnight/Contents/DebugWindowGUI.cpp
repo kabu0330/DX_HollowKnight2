@@ -4,6 +4,7 @@
 #include <EngineCore/EngineGUI.h>
 #include "PlayGameMode.h"
 #include "Room.h"
+#include "EnginePlatform/EngineInput.h"
 
 UDebugWindowGUI::UDebugWindowGUI()
 {
@@ -16,6 +17,11 @@ UDebugWindowGUI::~UDebugWindowGUI()
 void UDebugWindowGUI::OnGUI()
 {
 	if (true == ImGui::Button("FreeCameraOn"))
+	{
+		GetWorld()->GetMainCamera()->FreeCameraSwitch();
+	}
+
+	if (UEngineInput::IsDown(VK_F8))
 	{
 		GetWorld()->GetMainCamera()->FreeCameraSwitch();
 	}

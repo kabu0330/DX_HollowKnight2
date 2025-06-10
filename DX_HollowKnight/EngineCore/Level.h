@@ -125,7 +125,7 @@ public:
 	{
 		std::list<std::shared_ptr<ConvertType>> List;
 
-		for (std::shared_ptr<class AActor> Actor : AllActorList)
+		for (std::shared_ptr<class AActor> Actor : AllActors)
 		{
 			std::shared_ptr<ConvertType> Convert = std::dynamic_pointer_cast<ConvertType>(Actor);
 			if (nullptr == Convert)
@@ -143,7 +143,7 @@ public:
 	{
 		std::vector<std::shared_ptr<ConvertType>> List;
 
-		for (std::shared_ptr<class AActor> Actor : AllActorList)
+		for (std::shared_ptr<class AActor> Actor : AllActors)
 		{
 			std::shared_ptr<ConvertType> Convert = std::dynamic_pointer_cast<ConvertType>(Actor);
 			if (nullptr == Convert)
@@ -167,7 +167,7 @@ private:
 
 	std::list<std::shared_ptr<class AActor>> BeginPlayList;
 
-	std::list<std::shared_ptr<class AActor>> AllActorList;
+	std::list<std::shared_ptr<class AActor>> AllActors;
 
 	std::map<int, std::shared_ptr<class ACameraActor>> Cameras;
 
