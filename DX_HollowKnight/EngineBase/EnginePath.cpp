@@ -32,7 +32,7 @@ std::string UEnginePath::GetFileName()
 {
 	if (true == IsDirectory())
 	{
-		MSGASSERT("파일 경로 일때만 GetFileName을 호출할수 있습니다." + Path.string());
+		MSGASSERT("파일 경로가 잘못되었습니다." + Path.string());
 		return "";
 	}
 
@@ -43,7 +43,7 @@ std::string UEnginePath::GetDirectoryName()
 {
 	if (false == IsDirectory())
 	{
-		MSGASSERT("디렉토리 경로 일때만 GetDirectoryName을 호출할수 있습니다." + Path.string());
+		MSGASSERT("디렉토리 경로가 잘못되었습니다. " + Path.string());
 		return "";
 	}
 
@@ -82,7 +82,7 @@ bool UEnginePath::Move(std::string_view _Path)
 
 	if (false == IsExists())
 	{
-		MSGASSERT("존재하지 않는 경로로 이동하려고 했습니다."); 
+		MSGASSERT("존재하지 않는 경로로 이동할 수 없습니다."); 
 		return false;
 	}
 
@@ -101,7 +101,7 @@ bool UEnginePath::MoveParentToDirectory(std::string_view _Path)
 
 	if (false == DummyPath.IsDirectory())
 	{
-		MSGASSERT("디렉토리 경로일때만 MoveParentToDirectory 를 호출할수 있습니다");
+		MSGASSERT("디렉토리 경로가 아닙니다.");
 		return false;
 	}
 

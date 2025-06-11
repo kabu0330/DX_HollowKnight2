@@ -10,7 +10,6 @@ class UEngineFile : public UEnginePath
 {
 public:
 	ENGINEAPI UEngineFile();
-	// 생성체인
 	ENGINEAPI UEngineFile(const std::string& _Path);
 	ENGINEAPI UEngineFile(std::string_view _Path);
 	ENGINEAPI UEngineFile(std::filesystem::path _Path);

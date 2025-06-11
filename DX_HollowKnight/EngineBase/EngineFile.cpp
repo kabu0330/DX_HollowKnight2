@@ -76,17 +76,17 @@ void UEngineFile::Write(const void* _Ptr, size_t _Size)
 {
 	if (0 == _Size)
 	{
-		MSGASSERT("크기가 0인 데이터를 쓸수는 없습니다.");
+		MSGASSERT("크기가 0인 데이터를 쓸 수 없습니다.");
 	}
 
 	if (nullptr == _Ptr)
 	{
-		MSGASSERT("존재하지 않는 메모리를 사용하려고 했습니다.");
+		MSGASSERT("포인터가 nullptr입니다.");
 	}
 
 	if (nullptr == File)
 	{
-		MSGASSERT("열지 않은 파일에 내용을 쓰려고 했습니다");
+		MSGASSERT("열지 않은 파일에 쓰기를 할 수 없습니다.");
 		return;
 	}
 
@@ -97,17 +97,17 @@ void UEngineFile::Read(void* _Ptr, size_t _Size)
 {
 	if (0 == _Size)
 	{
-		MSGASSERT("크기가 0인 데이터를 읽을수는 없습니다.");
+		MSGASSERT("크기가 0인 데이터를 읽을 수 없습니다.");
 	}
 
 	if (nullptr == _Ptr)
 	{
-		MSGASSERT("존재하지 않는 메모리를 읽으려고 했습니다.");
+		MSGASSERT("포인터가 nullptr입니다.");
 	}
 
 	if (nullptr == File)
 	{
-		MSGASSERT("열지 않은 파일에 내용을 쓰려고 했습니다");
+		MSGASSERT("열지 않은 파일은 읽을 수 없습니다.");
 		return;
 	}
 

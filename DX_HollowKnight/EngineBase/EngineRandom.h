@@ -22,11 +22,8 @@ public:
 			_Max = SwapValue;
 		}
 
-		// _Min ~ _Max 랜덤값 뽑아줘
 		std::uniform_int_distribution<int> RandomCreate(_Min, _Max);
 
-		// MtGen 제네레이터 써서
-		// std::mt19937_64 메르헨 트위스터 알고리즘 써서 만들어줘.
 		return RandomCreate.operator()(MtGen);
 	}
 
@@ -39,7 +36,6 @@ public:
 			_Max = SwapValue;
 		}
 
-		// _Min ~ _Max 랜덤값 뽑아줘
 		std::uniform_real_distribution<float> RandomCreate(_Min, _Max);
 		return RandomCreate.operator()(MtGen);
 	}
@@ -47,10 +43,7 @@ public:
 protected:
 
 private:
-
 	std::mt19937_64 MtGen = std::mt19937_64(time(nullptr));
-
-	//std::well512
 
 private:
 	// delete Function

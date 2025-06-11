@@ -13,13 +13,11 @@ public:
 	ENGINEAPI float GetDeltaTime()
 	{
 		// 0.0000001
-		// 0.000000000000001
 		return fDeltaTime;
 	}
 
 	ENGINEAPI double GetDoubleDeltaTime()
 	{
-		// 0.0000001
 		// 0.000000000000001
 		return DeltaTime;
 	}
@@ -38,18 +36,6 @@ public:
 protected:
 
 private:
-	//typedef union _LARGE_INTEGER {
-	//	struct {
-	//		DWORD LowPart;
-	//		LONG HighPart;
-	//	} DUMMYSTRUCTNAME;
-	//	struct {
-	//		DWORD LowPart;
-	//		LONG HighPart;
-	//	} u;
-	//	LONGLONG QuadPart;
-	//} LARGE_INTEGER;
-
 	// LONGLONG QuadPart => __int64
 	LARGE_INTEGER Count = LARGE_INTEGER(); 
 	LARGE_INTEGER PrevTime = LARGE_INTEGER();
