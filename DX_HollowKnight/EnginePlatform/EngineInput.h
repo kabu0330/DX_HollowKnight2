@@ -5,7 +5,7 @@
 #include <vector>
 #include <functional>
 
-enum class KeyEvent
+enum class EKeyEvent
 {
 	Down,
 	Press,
@@ -46,9 +46,9 @@ private:
 		{
 		}
 
-		void EventCheck();
+		void CheckInputEvent();
 
-		void KeyCheck(float _DeltaTime);
+		void CheckInput(float _DeltaTime);
 
 		void Reset()
 		{
@@ -63,12 +63,12 @@ private:
 	};
 
 	ENGINEAPI static UEngineInput& GetInst();
-	ENGINEAPI static void EventCheck(float _DeltaTime);
+	ENGINEAPI static void CheckInputEvent(float _DeltaTime);
 
 public:
-	ENGINEAPI static void KeyCheck(float _DeltaTime);
+	ENGINEAPI static void CheckInput(float _DeltaTime);
 
-	ENGINEAPI static void KeyReset();
+	ENGINEAPI static void ResetKey();
 
 	bool IsDoubleClick(int _KeyIndex, float _Time)
 	{
@@ -137,7 +137,7 @@ public:
 		return GetInst().Keys[_KeyIndex].IsFree;
 	}
 
-	void BindAction(int _KeyIndex, KeyEvent _EventType,  std::function<void()> _Function);
+	void BindAction(int _KeyIndex, EKeyEvent _EventType,  std::function<void()> _Function);
 
 protected:
 

@@ -45,7 +45,7 @@ void UEngineGUI::Init()
 
     UEngineDirectory NewDir;
     NewDir.MoveParentToDirectory("EngineResources");
-    NewDir.Move("Font");
+    NewDir.MovePath("Font");
     UEngineFile File = NewDir.GetFile("malgun.ttf");
 
     File.GetPathToString();

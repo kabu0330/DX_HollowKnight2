@@ -211,7 +211,7 @@ UEngineSound::~UEngineSound()
 void UEngineSound::Load(std::string_view _Path)
 {
 	UEnginePath EnginePath = UEnginePath(_Path);
-	std::string FileName = EnginePath.GetFileName();
+	std::string FileName = EnginePath.GetFileNameToString();
 
 	UEngineSound::Load(FileName.data(), _Path);
 }

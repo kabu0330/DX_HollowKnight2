@@ -28,7 +28,7 @@ std::string UEnginePath::GetPathToString()
 	return Path.string();
 }
 
-std::string UEnginePath::GetFileName()
+std::string UEnginePath::GetFileNameToString()
 {
 	if (true == IsDirectory())
 	{
@@ -39,7 +39,7 @@ std::string UEnginePath::GetFileName()
 	return Path.filename().string();
 }
 
-std::string UEnginePath::GetDirectoryName()
+std::string UEnginePath::GetDirectoryNameToString()
 {
 	if (false == IsDirectory())
 	{
@@ -50,13 +50,12 @@ std::string UEnginePath::GetDirectoryName()
 	return Path.filename().string();
 }
 
-std::string UEnginePath::GetExtension()
+std::string UEnginePath::GetExtensionToString()
 {
 	return Path.extension().string();
 }
 
-
-bool UEnginePath::IsExists()
+bool UEnginePath::DoesPathExist()
 {
 	return std::filesystem::exists(Path);
 }
@@ -71,16 +70,16 @@ bool UEnginePath::IsDirectory()
 	return std::filesystem::is_directory(Path);
 }
 
-void UEnginePath::MoveParent()
+void UEnginePath::MoveParentPath()
 {
 	Path = Path.parent_path();
 }
 
-bool UEnginePath::Move(std::string_view _Path)
+bool UEnginePath::MovePath(std::string_view _Path)
 {
 	Append(_Path);
 
-	if (false == IsExists())
+	if (false == DoesPathExist())
 	{
 		MSGASSERT("존재하지 않는 경로로 이동할 수 없습니다."); 
 		return false;
@@ -125,7 +124,7 @@ bool UEnginePath::MoveParentToDirectory(std::string_view _Path)
 			Path = CurPath;
 			break;
 		}
-		DummyPath.MoveParent();
+		DummyPath.MoveParentPath();
 	}
 
 	return Result;

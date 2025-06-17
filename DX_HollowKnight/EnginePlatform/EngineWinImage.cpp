@@ -140,7 +140,7 @@ void UEngineWinImage::Load(UEngineWinImage* _TargetImage, std::string_view _Path
 {
 	UEnginePath Path = _Path;
 
-	std::string UpperExt = UEngineString::ToUpper(Path.GetExtension());
+	std::string UpperExt = UEngineString::ToUpper(Path.GetExtensionToString());
 
 	HBITMAP NewBitmap = nullptr;
 

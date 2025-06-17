@@ -14,7 +14,7 @@ public:
 	{
 		UEnginePath EnginePath = UEnginePath(_Path);
 
-		std::string FileName = EnginePath.GetFileName();
+		std::string FileName = EnginePath.GetFileNameToString();
 
 		return Load(FileName, _Path, _EntryPoint, _VersionHigh, _VersionLow);
 	}

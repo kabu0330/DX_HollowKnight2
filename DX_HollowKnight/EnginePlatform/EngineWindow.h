@@ -11,7 +11,7 @@
 class UEngineWindow
 {
 public:
-	ENGINEAPI static void EngineWindowInit(HINSTANCE _Instance);
+	ENGINEAPI static void InitEngineWindow(HINSTANCE _Instance);
 	ENGINEAPI static void CreateWindowClass(const WNDCLASSEXA& _Class);
 	ENGINEAPI static int WindowMessageLoop(std::function<void()> _StartFunction, std::function<void()> _FrameFunction, std::function<void()> _EndFunction = nullptr);
 	

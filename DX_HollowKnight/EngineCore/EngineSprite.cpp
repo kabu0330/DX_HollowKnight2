@@ -28,7 +28,7 @@ std::shared_ptr<UEngineSprite> UEngineSprite::CreateSpriteToFolder(std::string_v
 
 	for (size_t i = 0; i < Files.size(); i++)
 	{
-		std::string UpperName = UEngineString::ToUpper(Files[i].GetFileName());
+		std::string UpperName = UEngineString::ToUpper(Files[i].GetFileNameToString());
 
 		std::shared_ptr<UEngineTexture> Texture = UEngineTexture::Find<UEngineTexture>(UpperName);
 
@@ -64,9 +64,9 @@ std::shared_ptr<UEngineSprite> UEngineSprite::CreateSpriteToMeta(std::string_vie
 	PushRes<UEngineSprite>(NewRes, _Name, "");
 
 	UEnginePath Path = Tex->GetPath();
-	std::string FileName = Path.GetFileName();
+	std::string FileName = Path.GetFileNameToString();
 	FileName += _DataFileExt;
-	Path.MoveParent();
+	Path.MoveParentPath();
 	Path.Append(FileName);
 
 	UEngineFile File = Path;

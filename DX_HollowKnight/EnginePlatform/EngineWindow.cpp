@@ -77,7 +77,7 @@ LRESULT CALLBACK UEngineWindow::WndProc(HWND hWnd, UINT message, WPARAM wParam, 
     return 0;
 }
 
-void UEngineWindow::EngineWindowInit(HINSTANCE _Instance)
+void UEngineWindow::InitEngineWindow(HINSTANCE _Instance)
 {
     hInstance = _Instance;
 

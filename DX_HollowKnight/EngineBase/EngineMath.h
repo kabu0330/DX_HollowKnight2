@@ -213,10 +213,10 @@ public:
 	// 일반적으로 벡터와 행렬이 곱해지는 것을 트랜스폼
 	static TVector Transform(const TVector& _Vector, const class FMatrix& _Matrix);
 
-	// 이동 적용할게
+	// 이동 적용
 	static TVector TransformCoord(const TVector& _Vector, const class FMatrix& _Matrix);
 
-	// 이동 적용하지 않을게
+	// 이동 X
 	static TVector TransformNormal(const TVector& _Vector, const class FMatrix& _Matrix);
 
 	int iX() const
@@ -239,7 +239,6 @@ public:
 		return Y * 0.5f;
 	}
 
-	// X든 Y든 0이있으면 터트리는 함수.
 	bool IsZeroed() const
 	{
 		return X == 0.0f || Y == 0.0f;

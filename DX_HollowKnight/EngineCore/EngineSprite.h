@@ -18,7 +18,7 @@ public:
 	{
 		UEngineDirectory Dir = _Path;
 
-		return CreateSpriteToFolder(Dir.GetDirectoryName(), _Path);
+		return CreateSpriteToFolder(Dir.GetDirectoryNameToString(), _Path);
 	}
 
 	ENGINEAPI static std::shared_ptr<UEngineSprite> CreateSpriteToFolder(std::string_view _Name, std::string_view _Path);

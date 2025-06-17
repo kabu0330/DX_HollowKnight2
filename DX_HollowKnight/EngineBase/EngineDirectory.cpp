@@ -58,7 +58,7 @@ std::vector<class UEngineFile> UEngineDirectory::GetAllFile(bool _IsRecursive, c
 
 		for (size_t i = 0; i < UpperExts.size(); i++)
 		{
-			std::string CurUpperExt = UEngineString::ToUpper(Path.GetExtension());
+			std::string CurUpperExt = UEngineString::ToUpper(Path.GetExtensionToString());
 
 			if (CurUpperExt == UpperExts[i])
 			{
@@ -132,7 +132,7 @@ void UEngineDirectory::GetAllFileRecursive(std::filesystem::path _Path, std::vec
 
 		for (size_t i = 0; i < UpperExts.size(); i++)
 		{
-			std::string CurUpperExt = UEngineString::ToUpper(Path.GetExtension());
+			std::string CurUpperExt = UEngineString::ToUpper(Path.GetExtensionToString());
 
 			if (CurUpperExt == UpperExts[i])
 			{

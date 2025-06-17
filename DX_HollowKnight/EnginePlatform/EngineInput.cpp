@@ -2,7 +2,7 @@
 #include "EngineInput.h"
 
 // Input 내부에 Key 내부의 keyCheck 함수
-void UEngineInput::UEngineKey::KeyCheck(float _DeltaTime)
+void UEngineInput::UEngineKey::CheckInput(float _DeltaTime)
 {
 	if (0 != GetAsyncKeyState(Key))
 	{
@@ -54,7 +54,7 @@ void UEngineInput::UEngineKey::KeyCheck(float _DeltaTime)
 	}
 }
 
-void UEngineInput::UEngineKey::EventCheck()
+void UEngineInput::UEngineKey::CheckInputEvent()
 {
 	if (true == IsDown)
 	{
@@ -203,7 +203,7 @@ UEngineInput::UEngineInput()
 	Keys.insert({ VK_F24		, UEngineKey(VK_F24) });
 }
 
-void UEngineInput::EventCheck(float _DeltaTime)
+void UEngineInput::CheckInputEvent(float _DeltaTime)
 {
 	std::map<int, UEngineKey>::iterator StartIter = GetInst().Keys.begin();
 	std::map<int, UEngineKey>::iterator EndIter = GetInst().Keys.end();
@@ -211,11 +211,11 @@ void UEngineInput::EventCheck(float _DeltaTime)
 	for (; StartIter != EndIter; ++StartIter)
 	{
 		UEngineKey& CurKey = StartIter->second;
-		CurKey.EventCheck();
+		CurKey.CheckInputEvent();
 	}
 }
 
-void UEngineInput::KeyCheck(float _DeltaTime)
+void UEngineInput::CheckInput(float _DeltaTime)
 {
 	std::map<int, UEngineKey>::iterator StartIter = GetInst().Keys.begin();
 	std::map<int, UEngineKey>::iterator EndIter = GetInst().Keys.end();
@@ -223,17 +223,17 @@ void UEngineInput::KeyCheck(float _DeltaTime)
 	for (; StartIter != EndIter; ++StartIter)
 	{
 		UEngineKey& CurKey = StartIter->second;
-		CurKey.KeyCheck(_DeltaTime);
+		CurKey.CheckInput(_DeltaTime);
 	}
 
-	EventCheck(_DeltaTime);
+	CheckInputEvent(_DeltaTime);
 }
 
 UEngineInput::~UEngineInput()
 {
 }
 
-void UEngineInput::BindAction(int _KeyIndex, KeyEvent _EventType, std::function<void() > _Function)
+void UEngineInput::BindAction(int _KeyIndex, EKeyEvent _EventType, std::function<void() > _Function)
 {
 	if (false == Keys.contains(_KeyIndex))
 	{
@@ -243,16 +243,16 @@ void UEngineInput::BindAction(int _KeyIndex, KeyEvent _EventType, std::function<
 
 	switch (_EventType)
 	{
-	case KeyEvent::Down:
+	case EKeyEvent::Down:
 		Keys[_KeyIndex].DownEvents.push_back(_Function);
 		break;
-	case KeyEvent::Press:
+	case EKeyEvent::Press:
 		Keys[_KeyIndex].PressEvents.push_back(_Function);
 		break;
-	case KeyEvent::Free:
+	case EKeyEvent::Free:
 		Keys[_KeyIndex].FreeEvents.push_back(_Function);
 		break;
-	case KeyEvent::Up:
+	case EKeyEvent::Up:
 		Keys[_KeyIndex].UpEvents.push_back(_Function);
 		break;
 	default:
@@ -260,7 +260,7 @@ void UEngineInput::BindAction(int _KeyIndex, KeyEvent _EventType, std::function<
 	}
 }
 
-void UEngineInput::KeyReset()
+void UEngineInput::ResetKey()
 {
 	std::map<int, UEngineKey>::iterator StartIter = GetInst().Keys.begin();
 	std::map<int, UEngineKey>::iterator EndIter = GetInst().Keys.end();

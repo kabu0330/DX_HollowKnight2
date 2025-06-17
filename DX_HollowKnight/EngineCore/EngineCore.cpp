@@ -60,7 +60,7 @@ UEngineCore::~UEngineCore()
 
 void UEngineCore::InitWindow(HINSTANCE _Instance)
 {
-	UEngineWindow::EngineWindowInit(_Instance);
+	UEngineWindow::InitEngineWindow(_Instance);
 	GEngine->MainWindow.Open("MainWindow");
 }
 
@@ -69,12 +69,12 @@ void UEngineCore::LoadContents(std::string_view _DllName)
 	UEngineDirectory Dir;
 
 	Dir.MoveParentToDirectory("Build");
-	Dir.Move("bin/x64");
+	Dir.MovePath("bin/x64");
 
 #ifdef _DEBUG
-	Dir.Move("Debug");
+	Dir.MovePath("Debug");
 #else
-	Dir.Move("Release");
+	Dir.MovePath("Release");
 #endif
 
 	UEngineFile File = Dir.GetFile(_DllName);
@@ -107,7 +107,7 @@ void UEngineCore::LoadContents(std::string_view _DllName)
 
 void UEngineCore::EngineStart(HINSTANCE _Instance, std::string_view _DllName)
 {
-	UEngineDebug::LeakCheck();
+	UEngineDebug::CheckMemoryLeak();
 
 	UEngineCore EngineCore;
 
@@ -204,10 +204,10 @@ void UEngineCore::EngineFrame()
 
 	if (true == GEngine->MainWindow.IsFocus()) // 윈도우가 포커스되었을 때만
 	{
-		UEngineInput::KeyCheck(DeltaTime); // 키 입력 체크
+		UEngineInput::CheckInput(DeltaTime); // 키 입력 체크
 	}
 	else {
-		UEngineInput::KeyReset();
+		UEngineInput::ResetKey();
 	}
 
 	UEngineSound::Update();

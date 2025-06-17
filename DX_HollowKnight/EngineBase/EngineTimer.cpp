@@ -38,7 +38,7 @@ void UEngineTimer::TimeCheck()
 	QueryPerformanceCounter(&CurTime);
 
 	double Tick = static_cast<double>(CurTime.QuadPart - PrevTime.QuadPart);
-	DeltaTime = Tick / TimeCounter * TimeScale;
+	DeltaTime = Tick / TimeCounter * TimeScale; // TimeScale is 1.0f;
 	fDeltaTime = static_cast<float>(DeltaTime);
 	PrevTime.QuadPart = CurTime.QuadPart;
 }

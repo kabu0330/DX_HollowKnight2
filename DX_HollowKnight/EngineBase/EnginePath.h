@@ -10,24 +10,24 @@ public:
 	ENGINEAPI UEnginePath(std::filesystem::path _Path);
 	ENGINEAPI virtual ~UEnginePath();
 
-	ENGINEAPI bool IsExists();
-	ENGINEAPI void MoveParent();
+	ENGINEAPI bool DoesPathExist();
+	ENGINEAPI void MoveParentPath();
 
 	ENGINEAPI std::string GetPathToString();
 
 	// 파일명 + 확장자 포함
-	ENGINEAPI std::string GetFileName();
+	ENGINEAPI std::string GetFileNameToString();
 
 	// 파일명 + 확장자 포함
-	ENGINEAPI std::string GetDirectoryName();
+	ENGINEAPI std::string GetDirectoryNameToString();
 
 	// 확장자
-	ENGINEAPI std::string GetExtension();
+	ENGINEAPI std::string GetExtensionToString();
 
 
 	ENGINEAPI bool MoveParentToDirectory(std::string_view _Path);
 
-	ENGINEAPI bool Move(std::string_view _Path);
+	ENGINEAPI bool MovePath(std::string_view _Path);
 
 	ENGINEAPI bool IsDirectory();
 

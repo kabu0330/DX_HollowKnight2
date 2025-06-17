@@ -37,7 +37,7 @@ void UEngineTexture::ResLoad()
 	UEngineFile File = Path;
 
 	std::string Str = File.GetPathToString();
-	std::string Ext = File.GetExtension();
+	std::string Ext = File.GetExtensionToString();
 	std::wstring wLoadPath = UEngineString::AnsiToUnicode(Str.c_str());
 	std::string UpperExt = UEngineString::ToUpper(Ext.c_str());
 
