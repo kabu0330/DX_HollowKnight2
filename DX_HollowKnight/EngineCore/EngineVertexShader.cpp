@@ -25,12 +25,12 @@ std::shared_ptr<UEngineVertexShader> UEngineVertexShader::Load(std::string_view 
 	NewRes->VersionHigh = _VersionHigh;
 	NewRes->VersionLow = _VersionLow;
 	NewRes->EntryName = _EntryPoint;
-	NewRes->ResLoad();
+	NewRes->LoadResource();
 
 	return NewRes;
 }
 
-void UEngineVertexShader::ResLoad()
+void UEngineVertexShader::LoadResource()
 {
 	std::wstring WPath = UEngineString::AnsiToUnicode(GetPath().GetPathToString());
 

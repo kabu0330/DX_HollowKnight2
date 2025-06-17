@@ -26,7 +26,7 @@ public:
 protected:
 
 private:
-	ENGINEAPI void ResLoad();
+	ENGINEAPI void LoadResource();
 
 	Microsoft::WRL::ComPtr<ID3D11PixelShader> ShaderRes = nullptr;
 

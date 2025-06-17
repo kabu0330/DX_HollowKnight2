@@ -4,7 +4,7 @@
 #include <EnginePlatform/EngineWindow.h>
 #include <EnginePlatform/EngineSound.h>
 #include <EnginePlatform/EngineInput.h>
-#include "IContentsCore.h"
+#include "IContentCore.h"
 #include "EngineResources.h"
 #include "EngineConstantBuffer.h"
 #include "EngineGUI.h"
@@ -88,7 +88,8 @@ void UEngineCore::LoadContents(std::string_view _DllName)
 		return;
 	}
 
-	INT_PTR(__stdcall * Ptr)(std::shared_ptr<IContentsCore>&) = (INT_PTR(__stdcall*)(std::shared_ptr<IContentsCore>&))GetProcAddress(GEngine->ContentsDLL, "CreateContentsCore");
+	INT_PTR(__stdcall * Ptr)(std::shared_ptr<IContentCore>&) = 
+		(INT_PTR(__stdcall*)(std::shared_ptr<IContentCore>&))GetProcAddress(GEngine->ContentsDLL, "CreateContentsCore");
 
 	if (nullptr == Ptr)
 	{
@@ -105,7 +106,7 @@ void UEngineCore::LoadContents(std::string_view _DllName)
 	}
 }
 
-void UEngineCore::EngineStart(HINSTANCE _Instance, std::string_view _DllName)
+void UEngineCore::StartEngine(HINSTANCE _Instance, std::string_view _DllName)
 {
 	UEngineDebug::CheckMemoryLeak();
 
@@ -126,7 +127,7 @@ void UEngineCore::EngineStart(HINSTANCE _Instance, std::string_view _DllName)
 
 			GEngine->Device.SetupRenderingPipeline();
 
-			GEngine->Core->EngineStart(GEngine->Data);
+			GEngine->Core->StartEngine(GEngine->Data);
 			
 			GEngine->MainWindow.SetWindowPosAndScale(GEngine->Data.WindowPos, GEngine->Data.WindowSize);
 
@@ -140,7 +141,7 @@ void UEngineCore::EngineStart(HINSTANCE _Instance, std::string_view _DllName)
 		},
 		[]()
 		{
-			EngineEnd();
+			EndEngine();
 		});	
 }
 
@@ -221,7 +222,7 @@ void UEngineCore::EngineFrame()
 	GEngine->CurLevel->Release(DeltaTime);
 }
 
-void UEngineCore::EngineEnd()
+void UEngineCore::EndEngine()
 {
 	UEngineGUI::Release();
 

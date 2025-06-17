@@ -25,12 +25,12 @@ std::shared_ptr<UEnginePixelShader> UEnginePixelShader::Load(std::string_view _N
 	NewRes->VersionHigh = _VersionHigh;
 	NewRes->VersionLow = _VersionLow;
 	NewRes->EntryName = _EntryPoint;
-	NewRes->ResLoad();
+	NewRes->LoadResource();
 
 	return NewRes;
 }
 
-void UEnginePixelShader::ResLoad()
+void UEnginePixelShader::LoadResource()
 {
 	std::wstring WPath = UEngineString::AnsiToUnicode(GetPath().GetPathToString());
 

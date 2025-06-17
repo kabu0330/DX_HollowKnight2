@@ -52,7 +52,7 @@ void USoundPlayer::SetVolume(float _Volume)
 	Control->setVolume(_Volume);
 }
 
-void USoundPlayer::OnOffSwtich()
+void USoundPlayer::SwtichOnOffSound()
 {
 	bool Check = false;
 	Control->getPaused(&Check);
@@ -77,12 +77,12 @@ void USoundPlayer::Loop(int Count/* = -1*/)
 	Control->setLoopCount(Count);
 }
 
-void USoundPlayer::ReStart()
+void USoundPlayer::Restart()
 {
 	SetPosition(0);
 }
 
-unsigned int USoundPlayer::LengthMs()
+unsigned int USoundPlayer::GetLengthMs()
 {
 	unsigned int ResultLength = 0;
 	SoundHandle->getLength(&ResultLength, FMOD_TIMEUNIT_MS);
@@ -229,7 +229,7 @@ void UEngineSound::Load(std::string_view _Name, std::string_view _Path)
 		return;
 	}
 
-	if (false == NewSound->ResLoad(_Path))
+	if (false == NewSound->LoadResource(_Path))
 	{
 		delete NewSound;
 		MSGASSERT("사운드 로드에 실패했습니다" + UpperString);
@@ -279,7 +279,7 @@ USoundPlayer UEngineSound::Play(std::string_view _Name)
 }
 
 
-bool UEngineSound::ResLoad(std::string_view _Path)
+bool UEngineSound::LoadResource(std::string_view _Path)
 {
 	SoundSystem->createSound(_Path.data(), FMOD_LOOP_NORMAL, nullptr, &SoundHandle);
 

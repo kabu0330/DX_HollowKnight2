@@ -27,12 +27,12 @@ std::shared_ptr<UEngineTexture> UEngineTexture::Load(std::string_view _Name, std
 
 	std::shared_ptr<UEngineTexture> NewRes =  std::make_shared<UEngineTexture>();
 	PushRes<UEngineTexture>(NewRes, _Name, _Path); // 텍스처를 관리구조에 편입
-	NewRes->ResLoad();
+	NewRes->LoadResource();
 
 	return NewRes;
 }
 
-void UEngineTexture::ResLoad()
+void UEngineTexture::LoadResource()
 {
 	UEngineFile File = Path;
 

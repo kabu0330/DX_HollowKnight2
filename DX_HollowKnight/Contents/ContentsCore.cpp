@@ -20,7 +20,7 @@
 // 상위 엔진 레벨에 해당 클래스를 EngineCore에 간접적인 제어권한을 가지는 컨텐츠 코어로 설정한다.
 CreateContentsCoreDefine(UContentsCore);
 
-void UContentsCore::EngineStart(UEngineInitData& _Data)
+void UContentsCore::StartEngine(UEngineInitData& _Data)
 {
 	SetWindowSize(_Data);
 
@@ -60,7 +60,7 @@ void UContentsCore::EngineTick(float _DeltaTime)
 {
 }
 
-void UContentsCore::EngineEnd()
+void UContentsCore::EndEngine()
 {
 
 }

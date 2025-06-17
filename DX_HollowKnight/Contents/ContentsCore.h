@@ -1,17 +1,17 @@
 #pragma once
-#include <EngineCore/IContentsCore.h>
+#include <EngineCore/IContentCore.h>
 
 // 설명 : 윈도우 크기 설정, 리소스 로드, 레벨 생성
-class UContentsCore : public IContentsCore
+class UContentsCore : public IContentCore
 {
 public:
 	UContentsCore();
 	~UContentsCore();
 
 protected:
-	void EngineStart(UEngineInitData& _Data);
+	void StartEngine(UEngineInitData& _Data);
 	void EngineTick(float _DeltaTime);
-	void EngineEnd();
+	void EndEngine();
 
 private:
 	void SetWindowSize(UEngineInitData& _Data);

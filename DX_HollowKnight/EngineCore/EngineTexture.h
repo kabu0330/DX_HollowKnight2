@@ -62,7 +62,7 @@ public:
 protected:
 
 private:
-	ENGINEAPI void ResLoad();
+	ENGINEAPI void LoadResource();
 
 	FVector Size = FVector::ZERO;
 	DirectX::TexMetadata Metadata = DirectX::TexMetadata();

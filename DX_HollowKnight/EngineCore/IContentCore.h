@@ -10,18 +10,18 @@ public:
 
 
 // Ό³Έν : 
-class IContentsCore
+class IContentCore
 {
 public:
-	virtual ~IContentsCore() = 0 {};
+	virtual ~IContentCore() = 0 {};
 
-	virtual void EngineStart(UEngineInitData& _Data) = 0 {};
+	virtual void StartEngine(UEngineInitData& _Data) = 0 {};
 	virtual void EngineTick(float _DeltaTime) {};
-	virtual void EngineEnd() {};
+	virtual void EndEngine() {};
 };
 
 #define CreateContentsCoreDefine(TYPE) \
-STDAPI_(__declspec(dllexport) INT_PTR) __stdcall CreateContentsCore(std::shared_ptr<IContentsCore>& _Core) \
+STDAPI_(__declspec(dllexport) INT_PTR) __stdcall CreateContentsCore(std::shared_ptr<IContentCore>& _Core) \
 { \
 	_Core = std::make_shared<TYPE>(); \
 	if (nullptr == _Core) \

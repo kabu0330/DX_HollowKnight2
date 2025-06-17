@@ -19,11 +19,11 @@ public:
 	ENGINEAPI void Stop();
 	ENGINEAPI bool IsPlaying();
 	ENGINEAPI void SetVolume(float _Volume);
-	ENGINEAPI void OnOffSwtich();
+	ENGINEAPI void SwtichOnOffSound();
 	ENGINEAPI void SetPosition(unsigned int _Value);
 	ENGINEAPI void Loop(int Count = -1);
-	ENGINEAPI void ReStart();
-	ENGINEAPI unsigned int LengthMs();
+	ENGINEAPI void Restart();
+	ENGINEAPI unsigned int GetLengthMs();
 
 private:
 	// 채널이 사운드 재생권한 소유
@@ -59,7 +59,7 @@ private:
 
 	FMOD::Sound* SoundHandle;
 
-	ENGINEAPI bool ResLoad(std::string_view _Path);
+	ENGINEAPI bool LoadResource(std::string_view _Path);
 
 private:
 	// delete Function

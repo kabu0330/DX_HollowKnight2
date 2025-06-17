@@ -5,7 +5,7 @@
 #include <EnginePlatform/EngineWindow.h>
 #include <EnginePlatform/EngineWorkThreadPool.h>
 #include "EngineGraphicDevice.h"
-#include "IContentsCore.h"
+#include "IContentCore.h"
 #include "Level.h"
 #include <memory>
 
@@ -14,7 +14,7 @@ class UEngineCore
 {
 public:
 
-	ENGINEAPI static void EngineStart(HINSTANCE _Instance, std::string_view _DllName);
+	ENGINEAPI static void StartEngine(HINSTANCE _Instance, std::string_view _DllName);
 
 	template<typename GameModeType, typename MainPawnType, typename HUDType>
 	static class std::shared_ptr<class ULevel> CreateLevel(std::string_view _Name)
@@ -88,7 +88,7 @@ private:
 	UEngineGraphicDevice Device = UEngineGraphicDevice();
 
 	HMODULE ContentsDLL = nullptr;
-	std::shared_ptr<IContentsCore> Core = nullptr;
+	std::shared_ptr<IContentCore> Core = nullptr;
 	UEngineInitData Data = UEngineInitData();
 
 	UEngineTimer Timer = UEngineTimer();
@@ -97,7 +97,7 @@ private:
 	static void LoadContents(std::string_view _DllName);
 
 	static void EngineFrame();
-	static void EngineEnd();
+	static void EndEngine();
 
 	ENGINEAPI static std::shared_ptr<ULevel> NewLevelCreate(std::string_view _Name);
 

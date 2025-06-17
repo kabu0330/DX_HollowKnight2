@@ -20,7 +20,7 @@ protected:
 
 private:
 	Microsoft::WRL::ComPtr<IFW1FontWrapper> Font;
-	void ResLoad(std::string_view _Path);
+	void LoadResource(std::string_view _Path);
 
 private:
 	// delete Function

@@ -207,7 +207,7 @@
     <ClInclude Include="GameInstance.h" />
     <ClInclude Include="GameMode.h" />
     <ClInclude Include="HUD.h" />
-    <ClInclude Include="IContentsCore.h" />
+    <ClInclude Include="IContentCore.h" />
     <ClInclude Include="ImageWidget.h" />
     <ClInclude Include="imconfig.h" />
     <ClInclude Include="imgui.h" />
