@@ -52,6 +52,8 @@ private:
 
 	void ShowPrompt();
 
+	void CreateRoomAndSound();
+
 	std::shared_ptr<class UTimeEventComponent> TimeEventer;
 
 	URoomManager Rooms = URoomManager();

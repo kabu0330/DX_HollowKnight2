@@ -50,19 +50,7 @@ void APlayGameMode::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
 
-	if (false == bInitSetting)
-	{
-		bInitSetting = true;
-
-		Rooms.CreateRoom(this);
-
-		UEngineSound::AllSoundOff();
-		Sound = UEngineSound::Play("Dirtmouth 1.wav");
-		APlayHUD* HUD = dynamic_cast<APlayHUD*>(GetWorld()->GetHUD());
-		HUD->FadeOut(3.0f, 0.5f);
-	}
-
-
+	CreateRoomAndSound();
 
 	CheckInfo();
 	CheckDebugInput();
@@ -169,6 +157,22 @@ void APlayGameMode::ShowPrompt()
 		{
 			APlayHUD::GetHUD()->ActiveFalsePrompt();
 		});
+}
+
+void APlayGameMode::CreateRoomAndSound()
+{
+	if (false == bInitSetting)
+	{
+		bInitSetting = true;
+
+		Rooms.CreateRoom(this);
+
+		UEngineSound::AllSoundOff();
+		Sound = UEngineSound::Play("Dirtmouth 1.wav");
+
+		APlayHUD* HUD = dynamic_cast<APlayHUD*>(GetWorld()->GetHUD());
+		HUD->FadeOut(3.0f, 0.5f);
+	}
 }
 
 void APlayGameMode::BeginPlay()

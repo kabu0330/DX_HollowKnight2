@@ -41,59 +41,11 @@ void ATitleGameMode::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
 
-	if (true == UEngineCore::GetThreadPool().IsIdle() && false == bIsReady)
-	{
-		EndLoadingTime = ::clock();
-		bIsPlayStart = true;
+	CheckPlayLoadComplete();
 
-		Thread.Join();
+	StartLoadPlayLevelResource();
 
-		bIsReady = true;
-		std::cout << std::endl;
-		std::cout << "PlayLevel Resources is Ready." << std::endl;
-	}
-
-	if (true == bTitleLoadFinished && true == bEndInitTask)
-	{
-		bEndInitTask = false;
-
-		UEngineCore::EndTime = ::clock();
-		bIsExecute = true;
-
-		TitleScene = GetWorld()->SpawnActor<ATitleScene>();
-		TitleScene->SetActorLocation({ 0.0f, 0.0f, 0.0f });
-		std::shared_ptr<ACameraActor> Camera = GetWorld()->GetMainCamera();
-		Camera->SetActorLocation({ 0.0f, 0.0f, -1000.0f, 1.0f });
-
-		HUD = dynamic_cast<ATitleHUD*>(GetWorld()->GetHUD());
-
-		InitBackgroundSound();
-		FadeEffect();
-
-		PlayStartLoadingTime = ::clock();
-		if (true == Thread.Joinable())
-		{
-			Thread.Join();
-		}
-		Thread.Start("PlayLoading", [this]()
-			{
-				UContentsResource::LoadPlayResource();
-			});
-	}
-
-	if (false == bEndInitTask)
-	{
-		StartPlayGameMode();
-	}
-}
-
-void ATitleGameMode::StartLevel()
-{
-
-}
-
-void ATitleGameMode::EndLevel()
-{
+	StartPlayGameMode();
 
 }
 
@@ -129,6 +81,11 @@ void ATitleGameMode::FadeEffect()
 
 void ATitleGameMode::StartPlayGameMode()
 {
+	if (true == bEndInitTask)
+	{
+		return;
+	}
+
 	if (false == bCanNextMode)
 	{
 		return;
@@ -177,5 +134,61 @@ void ATitleGameMode::SetupPlayGameMode()
 			PlayWorld = UEngineCore::CreateLevel<APlayGameMode, AKnight, APlayHUD>("Play").get();
 			UEngineCore::OpenLevel("Play");
 		});
+}
+
+void ATitleGameMode::StartLoadPlayLevelResource()
+{
+	if (true == bTitleLoadFinished && true == bEndInitTask)
+	{
+		bEndInitTask = false;
+
+		UEngineCore::EndTime = ::clock();
+		bIsExecute = true;
+
+		TitleScene = GetWorld()->SpawnActor<ATitleScene>();
+		TitleScene->SetActorLocation({ 0.0f, 0.0f, 0.0f });
+		std::shared_ptr<ACameraActor> Camera = GetWorld()->GetMainCamera();
+		Camera->SetActorLocation({ 0.0f, 0.0f, -1000.0f, 1.0f });
+
+		HUD = dynamic_cast<ATitleHUD*>(GetWorld()->GetHUD());
+
+		InitBackgroundSound();
+		FadeEffect();
+
+		PlayStartLoadingTime = ::clock();
+		if (true == Thread.Joinable())
+		{
+			Thread.Join();
+		}
+		Thread.Start("PlayLoading", [this]()
+			{
+				UContentsResource::LoadPlayResource();
+			});
+	}
+}
+
+void ATitleGameMode::CheckPlayLoadComplete()
+{
+	if (true == UEngineCore::GetThreadPool().IsIdle() && false == bIsReady)
+	{
+		EndLoadingTime = ::clock();
+		bIsPlayStart = true;
+
+		Thread.Join();
+
+		bIsReady = true;
+		std::cout << std::endl;
+		std::cout << "PlayLevel Resources is Ready." << std::endl;
+	}
+}
+
+void ATitleGameMode::StartLevel()
+{
+
+}
+
+void ATitleGameMode::EndLevel()
+{
+
 }
 

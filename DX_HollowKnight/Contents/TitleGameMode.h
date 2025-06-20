@@ -39,6 +39,8 @@ protected:
 	void StartPlayGameMode();
 	void SetupPlayGameMode();
 
+	void StartLoadPlayLevelResource();
+	void CheckPlayLoadComplete();
 private:
 	std::shared_ptr<class ATitleScene> TitleScene;
 	UTimeEventComponent* TimeEventer = nullptr;
