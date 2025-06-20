@@ -33,6 +33,7 @@ public:
 		return bEndInitTask;
 	}
 
+
 protected:
 	void InitBackgroundSound();
 	void StartPlayGameMode();
@@ -50,11 +51,13 @@ private:
 
 	inline static bool bIsExecute = false;
 	inline static bool bIsPlayStart = false;
-	bool bPlayResourceLoadFinished = false;
 
 	UEngineThread Thread;
-	bool bTitleLoadFinished = false;
+	std::atomic<bool> bTitleLoadFinished = false;
 	bool bEndInitTask = true;
+
+	class ULevel* PlayWorld = nullptr;
+	bool bIsReady = false;
 
 private:
 	// delete Function

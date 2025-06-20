@@ -9,7 +9,7 @@ void UContentsResource::LoadTitleResource()
 	
 	//LoadImageDirectory("Image/Title");
 	LoadImageDirectoryByThread("Image/Title");
-	LoadSoundDirectory("Sound/Title");
+	LoadSoundDirectoryByThread("Sound/Title");
 	UEngineSprite::CreateSpriteToMeta("BlackParticle.png", ".smeta");
 }
 
@@ -73,6 +73,8 @@ void UContentsResource::LoadFont(const std::string& _FontName, const std::string
 
 void UContentsResource::LoadPlayResourceDirectory()
 {
+	LoadImageDirectoryByThread("MapData");
+
 	LoadImageDirectoryByThread("Image/Effect");
 	LoadImageDirectoryByThread("Image/etc");
 	LoadImageDirectoryByThread("Image/Knight");
@@ -80,12 +82,11 @@ void UContentsResource::LoadPlayResourceDirectory()
 	LoadImageDirectoryByThread("Image/Prompt");
 	LoadImageDirectoryByThread("Image/UI");
 
-	LoadImageDirectoryByThread("MapData");
 
-	LoadSoundDirectory("Sound/Background");
-	LoadSoundDirectory("Sound/FalseKnight");
-	LoadSoundDirectory("Sound/Knight");
-	LoadSoundDirectory("Sound/Monster");
+	LoadSoundDirectoryByThread("Sound/Background");
+	LoadSoundDirectoryByThread("Sound/FalseKnight");
+	LoadSoundDirectoryByThread("Sound/Knight");
+	LoadSoundDirectoryByThread("Sound/Monster");
 }
 
 void UContentsResource::LoadSpriteDirectory()
@@ -276,12 +277,37 @@ void UContentsResource::LoadImageDirectoryByThread(std::string_view _DirectoryNa
 	for (size_t i = 0; i < ImageFiles.size(); i++)
 	{
 		std::string FilePath = ImageFiles[i].GetPathToString();
-
-		UEngineCore::GetThreadPool().WorkQueue([FilePath]()
+		std::string FileName = ImageFiles[i].GetFileNameToString();
+		UEngineCore::GetThreadPool().WorkQueue([FilePath, FileName]()
 			{
 				UEngineTexture::LoadTextureThreadSafe(FilePath);
-				std::cout << "Work Thread" << std::endl;
+				
+				std::cout << FileName + " Work!" << std::endl;
 			});
+	}
+}
+
+void UContentsResource::LoadSoundDirectoryByThread(std::string_view _DirectoryName, bool _bIsRecursive)
+{
+	UEngineDirectory Dir;
+	if (false == Dir.MoveParentToDirectory("ContentsResources"))
+	{
+		MSGASSERT("리소스 폴더를 찾지 못했습니다.");
+		return;
+	}
+	Dir.Append(_DirectoryName);
+	std::vector<UEngineFile> SoundFile = Dir.GetAllFile(_bIsRecursive, { ".wav", ".mp3" });
+
+	for (size_t i = 0; i < SoundFile.size(); i++)
+	{
+		std::string FilePath = SoundFile[i].GetPathToString();
+		std::string FileName = SoundFile[i].GetFileNameToString();
+		UEngineCore::GetThreadPool().WorkQueue([FilePath, FileName]()
+			{
+				UEngineSound::Load(FilePath);
+				std::cout << FileName + " Work!" << std::endl;
+			});
+
 	}
 }
 

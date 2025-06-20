@@ -5,6 +5,7 @@
 #include <EngineCore/FontWidget.h>
 #include <EngineCore/TimeEventComponent.h>
 #include "Door.h"
+#include "PlayGameMode.h"
 
 APlayHUD::APlayHUD()
 {
@@ -24,22 +25,26 @@ APlayHUD::~APlayHUD()
 void APlayHUD::BeginPlay()
 {
 	AHUD::BeginPlay();
-
-	InitSkillGaugeFrame();
-	InitSkillGauge();
-	InitKinghtHp = AKnight::GetPawn()->GetStatRef().GetMaxHp();
-	CreateSkillGaugeEffect();
-
-	CreateBossText();
-	CreateFleur();
-	CreateClimbText();
-	CreatePrompt();
-	//CreateGeo();
 }
 
 void APlayHUD::Tick(float _DeltaTime)
 {
 	AHUD::Tick(_DeltaTime);
+
+	if (false == bInitSetting)
+	{
+		bInitSetting = true;
+
+		InitSkillGaugeFrame();
+		InitSkillGauge();
+		InitKinghtHp = AKnight::GetPawn()->GetStatRef().GetMaxHp();
+		CreateSkillGaugeEffect();
+
+		CreateBossText();
+		CreateFleur();
+		CreateClimbText();
+		CreatePrompt();
+	}
 
 	if (true == ADoor::IsDoorEnter())
 	{

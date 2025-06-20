@@ -60,6 +60,8 @@ private:
 
 	USoundPlayer Sound;
 
+	bool bInitSetting = false;
+
 private:
 	// delete Function
 	APlayGameMode(const APlayGameMode& _Other) = delete;

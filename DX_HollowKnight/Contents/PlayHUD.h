@@ -110,7 +110,7 @@ private:
 
 	USoundPlayer Sound;
 
-
+	bool bInitSetting = false;
 private:
 	// delete Function
 	APlayHUD(const APlayHUD& _Other) = delete;

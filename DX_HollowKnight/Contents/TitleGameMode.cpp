@@ -41,18 +41,24 @@ void ATitleGameMode::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
 
-	if (true == bPlayResourceLoadFinished)
+	if (true == UEngineCore::GetThreadPool().IsIdle() && false == bIsReady)
 	{
 		EndLoadingTime = ::clock();
 		bIsPlayStart = true;
 
-		UEngineCore::CreateLevel<APlayGameMode, AKnight, APlayHUD>("Play");
-		UEngineCore::OpenLevel("Play");
+		Thread.Join();
+
+		bIsReady = true;
+		std::cout << std::endl;
+		std::cout << "PlayLevel Resources is Ready." << std::endl;
 	}
 
 	if (true == bTitleLoadFinished && true == bEndInitTask)
 	{
 		bEndInitTask = false;
+
+		UEngineCore::EndTime = ::clock();
+		bIsExecute = true;
 
 		TitleScene = GetWorld()->SpawnActor<ATitleScene>();
 		TitleScene->SetActorLocation({ 0.0f, 0.0f, 0.0f });
@@ -63,6 +69,16 @@ void ATitleGameMode::Tick(float _DeltaTime)
 
 		InitBackgroundSound();
 		FadeEffect();
+
+		PlayStartLoadingTime = ::clock();
+		if (true == Thread.Joinable())
+		{
+			Thread.Join();
+		}
+		Thread.Start("PlayLoading", [this]()
+			{
+				UContentsResource::LoadPlayResource();
+			});
 	}
 
 	if (false == bEndInitTask)
@@ -73,8 +89,7 @@ void ATitleGameMode::Tick(float _DeltaTime)
 
 void ATitleGameMode::StartLevel()
 {
-	bIsExecute = true;
-	UEngineCore::EndTime = ::clock();
+
 }
 
 void ATitleGameMode::EndLevel()
@@ -93,20 +108,20 @@ void ATitleGameMode::InitBackgroundSound()
 
 void ATitleGameMode::FadeEffect()
 {
-	TimeEventer->AddEndEvent(1.0f, [this]()
+	TimeEventer->AddEndEvent(0.5f, [this]()
 		{
 			HUD->CreditsFadeIn();
 		});
 
-	TimeEventer->AddEndEvent(4.0f, [this]()
+	TimeEventer->AddEndEvent(2.5f, [this]()
 		{
 			HUD->CreditsFadeOut();
 		});
-	TimeEventer->AddEndEvent(6.0f, [this]()
+	TimeEventer->AddEndEvent(4.5f, [this]()
 		{
 			HUD->FadeOut();
 		});
-	TimeEventer->AddEndEvent(8.0f, [this]()
+	TimeEventer->AddEndEvent(7.0f, [this]()
 		{
 			bCanNextMode = true;
 		});
@@ -122,12 +137,12 @@ void ATitleGameMode::StartPlayGameMode()
 	{
 		return;
 	}
-	if (true == UEngineInput::IsDown(VK_SPACE))
+	if (true == UEngineInput::IsDown(VK_SPACE) && true == bIsReady)
 	{
 		bIsSpace = true;
 		ButtonSound = UEngineSound::Play("ui_button_confirm.wav");
 		HUD->FadeIn();
-		TimeEventer->AddEndEvent(0.5f, [this]()
+		TimeEventer->AddEndEvent(0.2f, [this]()
 			{
 				SetupPlayGameMode();
 			});
@@ -136,17 +151,6 @@ void ATitleGameMode::StartPlayGameMode()
 
 void ATitleGameMode::SetupPlayGameMode()
 {
-	PlayStartLoadingTime = ::clock();
-	if (true == Thread.Joinable())
-	{
-		Thread.Join();
-	}
-	Thread.Start("PlayLoading", [this]()
-		{
-			UContentsResource::LoadPlayResource();
-			bPlayResourceLoadFinished = true;
-		});
-
 	TimeEventer->AddEndEvent(0.5f, [this]()
 		{
 			Volume -= 0.2f;
@@ -154,37 +158,24 @@ void ATitleGameMode::SetupPlayGameMode()
 		});
 	TimeEventer->AddEndEvent(1.0f, [this]()
 		{
-			Volume -= 0.1f;
+			Volume -= 0.2f;
 			Sound.SetVolume(Volume);
 		});
 	TimeEventer->AddEndEvent(1.5f, [this]()
 		{
-			Volume -= 0.1f;
+			Volume -= 0.2f;
 			Sound.SetVolume(Volume);
 		});
 	TimeEventer->AddEndEvent(2.0f, [this]()
 		{
-			Volume -= 0.1f;
+			Volume -= 0.2f;
 			Sound.SetVolume(Volume);
 		});
 	TimeEventer->AddEndEvent(2.5f, [this]()
 		{
-			Volume -= 0.1f;
-			Sound.SetVolume(Volume);
-		});
-	TimeEventer->AddEndEvent(3.0f, [this]()
-		{
-			Volume -= 0.1f;
-			Sound.SetVolume(Volume);
-		});
-	TimeEventer->AddEndEvent(3.5f, [this]()
-		{
-			Volume -= 0.1f;
-			Sound.SetVolume(Volume);
-		});
-	TimeEventer->AddEndEvent(4.0f, [this]()
-		{
 			UEngineSound::AllSoundStop();
+			PlayWorld = UEngineCore::CreateLevel<APlayGameMode, AKnight, APlayHUD>("Play").get();
+			UEngineCore::OpenLevel("Play");
 		});
 }
 

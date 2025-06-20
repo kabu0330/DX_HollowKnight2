@@ -23,6 +23,7 @@ private:
 	static void LoadSoundDirectory(std::string_view _DirectoryName, bool _bIsRecursive = true);
 
 	static void LoadImageDirectoryByThread(std::string_view _DirectoryName, bool _bIsRecursive = true);
+	static void LoadSoundDirectoryByThread(std::string_view _DirectoryName, bool _bIsRecursive = true);
 
 	static void LoadContentsResource(std::string_view _Path);
 	static void LoadSpriteDirectory();

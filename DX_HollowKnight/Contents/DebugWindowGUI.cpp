@@ -118,7 +118,7 @@ void UDebugWindowGUI::ShowLoadingTime()
 	if (true == bIsExecute)
 	{
 		double Time = double(UEngineCore::EndTime - UEngineCore::StartTime) / CLOCKS_PER_SEC;
-		ImGui::Text("Exe Time : %0.6f", Time);
+		ImGui::Text("Exe Time : %0.4f", Time);
 	}
 }
 
@@ -128,6 +128,6 @@ void UDebugWindowGUI::ShowPlayLoadingTime()
 	if (true == Result)
 	{
 		double Time = double(EndLoadingTime - PlayStartLoadingTime) / CLOCKS_PER_SEC;
-		ImGui::Text("Play Loading Time : %0.6f", Time);
+		ImGui::Text("Play Loading Time : %0.4f", Time);
 	}
 }

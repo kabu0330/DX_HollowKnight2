@@ -73,6 +73,8 @@ void UEngineWorkThreadPool::ThreadQueueFunction(HANDLE _IOCPHandle, UEngineWorkT
 			if (nullptr != Work)
 			{
 				Work->Function();
+
+				_JobQueue->PendingCount.fetch_sub(1, std::memory_order_relaxed);
 			}
 
 			delete Work;
@@ -80,12 +82,20 @@ void UEngineWorkThreadPool::ThreadQueueFunction(HANDLE _IOCPHandle, UEngineWorkT
 	}
 
 	_JobQueue->RunningCount -= 1;
+	_JobQueue->PendingCount.fetch_sub(1, std::memory_order_relaxed);
 }
 
 void UEngineWorkThreadPool::WorkQueue(std::function<void()> _Work)
 {
+	PendingCount.fetch_add(1, std::memory_order_relaxed);
+
 	UWork* NewWork = new UWork();
 	NewWork->Function = _Work;
 
 	PostQueuedCompletionStatus(IOCPHandle, static_cast<DWORD>(EThreadStatus::WORK), reinterpret_cast<ULONG_PTR>(NewWork), nullptr);
+}
+
+bool UEngineWorkThreadPool::IsIdle() const
+{
+	return 0 == PendingCount.load(std::memory_order_relaxed);
 }

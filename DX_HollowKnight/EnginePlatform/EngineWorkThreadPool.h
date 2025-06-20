@@ -20,18 +20,19 @@ public:
 
 	ENGINEAPI void WorkQueue(std::function<void()> _Work);
 
-	ENGINEAPI int GetRunningCount() const
-	{
-		return RunningCount;
-	}
+	ENGINEAPI bool IsIdle() const;
+
 
 protected:
 
 private:
-	std::atomic<int> RunningCount;
+	std::atomic<int> RunningCount; // 살아있는 스레드 수
+
 	std::atomic<bool> IsWork = true;
 
 	HANDLE IOCPHandle = nullptr;
+
+	std::atomic<int> PendingCount{ 0 }; // 작업 스레드 수
 
 	int ThreadCount = 0;
 	std::vector<std::shared_ptr<UEngineThread>> Threads;

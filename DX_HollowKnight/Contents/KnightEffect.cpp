@@ -14,6 +14,8 @@ AKnightEffect::AKnightEffect()
 
 	SetZSort(static_cast<int>(EZOrder::KNIGHT_SKILL_FRONT));
 
+	InitSprite();
+
 	std::string FocusEffect = "FocusEffect";
 	BodyRenderer->CreateAnimation(FocusEffect, FocusEffect, 0, 10, FocusTime, false);
 
@@ -32,8 +34,6 @@ AKnightEffect::AKnightEffect()
 
 	std::string StunEffect02 = "StunEffect02";
 	BodyRenderer->CreateAnimation(StunEffect02, StunEffect02, 0, 6, StunFrame, false);
-
-	InitSprite();
 
 	BodyRenderer->ChangeAnimation(FocusEffect);
 }
