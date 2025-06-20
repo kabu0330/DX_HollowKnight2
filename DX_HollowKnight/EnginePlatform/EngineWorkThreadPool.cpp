@@ -17,17 +17,8 @@ UEngineWorkThreadPool::~UEngineWorkThreadPool()
 
 	while (0 < RunningCount)
 	{
-		PostQueuedCompletionStatus(IOCPHandle, static_cast<DWORD>(EThreadStatus::Destroy), 0, nullptr);
+		PostQueuedCompletionStatus(IOCPHandle, static_cast<DWORD>(EThreadStatus::DESTROY), 0, nullptr);
 	}
-
-}
-
-void UEngineWorkThreadPool::WorkQueue(std::function<void()> _Work)
-{
-	UWork* NewWork = new UWork();
-	NewWork->Function = _Work;
-
-	PostQueuedCompletionStatus(IOCPHandle, static_cast<DWORD>(EThreadStatus::Work), reinterpret_cast<ULONG_PTR>(NewWork), nullptr);
 }
 
 void UEngineWorkThreadPool::Initialize(std::string_view ThreadName /*= "WorkThread"*/, int Count /*= 0*/)
@@ -44,7 +35,6 @@ void UEngineWorkThreadPool::Initialize(std::string_view ThreadName /*= "WorkThre
 	RunningCount = ThreadCount;
 
 	IOCPHandle = CreateIoCompletionPort(INVALID_HANDLE_VALUE, 0, 0, 0);
-
 
 	if (nullptr == IOCPHandle)
 	{
@@ -72,15 +62,14 @@ void UEngineWorkThreadPool::ThreadQueueFunction(HANDLE _IOCPHandle, UEngineWorkT
 	{
 		GetQueuedCompletionStatus(_IOCPHandle, &Byte, &Ptr, &OverPtr, INFINITE);
 
-		if (-1 == Byte)
+		if (static_cast<int>(EThreadStatus::DESTROY) == Byte)
 		{
 			break;
 		}
 
-		if (-2 == Byte)
+		if (static_cast<int>(EThreadStatus::WORK) == Byte)
 		{
 			UWork* Work = reinterpret_cast<UWork*>(Ptr);
-
 			if (nullptr != Work)
 			{
 				Work->Function();
@@ -91,4 +80,12 @@ void UEngineWorkThreadPool::ThreadQueueFunction(HANDLE _IOCPHandle, UEngineWorkT
 	}
 
 	_JobQueue->RunningCount -= 1;
+}
+
+void UEngineWorkThreadPool::WorkQueue(std::function<void()> _Work)
+{
+	UWork* NewWork = new UWork();
+	NewWork->Function = _Work;
+
+	PostQueuedCompletionStatus(IOCPHandle, static_cast<DWORD>(EThreadStatus::WORK), reinterpret_cast<ULONG_PTR>(NewWork), nullptr);
 }

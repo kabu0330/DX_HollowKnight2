@@ -57,7 +57,6 @@ private:
 	URoomManager Rooms = URoomManager();
 
 	std::shared_ptr<class UCollision> BasePointCollision = nullptr;
-	std::shared_ptr<class UDebugWindowGUI> Window = nullptr;
 
 	USoundPlayer Sound;
 

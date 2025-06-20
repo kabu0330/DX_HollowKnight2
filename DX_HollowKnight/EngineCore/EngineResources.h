@@ -36,6 +36,15 @@ public:
 	}
 
 	template<typename ResType>
+	ENGINEAPI static void PushResourceThreadSafe(std::shared_ptr<UEngineResources> _Res, std::string_view _Name, std::string_view _Path)
+	{
+		const type_info& Info = typeid(ResType);
+		PushResourceThreadSafe(_Res, Info.name(), _Name, _Path);
+	}
+
+	ENGINEAPI static void PushResourceThreadSafe(std::shared_ptr<UEngineResources> _Res, std::string_view _Info, std::string_view _Name, std::string_view _Path);
+
+	template<typename ResType>
 	ENGINEAPI static void PushRes(std::shared_ptr<UEngineResources> _Res, std::string_view _Name, std::string_view _Path)
 	{
 		const type_info& Info = typeid(ResType);

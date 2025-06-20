@@ -29,13 +29,13 @@
       <Filter>Play\Unit</Filter>
     </ClInclude>
     <ClInclude Include="ContentsEditorGUI.h">
-      <Filter>ContentsSetting\GUI</Filter>
+      <Filter>ContentSetting\GUI</Filter>
     </ClInclude>
     <ClInclude Include="DebugWindowGUI.h">
-      <Filter>ContentsSetting\GUI</Filter>
+      <Filter>ContentSetting\GUI</Filter>
     </ClInclude>
     <ClInclude Include="ContentsResource.h">
-      <Filter>ContentsSetting\Resource</Filter>
+      <Filter>ContentSetting\Resource</Filter>
     </ClInclude>
     <ClInclude Include="CollisionManager.h">
       <Filter>Play\Setting</Filter>
@@ -44,7 +44,7 @@
       <Filter>Play\Setting</Filter>
     </ClInclude>
     <ClInclude Include="ContentsRenderer.h">
-      <Filter>ContentsSetting\Render</Filter>
+      <Filter>ContentSetting\Render</Filter>
     </ClInclude>
     <ClInclude Include="Skill.h">
       <Filter>Global</Filter>
@@ -166,13 +166,13 @@
       <Filter>Play\Unit</Filter>
     </ClCompile>
     <ClCompile Include="ContentsEditorGUI.cpp">
-      <Filter>ContentsSetting\GUI</Filter>
+      <Filter>ContentSetting\GUI</Filter>
     </ClCompile>
     <ClCompile Include="DebugWindowGUI.cpp">
-      <Filter>ContentsSetting\GUI</Filter>
+      <Filter>ContentSetting\GUI</Filter>
     </ClCompile>
     <ClCompile Include="ContentsResource.cpp">
-      <Filter>ContentsSetting\Resource</Filter>
+      <Filter>ContentSetting\Resource</Filter>
     </ClCompile>
     <ClCompile Include="CollisionManager.cpp">
       <Filter>Play\Setting</Filter>
@@ -187,7 +187,7 @@
       <Filter>Global\Knight</Filter>
     </ClCompile>
     <ClCompile Include="ContentsRenderer.cpp">
-      <Filter>ContentsSetting\Render</Filter>
+      <Filter>ContentSetting\Render</Filter>
     </ClCompile>
     <ClCompile Include="Skill.cpp">
       <Filter>Global</Filter>
@@ -308,18 +308,6 @@
     <Filter Include="Level">
       <UniqueIdentifier>{58d3821e-f186-4e77-a861-8f16b9ad13ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ContentsSetting">
-      <UniqueIdentifier>{705f4313-018d-4c2b-84c9-0b0201018210}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ContentsSetting\Resource">
-      <UniqueIdentifier>{318effba-c84a-4d4f-8a42-98637e2f0fa4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ContentsSetting\GUI">
-      <UniqueIdentifier>{8d190253-6f67-4848-947a-2155a14ebc95}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ContentsSetting\Render">
-      <UniqueIdentifier>{487692e4-6b76-4236-8869-624e3b36942f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Play\Setting">
       <UniqueIdentifier>{cbf9cc41-8d7d-4084-959d-3decaa2e300c}</UniqueIdentifier>
     </Filter>
@@ -358,6 +346,18 @@
     </Filter>
     <Filter Include="Play\Monster\Base\Effect">
       <UniqueIdentifier>{7b5b58f4-9f35-4fc3-887b-05a50e58872a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentSetting">
+      <UniqueIdentifier>{705f4313-018d-4c2b-84c9-0b0201018210}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentSetting\Resource">
+      <UniqueIdentifier>{318effba-c84a-4d4f-8a42-98637e2f0fa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentSetting\GUI">
+      <UniqueIdentifier>{8d190253-6f67-4848-947a-2155a14ebc95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentSetting\Render">
+      <UniqueIdentifier>{487692e4-6b76-4236-8869-624e3b36942f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

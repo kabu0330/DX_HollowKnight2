@@ -986,6 +986,7 @@ void AFalseKnight::CreateStunEffect()
 	}
 
 	AEffect* WhiteEffect = GetWorld()->SpawnActor<AEffect>().get();
+	WhiteEffect->InitSprite();
 	WhiteEffect->SetZSort(static_cast<int>(EZOrder::MONSTER_SKILL_FRONT) - 6);
 	WhiteEffect->SetName("Stun White Effect");
 	WhiteEffect->ChangeAnimation("StunEffect03", GetActorLocation());

@@ -39,6 +39,7 @@ void AMonster::CreateHitOrangeEffect()
 	FVector MonsterScale = BodyRenderer->GetScale();
 
 	AEffect* HitOrange = GetWorld()->SpawnActor<AEffect>().get();
+	HitOrange->InitSprite();
 	HitOrange->ChangeAnimation("HitOrange", ActorPos);
 	UEngineRandom Random;
 	int Result = Random.RandomInt(0, 49);

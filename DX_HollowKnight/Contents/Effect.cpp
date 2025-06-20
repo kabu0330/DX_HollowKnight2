@@ -16,12 +16,25 @@ AEffect::AEffect()
 	ZSort = static_cast<float>(EZOrder::KNIGHT_SKILL_FRONT);
 	BodyRenderer->SetWorldLocation({ 0.0f, 0.0f, ZSort });
 
-	
+	std::string Png = ".png";
+	float BlackParticleTime = 10.0f;
+	std::string BlackParticle = "BlackParticle";
+	BodyRenderer->CreateAnimation(BlackParticle, BlackParticle + Png, 1, 1, BlackParticleTime, false);
+
+	BodyRenderer->ChangeAnimation(BlackParticle);
+}
+
+AEffect::~AEffect()
+{
+	bIsValid = false;
+}
+
+void AEffect::InitSprite()
+{
 	// 가져가서 만들 부분
 	float FrameTime = 0.04f;
 	std::string FocusEffect = "FocusEffect";
 	BodyRenderer->CreateAnimation(FocusEffect, FocusEffect, 0, 10, FrameTime, false);
-
 
 	std::string Png = ".png";
 	float LightTime = 0.3f;
@@ -43,6 +56,7 @@ AEffect::AEffect()
 
 
 	float WhiteHitTime = 0.5f;
+	float BlackParticleTime = 10.0f;
 	std::string WhiteHit = "WhiteHit";
 	std::string WhiteHit0 = "WhiteHit0";
 	std::string WhiteHit1 = "WhiteHit1";
@@ -50,10 +64,6 @@ AEffect::AEffect()
 	BodyRenderer->CreateAnimation(WhiteHit0, WhiteHit + Png, 0, 0, WhiteHitTime, false);
 	BodyRenderer->CreateAnimation(WhiteHit1, WhiteHit + Png, 1, 1, WhiteHitTime, false);
 	BodyRenderer->CreateAnimation(WhiteHit2, WhiteHit + Png, 2, 2, WhiteHitTime, false);
-
-	float BlackParticleTime = 10.0f;
-	std::string BlackParticle = "BlackParticle";
-	BodyRenderer->CreateAnimation(BlackParticle, BlackParticle + Png, 1, 1, BlackParticleTime, false);
 
 	std::string WhiteParticle = "WhiteParticle";
 	BodyRenderer->CreateAnimation(WhiteParticle, WhiteHit + Png, 1, 1, BlackParticleTime, false);
@@ -65,14 +75,8 @@ AEffect::AEffect()
 	std::string DefaultHitParticle = "DefaultHitParticle";
 	BodyRenderer->CreateAnimation(DefaultHitParticle, DefaultHitParticle + Png, 0, 0, HitFrame, false);
 
-
-
-	BodyRenderer->ChangeAnimation(FocusEffect);
-}
-
-AEffect::~AEffect()
-{
-	bIsValid = false;
+	ZSort = static_cast<float>(EZOrder::KNIGHT_SKILL_FRONT);
+	BodyRenderer->SetWorldLocation({ 0.0f, 0.0f, ZSort });
 }
 
 void AEffect::ChangeAnimation(std::string_view _AnimationName)
@@ -110,6 +114,7 @@ void AEffect::SetZSort(int _Value)
 void AEffect::BeginPlay()
 {
 	AActor::BeginPlay();
+
 	Knight = AKnight::GetPawn();
 	if (nullptr != TargetActor)
 	{
@@ -219,7 +224,11 @@ void AEffect::CheckDirection()
 	}
 	else
 	{
-		bIsLeft = AKnight::GetPawn()->IsLeft();
+		AKnight* Knight = AKnight::GetPawn();
+		if (nullptr != Knight)
+		{
+			bIsLeft = Knight->IsLeft();
+		}
 		return;
 	}
 

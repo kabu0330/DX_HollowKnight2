@@ -3,12 +3,10 @@
 #include <EngineCore/ImageWidget.h>
 #include <EngineCore/FontWidget.h>
 #include <EnginePlatform/EngineInput.h>
+#include "TitleGameMode.h"
 
 ATitleHUD::ATitleHUD()
 {
-	CreateFade();
-	CreateCreditsLogo();
-
 	TimeEventer = CreateDefaultSubobject<UTimeEventComponent>().get();
 }
 
@@ -25,12 +23,21 @@ void ATitleHUD::BeginPlay()
 void ATitleHUD::Tick(float _DeltaTime)
 {
 	AHUD::Tick(_DeltaTime);
-	if (UEngineInput::IsDown('F'))
+
+	ATitleGameMode* GameMode = dynamic_cast<ATitleGameMode*>(GetWorld()->GetGameMode());
+	if (nullptr != GameMode && false == GameMode->IsResourceLoading() && false == bInitStart)
 	{
-		CreditsLogo->ColorData.MulColor.W -= 0.1f;
-		//CreditsFadeOut();
-		int a = 0;
+		bInitStart = true;
+
+		CreateFade();
+		CreateCreditsLogo();
+
+		if (UEngineInput::IsDown('F'))
+		{
+			CreditsLogo->ColorData.MulColor.W -= 0.1f;
+		}
 	}
+
 }
 
 void ATitleHUD::CreateFade()

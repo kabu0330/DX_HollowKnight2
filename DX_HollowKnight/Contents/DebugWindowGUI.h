@@ -10,13 +10,18 @@ public:
 
 	void GetMousePos();
 	void GetCurRoom();
-	void GetKnightInfo();
+	void ShowKnightInfo();
 	void GetGravityForce();
 	void GetFrame();
+	void SetFreeCamera();
+	void ShowLoadingTime();
+	void ShowPlayLoadingTime();
 
 
 protected:
 	void OnGUI() override;
+
+private:
 
 private:
 	// delete Function

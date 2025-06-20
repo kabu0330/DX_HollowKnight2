@@ -34,6 +34,7 @@ protected:
 	float4 CreditsFadeDir = FVector::UNIT; 
 
 	UTimeEventComponent* TimeEventer = nullptr;
+	bool bInitStart = false;
 
 private:
 	// delete Function

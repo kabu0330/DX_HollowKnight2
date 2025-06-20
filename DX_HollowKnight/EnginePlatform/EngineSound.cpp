@@ -8,6 +8,7 @@ std::list<USoundPlayer> UEngineSound::Players;
 
 // 사운드를 제어하기위한 핸들
 FMOD::System* SoundSystem = nullptr;
+std::mutex SoundCriticalSection;
 
 #ifdef _DEBUG
 #pragma comment(lib, "fmodL_vc.lib")
@@ -218,25 +219,29 @@ void UEngineSound::Load(std::string_view _Path)
 
 void UEngineSound::Load(std::string_view _Name, std::string_view _Path)
 {
-	std::string UpperString = UEngineString::ToUpper(_Name);
-
-	UEngineSound* NewSound = new UEngineSound();
-
-	if (false != UEngineSound::Sounds.contains(UpperString))
 	{
-		delete NewSound;
-		MSGASSERT("이미 로드한 사운드를 또 로드하려고 했습니다." + UpperString);
-		return;
-	}
+		std::lock_guard<std::mutex> Lock(SoundCriticalSection);
 
-	if (false == NewSound->LoadResource(_Path))
-	{
-		delete NewSound;
-		MSGASSERT("사운드 로드에 실패했습니다" + UpperString);
-		return;
-	}
+		std::string UpperString = UEngineString::ToUpper(_Name);
 
-	UEngineSound::Sounds.insert({ UpperString, NewSound });
+		UEngineSound* NewSound = new UEngineSound();
+
+		if (false != UEngineSound::Sounds.contains(UpperString))
+		{
+			delete NewSound;
+			MSGASSERT("이미 로드한 사운드를 또 로드하려고 했습니다." + UpperString);
+			return;
+		}
+
+		if (false == NewSound->LoadResource(_Path))
+		{
+			delete NewSound;
+			MSGASSERT("사운드 로드에 실패했습니다" + UpperString);
+			return;
+		}
+
+		UEngineSound::Sounds.insert({ UpperString, NewSound });
+	}
 }
 
 UEngineSound* UEngineSound::Find(std::string_view _Name)

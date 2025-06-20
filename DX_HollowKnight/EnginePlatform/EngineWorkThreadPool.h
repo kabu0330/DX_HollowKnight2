@@ -5,8 +5,8 @@
 
 enum class EThreadStatus
 {
-	Work = -2,
-	Destroy = -1,
+	WORK = -2,
+	DESTROY = -1,
 };
 
 // Ό³Έν :
@@ -19,6 +19,11 @@ public:
 	ENGINEAPI void Initialize(std::string_view ThreadName = "WorkThread", int Count = 0);
 
 	ENGINEAPI void WorkQueue(std::function<void()> _Work);
+
+	ENGINEAPI int GetRunningCount() const
+	{
+		return RunningCount;
+	}
 
 protected:
 

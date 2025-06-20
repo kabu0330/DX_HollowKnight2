@@ -26,6 +26,7 @@ AMonsterEffect::AMonsterEffect()
 	std::string GroundImapctEffect = "GroundImapctEffect";
 	BodyRenderer->CreateAnimation(GroundImapctEffect, GroundImapctEffect + Png, 0, 3, ImpactTime, false);
 
+	InitSprite();
 
 	BodyRenderer->ChangeAnimation(FocusEffect);
 }

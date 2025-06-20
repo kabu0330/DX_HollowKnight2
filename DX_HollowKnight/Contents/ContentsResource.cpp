@@ -3,125 +3,93 @@
 #include <EnginePlatform/EngineSound.h>
 #include <EngineCore/EngineFont.h>
 
-void UContentsResource::LoadResource()
+void UContentsResource::LoadTitleResource()
 {
-	{
-		UEngineDirectory Dir;
-		if (false == Dir.MoveParentToDirectory("ContentsResources"))
-		{
-			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
-			return;
-		}
-		Dir.Append("Image");
-		std::vector<UEngineFile> ImageFiles = Dir.GetAllFile(true, { ".PNG", ".BMP", ".JPG" });
-		for (size_t i = 0; i < ImageFiles.size(); i++)
-		{
-			std::string FilePath = ImageFiles[i].GetPathToString();
-			UEngineTexture::Load(FilePath);
-		}
-	}
+	// 최초 1회 리소스 폴더를 로드해야 한다.
+	
+	//LoadImageDirectory("Image/Title");
+	LoadImageDirectoryByThread("Image/Title");
+	LoadSoundDirectory("Sound/Title");
+	UEngineSprite::CreateSpriteToMeta("BlackParticle.png", ".smeta");
+}
 
-	{
-		// 맵 리소스
-		UEngineDirectory Dir;
-		Dir.MoveParentToDirectory("ContentsResources");
-		Dir.Append("MapObjectResources");
-
-		std::vector<UEngineFile> ImageFiles = Dir.GetAllFile(true, { ".PNG", ".BMP", ".JPG" });
-		for (size_t i = 0; i < ImageFiles.size(); i++)
-		{
-			std::string FilePath = ImageFiles[i].GetPathToString();
-			UEngineTexture::Load(FilePath);
-		}
-	}
-
-	{
-		// 맵 리소스
-		UEngineDirectory Dir;
-		Dir.MoveParentToDirectory("ContentsResources");
-		Dir.Append("MapData");
-
-		std::vector<UEngineFile> ImageFiles = Dir.GetAllFile(true, { ".PNG", ".BMP", ".JPG" });
-		for (size_t i = 0; i < ImageFiles.size(); i++)
-		{
-			std::string FilePath = ImageFiles[i].GetPathToString();
-			UEngineTexture::Load(FilePath);
-		}
-	}	
-
-	{	// 사운드 로드
-		UEngineDirectory Dir;
-		if (false == Dir.MoveParentToDirectory("ContentsResources"))
-		{
-			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
-			return;
-		}
-		Dir.Append("Sound");
-		// 로딩바 만들고 싶으면  100개면 10 10 10 10 10 10
-		std::vector<UEngineFile> ImageFiles = Dir.GetAllFile(true, { ".wav", ".mp3" });
-
-		for (size_t i = 0; i < ImageFiles.size(); i++)
-		{
-			std::string FilePath = ImageFiles[i].GetPathToString();
-			UEngineSound::Load(FilePath);
-		}
-	}
+void UContentsResource::LoadPlayResource()
+{
+	LoadPlayResourceDirectory();
+	LoadFont();
+	LoadSpriteDirectory();
+	LoadSpriteMetaData();
 }
 
 void UContentsResource::LoadFont()
 {
-	{
-		// 폰트
-		UEngineDirectory Dir;
-		Dir.MoveParentToDirectory("ContentsResources");
-		Dir.Append("Font/TrajanPro-Regular.otf");
-		std::string FilePath = Dir.GetPathToString();
-		UEngineFont::Load("TrajanPro-Regular", FilePath);
-	}
-	{
-		// 폰트
-		UEngineDirectory Dir;
-		Dir.MoveParentToDirectory("ContentsResources");
-		Dir.Append("Font/NotoSerifCJKsc-Regular.otf");
-		std::string FilePath = Dir.GetPathToString();
-		UEngineFont::Load("NotoSerifCJKsc-Regular", FilePath);
-	}
-	{
-		// 폰트
-		UEngineDirectory Dir;
-		Dir.MoveParentToDirectory("ContentsResources");
-		Dir.Append("Font/Perpetua.ttf");
-		std::string FilePath = Dir.GetPathToString();
-		UEngineFont::Load("Perpetua", FilePath);
-	}
-	{
-		// 폰트
-		UEngineDirectory Dir;
-		Dir.MoveParentToDirectory("ContentsResources");
-		Dir.Append("Font/TrajanPro-Bold.otf");
-		std::string FilePath = Dir.GetPathToString();
-		UEngineFont::Load("TrajanPro-Bold", FilePath);
-	}
+	LoadFont("TrajanPro-Regular", "otf");
+	LoadFont("NotoSerifCJKsc-Regular", "otf");
+	LoadFont("Perpetua", "ttf");
+	LoadFont("TrajanPro-Bold", "otf");
+	//{
+	//	// 폰트
+	//	UEngineDirectory Dir;
+	//	Dir.MoveParentToDirectory("ContentsResources");
+	//	Dir.Append("Font/TrajanPro-Regular.otf");
+	//	std::string FilePath = Dir.GetPathToString();
+	//	UEngineFont::Load("TrajanPro-Regular", FilePath);
+	//}
+	//{
+	//	// 폰트
+	//	UEngineDirectory Dir;
+	//	Dir.MoveParentToDirectory("ContentsResources");
+	//	Dir.Append("Font/NotoSerifCJKsc-Regular.otf");
+	//	std::string FilePath = Dir.GetPathToString();
+	//	UEngineFont::Load("NotoSerifCJKsc-Regular", FilePath);
+	//}
+	//{
+	//	// 폰트
+	//	UEngineDirectory Dir;
+	//	Dir.MoveParentToDirectory("ContentsResources");
+	//	Dir.Append("Font/Perpetua.ttf");
+	//	std::string FilePath = Dir.GetPathToString();
+	//	UEngineFont::Load("Perpetua", FilePath);
+	//}
+	//{
+	//	// 폰트
+	//	UEngineDirectory Dir;
+	//	Dir.MoveParentToDirectory("ContentsResources");
+	//	Dir.Append("Font/TrajanPro-Bold.otf");
+	//	std::string FilePath = Dir.GetPathToString();
+	//	UEngineFont::Load("TrajanPro-Bold", FilePath);
+	//}
 }
 
-void UContentsResource::LoadContentsResource(std::string_view _Path)
+void UContentsResource::LoadFont(const std::string& _FontName, const std::string& _Exe)
 {
-	std::string Path = _Path.data();
+	// 폰트
 	UEngineDirectory Dir;
-	if (false == Dir.MoveParentToDirectory("ContentsResources"))
-	{
-		MSGASSERT("리소스 폴더를 찾지 못했습니다.");
-		return;
-	}
-	Dir.Append(Path);
-	UEngineSprite::CreateSpriteToFolder(Dir.GetPathToString());
+	Dir.MoveParentToDirectory("ContentsResources");
+	Dir.Append("Font/" + _FontName + _Exe);
+	std::string FilePath = Dir.GetPathToString();
+	UEngineFont::Load(_FontName, FilePath);
 }
 
-void UContentsResource::LoadResourceDirectory()
+void UContentsResource::LoadPlayResourceDirectory()
 {
-	LoadResource(); // 최초 1회 리소스 폴더를 로드해야 한다.
-	LoadFont();
+	LoadImageDirectoryByThread("Image/Effect");
+	LoadImageDirectoryByThread("Image/etc");
+	LoadImageDirectoryByThread("Image/Knight");
+	LoadImageDirectoryByThread("Image/Monster");
+	LoadImageDirectoryByThread("Image/Prompt");
+	LoadImageDirectoryByThread("Image/UI");
 
+	LoadImageDirectoryByThread("MapData");
+
+	LoadSoundDirectory("Sound/Background");
+	LoadSoundDirectory("Sound/FalseKnight");
+	LoadSoundDirectory("Sound/Knight");
+	LoadSoundDirectory("Sound/Monster");
+}
+
+void UContentsResource::LoadSpriteDirectory()
+{
 	// Knight
 	LoadContentsResource("Image/Knight/Idle");
 	LoadContentsResource("Image/Knight/Run");
@@ -197,14 +165,7 @@ void UContentsResource::LoadResourceDirectory()
 
 }
 
-void UContentsResource::LoadFolder()
-{
-	//UEngineDirectory TitleMain;
-	//TitleMain.MoveParentToDirectory("ContentsResources//Image//Title");
-	//TitleMain.Append("TitleBackGround");
-}
-
-void UContentsResource::LoadSprite()
+void UContentsResource::LoadSpriteMetaData()
 {
 	UEngineSprite::CreateSpriteToMeta("WanderingHusk.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("LeapingHusk.png", ".smeta");
@@ -224,7 +185,6 @@ void UContentsResource::LoadSprite()
 	UEngineSprite::CreateSpriteToMeta("Puff.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("HitOrange.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("WhiteHit.png", ".smeta");
-	UEngineSprite::CreateSpriteToMeta("BlackParticle.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("DefaultHitParticle.png", ".smeta");
 	UEngineSprite::CreateSpriteToMeta("OrangeParticle.png", ".smeta");
 
@@ -265,6 +225,77 @@ void UContentsResource::LoadShaderResource()
 		Mat->SetDepthStencilState("CollisionDebugDepth");
 		Mat->SetRasterizerState("CollisionDebugRas");
 	}
+}
+
+void UContentsResource::LoadImageDirectory(std::string_view _DirectoryName, bool _bIsRecursive)
+{
+	UEngineDirectory Dir;
+	if (false == Dir.MoveParentToDirectory("ContentsResources"))
+	{
+		MSGASSERT("리소스 폴더를 찾지 못했습니다.");
+		return;
+	}
+	Dir.Append(_DirectoryName);
+	std::vector<UEngineFile> ImageFiles = Dir.GetAllFile(_bIsRecursive, { ".PNG", ".BMP", ".JPG" });
+	for (size_t i = 0; i < ImageFiles.size(); i++)
+	{
+		std::string FilePath = ImageFiles[i].GetPathToString();
+		UEngineTexture::Load(FilePath);
+	}
+}
+
+void UContentsResource::LoadSoundDirectory(std::string_view _DirectoryName, bool _bIsRecursive)
+{
+	UEngineDirectory Dir;
+	if (false == Dir.MoveParentToDirectory("ContentsResources"))
+	{
+		MSGASSERT("리소스 폴더를 찾지 못했습니다.");
+		return;
+	}
+	Dir.Append(_DirectoryName);
+	std::vector<UEngineFile> SoundFile = Dir.GetAllFile(_bIsRecursive, { ".wav", ".mp3" });
+
+	for (size_t i = 0; i < SoundFile.size(); i++)
+	{
+		std::string FilePath = SoundFile[i].GetPathToString();
+		UEngineSound::Load(FilePath);
+	}
+}
+
+void UContentsResource::LoadImageDirectoryByThread(std::string_view _DirectoryName, bool _bIsRecursive)
+{
+	UEngineDirectory Dir;
+	if (false == Dir.MoveParentToDirectory("ContentsResources"))
+	{
+		MSGASSERT("리소스 폴더를 찾지 못했습니다.");
+		return;
+	}
+	Dir.Append(_DirectoryName);
+	std::vector<UEngineFile> ImageFiles = Dir.GetAllFile(_bIsRecursive, { ".PNG", ".BMP", ".JPG" });
+
+	for (size_t i = 0; i < ImageFiles.size(); i++)
+	{
+		std::string FilePath = ImageFiles[i].GetPathToString();
+
+		UEngineCore::GetThreadPool().WorkQueue([FilePath]()
+			{
+				UEngineTexture::LoadTextureThreadSafe(FilePath);
+				std::cout << "Work Thread" << std::endl;
+			});
+	}
+}
+
+void UContentsResource::LoadContentsResource(std::string_view _Path)
+{
+	std::string Path = _Path.data();
+	UEngineDirectory Dir;
+	if (false == Dir.MoveParentToDirectory("ContentsResources"))
+	{
+		MSGASSERT("리소스 폴더를 찾지 못했습니다.");
+		return;
+	}
+	Dir.Append(Path);
+	UEngineSprite::CreateSpriteToFolder(Dir.GetPathToString());
 }
 
 UContentsResource::UContentsResource()

@@ -14,6 +14,8 @@ public:
 	{
 		return BodyRenderer.get();
 	}
+
+	void InitSprite();
 	
 	void ChangeAnimation(std::string_view _AnimationName);
 	void ChangeAnimation(std::string_view _AnimationName, FVector _Pos)

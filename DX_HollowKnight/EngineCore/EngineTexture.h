@@ -17,6 +17,16 @@ public:
 	ENGINEAPI UEngineTexture();
 	ENGINEAPI ~UEngineTexture();
 
+	static std::shared_ptr<UEngineTexture> LoadTextureThreadSafe(std::string_view _Path)
+	{
+		UEnginePath EnginePath = UEnginePath(_Path);
+		std::string FileName = EnginePath.GetFileNameToString();
+		return LoadTextureThreadSafe(FileName, _Path);
+	}
+
+	ENGINEAPI static std::shared_ptr<UEngineTexture> LoadTextureThreadSafe(std::string_view _Name, std::string_view _Path);
+
+
 	static std::shared_ptr<UEngineTexture> Load(std::string_view _Path)
 	{
 		UEnginePath EnginePath = UEnginePath(_Path);

@@ -63,6 +63,7 @@ public:
 	ENGINEAPI static UEngineWindow& GetMainWindow();
 
 	ENGINEAPI static float GetDeltaTime();
+	ENGINEAPI static double GetDoubleDeltaTime();
 
 	ENGINEAPI static std::map<std::string, std::shared_ptr<class ULevel>> GetAllLevelMap();
 
@@ -75,6 +76,10 @@ public:
 	{
 		SetGameInstance(std::make_shared<Type>());
 	}
+
+	// Debug
+	ENGINEAPI inline static clock_t StartTime = ::clock();
+	ENGINEAPI inline static clock_t EndTime = -1;
 
 protected:
 
@@ -92,6 +97,7 @@ private:
 	UEngineInitData Data = UEngineInitData();
 
 	UEngineTimer Timer = UEngineTimer();
+
 
 	static void InitWindow(HINSTANCE _Instance);
 	static void LoadContents(std::string_view _DllName);

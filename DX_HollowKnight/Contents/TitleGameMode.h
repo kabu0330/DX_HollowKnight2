@@ -2,6 +2,7 @@
 #include <EngineCore/GameMode.h>
 #include <EnginePlatform/EngineSound.h>
 #include <EngineCore/TimeEventComponent.h>
+#include <EnginePlatform/EngineThread.h>
 
 // Ό³Έν :
 class ATitleGameMode : public AGameMode
@@ -17,9 +18,25 @@ public:
 
 	void FadeEffect();
 
+	static bool IsExecute()
+	{
+		return bIsExecute;
+	}
+
+	static bool IsPlayStart()
+	{
+		return bIsPlayStart;
+	}
+
+	bool IsResourceLoading() const
+	{
+		return bEndInitTask;
+	}
+
 protected:
 	void InitBackgroundSound();
-	void StartSound();
+	void StartPlayGameMode();
+	void SetupPlayGameMode();
 
 private:
 	std::shared_ptr<class ATitleScene> TitleScene;
@@ -31,6 +48,14 @@ private:
 	bool bIsSpace = false;
 	class ATitleHUD* HUD = nullptr;
 
+	inline static bool bIsExecute = false;
+	inline static bool bIsPlayStart = false;
+	bool bPlayResourceLoadFinished = false;
+
+	UEngineThread Thread;
+	bool bTitleLoadFinished = false;
+	bool bEndInitTask = true;
+
 private:
 	// delete Function
 	ATitleGameMode(const ATitleGameMode& _Other) = delete;
@@ -39,3 +64,6 @@ private:
 	ATitleGameMode& operator=(ATitleGameMode&& _Other) noexcept = delete;
 };
 
+// debug
+extern clock_t PlayStartLoadingTime;
+extern clock_t EndLoadingTime;

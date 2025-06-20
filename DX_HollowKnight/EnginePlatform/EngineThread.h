@@ -11,6 +11,7 @@ public:
 
 	ENGINEAPI bool Start(std::string _Name, std::function<void()> _Function);
 	ENGINEAPI void Join();
+	ENGINEAPI bool Joinable();
 
 protected:
 

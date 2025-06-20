@@ -2,6 +2,8 @@
 #include "Particle.h"
 #include <EngineBase/EngineRandom.h>
 #include "Effect.h"
+#include "TitleGameMode.h"
+#include <EngineCore/Level.h>
 
 AParticle::AParticle()
 {
@@ -94,6 +96,12 @@ void AParticle::SpawnParticle()
 		float RandomScale = Random.Randomfloat(RandomScaleMin, RandomScaleMax);
 
 		std::shared_ptr<AEffect> Effect = GetWorld()->SpawnActor<AEffect>();
+		ATitleGameMode* TitleMode = dynamic_cast<ATitleGameMode*>(GetWorld()->GetGameMode());
+		if (nullptr == TitleMode)
+		{
+			Effect->InitSprite();
+		}
+
 		Effect->ChangeAnimation(EffectName);
 
 		SetEmitterPosition(RandomScale); // 특정 파티클 옵션일 때, EmitterPosition 값을 변환

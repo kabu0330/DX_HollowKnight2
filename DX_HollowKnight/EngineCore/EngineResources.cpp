@@ -1,6 +1,9 @@
 #include "PreCompile.h"
 #include "EngineResources.h"
 #include "EngineTexture.h"
+#include <mutex>
+
+std::mutex ResCriticalSection;
 
 std::shared_ptr<UEngineResources> UEngineResources::Find(std::string_view _ResName, std::string_view _Name)
 {
@@ -12,6 +15,25 @@ std::shared_ptr<UEngineResources> UEngineResources::Find(std::string_view _ResNa
 	}
 
 	return ResMap[_ResName.data()][UpperString];
+}
+
+void UEngineResources::PushResourceThreadSafe(std::shared_ptr<UEngineResources> _Res, std::string_view _Info, std::string_view _Name, std::string_view _Path)
+{
+	std::string UpperName = UEngineString::ToUpper(_Name);
+	_Res->SetName(UpperName);
+	_Res->Path = _Path;
+
+	{
+		std::lock_guard<std::mutex> Lock(ResCriticalSection);
+		
+		if (true == ResMap[_Info.data()].contains(UpperName))
+		{
+			MSGASSERT("이미 로드한 텍스처입니다." + std::string(_Info.data()) + " " + _Name.data());
+			return;
+		}
+
+		ResMap[_Info.data()].insert({ UpperName, _Res });
+	}
 }
 
 //                                              메모리 블록                    자료형                     내가 정한 이름             경로(생략가능)

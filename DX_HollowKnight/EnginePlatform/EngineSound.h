@@ -4,6 +4,7 @@
 #include <EnginePlatform/ThirdParty/FMOD/inc/fmod.hpp>
 
 #include "math.h"
+#include <mutex>
 
 class USoundPlayer 
 {

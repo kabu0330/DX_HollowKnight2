@@ -11,6 +11,8 @@
 #include "Level.h"
 #include "GameInstance.h"
 
+UEngineCore* GEngine = nullptr;
+
 UEngineGraphicDevice& UEngineCore::GetDevice()
 {
 	return GEngine->Device;
@@ -24,6 +26,13 @@ UEngineWindow& UEngineCore::GetMainWindow()
 float UEngineCore::GetDeltaTime()
 {
 	float Time = GEngine->Timer.GetDeltaTime();
+
+	return Time;
+}
+
+double UEngineCore::GetDoubleDeltaTime()
+{
+	double Time = GEngine->Timer.GetDoubleDeltaTime();
 
 	return Time;
 }
@@ -42,8 +51,6 @@ UEngineWorkThreadPool& UEngineCore::GetThreadPool()
 {
 	return GEngine->ThreadPool;
 }
-
-UEngineCore* GEngine = nullptr;
 
 FVector UEngineCore::GetScreenScale()
 {
@@ -123,6 +130,10 @@ void UEngineCore::StartEngine(HINSTANCE _Instance, std::string_view _DllName)
 	UEngineWindow::WindowMessageLoop(
 		[]()
 		{
+#ifdef _DEBUG
+			UEngineDebug::StartConsole();
+#endif
+
 			UEngineSound::Init();
 
 			GEngine->Device.SetupRenderingPipeline();
@@ -158,8 +169,6 @@ std::shared_ptr<ULevel> UEngineCore::NewLevelCreate(std::string_view _Name)
 	Ptr->SetName(_Name);
 
 	GEngine->LevelMap.insert({ _Name.data(), Ptr}); // 생성된 레벨은 모두 LevelMap에 저장
-
-	std::cout << "NewLevelCreate" << std::endl;
 
 	return Ptr;
 }

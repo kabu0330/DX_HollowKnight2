@@ -14,6 +14,7 @@
 #include "PlayGameMode.h"
 #include "MapEditorGameMode.h"
 #include "ContentsEditorGUI.h"
+#include "DebugWindowGUI.h"
 #include "TitleHUD.h"
 #include "PlayHUD.h"
 
@@ -24,18 +25,10 @@ void UContentsCore::StartEngine(UEngineInitData& _Data)
 {
 	SetWindowSize(_Data);
 
-	UContentsResource::LoadResourceDirectory();
-	UContentsResource::LoadFolder();
-	UContentsResource::LoadSprite();
 	UContentsResource::LoadShaderResource();
 
 	CreateLevel();
-
-	UEngineGUI::AllWindowOff();
-
-	UEngineGUI::CreateGUIWindow<UContentsEditorGUI>("ContentsEditorGUI");
-	std::shared_ptr<UContentsEditorGUI> Window = UEngineGUI::FindGUIWindow<UContentsEditorGUI>("ContentsEditorGUI");
-	Window->SetActive(true);
+	CreateGUI();
 }
 
 void UContentsCore::SetWindowSize(UEngineInitData& _Data)
@@ -47,13 +40,33 @@ void UContentsCore::SetWindowSize(UEngineInitData& _Data)
 void UContentsCore::CreateLevel()
 {
 	UEngineCore::CreateLevel<ATitleGameMode, APawn, ATitleHUD>("Title");
-	UEngineCore::CreateLevel<APlayGameMode, AKnight, APlayHUD>("Play");
 
 #ifdef _DEBUG
-	UEngineCore::OpenLevel("Play");
+	//UEngineCore::OpenLevel("Play");
+	UEngineCore::OpenLevel("Title");
 #else
 	UEngineCore::OpenLevel("Title");
 #endif // _DEBUG
+}
+
+void UContentsCore::CreateGUI()
+{
+	UEngineGUI::AllWindowOff();
+
+	//{
+	//	UEngineGUI::CreateGUIWindow<UContentsEditorGUI>("ContentEditorGUI");
+	//	std::shared_ptr<UContentsEditorGUI> Window = UEngineGUI::FindGUIWindow<UContentsEditorGUI>("ContentEditorGUI");
+	//	Window->SetActive(true);
+	//}
+
+	{
+		DebugGUI = UEngineGUI::FindGUIWindow<UDebugWindowGUI>("DebugWindow");
+		if (nullptr == DebugGUI)
+		{
+			DebugGUI = UEngineGUI::CreateGUIWindow<UDebugWindowGUI>("DebugWindow");
+		}
+		DebugGUI->SetActive(true);
+	}
 }
 
 void UContentsCore::EngineTick(float _DeltaTime)

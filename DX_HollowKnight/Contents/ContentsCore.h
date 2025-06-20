@@ -8,6 +8,11 @@ public:
 	UContentsCore();
 	~UContentsCore();
 
+	class UDebugWindowGUI* GetDebugGUI() const
+	{
+		return DebugGUI.get();
+	}
+
 protected:
 	void StartEngine(UEngineInitData& _Data);
 	void EngineTick(float _DeltaTime);
@@ -17,7 +22,9 @@ private:
 	void SetWindowSize(UEngineInitData& _Data);
 
 	void CreateLevel();
+	void CreateGUI();
 
+	std::shared_ptr<class UDebugWindowGUI> DebugGUI = nullptr;
 
 private:
 	// delete Function

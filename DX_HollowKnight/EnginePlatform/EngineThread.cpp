@@ -43,3 +43,8 @@ void UEngineThread::Join()
 {
 	ThreadInst.join();
 }
+
+bool UEngineThread::Joinable()
+{
+	return ThreadInst.joinable();
+}

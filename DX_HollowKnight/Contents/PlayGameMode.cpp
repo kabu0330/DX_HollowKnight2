@@ -12,8 +12,8 @@
 #include "Room.h"
 #include "CollisionManager.h"
 #include "RoomManager.h"
-#include "DebugWindowGUI.h"
 #include "PlayHUD.h"
+#include "ContentsResource.h"
 
 
 FVector APlayGameMode::MousePos = { 0.0f, 0.0f, 0.0f };
@@ -21,6 +21,7 @@ FVector APlayGameMode::KnightPos = { 0.0f, 0.0f, 0.0f };
 
 APlayGameMode::APlayGameMode()
 {
+
 #ifdef _DEBUG
 	UCollision::GetDebugModeRef() = true;
 #else
@@ -186,14 +187,7 @@ void APlayGameMode::StartLevel()
 	APlayHUD* HUD = dynamic_cast<APlayHUD*>(GetWorld()->GetHUD());
 	HUD->FadeOut(3.0f, 0.5f);
 
-	Window = UEngineGUI::FindGUIWindow<UDebugWindowGUI>("DebugWindow");
 
-	if (nullptr == Window)
-	{
-		Window = UEngineGUI::CreateGUIWindow<UDebugWindowGUI>("DebugWindow");
-	}
-
-	Window->SetActive(true);
 }
 
 void APlayGameMode::EndLevel()

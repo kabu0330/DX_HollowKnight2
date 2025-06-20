@@ -64,8 +64,12 @@ void AKnight::SpawnFocus()
 	FocusEffect->ChangeAnimation("FocusEffect", GetActorLocation());
 	FVector Offest = { 5.0f, 30.0f, 0.0f };
 	FocusEffect->SetLocation(this, Offest);
+	
 	FocusEffect->EnableRotation(false); // 좌우반전에 따라 
 	FocusEffect->GetRenderer()->SetAutoScaleRatio(1.5f);
+
+	FVector RendererPos = FocusEffect->GetRenderer()->GetWorldLocation();
+	FocusEffect->GetRenderer()->SetWorldLocation({ RendererPos.X, RendererPos.Y, static_cast<float>(EZOrder::KNIGHT_SKILL_FRONT)});
 
 	FocusEffect->GetRenderer()->SetMulColor({ 12.0f, 12.0f, 12.0f }, 0.1f);
 
