@@ -21,11 +21,11 @@ UEngineWorkThreadPool::~UEngineWorkThreadPool()
 	}
 }
 
-void UEngineWorkThreadPool::Initialize(std::string_view ThreadName /*= "WorkThread"*/, int Count /*= 0*/)
+void UEngineWorkThreadPool::Initialize(std::string_view _ThreadName /*= "WorkThread"*/, int _Count /*= 0*/)
 {
-	ThreadCount = Count;
+	ThreadCount = _Count;
 
-	if (0 >= Count)
+	if (0 >= _Count)
 	{
 		SYSTEM_INFO Info;
 		GetSystemInfo(&Info);
@@ -47,7 +47,7 @@ void UEngineWorkThreadPool::Initialize(std::string_view ThreadName /*= "WorkThre
 	{
 		Threads[i] = std::make_shared<UEngineThread>();
 
-		Threads[i]->Start(std::string(ThreadName) + std::to_string(i), std::bind(ThreadQueueFunction, IOCPHandle, this));
+		Threads[i]->Start(std::string(_ThreadName) + std::to_string(i), std::bind(ThreadQueueFunction, IOCPHandle, this));
 	}
 }
 

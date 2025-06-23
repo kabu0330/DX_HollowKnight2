@@ -16,7 +16,7 @@ public:
 	ENGINEAPI UEngineWorkThreadPool();
 	ENGINEAPI ~UEngineWorkThreadPool();
 
-	ENGINEAPI void Initialize(std::string_view ThreadName = "WorkThread", int Count = 0);
+	ENGINEAPI void Initialize(std::string_view _ThreadName = "WorkThread", int _Count = 0);
 
 	ENGINEAPI void WorkQueue(std::function<void()> _Work);
 

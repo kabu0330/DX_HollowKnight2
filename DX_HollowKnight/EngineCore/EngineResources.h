@@ -27,12 +27,12 @@ public:
 
 	static bool Contains(std::string_view _Name)
 	{
-		return ResMap.contains(_Name.data());
+		return Asset.contains(_Name.data());
 	}
 
 	static void Release()
 	{
-		ResMap.clear();
+		Asset.clear();
 	}
 
 	template<typename ResType>
@@ -66,7 +66,7 @@ private:
 	// 이걸 해결방법은 
 	//                               텍스처                aaaa.png       데이터
 	//                               버텍스버퍼             Box             데이터
-	ENGINEAPI static inline std::map<std::string, std::map<std::string, std::shared_ptr<UEngineResources>>> ResMap;
+	ENGINEAPI static inline std::map<std::string, std::map<std::string, std::shared_ptr<UEngineResources>>> Asset;
 
 private:
 	// delete Function

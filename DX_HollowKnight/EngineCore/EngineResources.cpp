@@ -9,12 +9,12 @@ std::shared_ptr<UEngineResources> UEngineResources::Find(std::string_view _ResNa
 {
 	std::string UpperString = UEngineString::ToUpper(_Name);
 
-	if (false == ResMap[_ResName.data()].contains(UpperString))
+	if (false == Asset[_ResName.data()].contains(UpperString))
 	{
 		return nullptr;
 	}
 
-	return ResMap[_ResName.data()][UpperString];
+	return Asset[_ResName.data()][UpperString];
 }
 
 void UEngineResources::PushResourceThreadSafe(std::shared_ptr<UEngineResources> _Res, std::string_view _Info, std::string_view _Name, std::string_view _Path)
@@ -26,13 +26,13 @@ void UEngineResources::PushResourceThreadSafe(std::shared_ptr<UEngineResources> 
 	{
 		std::lock_guard<std::mutex> Lock(ResCriticalSection);
 		
-		if (true == ResMap[_Info.data()].contains(UpperName))
+		if (true == Asset[_Info.data()].contains(UpperName))
 		{
-			MSGASSERT("이미 로드한 텍스처입니다." + std::string(_Info.data()) + " " + _Name.data());
+			MSGASSERT("이미 로드한 리소스입니다." + std::string(_Info.data()) + " " + _Name.data());
 			return;
 		}
 
-		ResMap[_Info.data()].insert({ UpperName, _Res });
+		Asset[_Info.data()].insert({ UpperName, _Res });
 	}
 }
 
@@ -42,7 +42,7 @@ void UEngineResources::PushRes(std::shared_ptr<UEngineResources> _Res, const std
 	std::string UpperName = UEngineString::ToUpper(_Name);
 
 	//       텍스처에                  Player.png가 들어있는지 확인.
-	if (true == ResMap[_Info.data()].contains(UpperName))
+	if (true == Asset[_Info.data()].contains(UpperName))
 	{
 		MSGASSERT("이미 로드한 리소스를 또 로드 하려고 했습니다" + std::string(_Info.data()) + "  " + _Name.data());
 		return;
@@ -50,7 +50,7 @@ void UEngineResources::PushRes(std::shared_ptr<UEngineResources> _Res, const std
 
 	_Res->SetName(UpperName); // 텍스처 이름
 	_Res->Path = _Path; // 텍스처 경로
-	ResMap[_Info.data()].insert({UpperName, _Res }); // 자료형을 기준으로 다시, 텍스처 이름을 기준으로 텍스처 데이터를 저장
+	Asset[_Info.data()].insert({UpperName, _Res }); // 자료형을 기준으로 다시, 텍스처 이름을 기준으로 텍스처 데이터를 저장
 
 	return;
 }
