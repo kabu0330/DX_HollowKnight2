@@ -65,7 +65,7 @@ UEngineCore::~UEngineCore()
 {
 }
 
-void UEngineCore::InitWindow(HINSTANCE _Instance)
+void UEngineCore::CreateAndShowWindow(HINSTANCE _Instance)
 {
 	UEngineWindow::InitEngineWindow(_Instance);
 	GEngine->MainWindow.Open("MainWindow");
@@ -123,7 +123,7 @@ void UEngineCore::StartEngine(HINSTANCE _Instance, std::string_view _DllName)
 
 	GEngine->ThreadPool.Initialize();
 
-	InitWindow(_Instance);
+	CreateAndShowWindow(_Instance);
 
 	LoadContents(_DllName);
 

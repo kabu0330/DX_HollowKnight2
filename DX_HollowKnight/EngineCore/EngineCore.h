@@ -99,7 +99,7 @@ private:
 	UEngineTimer Timer = UEngineTimer();
 
 
-	static void InitWindow(HINSTANCE _Instance);
+	static void CreateAndShowWindow(HINSTANCE _Instance);
 	static void LoadContents(std::string_view _DllName);
 
 	static void EngineFrame();
