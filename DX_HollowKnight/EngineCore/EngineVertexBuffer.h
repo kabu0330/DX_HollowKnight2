@@ -1,10 +1,10 @@
 #pragma once
 #include "EngineResourceBase.h"
-#include "EngineDeviceBuffer.h"
+#include "EngineDeviceBufferBase.h"
 #include "EngineVertex.h"
 
 // Ό³Έν :
-class UEngineVertexBuffer : public UEngineResourceBase, public UEngineDeviceBuffer
+class UEngineVertexBuffer : public UEngineResourceBase, public UEngineDeviceBufferBase
 {
 public:
 	UEngineVertexBuffer();

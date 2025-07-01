@@ -10,13 +10,13 @@ UEnginePixelShader::~UEnginePixelShader()
 {
 }
 
-std::shared_ptr<UEnginePixelShader> UEnginePixelShader::Load(std::string_view _Name, std::string_view _Path, const std::string_view& _EntryPoint, UINT _VersionHigh /*= 5*/, UINT _VersionLow /*= 0*/)
+std::shared_ptr<UEnginePixelShader> UEnginePixelShader::LoadPixelShader(std::string_view _Name, std::string_view _Path, const std::string_view& _EntryPoint, UINT _VersionHigh /*= 5*/, UINT _VersionLow /*= 0*/)
 {
 	std::string UpperName = ToUpperName(_Name);
 
 	if (true == Contains(UpperName))
 	{
-		MSGASSERT("이미 로드한 텍스처를 다시 로드하려고 했습니다." + UpperName);
+		MSGASSERT("이미 등록한 픽셀 셰이더입니다." + UpperName);
 		return nullptr;
 	}
 
@@ -25,12 +25,12 @@ std::shared_ptr<UEnginePixelShader> UEnginePixelShader::Load(std::string_view _N
 	NewRes->VersionHigh = _VersionHigh;
 	NewRes->VersionLow = _VersionLow;
 	NewRes->EntryName = _EntryPoint;
-	NewRes->LoadResource();
+	NewRes->CreatePixelShader();
 
 	return NewRes;
 }
 
-void UEnginePixelShader::LoadResource()
+void UEnginePixelShader::CreatePixelShader()
 {
 	std::wstring WPath = UEngineString::AnsiToUnicode(GetPath().GetPathToString());
 
@@ -59,7 +59,7 @@ void UEnginePixelShader::LoadResource()
 	if (nullptr == ShaderCodeBlob)
 	{
 		std::string ErrString = reinterpret_cast<char*>(ErrorCodeBlob->GetBufferPointer());
-		MSGASSERT("쉐이더 코드 중간빌드에서 실패했습니다\n" + ErrString);
+		MSGASSERT("픽셀 셰이더 중간 빌드에 실패했습니다. \n" + ErrString);
 		return;
 	}
 
@@ -67,18 +67,18 @@ void UEnginePixelShader::LoadResource()
 		ShaderCodeBlob->GetBufferPointer(),
 		ShaderCodeBlob->GetBufferSize(),
 		nullptr,
-		&ShaderRes
+		&PixelShader
 	);
 
 	if (S_OK != Result)
 	{
-		MSGASSERT("픽셀 쉐이더 생성에 실패했습니다.");
+		MSGASSERT("픽셀 셰이더 생성에 실패했습니다.");
 	}
 
-	UEngineShader::ShaderResCheck();
+	UEngineShaderBase::ReflectAndBindShaderResources();
 }
 
-void UEnginePixelShader::Setting()
+void UEnginePixelShader::PSSetShader()
 {
-	UEngineCore::GetDevice().GetContext()->PSSetShader(ShaderRes.Get(), nullptr, 0);
+	UEngineCore::GetDevice().GetContext()->PSSetShader(PixelShader.Get(), nullptr, 0);
 }

@@ -5,7 +5,7 @@
 #include "EngineIndexBuffer.h"
 #include "Mesh.h"
 #include "EngineBlend.h"
-#include "EngineShader.h"
+#include "EngineShaderBase.h"
 #include "EngineMaterial.h"
 #include "EngineTexture.h"
 #include "EngineFont.h"
@@ -107,7 +107,7 @@ void UEngineGraphicDevice::InitShader()
 
 	for (size_t i = 0; i < ShaderFiles.size(); i++)
 	{
-		UEngineShader::ReflectionCompile(ShaderFiles[i]);
+		UEngineShaderBase::AutoCompileShaderByNaming(ShaderFiles[i]);
 	}
 }
 

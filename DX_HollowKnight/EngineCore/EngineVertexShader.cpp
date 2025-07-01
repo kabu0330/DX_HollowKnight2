@@ -10,7 +10,7 @@ UEngineVertexShader::~UEngineVertexShader()
 {
 }
 
-std::shared_ptr<UEngineVertexShader> UEngineVertexShader::Load(std::string_view _Name, std::string_view _Path, const std::string_view& _EntryPoint, UINT _VersionHigh /*= 5*/, UINT _VersionLow /*= 0*/)
+std::shared_ptr<UEngineVertexShader> UEngineVertexShader::LoadVertexShader(std::string_view _Name, std::string_view _Path, const std::string_view& _EntryPoint, UINT _VersionHigh /*= 5*/, UINT _VersionLow /*= 0*/)
 {
 	std::string UpperName = ToUpperName(_Name);
 
@@ -25,12 +25,12 @@ std::shared_ptr<UEngineVertexShader> UEngineVertexShader::Load(std::string_view 
 	NewRes->VersionHigh = _VersionHigh;
 	NewRes->VersionLow = _VersionLow;
 	NewRes->EntryName = _EntryPoint;
-	NewRes->LoadResource();
+	NewRes->CreateVertexShader();
 
 	return NewRes;
 }
 
-void UEngineVertexShader::LoadResource()
+void UEngineVertexShader::CreateVertexShader()
 {
 	std::wstring WPath = UEngineString::AnsiToUnicode(GetPath().GetPathToString());
 
@@ -68,7 +68,7 @@ void UEngineVertexShader::LoadResource()
 		ShaderCodeBlob->GetBufferPointer(),
 		ShaderCodeBlob->GetBufferSize(),
 		nullptr,
-		&ShaderRes
+		&VertexShader
 	);
 
 	if (S_OK != Result)
@@ -76,10 +76,10 @@ void UEngineVertexShader::LoadResource()
 		MSGASSERT("버텍스 쉐이더 생성에 실패했습니다.");
 	}
 
-	UEngineShader::ShaderResCheck();
+	UEngineShaderBase::ReflectAndBindShaderResources();
 }
 
-void UEngineVertexShader::Setting()
+void UEngineVertexShader::VSSetShader()
 {
-	UEngineCore::GetDevice().GetContext()->VSSetShader(ShaderRes.Get(), nullptr, 0);
+	UEngineCore::GetDevice().GetContext()->VSSetShader(VertexShader.Get(), nullptr, 0);
 }

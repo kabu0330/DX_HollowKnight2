@@ -1,34 +1,34 @@
 #pragma once
 #include "EngineResourceBase.h"
 #include <Windows.h>
-#include "EngineShader.h"
+#include "EngineShaderBase.h"
 
 // Ό³Έν :
-class UEnginePixelShader : public UEngineResourceBase, public UEngineShader
+class UEnginePixelShader : public UEngineResourceBase, public UEngineShaderBase
 {
 public:
 	UEnginePixelShader();
 	~UEnginePixelShader();
 
-	static std::shared_ptr<UEnginePixelShader> Load(std::string_view _Path, const std::string_view& _EntryPoint, UINT _VersionHigh = 5, UINT _VersionLow = 0)
+	static std::shared_ptr<UEnginePixelShader> LoadPixelShader(std::string_view _Path, const std::string_view& _EntryPoint, UINT _VersionHigh = 5, UINT _VersionLow = 0)
 	{
 		UEnginePath EnginePath = UEnginePath(_Path);
 
 		std::string FileName = EnginePath.GetFileNameToString();
 
-		return Load(FileName, _Path, _EntryPoint, _VersionHigh, _VersionLow);
+		return LoadPixelShader(FileName, _Path, _EntryPoint, _VersionHigh, _VersionLow);
 	}
 
-	ENGINEAPI static std::shared_ptr<UEnginePixelShader> Load(std::string_view _Name, std::string_view _Path, const std::string_view& _EntryPoint, UINT _VersionHigh = 5, UINT _VersionLow = 0);
+	ENGINEAPI static std::shared_ptr<UEnginePixelShader> LoadPixelShader(std::string_view _Name, std::string_view _Path, const std::string_view& _EntryPoint, UINT _VersionHigh = 5, UINT _VersionLow = 0);
 
-	void Setting();
+	void PSSetShader();
 
 protected:
 
 private:
-	ENGINEAPI void LoadResource();
+	ENGINEAPI void CreatePixelShader();
 
-	Microsoft::WRL::ComPtr<ID3D11PixelShader> ShaderRes = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11PixelShader> PixelShader = nullptr;
 
 private:
 	// delete Function

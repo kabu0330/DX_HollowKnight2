@@ -1,18 +1,18 @@
 #include "PreCompile.h"
-#include "EngineShader.h"
+#include "EngineShaderBase.h"
 #include "EngineVertexShader.h"
 #include "EnginePixelShader.h"
 #include "EngineConstantBuffer.h"
 
-UEngineShader::UEngineShader()
+UEngineShaderBase::UEngineShaderBase()
 {
 }
 
-UEngineShader::~UEngineShader()
+UEngineShaderBase::~UEngineShaderBase()
 {
 }
 
-void UEngineShader::ReflectionCompile(UEngineFile& _File)
+void UEngineShaderBase::AutoCompileShaderByNaming(UEngineFile& _File)
 {
 	_File.FileOpen("rt");
 	std::string ShaderCode = _File.GetAllFileText();
@@ -29,7 +29,7 @@ void UEngineShader::ReflectionCompile(UEngineFile& _File)
 				std::string EntryName = ShaderCode.substr(FirstIndex + 1, EntryIndex - FirstIndex - 1);
 				EntryName += "_VS";
 
-				UEngineVertexShader::Load(_File.GetPathToString(), EntryName);
+				UEngineVertexShader::LoadVertexShader(_File.GetPathToString(), EntryName);
 				
 			}
 		}
@@ -41,23 +41,23 @@ void UEngineShader::ReflectionCompile(UEngineFile& _File)
 		if (EntryIndex != std::string::npos)
 		{
 			{
-				// 역순으로 찾아나가는 함수
+	
 				size_t FirstIndex = ShaderCode.find_last_of(" ", EntryIndex);
 
 				std::string EntryName = ShaderCode.substr(FirstIndex + 1, EntryIndex - FirstIndex - 1);
 				EntryName += "_PS";
 
-				UEnginePixelShader::Load(_File.GetPathToString(), EntryName);
+				UEnginePixelShader::LoadPixelShader(_File.GetPathToString(), EntryName);
 			}
 		}
 	}
 }
 
-void UEngineShader::ShaderResCheck()
+void UEngineShaderBase::ReflectAndBindShaderResources()
 {
 	if (nullptr == ShaderCodeBlob)
 	{
-		MSGASSERT("쉐이더가 컴파일되지 않아서 쉐이더의 리소스를 조사할수가 없습니다.");
+		MSGASSERT("셰이더가 컴파일되지 않았습니다.");
 		return;
 	}
 
@@ -133,26 +133,16 @@ void UEngineShader::ShaderResCheck()
 		}
 		case D3D_SIT_STRUCTURED:
 		{
-			int a = 0;
-
 			break;
 		}
-		case D3D_SIT_UAV_RWSTRUCTURED: // 컴퓨트
+		case D3D_SIT_UAV_RWSTRUCTURED:
 		{
-			int a = 0;
-
 			break;
 		}
 		default:
 			break;
 		}
-
-		int a = 0;
 	}
-
-	EntryName;
-	ShaderResources;
-
 }
 
 

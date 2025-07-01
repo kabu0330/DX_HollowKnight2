@@ -1,9 +1,9 @@
 #pragma once
 #include "EngineResourceBase.h"
-#include "EngineDeviceBuffer.h"
+#include "EngineDeviceBufferBase.h"
 
 // Ό³Έν :
-class UEngineIndexBuffer : public UEngineResourceBase, public UEngineDeviceBuffer
+class UEngineIndexBuffer : public UEngineResourceBase, public UEngineDeviceBufferBase
 {
 public:
 	UEngineIndexBuffer();

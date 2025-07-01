@@ -169,7 +169,7 @@ void URenderUnit::Render(class UEngineCamera* _Camera, float _DeltaTime)
 	}
 
 	Mesh->GetVertexBuffer()->IASetVertexBuffers();
-	Material->GetVertexShader()->Setting();
+	Material->GetVertexShader()->VSSetShader();
 	
 	Mesh->GetIndexBuffer()->IASetIndexBuffer();
 	Material->PrimitiveTopologySetting();
@@ -178,7 +178,7 @@ void URenderUnit::Render(class UEngineCamera* _Camera, float _DeltaTime)
 
 	Material->GetRasterizerState()->Setting();
 
-	Material->GetPixelShader()->Setting();
+	Material->GetPixelShader()->PSSetShader();
 
 	Material->GetBlend()->Setting();
 	Material->GetDepthStencilState()->Setting();

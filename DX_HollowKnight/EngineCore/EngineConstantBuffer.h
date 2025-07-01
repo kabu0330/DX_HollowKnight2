@@ -1,10 +1,10 @@
 #pragma once
 #include "EngineResourceBase.h"
-#include "EngineDeviceBuffer.h"
+#include "EngineDeviceBufferBase.h"
 #include "EngineEnums.h"
 
 // Ό³Έν :
-class UEngineConstantBuffer : public UEngineResourceBase, public UEngineDeviceBuffer
+class UEngineConstantBuffer : public UEngineResourceBase, public UEngineDeviceBufferBase
 {
 public:
 	UEngineConstantBuffer();

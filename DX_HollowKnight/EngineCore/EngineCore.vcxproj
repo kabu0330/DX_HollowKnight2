@@ -181,7 +181,7 @@
     </ClInclude>
     <ClInclude Include="EngineDataStruct.h" />
     <ClInclude Include="EngineDepthStencilState.h" />
-    <ClInclude Include="EngineDeviceBuffer.h" />
+    <ClInclude Include="EngineDeviceBufferBase.h" />
     <ClInclude Include="EngineEnums.h" />
     <ClInclude Include="EngineFont.h" />
     <ClInclude Include="EngineGraphicDevice.h" />
@@ -195,7 +195,7 @@
     <ClInclude Include="EngineRenderTarget.h" />
     <ClInclude Include="EngineResourceBase.h" />
     <ClInclude Include="EngineSampler.h" />
-    <ClInclude Include="EngineShader.h" />
+    <ClInclude Include="EngineShaderBase.h" />
     <ClInclude Include="EngineShaderResources.h" />
     <ClInclude Include="EngineSprite.h" />
     <ClInclude Include="EngineTexture.h" />
@@ -245,7 +245,7 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="EngineDepthStencilState.cpp" />
-    <ClCompile Include="EngineDeviceBuffer.cpp" />
+    <ClCompile Include="EngineDeviceBufferBase.cpp" />
     <ClCompile Include="EngineFont.cpp" />
     <ClCompile Include="EngineGraphicDevice.cpp" />
     <ClCompile Include="EngineGraphicDevice_Resources.cpp" />
@@ -259,7 +259,7 @@
     <ClCompile Include="EngineRenderTarget.cpp" />
     <ClCompile Include="EngineResourceBase.cpp" />
     <ClCompile Include="EngineSampler.cpp" />
-    <ClCompile Include="EngineShader.cpp" />
+    <ClCompile Include="EngineShaderBase.cpp" />
     <ClCompile Include="EngineShaderResources.cpp" />
     <ClCompile Include="EngineSprite.cpp" />
     <ClCompile Include="EngineTexture.cpp" />
