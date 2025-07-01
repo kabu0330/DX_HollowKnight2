@@ -8,8 +8,6 @@ public:
 	UEngineDeviceBuffer();
 	~UEngineDeviceBuffer();
 
-
-
 	const D3D11_BUFFER_DESC& GetBufferInfo()
 	{
 		return BufferInfo;

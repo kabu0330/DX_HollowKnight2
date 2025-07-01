@@ -1,9 +1,9 @@
 #pragma once
-#include "EngineResources.h"
+#include "EngineResourceBase.h"
 #include "EngineEnums.h"
 
 // Ό³Έν :
-class UEngineSampler : public UEngineResources
+class UEngineSampler : public UEngineResourceBase
 {
 public:
 	UEngineSampler();

@@ -1,11 +1,11 @@
 #pragma once
-#include "EngineResources.h"
+#include "EngineResourceBase.h"
 #include "EngineTexture.h"
 #include "RenderUnit.h"
 #include "EngineGraphicDevice.h"
 
 // 설명 : 렌더 타겟 뷰 생성, 깊이버퍼 생성, 출력 병합 후 렌더링 파이프라인으로 전송
-class UEngineRenderTarget : public UEngineResources
+class UEngineRenderTarget : public UEngineResourceBase
 {
 public:
 	UEngineRenderTarget();

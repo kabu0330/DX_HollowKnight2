@@ -11,20 +11,20 @@
 #include "EngineFont.h"
 #include "EngineDepthStencilState.h"
 
-void UEngineGraphicDevice::DefaultResourcesInit()
+void UEngineGraphicDevice::InitDefaultResources()
 {
-	DepthStencilInit();
-	TextureInit();
-	MeshInit();
-	BlendInit();
-	RasterizerStateInit();
-	ShaderInit();
-	MaterialInit();
+	InitDepthStencil();
+	InitTexture();
+	InitMesh();
+	InitBlend();
+	InitRasterizerState();
+	InitShader();
+	InitMaterial();
 
-	UEngineFont::Load("궁서", "궁서");
+	UEngineFont::LoadFont("궁서", "궁서");
 }
 
-void UEngineGraphicDevice::DepthStencilInit()
+void UEngineGraphicDevice::InitDepthStencil() 
 {
 	{
 		D3D11_DEPTH_STENCIL_DESC Desc = { 0 };
@@ -67,7 +67,7 @@ void UEngineGraphicDevice::DepthStencilInit()
 	}
 }
 
-void UEngineGraphicDevice::TextureInit()
+void UEngineGraphicDevice::InitTexture()
 {
 
 		D3D11_SAMPLER_DESC SampInfo = { D3D11_FILTER::D3D11_FILTER_MIN_MAG_MIP_POINT };
@@ -86,19 +86,19 @@ void UEngineGraphicDevice::TextureInit()
 		UEngineDirectory Dir;
 		if (false == Dir.MoveParentToDirectory("EngineShader"))
 		{
-			MSGASSERT("EngineShader 폴더를 찾지 못했습니다.");
+			MSGASSERT("EngineShader 폴더 조회에 실패했습니다.");
 			return;
 		}
 		std::vector<UEngineFile> ImageFiles = Dir.GetAllFile(true, { ".PNG", ".BMP", ".JPG" });
 		for (size_t i = 0; i < ImageFiles.size(); i++)
 		{
 			std::string FilePath = ImageFiles[i].GetPathToString();
-			UEngineTexture::Load(FilePath);
+			UEngineTexture::LoadTexture(FilePath);
 		}
 	}
 }
 
-void UEngineGraphicDevice::ShaderInit()
+void UEngineGraphicDevice::InitShader()
 {
 	UEngineDirectory CurDir;
 	CurDir.MoveParentToDirectory("EngineShader");
@@ -111,10 +111,8 @@ void UEngineGraphicDevice::ShaderInit()
 	}
 }
 
-void UEngineGraphicDevice::MeshInit()
+void UEngineGraphicDevice::InitMesh()
 {
-	int a = 0;
-
 	{
 		std::vector<FEngineVertex> Vertexs;
 		Vertexs.resize(4);
@@ -125,7 +123,6 @@ void UEngineGraphicDevice::MeshInit()
 
 		UEngineVertexBuffer::Create("Rect", Vertexs);
 	}
-
 	{
 		std::vector<unsigned int> Indexs;
 
@@ -138,7 +135,6 @@ void UEngineGraphicDevice::MeshInit()
 		Indexs.push_back(2);
 		UEngineIndexBuffer::Create("Rect", Indexs);
 	}
-
 	// 포지션을 1로 하면 화면 전체를 가리는 메시를 만들 수 있다.
 	{
 		std::vector<FEngineVertex> Vertexs;
@@ -150,16 +146,14 @@ void UEngineGraphicDevice::MeshInit()
 
 		UEngineVertexBuffer::Create("FullRect", Vertexs);
 	}
-
 	{
 		UMesh::Create("Rect");
 
-		UMesh::Create("FullRect", "FullRect", "Rect");
+		UMesh::CreateWithBuffers("FullRect", "FullRect", "Rect");
 	}
-
 }
 
-void UEngineGraphicDevice::BlendInit()
+void UEngineGraphicDevice::InitBlend()
 {
 	D3D11_BLEND_DESC Desc = {0};
 
@@ -177,11 +171,10 @@ void UEngineGraphicDevice::BlendInit()
 	Desc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;			// 알파 소스 값
 	Desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;			// 알파 대상 값
 
-
 	UEngineBlend::Create("AlphaBlend", Desc);
 }
 
-void UEngineGraphicDevice::RasterizerStateInit()
+void UEngineGraphicDevice::InitRasterizerState()
 {
 	{
 		D3D11_RASTERIZER_DESC Desc = {};
@@ -190,39 +183,35 @@ void UEngineGraphicDevice::RasterizerStateInit()
 
 		UEngineRasterizerState::Create("EngineBase", Desc);
 	}
-
 	{
 		D3D11_RASTERIZER_DESC Desc = {};
 		Desc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
 		Desc.FillMode = D3D11_FILL_MODE::D3D11_FILL_WIREFRAME;
 
-		UEngineRasterizerState::Create("CollisionDebugRas", Desc);
+		UEngineRasterizerState::Create("CollisionDebugRasterizer", Desc);
 	}
 }
 
-void UEngineGraphicDevice::MaterialInit()
+void UEngineGraphicDevice::InitMaterial()
 {
 	{
 		std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("SpriteMaterial");
 		Mat->SetVertexShader("EngineSpriteShader.fx");
 		Mat->SetPixelShader("EngineSpriteShader.fx");
 	}
-
 	{
 		std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("CollisionDebugMaterial");
 		Mat->SetVertexShader("EngineDebugCollisionShader.fx");
 		Mat->SetPixelShader("EngineDebugCollisionShader.fx");
 		Mat->SetDepthStencilState("CollisionDebugDepth");
-		Mat->SetRasterizerState("CollisionDebugRas");
+		Mat->SetRasterizerState("CollisionDebugRasterizer");
 	}
-
 	{
 		std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("WidgetMaterial");
 		Mat->SetVertexShader("EngineSpriteShader.fx");
 		Mat->SetPixelShader("EngineSpriteShader.fx");
 		Mat->SetDepthStencilState("UIDepth");
 	}
-
 	{
 		std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("TargetMerge");
 		Mat->SetVertexShader("EngineTargetMergeShader.fx");

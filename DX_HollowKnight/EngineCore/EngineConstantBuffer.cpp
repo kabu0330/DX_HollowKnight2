@@ -1,11 +1,11 @@
 #include "PreCompile.h"
 #include "EngineConstantBuffer.h"
 
-std::map<int, std::map<std::string, std::shared_ptr<UEngineConstantBuffer>>> UEngineConstantBuffer::BufferMap;
+std::map<int, std::map<std::string, std::shared_ptr<UEngineConstantBuffer>>> UEngineConstantBuffer::AllConstantBuffers;
 
 void UEngineConstantBuffer::Release()
 {
-	BufferMap.clear();
+	AllConstantBuffers.clear();
 }
 
 UEngineConstantBuffer::UEngineConstantBuffer()
@@ -26,24 +26,24 @@ std::shared_ptr<UEngineConstantBuffer> UEngineConstantBuffer::CreateOrFind(UINT 
 
 	std::string UpperName = UEngineString::ToUpper(_Name);
 
-	if (true == BufferMap.contains(_Byte)) // 내가 알고 있는 바이트야?
+	if (true == AllConstantBuffers.contains(_Byte)) // 내가 알고 있는 바이트야?
 	{
-		if (true == BufferMap[_Byte].contains(UpperName)) // 내가 알고 있는 바이트에 이름이야?
+		if (true == AllConstantBuffers[_Byte].contains(UpperName)) // 내가 알고 있는 바이트에 이름이야?
 		{
-			return BufferMap[_Byte][UpperName]; // 그러면 내가 알고있는 상수버퍼 리턴
+			return AllConstantBuffers[_Byte][UpperName]; // 그러면 내가 알고있는 상수버퍼 리턴
 		}
-	} // 그게 아니면 내가 모르는 상수버퍼야. 새로 만들자.
+	}
 
 	std::shared_ptr<UEngineConstantBuffer> NewRes = std::make_shared<UEngineConstantBuffer>();
 	NewRes->SetName(UpperName);
-	NewRes->ResCreate(_Byte); // 상수 버퍼 생성
-	BufferMap[_Byte][UpperName] = NewRes;
+	NewRes->CreateConstantBuffer(_Byte); // 상수 버퍼 생성
+	AllConstantBuffers[_Byte][UpperName] = NewRes;
 
 	return NewRes;
 }
 
 // 상수 버퍼 생성, 상수버퍼의 특징은 CPU가 동적으로 계산해준 데이터를 그래픽카드가 읽는 것
-void UEngineConstantBuffer::ResCreate(UINT _Byte)
+void UEngineConstantBuffer::CreateConstantBuffer(UINT _Byte)
 {
 	BufferInfo.ByteWidth = _Byte;
 	BufferInfo.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
@@ -58,7 +58,7 @@ void UEngineConstantBuffer::ResCreate(UINT _Byte)
 	
 }
 
-void UEngineConstantBuffer::ChangeData(void* _Data, UINT _Size)
+void UEngineConstantBuffer::UpdateConstantBufferData(void* _Data, UINT _Size)
 {
 	if (_Size != BufferInfo.ByteWidth)
 	{
@@ -78,7 +78,7 @@ void UEngineConstantBuffer::ChangeData(void* _Data, UINT _Size)
 	UEngineCore::GetDevice().GetContext()->Unmap(Buffer.Get(), 0);
 }
 
-void UEngineConstantBuffer::Setting(EShaderType _Type, UINT _BindIndex)
+void UEngineConstantBuffer::BindToShaderSlot(EShaderType _Type, UINT _BindIndex)
 {
 	ID3D11Buffer* ArrPtr[1] = { Buffer.Get() };
 

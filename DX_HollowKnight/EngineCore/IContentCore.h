@@ -8,8 +8,7 @@ public:
 	FVector WindowSize;
 };
 
-
-// 설명 : 
+// 하위 계층의 클래스를 상위 계층에서 호출하는 방법
 class IContentCore
 {
 public:

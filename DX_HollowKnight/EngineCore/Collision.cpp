@@ -3,11 +3,11 @@
 #include <EngineBase/EngineString.h>
 #include <EngineCore/EngineCamera.h>
 
-bool UCollision::bIsDebugMode = true;
+bool UCollision::IsDebugMode = true;
 
 bool& UCollision::GetDebugModeRef()
 {
-	return bIsDebugMode;
+	return IsDebugMode;
 }
 
 UCollision::UCollision()
@@ -22,7 +22,7 @@ UCollision::~UCollision()
 	}
 }
 
-void UCollision::SetCollisionProfileName(std::string_view _ProfileName)
+void UCollision::SetCollisionProfile(std::string_view _ProfileName)
 {
 	if (_ProfileName == GetCollisionProfileName())
 	{
@@ -36,18 +36,18 @@ void UCollision::SetCollisionProfileName(std::string_view _ProfileName)
 	ULevel* Level = GetActor()->GetWorld();
 
 	std::shared_ptr<UCollision> ThisPtr = GetThis<UCollision>();
-	Level->ChangeCollisionProfileName(ProfileName, PrevProfileName, ThisPtr);
+	Level->ChangeCollisionProfile(ProfileName, PrevProfileName, ThisPtr);
 }
 
-bool UCollision::CollisionCheck(std::string_view _OtherName, std::vector<UCollision*>& _Vector)
+bool UCollision::CheckCollision(std::string_view _OtherName, std::vector<UCollision*>& _Vector)
 {
 	std::string UpperName = UEngineString::ToUpper(_OtherName);
 
-	std::map<std::string, std::list<std::shared_ptr<class UCollision>>>& Collision = GetWorld()->Collisions;
+	std::map<std::string, std::list<std::shared_ptr<class UCollision>>>& Collision = GetWorld()->AllCollisions;
 
 	if (false == Collision.contains(UpperName))
 	{
-		MSGASSERT("존재하지 않는 그룹과 충돌할수 없습니다" + std::string(UpperName));
+		MSGASSERT("콜리전 프로필이 등록되지 않았습니다.SetCollisionProfile()로 먼저 등록해주세요.\n" + std::string(UpperName));
 		return false;
 	}
 
@@ -69,15 +69,15 @@ bool UCollision::CollisionCheck(std::string_view _OtherName, std::vector<UCollis
 	return 0 != _Vector.size();
 }
 
-bool UCollision::CollisionCheck(std::string_view _OtherName, FVector _NextPos, std::vector<UCollision*>& _Vector)
+bool UCollision::CheckCollision(std::string_view _OtherName, FVector _NextPos, std::vector<UCollision*>& _Vector)
 {
 	std::string UpperName = UEngineString::ToUpper(_OtherName);
 
-	std::map<std::string, std::list<std::shared_ptr<class UCollision>>>& Collision = GetWorld()->Collisions;
+	std::map<std::string, std::list<std::shared_ptr<class UCollision>>>& Collision = GetWorld()->AllCollisions;
 
 	if (false == Collision.contains(UpperName))
 	{
-		MSGASSERT("존재하지 않는 그룹과 충돌할수 없습니다" + std::string(UpperName));
+		MSGASSERT("콜리전 프로필이 등록되지 않았습니다. SetCollisionProfile()로 먼저 등록해주세요.\n" + std::string(UpperName));
 		return false;
 	}
 
@@ -121,7 +121,7 @@ void UCollision::SetCollisionEnter(std::function<void(UCollision*, UCollision*)>
 {
 	if ("NONE" == GetCollisionProfileName())
 	{
-		MSGASSERT("아직 충돌 그룹이 지정되지 않은 충돌체를 이벤트 등록하려고 했습니다.");
+		MSGASSERT("콜리전 프로필이 등록되지 않았습니다. SetCollisionProfile()로 먼저 등록해주세요.\n");
 		return;
 	}
 
@@ -135,14 +135,14 @@ void UCollision::SetCollisionEnter(std::function<void(UCollision*, UCollision*)>
 	ULevel* Level = GetActor()->GetWorld();
 	std::shared_ptr<UCollision> ThisPtr = GetThis<UCollision>();
 
-	Level->CheckCollisions[GetCollisionProfileName()].push_back(ThisPtr);
+	Level->AllEventCollisions[GetCollisionProfileName()].push_back(ThisPtr);
 }
 
 void UCollision::SetCollisionStay(std::function<void(UCollision*, UCollision*)> _Function)
 {
 	if ("NONE" == GetCollisionProfileName())
 	{
-		MSGASSERT("아직 충돌 그룹이 지정되지 않은 충돌체를 이벤트 등록하려고 했습니다.");
+		MSGASSERT("콜리전 프로필이 등록되지 않았습니다. SetCollisionProfile()로 먼저 등록해주세요.\n");
 		return;
 	}
 
@@ -156,14 +156,14 @@ void UCollision::SetCollisionStay(std::function<void(UCollision*, UCollision*)> 
 	ULevel* Level = GetActor()->GetWorld();
 	std::shared_ptr<UCollision> ThisPtr = GetThis<UCollision>();
 
-	Level->CheckCollisions[GetCollisionProfileName()].push_back(ThisPtr);
+	Level->AllEventCollisions[GetCollisionProfileName()].push_back(ThisPtr);
 }
 
 void UCollision::SetCollisionEnd(std::function<void(UCollision*, UCollision*)> _Function)
 {
 	if ("NONE" == GetCollisionProfileName())
 	{
-		MSGASSERT("아직 충돌 그룹이 지정되지 않은 충돌체를 이벤트 등록하려고 했습니다.");
+		MSGASSERT("콜리전 프로필이 등록되지 않았습니다. SetCollisionProfile()로 먼저 등록해주세요.\n");
 		return;
 	}
 
@@ -176,10 +176,10 @@ void UCollision::SetCollisionEnd(std::function<void(UCollision*, UCollision*)> _
 	End = _Function;
 	ULevel* Level = GetActor()->GetWorld();
 	std::shared_ptr<UCollision> ThisPtr = GetThis<UCollision>();
-	Level->CheckCollisions[GetCollisionProfileName()].push_back(ThisPtr);
+	Level->AllEventCollisions[GetCollisionProfileName()].push_back(ThisPtr);
 }
 
-void UCollision::CollisionEventCheck(std::shared_ptr<UCollision> _Other)
+void UCollision::CheckCollisionEvent(std::shared_ptr<UCollision> _Other)
 {
 	if (false == _Other->IsActive())
 	{
@@ -220,9 +220,9 @@ void UCollision::CollisionEventCheck(std::shared_ptr<UCollision> _Other)
 	}
 }
 
-void UCollision::DebugRender(UEngineCamera* _Camera, float _DeltaTime)
+void UCollision::ApplyDebugRender(UEngineCamera* _Camera, float _DeltaTime)
 {
-	if (false == bIsDebugMode)
+	if (false == IsDebugMode)
 	{
 		return;
 	}

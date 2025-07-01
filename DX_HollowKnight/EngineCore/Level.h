@@ -65,12 +65,12 @@ public:
 
 	std::shared_ptr<class ACameraActor> GetCamera(int _Order)
 	{
-		if (false == Cameras.contains(_Order))
+		if (false == AllCameras.contains(_Order))
 		{
-			MSGASSERT("존재하지 않는 카메라를 사용하려고 했습니다.");
+			MSGASSERT("존재하지 않는 카메라 인덱스입니다.");
 		}
 
-		return Cameras[_Order];
+		return AllCameras[_Order];
 	}
 
 	template<typename EnumType>
@@ -84,16 +84,15 @@ public:
 	template<typename ActorType>
 	std::shared_ptr<ActorType> SpawnActor(std::string_view _Name = "")
 	{
-		static_assert(std::is_base_of_v<AActor, ActorType>, "액터를 상속받지 않은 클래스를 SpawnActor하려고 했습니다.");
+		static_assert(std::is_base_of_v<AActor, ActorType>, "[타입에러] 액터를 상속한 대상만 Spawn할 수 있습니다.");
 
 		if (false == std::is_base_of_v<AActor, ActorType>)
 		{
-			MSGASSERT("액터를 상속받지 않은 클래스를 SpawnActor하려고 했습니다.");
+			MSGASSERT("[타입에러] 액터를 상속한 대상만 Spawn할 수 있습니다.");
 			return nullptr;
 		}
 
 		char* ActorMemory = new char[sizeof(ActorType)];
-
 
 		AActor* ActorPtr = reinterpret_cast<ActorType*>(ActorMemory);
 		ActorPtr->World = this;
@@ -109,16 +108,13 @@ public:
 		return NewActor;
 	}
 
-	//                           0              100그룹
 	ENGINEAPI void ChangeRenderGroup(int _CameraOrder, int _PrevGroupOrder, std::shared_ptr<class URenderer> _Renderer);
 
-	ENGINEAPI void ChangeCollisionProfileName(std::string_view _ProfileName, std::string_view _PrevProfileName, std::shared_ptr<class UCollision> _Collision);
-
-	ENGINEAPI void PushCollisionProfileEvent(std::shared_ptr<class URenderer> _Renderer);
-
 	ENGINEAPI void CreateCollisionProfile(std::string_view _ProfileName);
-
+	ENGINEAPI void ChangeCollisionProfile(std::string_view _ProfileName, std::string_view _PrevProfileName, std::shared_ptr<class UCollision> _Collision);
 	ENGINEAPI void LinkCollisionProfile(std::string_view _LeftProfileName, std::string_view _RightProfileName);
+	ENGINEAPI void PushCollisionProfileEvent(std::shared_ptr<class URenderer> _Renderer) {};
+
 
 	template<typename ConvertType>
 	ENGINEAPI std::list<std::shared_ptr<ConvertType>> GetAllActorListByClass()
@@ -174,15 +170,15 @@ private:
 
 	std::list<std::shared_ptr<class AActor>> AllActors;
 
-	std::map<int, std::shared_ptr<class ACameraActor>> Cameras;
+	std::map<int, std::shared_ptr<class ACameraActor>> AllCameras;
 
 	// 모든 카메라(Play 화면 + UI 등)가 바라본 이미지를 섞은 타겟 => 백버퍼로 넘길 최종 타겟
 	std::shared_ptr<class UEngineRenderTarget> LastRenderTarget;
 
-	std::map<std::string, std::list<std::shared_ptr<class UCollision>>> Collisions;
+	std::map<std::string, std::list<std::shared_ptr<class UCollision>>> AllCollisions;
 
 	// 이벤트가 존재하는 애들만 충돌 체크하려고.
-	std::map<std::string, std::list<std::shared_ptr<class UCollision>>> CheckCollisions;
+	std::map<std::string, std::list<std::shared_ptr<class UCollision>>> AllEventCollisions;
 
 	std::map<std::string, std::list<std::string>> CollisionLinks;
 

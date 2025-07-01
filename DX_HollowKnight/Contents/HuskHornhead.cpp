@@ -102,7 +102,7 @@ void AHuskHornhead::CreateCollision()
 	BodyCollision->SetupAttachment(RootComponent);
 	BodyCollision->SetScale3D(CollisionScale);
 	BodyCollision->SetWorldLocation({ BodyCollisionOffset.X, BodyCollisionOffset.Y, ZSort });
-	BodyCollision->SetCollisionProfileName("Monster");
+	BodyCollision->SetCollisionProfile("Monster");
 }
 
 void AHuskHornhead::CreateAttackLogicAndEffect()

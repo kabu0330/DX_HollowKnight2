@@ -45,7 +45,7 @@ AKnight::AKnight()
 
 
 	// Debug
-	BodyRenderer->BillboardOn();
+	BodyRenderer->ActivateBillboard();
 
 }
 
@@ -156,7 +156,7 @@ void AKnight::CreatePixelCollision()
 	PixelCollision->SetupAttachment(RootComponent);
 	PixelCollision->SetScale3D({ 70, 5 });
 	PixelCollision->SetRelativeLocation({0.0f, -BodyRenderer->GetScale().Y * 0.5f, });
-	PixelCollision->SetCollisionProfileName("MonsterPoint");
+	PixelCollision->SetCollisionProfile("MonsterPoint");
 	PixelCollision->SetDebugColor({ 1.0f, 1.0f, 1.0f });
 }
 
@@ -728,7 +728,7 @@ void AKnight::DebugInput(float _DeltaTime)
 
 void AKnight::DebugCamera()
 {
-	if (false == bIsDebugMode)
+	if (false == IsDebugMode)
 	{
 		return;
 	}
@@ -771,7 +771,7 @@ void AKnight::CreateCollision()
 {
 	BodyCollision = CreateDefaultSubobject<UCollision>();
 	BodyCollision->SetupAttachment(RootComponent);
-	BodyCollision->SetCollisionProfileName("Knight");
+	BodyCollision->SetCollisionProfile("Knight");
 	BodyCollision->SetScale3D({ 60.0f, 130.0f });
 	BodyCollision->SetRelativeLocation(BodyRenderer->GetActorLocation());
 	//BodyCollision->SetCollisionType(ECollisionType::AABB);

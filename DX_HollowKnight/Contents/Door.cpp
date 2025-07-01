@@ -11,7 +11,7 @@ ADoor::ADoor()
 
 	BodyCollision = CreateDefaultSubobject<UCollision>();
 	BodyCollision->SetupAttachment(RootComponent);
-	BodyCollision->SetCollisionProfileName("Door");
+	BodyCollision->SetCollisionProfile("Door");
 	float ZSort = static_cast<float>(EZOrder::BACKGROUND);
 	BodyCollision->GetTransformRef().Location.Z = ZSort;
 	Scale = FVector(200, 100);

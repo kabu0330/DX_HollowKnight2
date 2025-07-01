@@ -8,8 +8,6 @@ public:
 	ENGINEAPI UDefaultSceneComponent();
 	ENGINEAPI ~UDefaultSceneComponent();
 
-
-
 protected:
 
 private:

@@ -233,9 +233,9 @@ private:
 	void DebugCamera();
 	void SwitchDebugMode()
 	{
-		bIsDebugMode = !bIsDebugMode;
+		IsDebugMode = !IsDebugMode;
 	}
-	bool bIsDebugMode = false;
+	bool IsDebugMode = false;
 	bool NoneGravity = false;
 	static AKnight* MainPawn;
 

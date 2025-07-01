@@ -6,7 +6,7 @@
 #include "EngineBlend.h"
 
 // 설명 : 버텍스 셰이더, 픽셀 셰이더, 레스터라이저, 알파블렌드, 뎁스 스텐실, 토폴로지를 모두 한데 묶어서 머티리얼
-class UEngineMaterial : public UEngineResources
+class UEngineMaterial : public UEngineResourceBase
 {
 public:
 	UEngineMaterial();

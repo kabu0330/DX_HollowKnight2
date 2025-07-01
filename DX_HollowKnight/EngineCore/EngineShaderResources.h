@@ -26,10 +26,10 @@ public:
 		if (nullptr != Data)
 		{
 			Name;
-			Res->ChangeData(Data, BufferSize);
+			Res->UpdateConstantBufferData(Data, BufferSize);
 		}
 
-		Res->Setting(ShaderType, BindIndex);
+		Res->BindToShaderSlot(ShaderType, BindIndex);
 	}
 
 	void Reset()

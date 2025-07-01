@@ -95,12 +95,12 @@ public:
 		return AutoScaleRatio;
 	}
 
-	void BillboardOn()
+	void ActivateBillboard()
 	{
 		IsBillboard = true;
 	}
 
-	void BillboardOff()
+	void DeactivateBillboard()
 	{
 		IsBillboard = false;
 	}

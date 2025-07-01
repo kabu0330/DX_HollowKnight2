@@ -14,7 +14,7 @@ UContentsEditorGUI::~UContentsEditorGUI()
 
 void UContentsEditorGUI::OnGUI()
 {
-	std::map<std::string, std::shared_ptr<class ULevel>> Map = UEngineCore::GetAllLevelMap();
+	std::map<std::string, std::shared_ptr<class ULevel>> Map = UEngineCore::GetAllLevels();
 
 	for (std::pair<const std::string, std::shared_ptr<class ULevel>>& Pair : Map)
 	{

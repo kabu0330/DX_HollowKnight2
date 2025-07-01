@@ -30,7 +30,7 @@ void ARoom::BeginPlay()
 	{
 		Collision = CreateDefaultSubobject<UCollision>().get();
 		Collision->SetupAttachment(RootComponent);
-		Collision->SetCollisionProfileName("Door");
+		Collision->SetCollisionProfile("Door");
 		float ZSort = static_cast<float>(EZOrder::BACKGROUND);
 		Collision->GetTransformRef().Location.Z = ZSort;
 		FVector CollisionScale = FVector(500, 900);

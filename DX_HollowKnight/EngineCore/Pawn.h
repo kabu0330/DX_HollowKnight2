@@ -8,8 +8,6 @@ public:
 	ENGINEAPI APawn();
 	ENGINEAPI ~APawn();
 
-
-
 protected:
 
 private:

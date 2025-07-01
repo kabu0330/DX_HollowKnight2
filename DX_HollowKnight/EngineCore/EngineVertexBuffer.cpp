@@ -10,7 +10,7 @@ UEngineVertexBuffer::~UEngineVertexBuffer()
 }
 
 std::shared_ptr<UEngineVertexBuffer> UEngineVertexBuffer::Create(std::string_view _Name, const void* _InitData, size_t _VertexSize, size_t _VertexCount,
-	UEngineInputLayOutInfo* _InfoPtr)
+	UEngineInputLayoutInfo* _InfoPtr)
 {
 	std::string UpperName = ToUpperName(_Name);
 
@@ -22,13 +22,13 @@ std::shared_ptr<UEngineVertexBuffer> UEngineVertexBuffer::Create(std::string_vie
 
 	std::shared_ptr<UEngineVertexBuffer> NewRes = std::make_shared<UEngineVertexBuffer>();
 	PushRes<UEngineVertexBuffer>(NewRes, _Name, "");
-	NewRes->ResCreate(_InitData, _VertexSize, _VertexCount);
-	NewRes->InfoPtr = _InfoPtr;
+	NewRes->CreateVertexBuffer(_InitData, _VertexSize, _VertexCount);
+	NewRes->InputLayoutInfo = _InfoPtr;
 	
 	return NewRes;
 }
 
-void UEngineVertexBuffer::ResCreate(const void* _InitData, size_t _VertexSize, size_t _VertexCount)
+void UEngineVertexBuffer::CreateVertexBuffer(const void* _InitData, size_t _VertexSize, size_t _VertexCount)
 {
 	VertexCount = static_cast<UINT>(_VertexCount);
 	VertexSize = static_cast<UINT>(_VertexSize);
@@ -47,7 +47,7 @@ void UEngineVertexBuffer::ResCreate(const void* _InitData, size_t _VertexSize, s
 	}
 }
 
-void UEngineVertexBuffer::Setting()
+void UEngineVertexBuffer::IASetVertexBuffers()
 {
 	UINT Offset = 0;
 	ID3D11Buffer* ArrBuffer[1];

@@ -20,11 +20,11 @@ public:
 	template<typename ComponentType>
 	inline std::shared_ptr<ComponentType> CreateDefaultSubobject()
 	{
-		static_assert(std::is_base_of_v<UActorComponent, ComponentType>, "액터 컴포넌트를 상속받지 않은 클래스를 CreateDefaultSubObject하려고 했습니다.");
+		static_assert(std::is_base_of_v<UActorComponent, ComponentType>, "액터 컴포넌트를 상속한 대상만 CreateDefaultSubObject<>()할 수 있습니다.");
 
 		if (false == std::is_base_of_v<UActorComponent, ComponentType>)
 		{
-			MSGASSERT("액터 컴포넌트를 상속받지 않은 클래스를 CreateDefaultSubObject하려고 했습니다.");
+			MSGASSERT("액터 컴포넌트를 상속한 대상만 CreateDefaultSubObject<>()할 수 있습니다.");
 			return nullptr;
 		}
 
@@ -49,7 +49,7 @@ public:
 		else if(!std::is_base_of_v<UActorComponent, ComponentType>
 			&& !std::is_base_of_v<USceneComponent, ComponentType>)
 		{
-			MSGASSERT("말도 안됨");
+			MSGASSERT("액터 컴포넌트를 상속한 대상만 CreateDefaultSubObject<>()할 수 있습니다.");
 		}
 
 		return NewCom;

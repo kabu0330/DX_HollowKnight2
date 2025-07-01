@@ -71,7 +71,7 @@ void APlayGameMode::CheckDebugInput()
 
 void APlayGameMode::CheckInfo()
 {
-	MousePos = Camera->ScreenMousePosToWorldPos();
+	MousePos = Camera->GetScreenMousePosToWorldPos();
 	KnightPos = AKnight::GetPawn()->GetRootComponent()->GetTransformRef().RelativeLocation;
 }
 
@@ -190,7 +190,7 @@ void APlayGameMode::SetBasePoint()
 
 	BasePointCollision = CreateDefaultSubobject<UCollision>();
 	BasePointCollision->SetupAttachment(RootComponent);
-	BasePointCollision->SetCollisionProfileName("Door");
+	BasePointCollision->SetCollisionProfile("Door");
 	float ZSort = static_cast<float>(EZOrder::BACKGROUND);
 	BasePointCollision->GetTransformRef().Location.Z = ZSort;
 	BasePointCollision->SetScale3D({8, 8});

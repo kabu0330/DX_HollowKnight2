@@ -35,12 +35,12 @@ void UDebugWindowGUI::SetFreeCamera()
 {
 	if (true == ImGui::Button("FreeCamera"))
 	{
-		GetWorld()->GetMainCamera()->FreeCameraSwitch();
+		GetWorld()->GetMainCamera()->SwitchFreeCamera();
 	}
 
 	if (UEngineInput::IsDown(VK_F8))
 	{
-		GetWorld()->GetMainCamera()->FreeCameraSwitch();
+		GetWorld()->GetMainCamera()->SwitchFreeCamera();
 		if (true == GetWorld()->GetMainCamera()->IsFreeCamera())
 		{
 			GetWorld()->GetGameMode<APlayGameMode>()->GetRoomsRef().SetActivate(true);

@@ -26,8 +26,7 @@ void AActor::BeginPlay()
 	for (std::shared_ptr<class UActorComponent>& ActorComponent : AllActorComponents)
 	{
 		ActorComponent->BeginPlay();
-	}
-	
+	}	
 }
 
 void AActor::Tick(float _DeltaTime)
@@ -59,13 +58,13 @@ void AActor::AttachToActor(AActor* _Parent)
 {
 	if (nullptr == RootComponent)
 	{
-		MSGASSERT("씬 컴포넌트가 루트가 아닌 액터가 부모를 가질수 없습니다.");
+		MSGASSERT("씬 컴포넌트가 RootComponent인 액터에게 부착할 수 있습니다.");
 		return;
 	}
 
 	if (nullptr == _Parent->RootComponent)
 	{
-		MSGASSERT("씬 컴포넌트가 루트가 아닌 액터가 부모를 가질수 없습니다.");
+		MSGASSERT("씬 컴포넌트가 RootComponent인 액터에게 부착할 수 있습니다.");
 		return;
 	}
 

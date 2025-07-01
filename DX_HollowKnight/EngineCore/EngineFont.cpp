@@ -36,13 +36,13 @@ UEngineFont::~UEngineFont()
 {
 }
 
-std::shared_ptr<UEngineFont> UEngineFont::Load(std::string_view _Name, std::string_view _Path)
+std::shared_ptr<UEngineFont> UEngineFont::LoadFont(std::string_view _Name, std::string_view _Path)
 {
 	std::string UpperName = ToUpperName(_Name);
 
 	if (true == Contains(UpperName))
 	{
-		MSGASSERT("이미 로드한 텍스처를 도 로드하려고 했습니다." + UpperName);
+		MSGASSERT("[이름 중복] 폰트 이름을 변경해주세요.\n" + UpperName);
 		return nullptr;
 	}
 

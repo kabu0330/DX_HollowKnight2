@@ -100,7 +100,7 @@ void ALeapingHusk::CreateCollision()
 	BodyCollision->SetupAttachment(RootComponent);
 	BodyCollision->SetScale3D(CollisionScale);
 	BodyCollision->SetWorldLocation({ BodyCollisionOffset.X, BodyCollisionOffset.Y, ZSort });
-	BodyCollision->SetCollisionProfileName("Monster");
+	BodyCollision->SetCollisionProfile("Monster");
 }
 
 void ALeapingHusk::SetAttack(float _DeltaTime)

@@ -1,8 +1,8 @@
 #pragma once
-#include "EngineResources.h"
+#include "EngineResourceBase.h"
 
 // Ό³Έν :
-class UEngineRasterizerState : public UEngineResources
+class UEngineRasterizerState : public UEngineResourceBase
 {
 public:
 	UEngineRasterizerState();

@@ -1,10 +1,10 @@
 #pragma once
-#include "EngineResources.h"
+#include "EngineResourceBase.h"
 #include "EngineDeviceBuffer.h"
 #include "EngineEnums.h"
 
 // 설명 :
-class UEngineConstantBuffer : public UEngineResources, public UEngineDeviceBuffer
+class UEngineConstantBuffer : public UEngineResourceBase, public UEngineDeviceBuffer
 {
 public:
 	UEngineConstantBuffer();
@@ -13,8 +13,8 @@ public:
 	// 상수버퍼를 만들거나 찾거나
 	static std::shared_ptr<UEngineConstantBuffer> CreateOrFind(UINT _Byte, const std::string_view& _Name);
 
-	void ChangeData(void* _Data, UINT _Size);
-	void Setting(EShaderType _Type, UINT _BindIndex);
+	void UpdateConstantBufferData(void* _Data, UINT _Size);
+	void BindToShaderSlot(EShaderType _Type, UINT _BindIndex);
 
 	static void Release();
 
@@ -23,9 +23,9 @@ protected:
 private:
 	//           바이트           사용자 정의 이름                     상수버퍼
 	// 어떤 이름으로 상수버퍼를 몇 바이트 저장할거냐?
-	static std::map<int, std::map<std::string, std::shared_ptr<UEngineConstantBuffer>>> BufferMap;
+	static std::map<int, std::map<std::string, std::shared_ptr<UEngineConstantBuffer>>> AllConstantBuffers;
 
-	void ResCreate(UINT _Byte);
+	void CreateConstantBuffer(UINT _Byte);
 
 private:
 	// delete Function

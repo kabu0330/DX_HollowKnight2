@@ -6,7 +6,7 @@
 AMonsterSkill::AMonsterSkill()
 {
 	SetName("MonsterSkill");
-	Collision->SetCollisionProfileName("MonsterObject");
+	Collision->SetCollisionProfile("MonsterObject");
 
 	// 이펙트 없이 컬리전만
 	std::string BlanckEffect = "BlanckEffect";

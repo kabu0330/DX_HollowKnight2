@@ -1,8 +1,8 @@
 #pragma once
-#include "EngineResources.h"
+#include "EngineResourceBase.h"
 
 // Ό³Έν :
-class UEngineBlend : public UEngineResources
+class UEngineBlend : public UEngineResourceBase
 {
 public:
 	UEngineBlend();

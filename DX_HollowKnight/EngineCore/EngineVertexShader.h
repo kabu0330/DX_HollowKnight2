@@ -1,10 +1,10 @@
 #pragma once
-#include "EngineResources.h"
+#include "EngineResourceBase.h"
 #include <Windows.h>
 #include "EngineShader.h"
 
 // Ό³Έν :
-class UEngineVertexShader : public UEngineResources, public UEngineShader
+class UEngineVertexShader : public UEngineResourceBase, public UEngineShader
 {
 public:
 	UEngineVertexShader();

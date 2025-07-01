@@ -1,5 +1,5 @@
 #pragma once
-#include "EngineResources.h"
+#include "EngineResourceBase.h"
 #include "EngineEnums.h"
 
 #include "ThirdParty/DirectxTex/Inc/DirectXTex.h"
@@ -9,7 +9,7 @@
 // 2.SRV 积己, 
 // 3. DSV 积己
 // 4. 坊歹 鸥百 轰 积己
-class UEngineTexture : public UEngineResources
+class UEngineTexture : public UEngineResourceBase
 {
 	friend class UEngineRenderTarget;
 
@@ -27,16 +27,16 @@ public:
 	ENGINEAPI static std::shared_ptr<UEngineTexture> LoadTextureThreadSafe(std::string_view _Name, std::string_view _Path);
 
 
-	static std::shared_ptr<UEngineTexture> Load(std::string_view _Path)
+	static std::shared_ptr<UEngineTexture> LoadTexture(std::string_view _Path)
 	{
 		UEnginePath EnginePath = UEnginePath(_Path);
 
 		std::string FileName = EnginePath.GetFileNameToString();
 
-		return Load(FileName, _Path);
+		return LoadTexture(FileName, _Path);
 	}
 
-	ENGINEAPI static std::shared_ptr<UEngineTexture> Load(std::string_view _Name, std::string_view _Path);
+	ENGINEAPI static std::shared_ptr<UEngineTexture> LoadTexture(std::string_view _Name, std::string_view _Path);
 
 	ID3D11DepthStencilView* GetDSV()
 	{

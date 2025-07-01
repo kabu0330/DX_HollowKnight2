@@ -33,7 +33,7 @@ std::shared_ptr<UEngineTexture> UEngineTexture::LoadTextureThreadSafe(std::strin
 }
 
 
-std::shared_ptr<UEngineTexture> UEngineTexture::Load(std::string_view _Name, std::string_view _Path)
+std::shared_ptr<UEngineTexture> UEngineTexture::LoadTexture(std::string_view _Name, std::string_view _Path)
 {
 	std::string UpperName = ToUpperName(_Name);
 

@@ -1,11 +1,11 @@
 #include "PreCompile.h"
 #include "EngineVertex.h"
 
-UEngineInputLayOutInfo FEngineVertex::Info;
+UEngineInputLayoutInfo FEngineVertex::InputLayoutInfo;
 
-UEngineInputLayOutInfo& FEngineVertex::GetInfo()
+UEngineInputLayoutInfo& FEngineVertex::GetInputLayoutInfo()
 {
-	return Info;
+	return InputLayoutInfo;
 }
 
 class EngineVertexInit
@@ -13,9 +13,9 @@ class EngineVertexInit
 public:
 	ENGINEAPI EngineVertexInit()
 	{
-		FEngineVertex::Info.AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32A32_FLOAT);
-		FEngineVertex::Info.AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32B32A32_FLOAT);
-		FEngineVertex::Info.AddInputLayout("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT);
+		FEngineVertex::InputLayoutInfo.AddInputLayout("POSITION", DXGI_FORMAT_R32G32B32A32_FLOAT);
+		FEngineVertex::InputLayoutInfo.AddInputLayout("TEXCOORD", DXGI_FORMAT_R32G32B32A32_FLOAT);
+		FEngineVertex::InputLayoutInfo.AddInputLayout("COLOR", DXGI_FORMAT_R32G32B32A32_FLOAT);
 	}
 };
 

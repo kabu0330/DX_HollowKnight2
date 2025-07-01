@@ -21,12 +21,12 @@ std::shared_ptr<UEngineIndexBuffer> UEngineIndexBuffer::Create(std::string_view 
 
 	std::shared_ptr<UEngineIndexBuffer> NewRes = std::make_shared<UEngineIndexBuffer>();
 	PushRes<UEngineIndexBuffer>(NewRes, _Name, "");
-	NewRes->ResCreate(_InitData, _VertexSize, _VertexCount);
+	NewRes->CreateIndexBuffer(_InitData, _VertexSize, _VertexCount);
 
 	return NewRes;
 }
 
-void UEngineIndexBuffer::ResCreate(const void* _InitData, size_t _Size, size_t _Count)
+void UEngineIndexBuffer::CreateIndexBuffer(const void* _InitData, size_t _Size, size_t _Count)
 {
 	IndexSize = static_cast<UINT>(_Size);
 	IndexCount = static_cast<UINT>(_Count);
@@ -59,7 +59,7 @@ void UEngineIndexBuffer::ResCreate(const void* _InitData, size_t _Size, size_t _
 	}
 }
 
-void UEngineIndexBuffer::Setting()
+void UEngineIndexBuffer::IASetIndexBuffer()
 {
 	int Offset = 0;
 	UEngineCore::GetDevice().GetContext()->IASetIndexBuffer(Buffer.Get(), Format, Offset);

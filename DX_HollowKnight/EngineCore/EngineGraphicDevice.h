@@ -21,12 +21,12 @@ public:
 	void SetupRenderingPipeline();
 	void CreateBackBuffer(const UEngineWindow& _Window);
 
-	IDXGIAdapter* GetHighPerFormanceAdapter();
+	IDXGIAdapter* GetHighPerformanceAdapter();
 
 	ENGINEAPI void Release();
 
-	void RenderStart();
-	void RenderEnd();
+	void StartRender();
+	void EndRender();
 
 	ENGINEAPI ID3D11Device* GetDevice()
 	{
@@ -56,15 +56,15 @@ private:
 	std::shared_ptr<class UEngineRenderTarget> BackBufferTarget;
 
 	
-	ENGINEAPI void DefaultResourcesInit();
+	ENGINEAPI void InitDefaultResources();
 
-	ENGINEAPI void MeshInit();
-	ENGINEAPI void BlendInit();
-	ENGINEAPI void ShaderInit();
-	ENGINEAPI void MaterialInit();
-	ENGINEAPI void RasterizerStateInit();
-	ENGINEAPI void TextureInit();
-	ENGINEAPI void DepthStencilInit();
+	ENGINEAPI void InitMesh();
+	ENGINEAPI void InitBlend();
+	ENGINEAPI void InitShader();
+	ENGINEAPI void InitMaterial();
+	ENGINEAPI void InitRasterizerState();
+	ENGINEAPI void InitTexture();
+	ENGINEAPI void InitDepthStencil();
 
 private:
 	// delete Function

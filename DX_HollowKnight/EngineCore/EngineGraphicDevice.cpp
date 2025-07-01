@@ -21,7 +21,7 @@ void UEngineGraphicDevice::Release()
     Device = nullptr;
 }
 
-IDXGIAdapter* UEngineGraphicDevice::GetHighPerFormanceAdapter()
+IDXGIAdapter* UEngineGraphicDevice::GetHighPerformanceAdapter()
 {
     // 1. 그래픽카드가 여러 개일 경우를 대비하여 가장 좋은 그래픽카드를 찾는다.
     IDXGIFactory* Factory = nullptr; // 팩토리 : 그래픽 카드 정보 열거, 출력 장치 관리
@@ -82,7 +82,7 @@ IDXGIAdapter* UEngineGraphicDevice::GetHighPerFormanceAdapter()
 
 void UEngineGraphicDevice::SetupRenderingPipeline()
 {
-    MainAdapter = GetHighPerFormanceAdapter(); // 제일 좋은 성능의 그래픽카드 정보를 MainAdapter에 저장한다.
+    MainAdapter = GetHighPerformanceAdapter(); // 제일 좋은 성능의 그래픽카드 정보를 MainAdapter에 저장한다.
 
     int iFlag = 0;
 
@@ -139,7 +139,7 @@ void UEngineGraphicDevice::SetupRenderingPipeline()
     }
     // 초기화 종료
 
-    DefaultResourcesInit();
+    InitDefaultResources();
 }
 
 // DSV와 RTV 객체 생성, 스왑체인 및 백버퍼 생성
@@ -213,13 +213,13 @@ void UEngineGraphicDevice::CreateBackBuffer(const UEngineWindow& _Window)
     BackBufferTarget->CreateDepth(); // DSV 생성 
 }
 
-void UEngineGraphicDevice::RenderStart()
+void UEngineGraphicDevice::StartRender()
 {
     BackBufferTarget->Clear();
     BackBufferTarget->Setting();
 }
 
-void UEngineGraphicDevice::RenderEnd()
+void UEngineGraphicDevice::EndRender()
 {
     HRESULT Result = SwapChain->Present(0, 0); // 스왑체인이 관리하는 백버퍼와 프론트버퍼를 교환(Swap)
     //             수직동기화 : 0(미사용) / 추가옵션(Flag) : 0(없음)

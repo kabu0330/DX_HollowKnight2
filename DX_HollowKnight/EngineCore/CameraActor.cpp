@@ -91,7 +91,7 @@ void ACameraActor::Tick(float _DeltaTime)
 	}
 }
 
-FVector ACameraActor::ScreenPosToWorldPos(FVector _Pos)
+FVector ACameraActor::GetScreenPosToWorldPos(FVector _Pos)
 {
 	FVector Size = UEngineCore::GetMainWindow().GetWindowSize();
 
@@ -107,7 +107,7 @@ FVector ACameraActor::ScreenPosToWorldPos(FVector _Pos)
 	return _Pos;
 }
 
-FVector ACameraActor::WorldPosToScreenPos(FVector _Pos)
+FVector ACameraActor::GetWorldPosToScreenPos(FVector _Pos)
 {
 	FVector Size = UEngineCore::GetMainWindow().GetWindowSize();
 
@@ -122,36 +122,31 @@ FVector ACameraActor::WorldPosToScreenPos(FVector _Pos)
 	return _Pos;
 }
 
-FVector ACameraActor::ScreenMousePosToWorldPosWithOutPos()
-{
-	return FVector();
-}
-
-FVector ACameraActor::ScreenMousePosToWorldPos()
+FVector ACameraActor::GetScreenMousePosToWorldPos()
 {
 	FVector MousePos = UEngineCore::GetMainWindow().GetMousePos();
 
-	return ScreenPosToWorldPos(MousePos);
+	return GetScreenPosToWorldPos(MousePos);
 }
 
-void ACameraActor::FreeCameraOn()
+void ACameraActor::ActivateFreeCamera()
 {
 	IsFreeCameraValue = true;
-	FreeCameraCheck();
+	CheckFreeCamera();
 }
 
-void ACameraActor::FreeCameraOff()
+void ACameraActor::DeactivateFreeCamera()
 {
 	IsFreeCameraValue = false;
 }
 
-void ACameraActor::FreeCameraSwitch()
+void ACameraActor::SwitchFreeCamera()
 {
 	IsFreeCameraValue = !IsFreeCameraValue;
-	FreeCameraCheck();
+	CheckFreeCamera();
 }
 
-void ACameraActor::FreeCameraCheck()
+void ACameraActor::CheckFreeCamera()
 {
 	if (true == IsFreeCameraValue)
 	{

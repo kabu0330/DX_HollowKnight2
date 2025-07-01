@@ -26,7 +26,7 @@ void UFontRenderer::Render(UEngineCamera* _Camera, float _DeltaTime)
 
 	ACameraActor* CameraActor = _Camera->GetActor<ACameraActor>();
 
-	FVector ScreenPos = CameraActor->WorldPosToScreenPos(GetWorldLocation());
+	FVector ScreenPos = CameraActor->GetWorldPosToScreenPos(GetWorldLocation());
 
 	Font->FontDraw(Text.c_str(), Scale, ScreenPos, Color, Flag);
 }

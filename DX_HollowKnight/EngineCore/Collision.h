@@ -11,9 +11,9 @@ public:
 	ENGINEAPI UCollision();
 	ENGINEAPI ~UCollision();
 
-	ENGINEAPI void SetCollisionProfileName(std::string_view _ProfileName);
+	ENGINEAPI void SetCollisionProfile(std::string_view _ProfileName);
 	ENGINEAPI void BeginPlay() override;
-	ENGINEAPI void DebugRender(UEngineCamera* _Camera, float _DeltaTime);
+	ENGINEAPI void ApplyDebugRender(UEngineCamera* _Camera, float _DeltaTime);
 
 	std::string GetCollisionProfileName()
 	{
@@ -22,16 +22,16 @@ public:
 
 	void SetRadius(float _Value);
 
-	ENGINEAPI bool CollisionCheck(std::string_view _OtherName, std::vector<UCollision*>& _Vector);
+	ENGINEAPI bool CheckCollision(std::string_view _OtherName, std::vector<UCollision*>& _Vector);
 
-	ENGINEAPI bool CollisionCheck(std::string_view _OtherName, FVector _NextPos, std::vector<UCollision*>& _Vector);
+	ENGINEAPI bool CheckCollision(std::string_view _OtherName, FVector _NextPos, std::vector<UCollision*>& _Vector);
 
 	void SetCollisionType(ECollisionType _Type)
 	{
 		CollisionType = _Type;
 	}
 
-	void CollisionEventCheck(std::shared_ptr<UCollision> _Other);
+	void CheckCollisionEvent(std::shared_ptr<UCollision> _Other);
 
 	ENGINEAPI void SetCollisionEnter(std::function<void(UCollision*, UCollision*)> _Function);
 	ENGINEAPI void SetCollisionStay(std::function<void(UCollision*, UCollision*)> _Function);
@@ -54,7 +54,7 @@ public:
 	ENGINEAPI static bool& GetDebugModeRef();
 
 private:
-	static bool bIsDebugMode;
+	static bool IsDebugMode;
 	FVector DebugColor = { 0.0f, 1.0f, 0.0f, 1.0f };
 	ECollisionType CollisionType = ECollisionType::OBB2D;
 

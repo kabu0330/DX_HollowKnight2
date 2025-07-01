@@ -34,7 +34,7 @@
     <ClInclude Include="ThirdParty\DirectxTex\Inc\DirectXTex.h">
       <Filter>06_ThirdParty\DirectxTex\Inc</Filter>
     </ClInclude>
-    <ClInclude Include="EngineResources.h">
+    <ClInclude Include="EngineResourceBase.h">
       <Filter>07_Resources</Filter>
     </ClInclude>
     <ClInclude Include="EngineGUI.h">
@@ -210,7 +210,7 @@
     <ClCompile Include="EngineGraphicDevice.cpp">
       <Filter>05_Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="EngineResources.cpp">
+    <ClCompile Include="EngineResourceBase.cpp">
       <Filter>07_Resources</Filter>
     </ClCompile>
     <ClCompile Include="EngineGUI.cpp">

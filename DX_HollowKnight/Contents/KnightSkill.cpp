@@ -8,7 +8,7 @@
 AKnightSkill::AKnightSkill()
 {
 	SetName("AKnightSkill");
-	Collision->SetCollisionProfileName("KnightObject");
+	Collision->SetCollisionProfile("KnightObject");
 }
 
 AKnightSkill::~AKnightSkill()

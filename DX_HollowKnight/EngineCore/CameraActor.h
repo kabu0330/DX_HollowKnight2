@@ -17,15 +17,10 @@ public:
 	ENGINEAPI void BeginPlay() override;
 	ENGINEAPI void Tick(float _DeltaTime);
 
-	ENGINEAPI FVector ScreenMousePosToWorldPos();
+	ENGINEAPI FVector GetScreenMousePosToWorldPos();
 
-	// 항상 중심을 0,0 으로 보는 마우스 포스 얻는법
-	ENGINEAPI FVector ScreenMousePosToWorldPosWithOutPos();
-
-
-	ENGINEAPI FVector ScreenPosToWorldPos(FVector _Pos);
-
-	ENGINEAPI FVector WorldPosToScreenPos(FVector _Pos);
+	ENGINEAPI FVector GetScreenPosToWorldPos(FVector _Pos);
+	ENGINEAPI FVector GetWorldPosToScreenPos(FVector _Pos);
 
 
 	ENGINEAPI inline bool IsFreeCamera()
@@ -33,11 +28,11 @@ public:
 		return IsFreeCameraValue;
 	}
 
-	ENGINEAPI void FreeCameraOn();
+	ENGINEAPI void ActivateFreeCamera();
 
-	ENGINEAPI void FreeCameraOff();
+	ENGINEAPI void DeactivateFreeCamera();
 
-	ENGINEAPI void FreeCameraSwitch();
+	ENGINEAPI void SwitchFreeCamera();
 
 	void SetFreeCameraSpeed(float _Speed)
 	{
@@ -50,7 +45,7 @@ private:
 	std::shared_ptr<class UEngineCamera> CameraComponent = nullptr;
 
 	bool IsFreeCameraValue = false;
-	ENGINEAPI void FreeCameraCheck();
+	ENGINEAPI void CheckFreeCamera();
 
 	FTransform PrevTrans;
 	EProjectionType PrevProjectionType = EProjectionType::Orthographic;

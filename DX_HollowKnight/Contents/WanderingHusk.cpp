@@ -92,6 +92,6 @@ void AWanderingHusk::CreateCollision()
 	BodyCollision->SetupAttachment(RootComponent);
 	BodyCollision->SetScale3D({ 106, 127 });
 	BodyCollision->SetWorldLocation({ BodyCollisionOffset.X, BodyCollisionOffset.Y, ZSort });
-	BodyCollision->SetCollisionProfileName("Monster");
+	BodyCollision->SetCollisionProfile("Monster");
 }
 

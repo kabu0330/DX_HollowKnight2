@@ -5,7 +5,7 @@
 #include <EnginePlatform/EngineSound.h>
 #include <EnginePlatform/EngineInput.h>
 #include "IContentCore.h"
-#include "EngineResources.h"
+#include "EngineResourceBase.h"
 #include "EngineConstantBuffer.h"
 #include "EngineGUI.h"
 #include "Level.h"
@@ -37,9 +37,9 @@ double UEngineCore::GetDoubleDeltaTime()
 	return Time;
 }
 
-std::map<std::string, std::shared_ptr<class ULevel>> UEngineCore::GetAllLevelMap()
+std::map<std::string, std::shared_ptr<class ULevel>> UEngineCore::GetAllLevels()
 {
-	return GEngine->LevelMap;
+	return GEngine->AllLevels;
 }
 
 UGameInstance* UEngineCore::GetGameInstance()
@@ -87,16 +87,16 @@ void UEngineCore::LoadContents(std::string_view _DllName)
 	UEngineFile File = Dir.GetFile(_DllName);
 	std::string FullPath = File.GetPathToString();
 
-	GEngine->ContentsDLL = LoadLibraryA(FullPath.c_str());
+	GEngine->ContentDLL = LoadLibraryA(FullPath.c_str());
 
-	if (nullptr == GEngine->ContentsDLL)
+	if (nullptr == GEngine->ContentDLL)
 	{
 		MSGASSERT("Contents dll 파일을 로드할 수 없습니다.");
 		return;
 	}
 
 	INT_PTR(__stdcall * Ptr)(std::shared_ptr<IContentCore>&) = 
-		(INT_PTR(__stdcall*)(std::shared_ptr<IContentCore>&))GetProcAddress(GEngine->ContentsDLL, "CreateContentsCore");
+		(INT_PTR(__stdcall*)(std::shared_ptr<IContentCore>&))GetProcAddress(GEngine->ContentDLL, "CreateContentsCore");
 
 	if (nullptr == Ptr)
 	{
@@ -133,7 +133,6 @@ void UEngineCore::StartEngine(HINSTANCE _Instance, std::string_view _DllName)
 #ifdef _DEBUG
 			UEngineDebug::StartConsole();
 #endif
-
 			UEngineSound::Init();
 
 			GEngine->Device.SetupRenderingPipeline();
@@ -159,7 +158,7 @@ void UEngineCore::StartEngine(HINSTANCE _Instance, std::string_view _DllName)
 // 헤더 순환 참조를 막기 위한 함수분리
 std::shared_ptr<ULevel> UEngineCore::NewLevelCreate(std::string_view _Name)
 {
-	if (true == GEngine->LevelMap.contains(_Name.data()))
+	if (true == GEngine->AllLevels.contains(_Name.data()))
 	{
 		MSGASSERT("같은 이름의 레벨을 또 만들수는 없습니다." + std::string(_Name.data()));
 		return nullptr;
@@ -168,7 +167,7 @@ std::shared_ptr<ULevel> UEngineCore::NewLevelCreate(std::string_view _Name)
 	std::shared_ptr<ULevel> Ptr = std::make_shared<ULevel>();
 	Ptr->SetName(_Name);
 
-	GEngine->LevelMap.insert({ _Name.data(), Ptr}); // 생성된 레벨은 모두 LevelMap에 저장
+	GEngine->AllLevels.insert({ _Name.data(), Ptr}); // 생성된 레벨은 모두 LevelMap에 저장
 
 	return Ptr;
 }
@@ -177,13 +176,13 @@ void UEngineCore::OpenLevel(std::string_view _Name)
 {
 	std::string UpperString = UEngineString::ToUpper(_Name);
 
-	if (false == GEngine->LevelMap.contains(UpperString))
+	if (false == GEngine->AllLevels.contains(UpperString))
 	{
 		MSGASSERT(std::string(_Name) + " 은 생성되지 않은 레벨입니다. \n CreateLevel 함수를 사용해 레벨을 생성 후 OpenLevel 함수를 사용해야 합니다.");
 		return;
 	}
 
-	GEngine->NextLevel = GEngine->LevelMap[UpperString];
+	GEngine->NextLevel = GEngine->AllLevels[UpperString];
 }
 
 void UEngineCore::EngineFrame()
@@ -212,21 +211,20 @@ void UEngineCore::EngineFrame()
 	GEngine->Timer.TimeCheck(); // 델타 타임 체크
 	float DeltaTime = GEngine->Timer.GetDeltaTime();
 
-	if (true == GEngine->MainWindow.IsFocus()) // 윈도우가 포커스되었을 때만
+	if (true == GEngine->MainWindow.IsFocus()) // 윈도우가 포커스된 상태일 때만
 	{
 		UEngineInput::CheckInput(DeltaTime); // 키 입력 체크
 	}
-	else {
+	else 
+	{
 		UEngineInput::ResetKey();
 	}
 
 	UEngineSound::Update();
 
-	// Core에서 Level이 관리하는 Actor, Renderer, Collision를 'Windows메시지루프'에서 돌려준다.
+
 	GEngine->CurLevel->Tick(DeltaTime);
 	GEngine->CurLevel->Render(DeltaTime);
-	// GUI랜더링은 기존 랜더링이 다 끝나고 해주는게 좋다.
-
 	GEngine->CurLevel->Collision(DeltaTime);
 	GEngine->CurLevel->Release(DeltaTime);
 }
@@ -237,13 +235,13 @@ void UEngineCore::EndEngine()
 
 	GEngine->Device.Release();
 
-	UEngineResources::Release();
+	UEngineResourceBase::Release();
 	UEngineConstantBuffer::Release();
 	UEngineSound::Release();
 
 	GEngine->CurLevel = nullptr;
 	GEngine->NextLevel = nullptr;
-	GEngine->LevelMap.clear();
+	GEngine->AllLevels.clear();
 
 	UEngineDebug::EndConsole();
 }
@@ -269,8 +267,8 @@ std::shared_ptr<ULevel> UEngineCore::ReadyToNextLevel(std::string_view _LevelNam
 {
 	std::string UpperName = UEngineString::ToUpper(_LevelName);
 
-	std::map<std::string, std::shared_ptr<ULevel>>::iterator FindIter = GEngine->LevelMap.find(UpperName);
-	GEngine->LevelMap.erase(FindIter); // 현재 레벨을 Level 관리구조에서 제외시키고
+	std::map<std::string, std::shared_ptr<ULevel>>::iterator FindIter = GEngine->AllLevels.find(UpperName);
+	GEngine->AllLevels.erase(FindIter); // 현재 레벨을 Level 관리구조에서 제외시키고
 	GEngine->IsCurLevelReset = true; // 다음 프레임까지 현재 레벨을 살려둔다.
 
 	return 	GEngine->NextLevel;
@@ -285,17 +283,17 @@ void UEngineCore::DestroyLevel(std::string_view _LevelName)
 {
 	std::string UpperName = UEngineString::ToUpper(_LevelName);
 
-	if (false == GEngine->LevelMap.contains(UpperName))
+	if (false == GEngine->AllLevels.contains(UpperName))
 	{
 		return;
 	}
 
-	std::map<std::string, std::shared_ptr<class ULevel>>::iterator FindIter = GEngine->LevelMap.find(UpperName);
+	std::map<std::string, std::shared_ptr<class ULevel>>::iterator FindIter = GEngine->AllLevels.find(UpperName);
 
 	if (nullptr != FindIter->second)
 	{
 		FindIter->second = nullptr;
 	}
 
-	GEngine->LevelMap.erase(FindIter);
+	GEngine->AllLevels.erase(FindIter);
 }

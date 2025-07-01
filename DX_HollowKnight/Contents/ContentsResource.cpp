@@ -33,7 +33,7 @@ void UContentsResource::LoadFont()
 	//	Dir.MoveParentToDirectory("ContentsResources");
 	//	Dir.Append("Font/TrajanPro-Regular.otf");
 	//	std::string FilePath = Dir.GetPathToString();
-	//	UEngineFont::Load("TrajanPro-Regular", FilePath);
+	//	UEngineFont::LoadFont("TrajanPro-Regular", FilePath);
 	//}
 	//{
 	//	// 폰트
@@ -41,7 +41,7 @@ void UContentsResource::LoadFont()
 	//	Dir.MoveParentToDirectory("ContentsResources");
 	//	Dir.Append("Font/NotoSerifCJKsc-Regular.otf");
 	//	std::string FilePath = Dir.GetPathToString();
-	//	UEngineFont::Load("NotoSerifCJKsc-Regular", FilePath);
+	//	UEngineFont::LoadFont("NotoSerifCJKsc-Regular", FilePath);
 	//}
 	//{
 	//	// 폰트
@@ -49,7 +49,7 @@ void UContentsResource::LoadFont()
 	//	Dir.MoveParentToDirectory("ContentsResources");
 	//	Dir.Append("Font/Perpetua.ttf");
 	//	std::string FilePath = Dir.GetPathToString();
-	//	UEngineFont::Load("Perpetua", FilePath);
+	//	UEngineFont::LoadFont("Perpetua", FilePath);
 	//}
 	//{
 	//	// 폰트
@@ -57,7 +57,7 @@ void UContentsResource::LoadFont()
 	//	Dir.MoveParentToDirectory("ContentsResources");
 	//	Dir.Append("Font/TrajanPro-Bold.otf");
 	//	std::string FilePath = Dir.GetPathToString();
-	//	UEngineFont::Load("TrajanPro-Bold", FilePath);
+	//	UEngineFont::LoadFont("TrajanPro-Bold", FilePath);
 	//}
 }
 
@@ -68,7 +68,7 @@ void UContentsResource::LoadFont(const std::string& _FontName, const std::string
 	Dir.MoveParentToDirectory("ContentsResources");
 	Dir.Append("Font/" + _FontName + _Exe);
 	std::string FilePath = Dir.GetPathToString();
-	UEngineFont::Load(_FontName, FilePath);
+	UEngineFont::LoadFont(_FontName, FilePath);
 }
 
 void UContentsResource::LoadPlayResourceDirectory()
@@ -224,7 +224,7 @@ void UContentsResource::LoadShaderResource()
 		Mat->SetPixelShader("EngineDebugCollisionShader.fx");
 		// 언제나 화면에 나오는 누구도 이녀석의 앞을 가릴수 없어.
 		Mat->SetDepthStencilState("CollisionDebugDepth");
-		Mat->SetRasterizerState("CollisionDebugRas");
+		Mat->SetRasterizerState("CollisionDebugRasterizer");
 	}
 }
 
@@ -241,7 +241,7 @@ void UContentsResource::LoadImageDirectory(std::string_view _DirectoryName, bool
 	for (size_t i = 0; i < ImageFiles.size(); i++)
 	{
 		std::string FilePath = ImageFiles[i].GetPathToString();
-		UEngineTexture::Load(FilePath);
+		UEngineTexture::LoadTexture(FilePath);
 	}
 }
 

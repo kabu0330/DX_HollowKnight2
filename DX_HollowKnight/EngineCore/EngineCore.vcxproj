@@ -193,7 +193,7 @@
     <ClInclude Include="EnginePixelShader.h" />
     <ClInclude Include="EngineRasterizerState.h" />
     <ClInclude Include="EngineRenderTarget.h" />
-    <ClInclude Include="EngineResources.h" />
+    <ClInclude Include="EngineResourceBase.h" />
     <ClInclude Include="EngineSampler.h" />
     <ClInclude Include="EngineShader.h" />
     <ClInclude Include="EngineShaderResources.h" />
@@ -257,7 +257,7 @@
     <ClCompile Include="EnginePixelShader.cpp" />
     <ClCompile Include="EngineRasterizerState.cpp" />
     <ClCompile Include="EngineRenderTarget.cpp" />
-    <ClCompile Include="EngineResources.cpp" />
+    <ClCompile Include="EngineResourceBase.cpp" />
     <ClCompile Include="EngineSampler.cpp" />
     <ClCompile Include="EngineShader.cpp" />
     <ClCompile Include="EngineShaderResources.cpp" />

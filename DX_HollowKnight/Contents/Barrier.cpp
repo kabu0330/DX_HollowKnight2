@@ -19,7 +19,7 @@ ABarrier::ABarrier()
 
 	Collision = CreateDefaultSubobject<UCollision>().get();
 	Collision->SetupAttachment(RootComponent);
-	Collision->SetCollisionProfileName("Barrier");
+	Collision->SetCollisionProfile("Barrier");
 	Collision->GetTransformRef().Location.Z = ZSort;
 	Scale = FVector(35, 400);
 	Collision->SetScale3D(Scale);

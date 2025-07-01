@@ -168,10 +168,10 @@ void URenderUnit::Render(class UEngineCamera* _Camera, float _DeltaTime)
 		Pair.second.Setting();
 	}
 
-	Mesh->GetVertexBuffer()->Setting();
+	Mesh->GetVertexBuffer()->IASetVertexBuffers();
 	Material->GetVertexShader()->Setting();
 	
-	Mesh->GetIndexBuffer()->Setting();
+	Mesh->GetIndexBuffer()->IASetIndexBuffer();
 	Material->PrimitiveTopologySetting();
 
 	UEngineCore::GetDevice().GetContext()->IASetInputLayout(InputLayOut.Get());
@@ -190,11 +190,11 @@ void URenderUnit::InputLayOutCreate()
 {
 	Microsoft::WRL::ComPtr<ID3DBlob> Blob = Material->GetVertexShader()->GetShaderCodeBlob();
 
-	UEngineInputLayOutInfo* InfoPtr = Mesh->GetVertexBuffer()->GetInfoPtr();
+	UEngineInputLayoutInfo* InputLayoutInfo = Mesh->GetVertexBuffer()->GetInputLayoutInfo();
 
 	HRESULT Result = UEngineCore::GetDevice().GetDevice()->CreateInputLayout(
-		&InfoPtr->InputLayOutData[0],
-		static_cast<unsigned int>(InfoPtr->InputLayOutData.size()),
+		&InputLayoutInfo->InputLayOutData[0],
+		static_cast<unsigned int>(InputLayoutInfo->InputLayOutData.size()),
 		Blob->GetBufferPointer(),
 		Blob->GetBufferSize(),
 		&InputLayOut);

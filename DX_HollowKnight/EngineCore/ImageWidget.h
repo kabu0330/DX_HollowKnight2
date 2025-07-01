@@ -31,12 +31,9 @@ public:
 	};
 
 	ENGINEAPI void CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, int _Start, int _End, float Time = 0.1f, bool _Loop = true);
-
 	ENGINEAPI void CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, std::vector<int> _Indexs, std::vector<float> _Frame, bool _Loop = true);
-
 	ENGINEAPI void CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, std::vector<int> _Indexs, float _Frame, bool _Loop = true);
 
-	// 내가 Idle인데 Idle 바꾸라고 했다. 
 	ENGINEAPI void ChangeAnimation(std::string_view _AnimationName, bool _Force = false);
 
 	ENGINEAPI void SetAnimationEvent(std::string_view _AnimationName, int _Frame, std::function<void()> _Function);
@@ -53,6 +50,7 @@ private:
 	float CurAnimationSpeed = 1.0f;
 	FrameAnimation* CurAnimation = nullptr;
 	std::map<std::string, FrameAnimation> FrameAnimations;
+
 public:
 	ENGINEAPI UImageWidget();
 	ENGINEAPI ~UImageWidget();
@@ -87,7 +85,6 @@ public:
 	FResultColor ColorData;
 	FUVValue UVValue;
 	FSpriteData SpriteData;
-
 
 protected:
 

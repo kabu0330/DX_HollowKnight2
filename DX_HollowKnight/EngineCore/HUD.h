@@ -13,15 +13,14 @@ public:
 	template<typename WidgetType>
 	std::shared_ptr<WidgetType> CreateWidget(int _ZOrder, std::string_view _Name = "NONE")
 	{
-		static_assert(std::is_base_of_v<UWidget, WidgetType>, "액터를 상속받지 않은 클래스를 SpawnActor하려고 했습니다.");
+		static_assert(std::is_base_of_v<UWidget, WidgetType>, "UWidget을 상속한 대상만 위젯으로 생성할 수 있습니다.");
 
 		if (false == std::is_base_of_v<UWidget, WidgetType>)
 		{
-			MSGASSERT("위젯을 상속받지 않은 클래스를 CreateWidget하려고 했습니다.");
+			MSGASSERT("UWidget을 상속한 대상만 위젯으로 생성할 수 있습니다.");
 			return nullptr;
 		}
 
-		// 액터와 동일하게 placemenet new를 통해서 생성 전에 값을 미리 세팅하는 방식을 사용.
 		char* Memory = new char[sizeof(WidgetType)];
 
 		UWidget* WidgetPtr = reinterpret_cast<WidgetType*>(Memory);

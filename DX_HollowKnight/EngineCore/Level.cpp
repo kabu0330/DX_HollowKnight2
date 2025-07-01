@@ -15,7 +15,7 @@ std::shared_ptr<class ACameraActor> ULevel::SpawnCamera(int _Order)
 {
 	std::shared_ptr<ACameraActor> Camera = std::make_shared<ACameraActor>();
 
-	if (true == Cameras.contains(_Order))
+	if (true == AllCameras.contains(_Order))
 	{
 		MSGASSERT("이미 존재하는 카메라 Order입니다. 다른 값을 입력해주세요. : " + std::to_string(_Order));
 		return nullptr;
@@ -23,7 +23,7 @@ std::shared_ptr<class ACameraActor> ULevel::SpawnCamera(int _Order)
 
 	Camera->BeginPlay(); 
 
-	Cameras.insert({ _Order , Camera });
+	AllCameras.insert({ _Order , Camera });
 	return Camera;
 }
 
@@ -44,7 +44,7 @@ ULevel::~ULevel()
 {
 	BeginPlayList.clear();
 	AllActors.clear();
-	Cameras.clear();
+	AllCameras.clear();
 }
 
 void ULevel::StartLevel()
@@ -121,11 +121,11 @@ void ULevel::Tick(float _DeltaTime)
 
 void ULevel::Render(float _DeltaTime)
 {
-	UEngineCore::GetDevice().RenderStart(); // 백버퍼 초기화 및 OM단계에서 사용할 RTV와 DSV 설정
+	UEngineCore::GetDevice().StartRender(); // 백버퍼 초기화 및 OM단계에서 사용할 RTV와 DSV 설정
 
 	LastRenderTarget->Clear(); // 최종 출력 화면도 화면 한 번 지워
 
-	for (std::pair<const int, std::shared_ptr<ACameraActor>>& Camera : Cameras)
+	for (std::pair<const int, std::shared_ptr<ACameraActor>>& Camera : AllCameras)
 	{
 		if (Camera.first == static_cast<int>(EEngineCameraType::UICamera)) 	// UI카메라는 따로 렌더를 돌려준다.
 		{
@@ -143,12 +143,12 @@ void ULevel::Render(float _DeltaTime)
 		Camera.second->GetCameraComponent()->CameraTarget->MergeTo(LastRenderTarget); // 렌더링 파이프라인으로
 	}
 
-	if (true == Cameras.contains(static_cast<int>(EEngineCameraType::UICamera))) // UI카메라는 따로 렌더를 돌려준다.
+	if (true == AllCameras.contains(static_cast<int>(EEngineCameraType::UICamera))) // UI카메라는 따로 렌더를 돌려준다.
 	{
-		std::shared_ptr<ACameraActor> CameraActor = Cameras[static_cast<int>(EEngineCameraType::UICamera)];
+		std::shared_ptr<ACameraActor> CameraActor = AllCameras[static_cast<int>(EEngineCameraType::UICamera)];
 		if (true == CameraActor->IsActive()) // UI카메라가 액티브 상태일때만 돌린다.
 		{
-			std::shared_ptr<UEngineCamera> CameraComponent = Cameras[static_cast<int>(EEngineCameraType::UICamera)]->GetCameraComponent();
+			std::shared_ptr<UEngineCamera> CameraComponent = AllCameras[static_cast<int>(EEngineCameraType::UICamera)]->GetCameraComponent();
 
 			CameraActor->Tick(_DeltaTime); // 틱도 돌리고
 			CameraComponent->CameraTarget->Clear(); // 화면도 지우고
@@ -161,7 +161,7 @@ void ULevel::Render(float _DeltaTime)
 	}
 	else
 	{
-		MSGASSERT("UI카메라가 존재하지 않습니다. 엔진 오류입니다. UI카메라를 제작해주세요.");
+		MSGASSERT("UI카메라가 존재하지 않습니다. UI카메라를 생성해 주세요.");
 		return;
 	}
 
@@ -173,7 +173,7 @@ void ULevel::Render(float _DeltaTime)
 	{
 		std::shared_ptr<class ACameraActor> Camera = GetMainCamera();
 
-		for (std::pair<const std::string, std::list<std::shared_ptr<UCollision>>>& Group : Collisions)
+		for (std::pair<const std::string, std::list<std::shared_ptr<UCollision>>>& Group : AllCollisions)
 		{
 			std::list<std::shared_ptr<UCollision>>& List = Group.second;
 
@@ -184,7 +184,7 @@ void ULevel::Render(float _DeltaTime)
 					continue;
 				}
 
-				_Collision->DebugRender(Camera->GetCameraComponent().get(), _DeltaTime); // 디버그
+				_Collision->ApplyDebugRender(Camera->GetCameraComponent().get(), _DeltaTime); // 디버그
 			}
 		}
 	}
@@ -196,19 +196,19 @@ void ULevel::Render(float _DeltaTime)
 	}
 
 	// Present
-	UEngineCore::GetDevice().RenderEnd(); // 스왑체인이 관리하는 백버퍼와 프론트버퍼를 교환(Swap) 
+	UEngineCore::GetDevice().EndRender(); // 스왑체인이 관리하는 백버퍼와 프론트버퍼를 교환(Swap) 
 	// 프론트버퍼(윈도우 창)에 출력
 }
 
 void ULevel::ChangeRenderGroup(int _CameraOrder, int _PrevGroupOrder, std::shared_ptr<URenderer> _Renderer)
 {
-	if (false == Cameras.contains(_CameraOrder))
+	if (false == AllCameras.contains(_CameraOrder))
 	{
-		MSGASSERT("존재하지 않는 카메라에 랜더러를 집어넣으려고 했습니다.");
+		MSGASSERT("존재하지 않는 카메라 인덱스입니다.");
 		return;
 	}
 
-	std::shared_ptr<ACameraActor> Camera = Cameras[_CameraOrder];
+	std::shared_ptr<ACameraActor> Camera = AllCameras[_CameraOrder];
 
 	Camera->GetCameraComponent()->ChangeRenderGroup(_PrevGroupOrder, _Renderer);
 }
@@ -217,7 +217,7 @@ void ULevel::CreateCollisionProfile(std::string_view _ProfileName)
 {
 	std::string UpperName = UEngineString::ToUpper(_ProfileName);
 
-	Collisions[UpperName];
+	AllCollisions[UpperName];
 }
 
 void ULevel::LinkCollisionProfile(std::string_view _LeftProfileName, std::string_view _RightProfileName)
@@ -228,16 +228,11 @@ void ULevel::LinkCollisionProfile(std::string_view _LeftProfileName, std::string
 	CollisionLinks[LeftUpperName].push_back(RightUpperName);
 }
 
-void ULevel::PushCollisionProfileEvent(std::shared_ptr<class URenderer> _Renderer)
+void ULevel::ChangeCollisionProfile(std::string_view _ProfileName, std::string_view _PrevProfileName, std::shared_ptr<UCollision> _Collision)
 {
-
-}
-
-void ULevel::ChangeCollisionProfileName(std::string_view _ProfileName, std::string_view _PrevProfileName, std::shared_ptr<UCollision> _Collision)
-{
-	if (false == Collisions.contains(_ProfileName.data()))
+	if (false == AllCollisions.contains(_ProfileName.data()))
 	{
-		MSGASSERT("존재하지 않는 콜리전 그룹에 랜더러를 집어넣으려고 했습니다.");
+		MSGASSERT("콜리전 프로필이 존재하지 않습니다. 프로필을 생성해주세요.");
 		return;
 	}
 
@@ -245,13 +240,13 @@ void ULevel::ChangeCollisionProfileName(std::string_view _ProfileName, std::stri
 
 	if (_PrevProfileName != "")
 	{
-		std::list<std::shared_ptr<UCollision>>& PrevCollisionGroup = Collisions[PrevUpperName];
+		std::list<std::shared_ptr<UCollision>>& PrevCollisionGroup = AllCollisions[PrevUpperName];
 		PrevCollisionGroup.remove(_Collision);
 	}
 
 	std::string UpperName = UEngineString::ToUpper(_ProfileName);
 
-	std::list<std::shared_ptr<UCollision>>& CollisionGroup = Collisions[UpperName];
+	std::list<std::shared_ptr<UCollision>>& CollisionGroup = AllCollisions[UpperName];
 	CollisionGroup.push_back(_Collision);
 }
 
@@ -265,8 +260,8 @@ void ULevel::Collision(float _DeltaTime)
 
 		for (std::string& RightProfile : LinkSecond)
 		{
-			std::list<std::shared_ptr<class UCollision>>& LeftList = CheckCollisions[LeftProfile];
-			std::list<std::shared_ptr<class UCollision>>& RightList = Collisions[RightProfile];
+			std::list<std::shared_ptr<class UCollision>>& LeftList = AllEventCollisions[LeftProfile];
+			std::list<std::shared_ptr<class UCollision>>& RightList = AllCollisions[RightProfile];
 
 			for (std::shared_ptr<class UCollision>& LeftCollision : LeftList)
 			{
@@ -277,7 +272,7 @@ void ULevel::Collision(float _DeltaTime)
 						continue;
 					}
 
-					LeftCollision->CollisionEventCheck(RightCollision);
+					LeftCollision->CheckCollisionEvent(RightCollision);
 				}
 			}
 		}
@@ -286,13 +281,13 @@ void ULevel::Collision(float _DeltaTime)
 
 void ULevel::Release(float _DeltaTime)
 {
-	for (std::pair<const int, std::shared_ptr<ACameraActor>>& Camera : Cameras)
+	for (std::pair<const int, std::shared_ptr<ACameraActor>>& Camera : AllCameras)
 	{
 		Camera.second->GetCameraComponent()->Release(_DeltaTime);
 	}
 
 	{
-		for (std::pair<const std::string, std::list<std::shared_ptr<UCollision>>>& Group : Collisions)
+		for (std::pair<const std::string, std::list<std::shared_ptr<UCollision>>>& Group : AllCollisions)
 		{
 			std::list<std::shared_ptr<UCollision>>& List = Group.second;
 
@@ -332,7 +327,6 @@ void ULevel::Release(float _DeltaTime)
 				continue;
 			}
 
-			// 이제 delete도 필요 없다.
 			StartIter = List.erase(StartIter);
 		}
 	}
@@ -341,8 +335,6 @@ void ULevel::Release(float _DeltaTime)
 void ULevel::InitLevel(AGameMode* _GameMode, APawn* _Pawn, AHUD* _HUD)
 {
 	GameMode = _GameMode;
-
 	MainPawn = _Pawn;
-
 	HUD = _HUD;
 }

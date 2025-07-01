@@ -3,7 +3,7 @@
 #include "EngineVertexBuffer.h"
 
 // Ό³Έν :
-class UMesh : public UEngineResources
+class UMesh : public UEngineResourceBase
 {
 public:
 	UMesh();
@@ -11,10 +11,10 @@ public:
 
 	static std::shared_ptr<UMesh> Create(std::string_view _Name)
 	{
-		return Create(_Name, _Name, _Name);
+		return CreateWithBuffers(_Name, _Name, _Name);
 	}
 
-	static std::shared_ptr<UMesh> Create(std::string_view _Name, std::string_view _VertexBuffer, std::string_view _IndexBuffer);
+	static std::shared_ptr<UMesh> CreateWithBuffers(std::string_view _Name, std::string_view _VertexBuffer, std::string_view _IndexBuffer);
 
 	std::shared_ptr<UEngineVertexBuffer> GetVertexBuffer()
 	{

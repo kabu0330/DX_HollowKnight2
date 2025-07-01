@@ -14,7 +14,7 @@ bool UActorComponent::IsActive()
 {
 	if (nullptr == GetActor())
 	{
-		MSGASSERT("부모가 존재하지 않는 컴포넌트가 존재합니다");
+		MSGASSERT("액터 컴포넌트는 액터 생성자에서 CreateDefaultSubobject<>()로 생성해야 합니다.");
 		return false;
 	}
 

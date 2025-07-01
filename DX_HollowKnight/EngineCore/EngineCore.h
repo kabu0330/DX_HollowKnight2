@@ -65,7 +65,7 @@ public:
 	ENGINEAPI static float GetDeltaTime();
 	ENGINEAPI static double GetDoubleDeltaTime();
 
-	ENGINEAPI static std::map<std::string, std::shared_ptr<class ULevel>> GetAllLevelMap();
+	ENGINEAPI static std::map<std::string, std::shared_ptr<class ULevel>> GetAllLevels();
 
 	ENGINEAPI static class UGameInstance* GetGameInstance();
 
@@ -92,7 +92,7 @@ private:
 
 	UEngineGraphicDevice Device = UEngineGraphicDevice();
 
-	HMODULE ContentsDLL = nullptr;
+	HMODULE ContentDLL = nullptr;
 	std::shared_ptr<IContentCore> Core = nullptr;
 	UEngineInitData Data = UEngineInitData();
 
@@ -107,7 +107,7 @@ private:
 
 	ENGINEAPI static std::shared_ptr<ULevel> NewLevelCreate(std::string_view _Name);
 
-	std::map<std::string, std::shared_ptr<class ULevel>> LevelMap;
+	std::map<std::string, std::shared_ptr<class ULevel>> AllLevels;
 	std::shared_ptr<class ULevel> CurLevel;
 	std::shared_ptr<class ULevel> NextLevel;
 	

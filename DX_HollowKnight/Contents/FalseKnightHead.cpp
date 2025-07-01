@@ -9,7 +9,7 @@
 AFalseKnightHead::AFalseKnightHead()
 {
 	SetName("MonsterSkill");
-	Collision->SetCollisionProfileName("MonsterHead");
+	Collision->SetCollisionProfile("MonsterHead");
 
 	// 이펙트 없이 컬리전만
 	BodyRenderer->SetName("FalseKnight Head");

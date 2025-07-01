@@ -19,7 +19,7 @@ void UWidget::Tick(float _DeltaTime)
 {
 	std::shared_ptr<class ACameraActor> CameraActor = GetWorld()->GetCamera(EEngineCameraType::UICamera);
 
-	FVector WorldPos = CameraActor->ScreenMousePosToWorldPos();
+	FVector WorldPos = CameraActor->GetScreenMousePosToWorldPos();
 	FTransform Transform;
 	Transform.WorldLocation = WorldPos;
 	

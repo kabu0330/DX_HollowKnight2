@@ -8,8 +8,6 @@ public:
 	ENGINEAPI AGameMode();
 	ENGINEAPI ~AGameMode();
 
-
-
 protected:
 
 private:

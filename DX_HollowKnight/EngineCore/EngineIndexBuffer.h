@@ -1,9 +1,9 @@
 #pragma once
-#include "EngineResources.h"
+#include "EngineResourceBase.h"
 #include "EngineDeviceBuffer.h"
 
 // Ό³Έν :
-class UEngineIndexBuffer : public UEngineResources, public UEngineDeviceBuffer
+class UEngineIndexBuffer : public UEngineResourceBase, public UEngineDeviceBuffer
 {
 public:
 	UEngineIndexBuffer();
@@ -17,7 +17,7 @@ public:
 
 	static std::shared_ptr<UEngineIndexBuffer> Create(std::string_view _Name, const void* _InitData, size_t _VertexSize, size_t _VertexCount);
 
-	void Setting();
+	void IASetIndexBuffer();
 
 	ENGINEAPI UINT GetIndexCount()
 	{
@@ -25,7 +25,7 @@ public:
 	}
 
 protected:
-	void ResCreate(const void* _InitData, size_t _VertexSize, size_t _VertexCount);
+	void CreateIndexBuffer(const void* _InitData, size_t _VertexSize, size_t _VertexCount);
 
 private:
 	UINT IndexSize = 0;

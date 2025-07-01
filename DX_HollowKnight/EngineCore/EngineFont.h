@@ -1,16 +1,16 @@
 #pragma once
-#include "EngineResources.h"
+#include "EngineResourceBase.h"
 
 #include "ThirdParty/FW1FontWrapper/Inc/FW1FontWrapper.h"
 
 // Ό³Έν :
-class UEngineFont : public UEngineResources
+class UEngineFont : public UEngineResourceBase
 {
 public:
 	UEngineFont();
 	~UEngineFont();
 
-	ENGINEAPI static std::shared_ptr<UEngineFont> Load(std::string_view _Name, std::string_view _Path);
+	ENGINEAPI static std::shared_ptr<UEngineFont> LoadFont(std::string_view _Name, std::string_view _Path);
 
 	void FontDraw(const std::string& _Text, float _FontScale, const FVector& _Pos, const UColor& _Color = UColor::BLACK, FW1_TEXT_FLAG Flag = FW1_LEFT);
 

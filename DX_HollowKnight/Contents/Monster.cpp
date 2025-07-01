@@ -19,7 +19,7 @@ AMonster::AMonster()
 	BodyRenderer = CreateDefaultSubobject<UContentsRenderer>();
 	BodyRenderer->SetupAttachment(RootComponent);
 	BodyRenderer->SetAutoScaleRatio(1.0f);
-	BodyRenderer->BillboardOn();
+	BodyRenderer->ActivateBillboard();
 
 	TimeEventer = CreateDefaultSubobject<UTimeEventComponent>().get();
 }
