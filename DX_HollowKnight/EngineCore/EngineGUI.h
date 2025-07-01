@@ -11,14 +11,12 @@ public:
 	UEngineGUI();
 	~UEngineGUI();
 
-
-
 	static void Init();
 	static void Release();
 
-	static void GUIRenderStart();
+	static void StartGUIRender();
 
-	static void GUIRenderEnd();
+	static void EndGUIRender();
 
 	ENGINEAPI static void PushGUIWindow(std::shared_ptr<class UEngineGUIWindow> _Window);
 
@@ -29,7 +27,7 @@ public:
 
 		if (nullptr != FindGUIWindow(UpperName))
 		{
-			MSGASSERT("이미 만들어진 윈도우를 또 만들수는 없습니다.");
+			MSGASSERT("동일한 이름의 ImGui가 존재합니다.\n" + UpperName);
 			return nullptr;
 		}
 
@@ -49,9 +47,9 @@ public:
 
 	static void GUIRender(ULevel* _Level);
 
-	ENGINEAPI static void AllWindowOff();
+	ENGINEAPI static void DeactivateAllWindow();
 
-	ENGINEAPI static void AllWindowOn();
+	ENGINEAPI static void ActivateAllWindow();
 
 protected:
 

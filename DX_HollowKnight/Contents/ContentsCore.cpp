@@ -51,7 +51,7 @@ void UContentsCore::CreateLevel()
 
 void UContentsCore::CreateGUI()
 {
-	UEngineGUI::AllWindowOff();
+	UEngineGUI::DeactivateAllWindow();
 
 	//{
 	//	UEngineGUI::CreateGUIWindow<UContentsEditorGUI>("ContentEditorGUI");

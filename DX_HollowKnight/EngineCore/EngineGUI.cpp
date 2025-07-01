@@ -73,7 +73,7 @@ void UEngineGUI::Release()
     ImGui::DestroyContext();
 }
 
-void UEngineGUI::GUIRenderStart()
+void UEngineGUI::StartGUIRender()
 {
     // Start the Dear ImGui frame
     ImGui_ImplDX11_NewFrame();
@@ -81,7 +81,7 @@ void UEngineGUI::GUIRenderStart()
     ImGui::NewFrame();
 }
 
-void UEngineGUI::GUIRenderEnd()
+void UEngineGUI::EndGUIRender()
 {
     ImGui::Render();
     ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
@@ -114,7 +114,7 @@ std::shared_ptr<UEngineGUIWindow> UEngineGUI::FindGUIWindow(std::string_view _Te
     return Windows[UpperName];
 }
 
-void UEngineGUI::AllWindowOn()
+void UEngineGUI::ActivateAllWindow()
 {
     for (std::pair<const std::string, std::shared_ptr<UEngineGUIWindow>>& Window : Windows)
     {
@@ -122,7 +122,7 @@ void UEngineGUI::AllWindowOn()
     }
 }
 
-void UEngineGUI::AllWindowOff()
+void UEngineGUI::DeactivateAllWindow()
 {
     for (std::pair<const std::string, std::shared_ptr<UEngineGUIWindow>>& Window : Windows)
     {
@@ -132,7 +132,7 @@ void UEngineGUI::AllWindowOff()
 
 void UEngineGUI::GUIRender(ULevel* _Level)
 {
-    UEngineGUI::GUIRenderStart();
+    UEngineGUI::StartGUIRender();
     for (std::pair<const std::string, std::shared_ptr<UEngineGUIWindow>>& Window : Windows)
     {
         if (false == Window.second->IsActive())
@@ -147,5 +147,5 @@ void UEngineGUI::GUIRender(ULevel* _Level)
         Window.second->OnGUI();
         ImGui::End();
     }
-    UEngineGUI::GUIRenderEnd();
+    UEngineGUI::EndGUIRender();
 }

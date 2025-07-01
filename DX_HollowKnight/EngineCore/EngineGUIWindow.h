@@ -22,7 +22,6 @@ protected:
 private:
 	ULevel* World;
 
-
 private:
 	// delete Function
 	UEngineGUIWindow(const UEngineGUIWindow& _Other) = delete;
