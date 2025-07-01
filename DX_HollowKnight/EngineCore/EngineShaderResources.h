@@ -45,12 +45,12 @@ public:
 
 	void Setting()
 	{
-		Res->Setting(ShaderType, BindIndex);
+		Res->BindToShaderResources(ShaderType, BindIndex);
 	}
 
 	void Reset()
 	{
-		Res->Reset(ShaderType, BindIndex);
+		Res->UnbindFromShaderResources(ShaderType, BindIndex);
 	}
 };
 

@@ -11,12 +11,12 @@ public:
 	~UEngineVertexBuffer();
 
 	template<typename VertexType>
-	static std::shared_ptr<UEngineVertexBuffer> Create(std::string_view _Name, const std::vector<VertexType>& _VertexData)
+	static std::shared_ptr<UEngineVertexBuffer> CreateVertexBuffer(std::string_view _Name, const std::vector<VertexType>& _VertexData)
 	{
-		return Create(_Name, reinterpret_cast<const void*>(&_VertexData[0]), sizeof(VertexType), _VertexData.size(), &VertexType::InputLayoutInfo);
+		return CreateVertexBuffer(_Name, reinterpret_cast<const void*>(&_VertexData[0]), sizeof(VertexType), _VertexData.size(), &VertexType::InputLayoutInfo);
 	}
 
-	static std::shared_ptr<UEngineVertexBuffer> Create(std::string_view _Name, const void* _InitData, size_t _VertexSize, size_t _VertexCount, UEngineInputLayoutInfo* _InfoPtr = nullptr);
+	static std::shared_ptr<UEngineVertexBuffer> CreateVertexBuffer(std::string_view _Name, const void* _InitData, size_t _VertexSize, size_t _VertexCount, UEngineInputLayoutInfo* _InfoPtr = nullptr);
 
 	void IASetVertexBuffers();
 

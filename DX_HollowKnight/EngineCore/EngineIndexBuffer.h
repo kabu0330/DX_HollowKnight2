@@ -10,12 +10,12 @@ public:
 	~UEngineIndexBuffer();
 
 	template<typename IndexType>
-	static std::shared_ptr<UEngineIndexBuffer> Create(std::string_view _Name, const std::vector<IndexType>& _Data)
+	static std::shared_ptr<UEngineIndexBuffer> CreateIndexBuffer(std::string_view _Name, const std::vector<IndexType>& _Data)
 	{
-		return Create(_Name, reinterpret_cast<const void*>(&_Data[0]), sizeof(IndexType), _Data.size());
+		return CreateIndexBuffer(_Name, reinterpret_cast<const void*>(&_Data[0]), sizeof(IndexType), _Data.size());
 	}
 
-	static std::shared_ptr<UEngineIndexBuffer> Create(std::string_view _Name, const void* _InitData, size_t _VertexSize, size_t _VertexCount);
+	static std::shared_ptr<UEngineIndexBuffer> CreateIndexBuffer(std::string_view _Name, const void* _InitData, size_t _VertexSize, size_t _VertexCount);
 
 	void IASetIndexBuffer();
 

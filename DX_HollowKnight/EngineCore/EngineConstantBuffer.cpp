@@ -16,7 +16,7 @@ UEngineConstantBuffer::~UEngineConstantBuffer()
 {
 }
 
-std::shared_ptr<UEngineConstantBuffer> UEngineConstantBuffer::CreateOrFind(UINT _Byte, const std::string_view& _Name)
+std::shared_ptr<UEngineConstantBuffer> UEngineConstantBuffer::CreateOrFindBuffer(UINT _Byte, const std::string_view& _Name)
 {
 	if (0 == _Byte) // 어떻게 0바이트에 데이터를 저장할 수 있겠어?
 	{

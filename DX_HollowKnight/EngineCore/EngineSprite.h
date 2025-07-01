@@ -33,7 +33,7 @@ public:
 	{
 		if (SpriteDatas.size() <= _Index)
 		{
-			MSGASSERT("스프라이트의 인덱스를 초과하여 사용하려고 했습니다.");
+			MSGASSERT("스프라이트의 인덱스를 초과했습니다. \n" + std::to_string(SpriteDatas.size()) + " / " + std::to_string(_Index));
 		}
 
 		return SpriteDatas[_Index];

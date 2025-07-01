@@ -12,7 +12,7 @@ UEngineRenderTarget::~UEngineRenderTarget()
 {
 }
 
-void UEngineRenderTarget::CreateTarget(float4 _Scale, float4 _ClearColor /*= float4::NONE*/, DXGI_FORMAT _Format /*= DXGI_FORMAT::DXGI_FORMAT_R32G32B32A32_FLOAT*/)
+void UEngineRenderTarget::CreateRenderTargetView(float4 _Scale, float4 _ClearColor /*= float4::NONE*/, DXGI_FORMAT _Format /*= DXGI_FORMAT::DXGI_FORMAT_R32G32B32A32_FLOAT*/)
 {
     ClearColor = _ClearColor; // 처음에 화면을 지울 색상
 
@@ -34,18 +34,18 @@ void UEngineRenderTarget::CreateTarget(float4 _Scale, float4 _ClearColor /*= flo
     //                                   렌더 타겟이면서                        셰이더도 사용한다.
     Desc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_RENDER_TARGET | D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE;
 
-    NewTarget->ResCreate(Desc); // 텍스처만들고 DSV도 만들고
+    NewTarget->CreateTextureWithView(Desc); // 텍스처만들고 DSV도 만들고
     NewTarget->Size = _Scale;
 
-    ArrRTVs.push_back(NewTarget->GetRTV()); // 렌더타겟뷰를 관리할 자료구조에 넣는다.
-    ArrTexture.push_back(NewTarget);
+    AllRenderTargetViews.push_back(NewTarget->GetRTV()); // 렌더타겟뷰를 관리할 자료구조에 넣는다.
+    AllTextures.push_back(NewTarget);
 }
 
 // 백버퍼용 렌더타겟뷰 생성 함수
-void UEngineRenderTarget::CreateTarget(Microsoft::WRL::ComPtr<ID3D11Texture2D> _Texture2D)
+void UEngineRenderTarget::CreateRenderTargetView(Microsoft::WRL::ComPtr<ID3D11Texture2D> _Texture2D)
 {
 	std::shared_ptr<class UEngineTexture> NewTarget = std::make_shared<UEngineTexture>();
-	NewTarget->ResCreate(_Texture2D);
+	NewTarget->CreateRenderTargetView(_Texture2D);
 
     if (nullptr == NewTarget->GetRTV())
     {
@@ -53,21 +53,21 @@ void UEngineRenderTarget::CreateTarget(Microsoft::WRL::ComPtr<ID3D11Texture2D> _
         return;
     }
 
-    ArrRTVs.push_back(NewTarget->GetRTV());
+    AllRenderTargetViews.push_back(NewTarget->GetRTV());
 
-    ArrTexture.push_back(NewTarget);
+    AllTextures.push_back(NewTarget);
 }
 
 // 몇번째 타겟의 사이즈로 깊이버퍼를 만들거냐
-void UEngineRenderTarget::CreateDepth(int _Index)
+void UEngineRenderTarget::CreateDepthTexture(int _Index)
 {
-    if (ArrTexture.size() <= _Index)
+    if (AllTextures.size() <= _Index)
     {
         MSGASSERT("깊이버퍼를 생성할 텍스처 인덱스가 올바르지 않습니다.");
         return;
     }
 
-    FVector Size = ArrTexture[_Index]->GetTextureSize();
+    FVector Size = AllTextures[_Index]->GetTextureSize();
  
     D3D11_TEXTURE2D_DESC Desc = { 0 };
     Desc.ArraySize = 1;
@@ -84,37 +84,36 @@ void UEngineRenderTarget::CreateDepth(int _Index)
     Desc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL; // 이 구조체의 용도는 뎁스 스텐실
 
     DepthTexture = std::make_shared<UEngineTexture>();
-    DepthTexture->ResCreate(Desc);
+    DepthTexture->CreateTextureWithView(Desc);
 }
 
 // 먼저 화면을 지우고 난 뒤에 그린다.
-void UEngineRenderTarget::Clear()
+void UEngineRenderTarget::ClearRenderTargets()
 {
-    for (size_t i = 0; i < ArrRTVs.size(); i++)
+    for (size_t i = 0; i < AllRenderTargetViews.size(); i++)
     {
         // 내가 정한 ClearColor로 모든 RTV를 지운다.
-        UEngineCore::GetDevice().GetContext()->ClearRenderTargetView(ArrRTVs[i], ClearColor.Arr1D);
+        UEngineCore::GetDevice().GetContext()->ClearRenderTargetView(AllRenderTargetViews[i], ClearColor.Arr1D);
     }
     UEngineCore::GetDevice().GetContext()->ClearDepthStencilView(DepthTexture->GetDSV(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 }
 
-void UEngineRenderTarget::Setting()
+void UEngineRenderTarget::OMSetRenderTargets()
 {
     // 렌더 타겟을 세팅한다. 배열에 렌더 타겟뷰가 여러 개 있으면 멀티렌더타겟, 하나만 있으면 싱글 렌더 타겟
-    UEngineCore::GetDevice().GetContext()->OMSetRenderTargets(1, &ArrRTVs[0], DepthTexture->GetDSV());
+    UEngineCore::GetDevice().GetContext()->OMSetRenderTargets(1, &AllRenderTargetViews[0], DepthTexture->GetDSV());
 }
 
-// 최종 렌더타겟에게까지 복사되어야 한다.
-void UEngineRenderTarget::CopyTo(std::shared_ptr<UEngineRenderTarget> _Target)
+void UEngineRenderTarget::CopyToRenderTarget(std::shared_ptr<UEngineRenderTarget> _Target)
 {
-    _Target->Clear(); // 복사하기 전에는 지우고
-    MergeTo(_Target); // 병합한다.
+    _Target->ClearRenderTargets(); 
+    MergeToRenderTarget(_Target);
 }
 
-void UEngineRenderTarget::MergeTo(std::shared_ptr<UEngineRenderTarget> _Target)
+void UEngineRenderTarget::MergeToRenderTarget(std::shared_ptr<UEngineRenderTarget> _Target)
 {
-    _Target->Setting(); // 출력병합 OMSetRenderTargets
-    TargetUnit.SetTexture("MergeTex", ArrTexture[0]); // 상수버퍼 세팅
+    _Target->OMSetRenderTargets();
+    TargetUnit.SetTexture("MergeTex", AllTextures[0]); // 상수버퍼 세팅
     TargetUnit.Render(nullptr, 0.0f); // 렌더링 파이프라인으로
     TargetUnit.Reset();
 }

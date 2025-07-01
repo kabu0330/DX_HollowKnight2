@@ -10,7 +10,7 @@ UEngineSampler::~UEngineSampler()
 {
 }
 
-std::shared_ptr<UEngineSampler> UEngineSampler::Create(std::string_view _Name, const D3D11_SAMPLER_DESC& _Value)
+std::shared_ptr<UEngineSampler> UEngineSampler::LoadSampler(std::string_view _Name, const D3D11_SAMPLER_DESC& _Value)
 {
 	std::string UpperName = ToUpperName(_Name);
 
@@ -22,14 +22,14 @@ std::shared_ptr<UEngineSampler> UEngineSampler::Create(std::string_view _Name, c
 
 	std::shared_ptr<UEngineSampler> NewRes = std::make_shared<UEngineSampler>();
 	PushRes<UEngineSampler>(NewRes, _Name, "");
-	NewRes->ResCreate(_Value);
+	NewRes->CreateSamplerState(_Value);
 
 	return NewRes;
 }
 
-void UEngineSampler::ResCreate(const D3D11_SAMPLER_DESC& _Value)
+void UEngineSampler::CreateSamplerState(const D3D11_SAMPLER_DESC& _Value)
 {
-	if (UEngineCore::GetDevice().GetDevice()->CreateSamplerState(&_Value, &State))
+	if (UEngineCore::GetDevice().GetDevice()->CreateSamplerState(&_Value, &SamplerState))
 	{
 		MSGASSERT("블랜드 스테이트 생성에 실패했습니다");
 		return;
@@ -39,7 +39,7 @@ void UEngineSampler::ResCreate(const D3D11_SAMPLER_DESC& _Value)
 
 void UEngineSampler::Setting(EShaderType _Type, UINT _BindIndex)
 {
-	ID3D11SamplerState* ArrPtr[1] = { State.Get() };
+	ID3D11SamplerState* ArrPtr[1] = { SamplerState.Get() };
 
 	switch (_Type)
 	{

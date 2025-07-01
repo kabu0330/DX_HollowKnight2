@@ -11,7 +11,7 @@ public:
 	~UEngineConstantBuffer();
 
 	// 상수버퍼를 만들거나 찾거나
-	static std::shared_ptr<UEngineConstantBuffer> CreateOrFind(UINT _Byte, const std::string_view& _Name);
+	static std::shared_ptr<UEngineConstantBuffer> CreateOrFindBuffer(UINT _Byte, const std::string_view& _Name);
 
 	void UpdateConstantBufferData(void* _Data, UINT _Size);
 	void BindToShaderSlot(EShaderType _Type, UINT _BindIndex);

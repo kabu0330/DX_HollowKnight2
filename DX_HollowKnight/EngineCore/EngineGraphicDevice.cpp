@@ -209,14 +209,14 @@ void UEngineGraphicDevice::CreateBackBuffer(const UEngineWindow& _Window)
 
     // 백버퍼의 수정 권한을 가진 렌더 타겟 뷰(RTV) 생성
     BackBufferTarget = std::make_shared<UEngineRenderTarget>();
-    BackBufferTarget->CreateTarget(DXBackBufferTexture);
-    BackBufferTarget->CreateDepth(); // DSV 생성 
+    BackBufferTarget->CreateRenderTargetView(DXBackBufferTexture);
+    BackBufferTarget->CreateDepthTexture(); // DSV 생성 
 }
 
 void UEngineGraphicDevice::StartRender()
 {
-    BackBufferTarget->Clear();
-    BackBufferTarget->Setting();
+    BackBufferTarget->ClearRenderTargets();
+    BackBufferTarget->OMSetRenderTargets();
 }
 
 void UEngineGraphicDevice::EndRender()

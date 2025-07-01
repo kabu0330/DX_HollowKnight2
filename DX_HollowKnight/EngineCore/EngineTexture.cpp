@@ -27,7 +27,8 @@ std::shared_ptr<UEngineTexture> UEngineTexture::LoadTextureThreadSafe(std::strin
 
 	std::shared_ptr<UEngineTexture> NewRes = std::make_shared<UEngineTexture>();
 	PushResourceThreadSafe<UEngineTexture>(NewRes, _Name, _Path);
-	NewRes->LoadResource();
+	NewRes->LoadFromFile();
+	NewRes->CreateTexShaderResourceView();
 
 	return NewRes;
 }
@@ -45,12 +46,13 @@ std::shared_ptr<UEngineTexture> UEngineTexture::LoadTexture(std::string_view _Na
 
 	std::shared_ptr<UEngineTexture> NewRes =  std::make_shared<UEngineTexture>();
 	PushRes<UEngineTexture>(NewRes, _Name, _Path); // 텍스처를 관리구조에 편입
-	NewRes->LoadResource();
+	NewRes->LoadFromFile();
+	NewRes->CreateTexShaderResourceView();
 
 	return NewRes;
 }
 
-void UEngineTexture::LoadResource()
+void UEngineTexture::LoadFromFile()
 {
 	UEngineFile File = Path;
 
@@ -84,6 +86,13 @@ void UEngineTexture::LoadResource()
 			return;
 		}
 	}
+}
+
+void UEngineTexture::CreateTexShaderResourceView()
+{
+	UEngineFile File = Path;
+	std::string Ext = File.GetExtensionToString();
+	std::string UpperExt = UEngineString::ToUpper(Ext.c_str());
 
 	// 파일 로드 후 셰이더 리소스 뷰 생성
 	if (S_OK != DirectX::CreateShaderResourceView(
@@ -94,7 +103,7 @@ void UEngineTexture::LoadResource()
 		&SRV
 	))
 	{
-		MSGASSERT(UpperExt + "쉐이더 리소스 뷰 생성에 실패했습니다..");
+		MSGASSERT(UpperExt + " 셰이더 리소스 뷰 생성에 실패했습니다.");
 		return;
 	}
 
@@ -103,7 +112,7 @@ void UEngineTexture::LoadResource()
 }
 
 // 셰이더 타입에 따라 상수버퍼 세팅
-void UEngineTexture::Setting(EShaderType _Type, UINT _BindIndex)
+void UEngineTexture::BindToShaderResources(EShaderType _Type, UINT _BindIndex)
 {
 	ID3D11ShaderResourceView* ArrPtr[1] = { SRV.Get() };
 
@@ -125,7 +134,7 @@ void UEngineTexture::Setting(EShaderType _Type, UINT _BindIndex)
 	}
 }
 
-void UEngineTexture::Reset(EShaderType _Type, UINT _BindIndex)
+void UEngineTexture::UnbindFromShaderResources(EShaderType _Type, UINT _BindIndex)
 {
 	ID3D11ShaderResourceView* ArrPtr[1] = { nullptr };
 
@@ -147,8 +156,7 @@ void UEngineTexture::Reset(EShaderType _Type, UINT _BindIndex)
 	}
 }
 
-// 뎁스 스텐실 뷰 객체 생성
-void UEngineTexture::ResCreate(const D3D11_TEXTURE2D_DESC& _Value)
+void UEngineTexture::CreateTextureWithView(const D3D11_TEXTURE2D_DESC& _Value)
 {
 	Desc = _Value;
 
@@ -176,7 +184,7 @@ void UEngineTexture::ResCreate(const D3D11_TEXTURE2D_DESC& _Value)
 	}
 }
 
-void UEngineTexture::ResCreate(Microsoft::WRL::ComPtr<ID3D11Texture2D> _Texture2D)
+void UEngineTexture::CreateRenderTargetView(Microsoft::WRL::ComPtr<ID3D11Texture2D> _Texture2D)
 {
 	Texture2D = _Texture2D;
 	

@@ -80,7 +80,7 @@ void UEngineGraphicDevice::InitTexture()
 		SampInfo.BorderColor[2] = 0.0f;
 		SampInfo.BorderColor[3] = 0.0f;
 
-		UEngineSampler::Create("WRAPSampler", SampInfo);
+		UEngineSampler::LoadSampler("WRAPSampler", SampInfo);
 
 	{
 		UEngineDirectory Dir;
@@ -121,7 +121,7 @@ void UEngineGraphicDevice::InitMesh()
 		Vertexs[2] = FEngineVertex{ FVector(-0.5f, -0.5f, 0.0f), {0.0f , 1.0f } , {0.0f, 0.0f, 1.0f, 1.0f} };
 		Vertexs[3] = FEngineVertex{ FVector(0.5f, -0.5f, 0.0f), {1.0f , 1.0f } , {1.0f, 1.0f, 1.0f, 1.0f} };
 
-		UEngineVertexBuffer::Create("Rect", Vertexs);
+		UEngineVertexBuffer::CreateVertexBuffer("Rect", Vertexs);
 	}
 	{
 		std::vector<unsigned int> Indexs;
@@ -133,7 +133,7 @@ void UEngineGraphicDevice::InitMesh()
 		Indexs.push_back(1);
 		Indexs.push_back(3);
 		Indexs.push_back(2);
-		UEngineIndexBuffer::Create("Rect", Indexs);
+		UEngineIndexBuffer::CreateIndexBuffer("Rect", Indexs);
 	}
 	// 포지션을 1로 하면 화면 전체를 가리는 메시를 만들 수 있다.
 	{
@@ -144,7 +144,7 @@ void UEngineGraphicDevice::InitMesh()
 		Vertexs[2] = FEngineVertex{ FVector(-1.0f, -1.0f, 0.0f), {0.0f , 1.0f } , {0.0f, 0.0f, 1.0f, 1.0f} };
 		Vertexs[3] = FEngineVertex{ FVector(1.0f, -1.0f, 0.0f), {1.0f , 1.0f } , {1.0f, 1.0f, 1.0f, 1.0f} };
 
-		UEngineVertexBuffer::Create("FullRect", Vertexs);
+		UEngineVertexBuffer::CreateVertexBuffer("FullRect", Vertexs);
 	}
 	{
 		UMesh::Create("Rect");

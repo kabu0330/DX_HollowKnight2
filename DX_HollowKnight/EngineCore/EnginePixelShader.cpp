@@ -16,7 +16,7 @@ std::shared_ptr<UEnginePixelShader> UEnginePixelShader::LoadPixelShader(std::str
 
 	if (true == Contains(UpperName))
 	{
-		MSGASSERT("이미 등록한 픽셀 셰이더입니다." + UpperName);
+		MSGASSERT("이미 등록된 픽셀 셰이더입니다.\n" + UpperName);
 		return nullptr;
 	}
 

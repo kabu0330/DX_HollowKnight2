@@ -36,8 +36,8 @@ ULevel::ULevel()
 
 	// 화면에 그려질 최종 렌더타겟을 만든다.
 	LastRenderTarget = std::make_shared<UEngineRenderTarget>();
-	LastRenderTarget->CreateTarget(UEngineCore::GetScreenScale());
-	LastRenderTarget->CreateDepth();
+	LastRenderTarget->CreateRenderTargetView(UEngineCore::GetScreenScale());
+	LastRenderTarget->CreateDepthTexture();
 }
 
 ULevel::~ULevel()
@@ -123,7 +123,7 @@ void ULevel::Render(float _DeltaTime)
 {
 	UEngineCore::GetDevice().StartRender(); // 백버퍼 초기화 및 OM단계에서 사용할 RTV와 DSV 설정
 
-	LastRenderTarget->Clear(); // 최종 출력 화면도 화면 한 번 지워
+	LastRenderTarget->ClearRenderTargets(); // 최종 출력 화면도 화면 한 번 지워
 
 	for (std::pair<const int, std::shared_ptr<ACameraActor>>& Camera : AllCameras)
 	{
@@ -140,7 +140,7 @@ void ULevel::Render(float _DeltaTime)
 		Camera.second->Tick(_DeltaTime); // View 행렬과 Projection 행렬 계산
 		Camera.second->GetCameraComponent()->Render(_DeltaTime);
 
-		Camera.second->GetCameraComponent()->CameraTarget->MergeTo(LastRenderTarget); // 렌더링 파이프라인으로
+		Camera.second->GetCameraComponent()->CameraTarget->MergeToRenderTarget(LastRenderTarget); // 렌더링 파이프라인으로
 	}
 
 	if (true == AllCameras.contains(static_cast<int>(EEngineCameraType::UICamera))) // UI카메라는 따로 렌더를 돌려준다.
@@ -151,12 +151,12 @@ void ULevel::Render(float _DeltaTime)
 			std::shared_ptr<UEngineCamera> CameraComponent = AllCameras[static_cast<int>(EEngineCameraType::UICamera)]->GetCameraComponent();
 
 			CameraActor->Tick(_DeltaTime); // 틱도 돌리고
-			CameraComponent->CameraTarget->Clear(); // 화면도 지우고
-			CameraComponent->CameraTarget->Setting(); // 렌더타겟 세팅하고
+			CameraComponent->CameraTarget->ClearRenderTargets(); // 화면도 지우고
+			CameraComponent->CameraTarget->OMSetRenderTargets(); // 렌더타겟 세팅하고
 
 			HUD->UIRender(CameraComponent.get(), _DeltaTime); // 위젯의 틱, 렌더 돌리고
 
-			CameraComponent->CameraTarget->MergeTo(LastRenderTarget); // 최종 출력병합하고
+			CameraComponent->CameraTarget->MergeToRenderTarget(LastRenderTarget); // 최종 출력병합하고
 		}
 	}
 	else
@@ -167,7 +167,7 @@ void ULevel::Render(float _DeltaTime)
 
 	// 백버퍼 렌더 타겟 출력 병합
 	std::shared_ptr<UEngineRenderTarget> BackBuffer = UEngineCore::GetDevice().GetBackBufferTarget();
-	LastRenderTarget->MergeTo(BackBuffer);
+	LastRenderTarget->MergeToRenderTarget(BackBuffer);
 
 	// 디버그 렌더링 : 주로 콜리전
 	{

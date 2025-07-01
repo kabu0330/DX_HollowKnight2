@@ -20,11 +20,11 @@ std::shared_ptr<UEngineSprite> UEngineSprite::CreateSpriteToFolder(std::string_v
 
 	if (0 == Files.size())
 	{
-		MSGASSERT("파일이 존재하지 않는 폴더를 스프라이트로 만들수는 없습니다.");
+		MSGASSERT("폴더 내 이미지가 존재하지 않습니다. \n이 함수는 폴더 내 연속된 스프라이트 이미지가 존재해야 합니다.");
 	}
 
-	std::shared_ptr<UEngineSprite> NewRes = std::make_shared<UEngineSprite>();
-	PushRes<UEngineSprite>(NewRes, _Name, "");
+	std::shared_ptr<UEngineSprite> NewSpirte = std::make_shared<UEngineSprite>();
+	PushRes<UEngineSprite>(NewSpirte, _Name, "");
 
 	for (size_t i = 0; i < Files.size(); i++)
 	{
@@ -34,20 +34,20 @@ std::shared_ptr<UEngineSprite> UEngineSprite::CreateSpriteToFolder(std::string_v
 
 		if (nullptr == Texture)
 		{
-			MSGASSERT("텍스처를 먼저 로드하고 폴더 스프라이트를 만들어 주세요." + UpperName);
+			MSGASSERT("텍스처 로드에 실패했습니다." + UpperName);
 			return nullptr;
 		}
 
-		NewRes->SpriteTexture.push_back(Texture.get());
+		NewSpirte->SpriteTexture.push_back(Texture.get());
 
 		FSpriteData SpriteData;
 		SpriteData.CuttingPos = { 0.0f, 0.0f };
 		SpriteData.CuttingSize = { 1.0f, 1.0f };
 		SpriteData.Pivot = { 0.5f, 0.5f };
-		NewRes->SpriteDatas.push_back(SpriteData);
+		NewSpirte->SpriteDatas.push_back(SpriteData);
 	}
 
-	return NewRes;
+	return NewSpirte;
 }
 
 std::shared_ptr<UEngineSprite> UEngineSprite::CreateSpriteToMeta(std::string_view _Name, std::string_view _DataFileExt)
@@ -56,12 +56,14 @@ std::shared_ptr<UEngineSprite> UEngineSprite::CreateSpriteToMeta(std::string_vie
 
 	if (nullptr == Tex)
 	{
-		MSGASSERT("존재하지 않는 텍스처로 스프라이트를 만들수는 없습니다.");
+		std::string Name = _Name.data();
+		std::string Ext = _DataFileExt.data();
+		MSGASSERT(Name + Ext + " 의 Unity 메타 파일을 찾지 못했습니다. 파일 이름 또는 확장자 명을 확인해주세요.");
 		return nullptr;
 	}
 
-	std::shared_ptr<UEngineSprite> NewRes = std::make_shared<UEngineSprite>();
-	PushRes<UEngineSprite>(NewRes, _Name, "");
+	std::shared_ptr<UEngineSprite> NewSpirte = std::make_shared<UEngineSprite>();
+	PushRes<UEngineSprite>(NewSpirte, _Name, "");
 
 	UEnginePath Path = Tex->GetPath();
 	std::string FileName = Path.GetFileNameToString();
@@ -88,7 +90,7 @@ std::shared_ptr<UEngineSprite> UEngineSprite::CreateSpriteToMeta(std::string_vie
 			break;
 		}
 
-		NewRes->SpriteTexture.push_back(Tex.get());
+		NewSpirte->SpriteTexture.push_back(Tex.get());
 		SpriteDataTexts.push_back(Text.substr(RectIndex, AligIndex - RectIndex));
 		StartPosition = AligIndex;
 	}
@@ -105,54 +107,43 @@ std::shared_ptr<UEngineSprite> UEngineSprite::CreateSpriteToMeta(std::string_vie
 
 		FSpriteData SpriteData;
 
-
 		{
 			std::string Number = UEngineString::InterString(Text, "x:", "\n", Start);
 			SpriteData.CuttingPos.X = static_cast<float>(atof(Number.c_str()));
 		}
-
 		{
 			std::string Number = UEngineString::InterString(Text, "y:", "\n", Start);
 			SpriteData.CuttingPos.Y = static_cast<float>(atof(Number.c_str()));
 		}
-
 		{
 			std::string Number = UEngineString::InterString(Text, "width:", "\n", Start);
 			SpriteData.CuttingSize.X = static_cast<float>(atof(Number.c_str()));
 		}
-
 		{
 			std::string Number = UEngineString::InterString(Text, "height:", "\n", Start);
 			SpriteData.CuttingSize.Y = static_cast<float>(atof(Number.c_str()));
 		}
-
 		{
 			std::string Number = UEngineString::InterString(Text, "x:", ",", Start);
 			SpriteData.Pivot.X = static_cast<float>(atof(Number.c_str()));
 		}
-
 		{
 			std::string Number = UEngineString::InterString(Text, "y:", "}", Start);
 			SpriteData.Pivot.Y = static_cast<float>(atof(Number.c_str()));
 		}
 
-
-
 		SpriteData.CuttingPos.Y = TexSize.Y - SpriteData.CuttingPos.Y - SpriteData.CuttingSize.Y;
-
 		SpriteData.CuttingPos.X /= TexSize.X;
 		SpriteData.CuttingPos.Y /= TexSize.Y;
 		SpriteData.CuttingSize.X /= TexSize.X;
 		SpriteData.CuttingSize.Y /= TexSize.Y;
 
-
 		TestData.push_back(SpriteData);
 	}
 
+	NewSpirte->SpriteDatas = TestData;
 
-	NewRes->SpriteDatas = TestData;
-
-	return NewRes;
+	return NewSpirte;
 }
 
 UEngineTexture* UEngineSprite::GetTexture(size_t _Index /*= 0*/)
@@ -169,7 +160,7 @@ FVector UEngineSprite::GetSpriteScaleToReal(size_t _Index)
 {
 	if (SpriteDatas.size() <= _Index)
 	{
-		MSGASSERT("스프라이트의 인덱스를 초과하여 사용하려고 했습니다.");
+		MSGASSERT("스프라이트의 인덱스를 초과했습니다. \n" + std::to_string(SpriteDatas.size()) + " / " + std::to_string(_Index));
 	}
 
 	FVector Result;

@@ -58,21 +58,21 @@ public:
 		return Size;
 	}
 
-	void Setting(EShaderType _Type, UINT _BindIndex);
-	void Reset(EShaderType _Type, UINT _BindIndex);
+	void BindToShaderResources(EShaderType _Type, UINT _BindIndex);
+	void UnbindFromShaderResources(EShaderType _Type, UINT _BindIndex);
 
-	ENGINEAPI void ResCreate(const D3D11_TEXTURE2D_DESC& _Value);
-
-	ENGINEAPI void ResCreate(Microsoft::WRL::ComPtr<ID3D11Texture2D> _Texture2D);
-
-	ENGINEAPI void CreateRenderTargetView();
-	ENGINEAPI void CreateShaderResourceView();
-	ENGINEAPI void CreateDepthStencilView();
+	ENGINEAPI void CreateTextureWithView(const D3D11_TEXTURE2D_DESC& _Value);
+	ENGINEAPI void CreateRenderTargetView(Microsoft::WRL::ComPtr<ID3D11Texture2D> _Texture2D);
 
 protected:
 
 private:
-	ENGINEAPI void LoadResource();
+	ENGINEAPI void CreateRenderTargetView();
+	ENGINEAPI void CreateShaderResourceView();
+	ENGINEAPI void CreateDepthStencilView();
+
+	ENGINEAPI void LoadFromFile();
+	ENGINEAPI void CreateTexShaderResourceView();
 
 	FVector Size = FVector::ZERO;
 	DirectX::TexMetadata Metadata = DirectX::TexMetadata();

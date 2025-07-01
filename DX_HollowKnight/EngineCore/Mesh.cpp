@@ -15,7 +15,7 @@ std::shared_ptr<UMesh> UMesh::CreateWithBuffers(std::string_view _Name, std::str
 
 	if (true == Contains(UpperName))
 	{
-		MSGASSERT("이미 로드한 텍스처를 다시 로드하려고 했습니다." + UpperName);
+		MSGASSERT("이미 등록된 메시입니다. \n" + UpperName);
 		return nullptr;
 	}
 

@@ -9,17 +9,17 @@ public:
 	UEngineSampler();
 	~UEngineSampler();
 
-	static std::shared_ptr<UEngineSampler> Create(std::string_view _Name, const D3D11_SAMPLER_DESC& _Value);
+	static std::shared_ptr<UEngineSampler> LoadSampler(std::string_view _Name, const D3D11_SAMPLER_DESC& _Value);
 
 	void Setting(EShaderType _Type, UINT _BindIndex);
 
 	void Reset(EShaderType _Type, UINT _BindIndex);
 
 protected:
-	void ResCreate(const D3D11_SAMPLER_DESC& _Value);
+	void CreateSamplerState(const D3D11_SAMPLER_DESC& _Value);
 
 private:
-	Microsoft::WRL::ComPtr<ID3D11SamplerState> State = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11SamplerState> SamplerState = nullptr;
 
 private:
 	// delete Function

@@ -91,7 +91,7 @@ void UEngineShaderBase::ReflectAndBindShaderResources()
 			D3D11_SHADER_BUFFER_DESC BufferInfo = { 0 };
 			Info->GetDesc(&BufferInfo);
 
-			std::shared_ptr<UEngineConstantBuffer> Buffer = UEngineConstantBuffer::CreateOrFind(BufferInfo.Size, UpperName);
+			std::shared_ptr<UEngineConstantBuffer> Buffer = UEngineConstantBuffer::CreateOrFindBuffer(BufferInfo.Size, UpperName);
 
 			UEngineConstantBufferRes NewRes;
 			NewRes.ShaderType = ShaderType;

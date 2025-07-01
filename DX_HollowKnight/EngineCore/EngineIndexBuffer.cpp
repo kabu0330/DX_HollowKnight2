@@ -9,13 +9,13 @@ UEngineIndexBuffer::~UEngineIndexBuffer()
 {
 }
 
-std::shared_ptr<UEngineIndexBuffer> UEngineIndexBuffer::Create(std::string_view _Name, const void* _InitData, size_t _VertexSize, size_t _VertexCount)
+std::shared_ptr<UEngineIndexBuffer> UEngineIndexBuffer::CreateIndexBuffer(std::string_view _Name, const void* _InitData, size_t _VertexSize, size_t _VertexCount)
 {
 	std::string UpperName = ToUpperName(_Name);
 
 	if (true == Contains(UpperName))
 	{
-		MSGASSERT("이미 로드한 텍스처를 다시 로드하려고 했습니다." + UpperName);
+		MSGASSERT("이미 등록된 인덱스 버퍼입니다. \n" + UpperName);
 		return nullptr;
 	}
 
@@ -54,7 +54,7 @@ void UEngineIndexBuffer::CreateIndexBuffer(const void* _InitData, size_t _Size, 
 
 	if (S_OK != UEngineCore::GetDevice().GetDevice()->CreateBuffer(&BufferInfo, &Data, &Buffer))
 	{
-		MSGASSERT("버텍스 버퍼 생성에 실패했습니다.");
+		MSGASSERT("인덱스 버퍼 생성에 실패했습니다.");
 		return;
 	}
 }
