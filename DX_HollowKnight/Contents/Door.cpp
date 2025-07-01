@@ -76,7 +76,7 @@ void ADoor::Warp(UCollision* _Actor1, UCollision* _Actor2)
 		});
 	TimeEventer->AddEndEvent(0.3f, [this]()
 		{
-			UEngineDebug::OutPutString("Enter");
+			UEngineDebug::OutputString("Enter");
 
 			Knight->SetActorLocation(TargetPos);
 			ARoom::SetCurRoom(TargetRoom); // «»ºø√Êµπ ±‚¡ÿ ∏ ¿ª πŸ≤€¥Ÿ.

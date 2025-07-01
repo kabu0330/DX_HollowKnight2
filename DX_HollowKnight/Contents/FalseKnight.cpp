@@ -1029,7 +1029,7 @@ void AFalseKnight::SetStunOpen(float _DeltaTime)
 void AFalseKnight::SetStunHit(float _DeltaTime)
 {
 	ActiveGravity();
-	UEngineDebug::OutPutString("스턴 히트" + std::to_string(HeadHp));
+	UEngineDebug::OutputString("스턴 히트" + std::to_string(HeadHp));
 
 	Head->GetRenderer()->ChangeAnimation("StunHit");
 	if (0 >= HeadHp)
@@ -1133,7 +1133,7 @@ void AFalseKnight::CreateDeathEffect(float _DeltaTime)
 	float Cooldown = 0.18f;
 	if (DeathEffectTimeElapesd >= Cooldown)
 	{
-		UEngineDebug::OutPutString("데스 파티클 호출 횟수 : " + std::to_string(DeathEffectCount));
+		UEngineDebug::OutputString("데스 파티클 호출 횟수 : " + std::to_string(DeathEffectCount));
 		CreateDeathOrangeParticleEffect();
 		DeathEffectTimeElapesd = 0.0f;
 	}	

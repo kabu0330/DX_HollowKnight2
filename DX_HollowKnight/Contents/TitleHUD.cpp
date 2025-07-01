@@ -85,7 +85,7 @@ void ATitleHUD::CreditsFadeOut()
 
 void ATitleHUD::CreditsFadeChange()
 {
-	UEngineDebug::OutPutString("Fade Change Mul : " + CreditsLogo->ColorData.MulColor.ToString());
+	UEngineDebug::OutputString("Fade Change Mul : " + CreditsLogo->ColorData.MulColor.ToString());
 	float DeltaTime = UEngineCore::GetDeltaTime();
 	float Ratio = 1.0f;
 	CreditsFadeValue.W += CreditsFadeDir.W * DeltaTime * Ratio;
@@ -150,7 +150,7 @@ void ATitleHUD::FadeOut()
 
 void ATitleHUD::FadeChange()
 {
-	UEngineDebug::OutPutString("Fade Change Mul : " + Fade->ColorData.MulColor.ToString());
+	UEngineDebug::OutputString("Fade Change Mul : " + Fade->ColorData.MulColor.ToString());
 
 	float DeltaTime = UEngineCore::GetDeltaTime();
 	float Ratio = 1.0f;

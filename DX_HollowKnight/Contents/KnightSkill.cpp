@@ -61,7 +61,7 @@ void AKnightSkill::Attack(UCollision* _This, UCollision* _Other)
 		Monster->DamageSound();
 
 		int MonsterHp = Monster->GetStatRef().GetHp();
-		UEngineDebug::OutPutString("나이트가 몬스터에게 " + std::to_string(KnightAtt) + "만큼 데미지를 주었습니다. 현재 체력 : " + std::to_string(MonsterHp));
+		UEngineDebug::OutputString("나이트가 몬스터에게 " + std::to_string(KnightAtt) + "만큼 데미지를 주었습니다. 현재 체력 : " + std::to_string(MonsterHp));
 
 		Knockback(_This, _Other);
 		Monster->DamageEvent();

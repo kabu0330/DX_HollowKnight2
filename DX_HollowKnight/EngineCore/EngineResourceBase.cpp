@@ -37,7 +37,7 @@ void UEngineResourceBase::PushResourceThreadSafe(std::shared_ptr<UEngineResource
 }
 
 //                                              메모리 블록                    자료형                     내가 정한 이름             경로(생략가능)
-void UEngineResourceBase::PushRes(std::shared_ptr<UEngineResourceBase> _Res, const std::string_view _Info, std::string_view _Name, std::string_view _Path)
+void UEngineResourceBase::PushResource(std::shared_ptr<UEngineResourceBase> _Res, const std::string_view _Info, std::string_view _Name, std::string_view _Path)
 {
 	std::string UpperName = UEngineString::ToUpper(_Name);
 

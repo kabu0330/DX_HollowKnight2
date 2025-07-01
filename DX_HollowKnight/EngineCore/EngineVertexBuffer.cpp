@@ -21,7 +21,7 @@ std::shared_ptr<UEngineVertexBuffer> UEngineVertexBuffer::CreateVertexBuffer(std
 	}
 
 	std::shared_ptr<UEngineVertexBuffer> NewRes = std::make_shared<UEngineVertexBuffer>();
-	PushRes<UEngineVertexBuffer>(NewRes, _Name, "");
+	PushResource<UEngineVertexBuffer>(NewRes, _Name, "");
 	NewRes->CreateVertexBuffer(_InitData, _VertexSize, _VertexCount);
 	NewRes->InputLayoutInfo = _InfoPtr;
 	

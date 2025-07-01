@@ -154,7 +154,7 @@ void AParticle::Remove()
 		Particles.end());
 	if (0 >= Particles.size())
 	{
-		UEngineDebug::OutPutString("ÆÄÆ¼Å¬ ¼Ò¸ê");
+		UEngineDebug::OutputString("ÆÄÆ¼Å¬ ¼Ò¸ê");
 		Destroy();
 	}
 }

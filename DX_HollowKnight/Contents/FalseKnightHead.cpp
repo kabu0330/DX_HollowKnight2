@@ -65,7 +65,7 @@ void AFalseKnightHead::Collide(UCollision* _This, UCollision* _Other)
 
 void AFalseKnightHead::Attack(UCollision* _This, UCollision* _Other)
 {
-	UEngineDebug::OutPutString("헤드 어택!!!");
+	UEngineDebug::OutputString("헤드 어택!!!");
 
 	if (nullptr == Boss)
 	{
@@ -81,12 +81,12 @@ void AFalseKnightHead::Attack(UCollision* _This, UCollision* _Other)
 	if (nullptr == Fireball)
 	{
 		UFightUnit::RecoverMp(11);
-		UEngineDebug::OutPutString("나이트가 마나를 획득하였습니다. 현재 마나 :  " + std::to_string(Knight->GetStatRef().GetMp()));
+		UEngineDebug::OutputString("나이트가 마나를 획득하였습니다. 현재 마나 :  " + std::to_string(Knight->GetStatRef().GetMp()));
 	}
 	else
 	{
 		UFightUnit::RecoverMp(-33);
-		UEngineDebug::OutPutString("나이트가 마나를 소비하였습니다. 현재 마나 :  " + std::to_string(Knight->GetStatRef().GetMp()));
+		UEngineDebug::OutputString("나이트가 마나를 소비하였습니다. 현재 마나 :  " + std::to_string(Knight->GetStatRef().GetMp()));
 	}
 
 	if (false == bIsDamage)

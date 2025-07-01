@@ -69,7 +69,7 @@ void AMonsterSkill::Attack(UCollision* _This, UCollision* _Other)
 	UFightUnit::OnHit(Knight, MonsterAtt);
 	Knight->SetInvicible(true);
 
-	UEngineDebug::OutPutString("몬스터가 나이트에게 데미지를 주었습니다." );
+	UEngineDebug::OutputString("몬스터가 나이트에게 데미지를 주었습니다." );
 
 	TimeEventer->AddEndEvent(0.3f, [this]()
 		{

@@ -238,8 +238,8 @@ void UCollision::ApplyDebugRender(UEngineCamera* _Camera, float _DeltaTime)
 	Unit.SetMesh("Rect");
 	Unit.SetMaterial("CollisionDebugMaterial");
 
-	Unit.ConstantBufferLinkData("FTransform", GetTransformRef());
-	Unit.ConstantBufferLinkData("OutColor", DebugColor);
+	Unit.LinkConstantBufferData("FTransform", GetTransformRef());
+	Unit.LinkConstantBufferData("OutColor", DebugColor);
 
 	Unit.Render(_Camera, _DeltaTime);
 

@@ -115,5 +115,5 @@ void UEngineRenderTarget::MergeToRenderTarget(std::shared_ptr<UEngineRenderTarge
     _Target->OMSetRenderTargets();
     TargetUnit.SetTexture("MergeTex", AllTextures[0]); // 상수버퍼 세팅
     TargetUnit.Render(nullptr, 0.0f); // 렌더링 파이프라인으로
-    TargetUnit.Reset();
+    TargetUnit.UnbindFromShaderSlot();
 }

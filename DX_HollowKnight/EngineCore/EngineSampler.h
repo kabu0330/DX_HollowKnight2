@@ -11,9 +11,9 @@ public:
 
 	static std::shared_ptr<UEngineSampler> LoadSampler(std::string_view _Name, const D3D11_SAMPLER_DESC& _Value);
 
-	void Setting(EShaderType _Type, UINT _BindIndex);
+	void BindToSamplerSlot(EShaderType _Type, UINT _BindIndex);
 
-	void Reset(EShaderType _Type, UINT _BindIndex);
+	void UnbindFromSamplerSlot(EShaderType _Type, UINT _BindIndex);
 
 protected:
 	void CreateSamplerState(const D3D11_SAMPLER_DESC& _Value);

@@ -5,7 +5,7 @@
 #include "EngineSampler.h"
 
 // 설명 : 셰이더 리소스는 이름과 셰이더 타입(VS, PS 등) 그리고 몇번째 인덱스인지를 하나의 데이터로 저장한다.
-class UEngineShaderRes 
+class UEngineShaderResourceBase 
 {
 public:
 	std::string Name;
@@ -14,59 +14,58 @@ public:
 };
 
 // 설명 : 상수버퍼 리소스는 셰이더 리소스 + 버퍼 사이즈 + 상수 버퍼
-class UEngineConstantBufferRes : public UEngineShaderRes
+class UEngineConstantBufferResource : public UEngineShaderResourceBase
 {
 public:
 	void* Data = nullptr; // 자신에게 세팅될 데이터는 스스로 가지고 있을 것이다.
 	UINT BufferSize;
-	std::shared_ptr<UEngineConstantBuffer> Res;
+	std::shared_ptr<UEngineConstantBuffer> ConstantBuffer;
 
-	void Setting()
+	void BindToShaderSlot()
 	{
 		if (nullptr != Data)
 		{
 			Name;
-			Res->UpdateConstantBufferData(Data, BufferSize);
+			ConstantBuffer->UpdateConstantBufferData(Data, BufferSize);
 		}
 
-		Res->BindToShaderSlot(ShaderType, BindIndex);
+		ConstantBuffer->BindToShaderSlot(ShaderType, BindIndex);
 	}
 
-	void Reset()
+	void UnbindFromShaderSlot()
 	{
-
-	}
-};
-
-class UEngineTextureRes : public UEngineShaderRes
-{
-public:
-	std::shared_ptr<UEngineTexture> Res;
-
-	void Setting()
-	{
-		Res->BindToShaderResources(ShaderType, BindIndex);
-	}
-
-	void Reset()
-	{
-		Res->UnbindFromShaderResources(ShaderType, BindIndex);
 	}
 };
 
-class UEngineSamplerRes : public UEngineShaderRes
+class UEngineTextureResource : public UEngineShaderResourceBase
 {
 public:
-	std::shared_ptr<UEngineSampler> Res;
+	std::shared_ptr<UEngineTexture> Texture;
 
-	void Setting()
+	void BindToShaderResources()
 	{
-		Res->Setting(ShaderType, BindIndex);
+		Texture->BindToShaderResources(ShaderType, BindIndex);
 	}
 
-	void Reset()
+	void UnbindFromShaderResources()
 	{
-		Res->Setting(ShaderType, BindIndex);
+		Texture->UnbindFromShaderResources(ShaderType, BindIndex);
+	}
+};
+
+class UEngineSamplerResource : public UEngineShaderResourceBase
+{
+public:
+	std::shared_ptr<UEngineSampler> Sampler;
+
+	void BindToSamplerSlot()
+	{
+		Sampler->BindToSamplerSlot(ShaderType, BindIndex);
+	}
+
+	void UnbindFromSamplerSlot()
+	{
+		Sampler->UnbindFromSamplerSlot(ShaderType, BindIndex);
 	}
 };
 
@@ -77,40 +76,36 @@ public:
 	UEngineShaderResources();
 	~UEngineShaderResources();
 
-	void CreateSamplerRes(std::string_view _Name, UEngineSamplerRes _Res);
+	void PushSamplerResource(std::string_view _Name, UEngineSamplerResource _Res);
 
-	void CreateTextureRes(std::string_view _Name, UEngineTextureRes _Res);
+	void PushTextureResource(std::string_view _Name, UEngineTextureResource _Res);
 
-	void CreateConstantBufferRes(std::string_view _Name, UEngineConstantBufferRes Res);
+	void PushConstantBufferResource(std::string_view _Name, UEngineConstantBufferResource _Res);
 
 	template<typename DataType>
-	void ConstantBufferLinkData(std::string_view _Name, DataType& Data)
+	void LinkConstantBufferData(std::string_view _Name, DataType& _Data)
 	{
-		ConstantBufferLinkData(_Name, reinterpret_cast<void*>(&Data));
+		LinkConstantBufferData(_Name, reinterpret_cast<void*>(&_Data));
 	}
 
-	void ConstantBufferLinkData(std::string_view _Name, void* Data);
+	void LinkConstantBufferData(std::string_view _Name, void* _Data);
 
-	void SamplerSetting(std::string_view _Name, std::string_view _ResName);
-	void TextureSetting(std::string_view _Name, std::string_view _ResName);
-	void TextureSetting(std::string_view _Name, std::shared_ptr<UEngineTexture> _Texture);
+	void PushSampler(std::string_view _Name, std::string_view _ResName);
+	void PushTexture(std::string_view _Name, std::string_view _ResName);
+	void PushTexture(std::string_view _Name, std::shared_ptr<UEngineTexture> _Texture);
 
+	bool HasSampler(std::string_view _Name);
+	bool HasTexture(std::string_view _Name);
+	bool HasConstantBuffer(std::string_view _Name);
+	void BindToShaderSlot();
 
-	bool IsSampler(std::string_view _Name);
-	bool IsTexture(std::string_view _Name);
-	bool IsConstantBuffer(std::string_view _Name);
-	void Setting();
-
-	void Reset();
-
+	void UnbindFromShaderSlot();
 
 protected:
 
 private:
-	std::map<std::string, UEngineConstantBufferRes> ConstantBufferRes;
-	std::map<std::string, UEngineTextureRes> TextureRes;
-	std::map<std::string, UEngineSamplerRes> SamplerRes;
-	// std::map<std::string, UEngineConstantBufferRes> ConstantBufferSetters;
-
+	std::map<std::string, UEngineConstantBufferResource> AllConstantBufferResources;
+	std::map<std::string, UEngineTextureResource> AllTextureResources;
+	std::map<std::string, UEngineSamplerResource> AllSamplerResources;
 };
 

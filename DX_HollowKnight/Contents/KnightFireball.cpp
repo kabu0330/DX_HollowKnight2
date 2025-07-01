@@ -60,7 +60,7 @@ void AKnightFireball::Tick(float _DeltaTime)
 
 void AKnightFireball::CreateHitEffect(UCollision* _This, UCollision* _Other)
 {
-	UEngineDebug::OutPutString("Fireball Impact");
+	UEngineDebug::OutputString("Fireball Impact");
 	AKnightFireballEffect* Effect = GetWorld()->SpawnActor<AKnightFireballEffect>().get();
 	Effect->SetName("FireballImpact");
 	Effect->SetZSort(static_cast<int>(EZOrder::KNIGHT_SKILL_FIREBALL_EFFECT));
@@ -87,8 +87,8 @@ void AKnightFireball::Attack(UCollision* _This, UCollision* _Other)
 		Monster->DamageLogic(KnightAtt);
 
 		int MonsterHp = Monster->GetStatRef().GetHp();
-		UEngineDebug::OutPutString("나이트가 몬스터에게 " + std::to_string(KnightAtt) + "만큼 데미지를 주었습니다. 현재 체력 : " + std::to_string(MonsterHp));
-		UEngineDebug::OutPutString("나이트가 마나를 소비하였습니다. 현재 마나 :  " + std::to_string(Knight->GetStatRef().GetMp()));
+		UEngineDebug::OutputString("나이트가 몬스터에게 " + std::to_string(KnightAtt) + "만큼 데미지를 주었습니다. 현재 체력 : " + std::to_string(MonsterHp));
+		UEngineDebug::OutputString("나이트가 마나를 소비하였습니다. 현재 마나 :  " + std::to_string(Knight->GetStatRef().GetMp()));
 
 		Knockback(_This, _Other);
 	}

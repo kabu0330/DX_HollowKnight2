@@ -8,9 +8,9 @@ UContentsRenderer::UContentsRenderer()
 	SetMesh("Rect");
 	SetMaterial("MyMaterial");
 
-	GetRenderUnit().ConstantBufferLinkData("ResultColor", ColorData);
-	GetRenderUnit().ConstantBufferLinkData("FSpriteData", SpriteData);
-	GetRenderUnit().ConstantBufferLinkData("FUVValue", UVValue);
+	GetRenderUnit().LinkConstantBufferData("ResultColor", ColorData);
+	GetRenderUnit().LinkConstantBufferData("FSpriteData", SpriteData);
+	GetRenderUnit().LinkConstantBufferData("FUVValue", UVValue);
 
 
 	UVValue.PlusUVValue = {0.0f, 0.0f, 0.0f, 0.0f};

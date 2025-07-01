@@ -21,23 +21,22 @@ std::shared_ptr<UEngineBlend> UEngineBlend::Create(std::string_view _Name, const
 	}
 
 	std::shared_ptr<UEngineBlend> NewRes = std::make_shared<UEngineBlend>();
-	PushRes<UEngineBlend>(NewRes, _Name, "");
-	NewRes->ResCreate(_Value);
+	PushResource<UEngineBlend>(NewRes, _Name, "");
+	NewRes->CreateBlendState(_Value);
 
 	return NewRes;
 }
 
-
-void UEngineBlend::ResCreate(const D3D11_BLEND_DESC& _Value)
+void UEngineBlend::CreateBlendState(const D3D11_BLEND_DESC& _Value)
 {
-	if (UEngineCore::GetDevice().GetDevice()->CreateBlendState(&_Value, &State))
+	if (UEngineCore::GetDevice().GetDevice()->CreateBlendState(&_Value, &BlendState))
 	{
 		MSGASSERT("블랜드 스테이트 생성에 실패했습니다");
 		return;
 	}
 }
 
-void UEngineBlend::Setting()
+void UEngineBlend::OMSetBlendState()
 {
-	UEngineCore::GetDevice().GetContext()->OMSetBlendState(State.Get(), BlendFactor.Arr1D, Mask);
+	UEngineCore::GetDevice().GetContext()->OMSetBlendState(BlendState.Get(), BlendFactor.Arr1D, Mask);
 }

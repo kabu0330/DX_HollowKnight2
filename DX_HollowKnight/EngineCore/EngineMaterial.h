@@ -44,7 +44,7 @@ public:
 	}
 	ENGINEAPI void SetDepthStencilState(std::string_view _Name);
 
-	ENGINEAPI void PrimitiveTopologySetting();
+	ENGINEAPI void IASetPrimitiveTopology();
 
 protected:
 

@@ -47,7 +47,7 @@ std::shared_ptr<UEngineFont> UEngineFont::LoadFont(std::string_view _Name, std::
 	}
 
 	std::shared_ptr<UEngineFont> NewRes = std::make_shared<UEngineFont>();
-	PushRes<UEngineFont>(NewRes, _Name, _Path);
+	PushResource<UEngineFont>(NewRes, _Name, _Path);
 	NewRes->LoadResource(_Path);
 	return NewRes;
 }

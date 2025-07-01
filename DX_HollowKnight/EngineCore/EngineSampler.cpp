@@ -16,12 +16,12 @@ std::shared_ptr<UEngineSampler> UEngineSampler::LoadSampler(std::string_view _Na
 
 	if (true == Contains(UpperName))
 	{
-		MSGASSERT("이미 로드한 텍스처를 다시 로드하려고 했습니다." + UpperName);
+		MSGASSERT("이미 등록된 샘플러입니다. \n" + UpperName);
 		return nullptr;
 	}
 
 	std::shared_ptr<UEngineSampler> NewRes = std::make_shared<UEngineSampler>();
-	PushRes<UEngineSampler>(NewRes, _Name, "");
+	PushResource<UEngineSampler>(NewRes, _Name, "");
 	NewRes->CreateSamplerState(_Value);
 
 	return NewRes;
@@ -37,7 +37,7 @@ void UEngineSampler::CreateSamplerState(const D3D11_SAMPLER_DESC& _Value)
 	
 }
 
-void UEngineSampler::Setting(EShaderType _Type, UINT _BindIndex)
+void UEngineSampler::BindToSamplerSlot(EShaderType _Type, UINT _BindIndex)
 {
 	ID3D11SamplerState* ArrPtr[1] = { SamplerState.Get() };
 
@@ -54,12 +54,12 @@ void UEngineSampler::Setting(EShaderType _Type, UINT _BindIndex)
 	case EShaderType::GS:
 	case EShaderType::CS:
 	default:
-		MSGASSERT("아직 존재하지 않는 쉐이더에 세팅하려고 했습니다.");
+		MSGASSERT("아직 존재하지 않는 셰이더에 바인드할 수 없습니다.");
 		break;
 	}
 }
 
-void UEngineSampler::Reset(EShaderType _Type, UINT _BindIndex)
+void UEngineSampler::UnbindFromSamplerSlot(EShaderType _Type, UINT _BindIndex)
 {
 	ID3D11SamplerState* ArrPtr[1] = { nullptr };
 
@@ -76,7 +76,7 @@ void UEngineSampler::Reset(EShaderType _Type, UINT _BindIndex)
 	case EShaderType::GS:
 	case EShaderType::CS:
 	default:
-		MSGASSERT("아직 존재하지 않는 쉐이더에 세팅하려고 했습니다.");
+		MSGASSERT("아직 존재하지 않는 셰이더에 바인드할 수 없습니다.");
 		break;
 	}
 }

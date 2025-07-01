@@ -93,27 +93,27 @@ void UEngineShaderBase::ReflectAndBindShaderResources()
 
 			std::shared_ptr<UEngineConstantBuffer> Buffer = UEngineConstantBuffer::CreateOrFindBuffer(BufferInfo.Size, UpperName);
 
-			UEngineConstantBufferRes NewRes;
+			UEngineConstantBufferResource NewRes;
 			NewRes.ShaderType = ShaderType;
 			NewRes.Name = UpperName;
 			NewRes.BindIndex = ResDesc.BindPoint;
-			NewRes.Res = Buffer;
+			NewRes.ConstantBuffer = Buffer;
 			NewRes.BufferSize = BufferInfo.Size;
 
-			ShaderResources.CreateConstantBufferRes(UpperName, NewRes);
+			AllShaderResources.PushConstantBufferResource(UpperName, NewRes);
 			break;
 		}
 		case D3D_SIT_TEXTURE:
 		{
 			std::shared_ptr<UEngineTexture> Res = UEngineTexture::Find<UEngineTexture>("NSBase.png");
 
-			UEngineTextureRes NewRes;
+			UEngineTextureResource NewRes;
 			NewRes.ShaderType = ShaderType;
 			NewRes.Name = UpperName;
 			NewRes.BindIndex = ResDesc.BindPoint;
-			NewRes.Res = Res;
+			NewRes.Texture = Res;
 
-			ShaderResources.CreateTextureRes(UpperName, NewRes);
+			AllShaderResources.PushTextureResource(UpperName, NewRes);
 
 			break;
 		}
@@ -121,13 +121,13 @@ void UEngineShaderBase::ReflectAndBindShaderResources()
 		{
 			std::shared_ptr<UEngineSampler> Res = UEngineSampler::Find<UEngineSampler>("WRapSampler");
 
-			UEngineSamplerRes NewRes;
+			UEngineSamplerResource NewRes;
 			NewRes.ShaderType = ShaderType;
 			NewRes.Name = UpperName;
 			NewRes.BindIndex = ResDesc.BindPoint;
-			NewRes.Res = Res;
+			NewRes.Sampler = Res;
 
-			ShaderResources.CreateSamplerRes(UpperName, NewRes);
+			AllShaderResources.PushSamplerResource(UpperName, NewRes);
 
 			break;
 		}

@@ -96,7 +96,7 @@ void AMonster::UpdateFSM(float _DeltaTime)
 
 void AMonster::SetIdle(float _DeltaTime)
 {
-	//UEngineDebug::OutPutString("Monster FSM : Idle");
+	//UEngineDebug::OutputString("Monster FSM : Idle");
 	PlayStaticSound(IdleSound);
 	
 
@@ -134,7 +134,7 @@ void AMonster::SetWalkAnticipate(float _DeltaTime)
 
 void AMonster::SetWalk(float _DeltaTime)
 {
-	//UEngineDebug::OutPutString("Monster FSM : Walk");
+	//UEngineDebug::OutputString("Monster FSM : Walk");
 	SetWalkRendererOffset();
 	CheckDeath();
 	ActiveGravity();
@@ -211,7 +211,7 @@ void AMonster::SetAttackAnticipate(float _DeltaTime)
 
 void AMonster::SetAttack(float _DeltaTime)
 {
-	//UEngineDebug::OutPutString("Monster FSM : Attack");
+	//UEngineDebug::OutputString("Monster FSM : Attack");
 	SetAttackRendererOffset();
 	CheckDeath();
 	ActiveGravity();
@@ -239,7 +239,7 @@ void AMonster::SetAttack(float _DeltaTime)
 
 void AMonster::SetAttackRecovery(float _DeltaTime)
 {
-	//UEngineDebug::OutPutString("Monster FSM : Attack Recovery");
+	//UEngineDebug::OutputString("Monster FSM : Attack Recovery");
 	//SetAttackRendererOffset();
 	JumpForce = 0.0f;
 
@@ -280,7 +280,7 @@ void AMonster::SetDeathAir(float _DeltaTime)
 	{
 		SoundPlay(DeathSound);
 	}
-	//UEngineDebug::OutPutString("Monster FSM : Death Air");
+	//UEngineDebug::OutputString("Monster FSM : Death Air");
 	Stat.SetKnockbackDir(FVector::ZERO);
 
 	bCanFly = false; // 하늘을 나는 애도 중력 적용 받도록
@@ -316,7 +316,7 @@ void AMonster::SetDeathLand(float _DeltaTime)
 
 	DeathPattern();
 
-	//UEngineDebug::OutPutString("Monster FSM : Death");
+	//UEngineDebug::OutputString("Monster FSM : Death");
 	bCanFly = false; // 하늘을 나는 애도 중력 적용 받도록
 	ActiveGravity();
 

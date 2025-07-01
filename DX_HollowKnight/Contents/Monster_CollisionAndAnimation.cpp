@@ -92,7 +92,7 @@ void AMonster::OnBodyCollision(UCollision* _This, UCollision* _Other)
 	OtherKnight->SetInvicible(true);
 
 	int KnightCurHp = OtherKnight->GetStatRef().GetHp();
-	UEngineDebug::OutPutString(GetName() + "의 공격으로 나이트가 " + std::to_string(Att) + "의 피해를 입었습니다. 남은 체력 : " + std::to_string(KnightCurHp));
+	UEngineDebug::OutputString(GetName() + "의 공격으로 나이트가 " + std::to_string(Att) + "의 피해를 입었습니다. 남은 체력 : " + std::to_string(KnightCurHp));
 }
 
 void AMonster::Knockback()

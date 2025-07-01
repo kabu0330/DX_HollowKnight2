@@ -35,7 +35,7 @@ void KnightStunEffect::Tick(float _DeltaTime)
 
 void KnightStunEffect::CreateStunImpactEffect()
 {
-	UEngineDebug::OutPutString("Spawn Stun Impact Effect");
+	UEngineDebug::OutputString("Spawn Stun Impact Effect");
 	UEngineRandom Random;
 	float Degree0 = Random.Randomfloat(0.0f, 360.0f);
 	float Scale0 = Random.Randomfloat(0.9f, 1.2f);

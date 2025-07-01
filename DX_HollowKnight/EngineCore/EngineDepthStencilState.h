@@ -8,16 +8,15 @@ public:
 	UEngineDepthStencilState();
 	~UEngineDepthStencilState();
 
-
 	static std::shared_ptr<UEngineDepthStencilState> Create(std::string_view _Name, const D3D11_DEPTH_STENCIL_DESC& _Value);
 
-	void Setting();
+	void OMSetDepthStencilState();
 
 protected:
-	void ResCreate(const D3D11_DEPTH_STENCIL_DESC& _Value);
+	void CreateDepthStencilState(const D3D11_DEPTH_STENCIL_DESC& _Value);
 
 private:
-	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> State = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> DepthStencilState = nullptr;
 
 private:
 	// delete Function

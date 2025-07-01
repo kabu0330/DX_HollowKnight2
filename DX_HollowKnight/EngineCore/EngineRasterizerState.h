@@ -10,13 +10,13 @@ public:
 
 	static std::shared_ptr<UEngineRasterizerState> Create(std::string_view _Name, const D3D11_RASTERIZER_DESC& _Value);
 
-	void Setting();
+	void RSSetState();
 
 protected:
 
 private:
-	void ResCreate(const D3D11_RASTERIZER_DESC& _Value);
-	Microsoft::WRL::ComPtr<ID3D11RasterizerState> State = nullptr;
+	void CreateRasterizerState(const D3D11_RASTERIZER_DESC& _Value);
+	Microsoft::WRL::ComPtr<ID3D11RasterizerState> RasterizerState = nullptr;
 
 private:
 	// delete Function

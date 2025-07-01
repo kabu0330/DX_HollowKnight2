@@ -45,7 +45,7 @@ std::shared_ptr<UEngineTexture> UEngineTexture::LoadTexture(std::string_view _Na
 	}
 
 	std::shared_ptr<UEngineTexture> NewRes =  std::make_shared<UEngineTexture>();
-	PushRes<UEngineTexture>(NewRes, _Name, _Path); // 텍스처를 관리구조에 편입
+	PushResource<UEngineTexture>(NewRes, _Name, _Path); // 텍스처를 관리구조에 편입
 	NewRes->LoadFromFile();
 	NewRes->CreateTexShaderResourceView();
 

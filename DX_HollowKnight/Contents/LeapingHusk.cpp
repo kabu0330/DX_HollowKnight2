@@ -105,7 +105,7 @@ void ALeapingHusk::CreateCollision()
 
 void ALeapingHusk::SetAttack(float _DeltaTime)
 {
-	//UEngineDebug::OutPutString("Monster FSM : Attack");
+	//UEngineDebug::OutputString("Monster FSM : Attack");
 	CheckDeath();
 	ActiveGravity();
 

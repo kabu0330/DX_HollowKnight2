@@ -16,7 +16,7 @@ public:
 	// 셰이더 파일 내의 _VS, _PS 네이밍 규칙으로 버텍스 셰이더와 픽셀 셰이더를 자동 분리 컴파일
 	ENGINEAPI static void AutoCompileShaderByNaming(UEngineFile& _File);
 
-	UEngineShaderResources ShaderResources;
+	UEngineShaderResources AllShaderResources;
 
 	Microsoft::WRL::ComPtr<ID3DBlob> GetShaderCodeBlob()
 	{

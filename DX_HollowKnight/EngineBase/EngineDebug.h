@@ -10,7 +10,7 @@ namespace UEngineDebug
 {
 	ENGINEAPI void CheckMemoryLeak();
 
-	ENGINEAPI void OutPutString(const std::string& Text);
+	ENGINEAPI void OutputString(const std::string& Text);
 
 
 	ENGINEAPI void StartConsole();

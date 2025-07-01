@@ -21,7 +21,7 @@ std::shared_ptr<UEngineVertexShader> UEngineVertexShader::LoadVertexShader(std::
 	}
 
 	std::shared_ptr<UEngineVertexShader> NewRes = std::make_shared<UEngineVertexShader>();
-	PushRes<UEngineVertexShader>(NewRes, _Name, _Path);
+	PushResource<UEngineVertexShader>(NewRes, _Name, _Path);
 	NewRes->VersionHigh = _VersionHigh;
 	NewRes->VersionLow = _VersionLow;
 	NewRes->EntryName = _EntryPoint;

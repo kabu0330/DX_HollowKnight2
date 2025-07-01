@@ -98,7 +98,7 @@ void AEffect::Release()
 
 	if (true == BodyRenderer->IsCurAnimationEnd())
 	{
-		UEngineDebug::OutPutString(GetName() + " Effect Destroy");
+		UEngineDebug::OutputString(GetName() + " Effect Destroy");
 		EndFunction();
 		Destroy();
 		return;

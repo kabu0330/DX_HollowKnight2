@@ -8,9 +8,9 @@ UImageWidget::UImageWidget()
 	RenderUnit.SetMesh("Rect");
 	RenderUnit.SetMaterial("WidgetMaterial");
 
-	RenderUnit.ConstantBufferLinkData("ResultColor", ColorData);
-	RenderUnit.ConstantBufferLinkData("FSpriteData", SpriteData);
-	RenderUnit.ConstantBufferLinkData("FUVValue", UVValue);
+	RenderUnit.LinkConstantBufferData("ResultColor", ColorData);
+	RenderUnit.LinkConstantBufferData("FSpriteData", SpriteData);
+	RenderUnit.LinkConstantBufferData("FUVValue", UVValue);
 
 	UVValue.PlusUVValue = { 0.0f, 0.0f, 0.0f, 0.0f };
 	SpriteData.CuttingPos = { 0.0f, 0.0f };

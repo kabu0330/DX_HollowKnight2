@@ -621,7 +621,7 @@ void APlayHUD::FadeIn()
 
 void APlayHUD::FadeChange()
 {
-	UEngineDebug::OutPutString("Fade Change Mul : " + Fade->ColorData.MulColor.ToString());
+	UEngineDebug::OutputString("Fade Change Mul : " + Fade->ColorData.MulColor.ToString());
 
 	float DeltaTime = UEngineCore::GetDeltaTime();
 	float Ratio = 1.5f;

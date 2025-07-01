@@ -45,14 +45,14 @@ public:
 	ENGINEAPI static void PushResourceThreadSafe(std::shared_ptr<UEngineResourceBase> _Res, std::string_view _Info, std::string_view _Name, std::string_view _Path);
 
 	template<typename ResType>
-	ENGINEAPI static void PushRes(std::shared_ptr<UEngineResourceBase> _Res, std::string_view _Name, std::string_view _Path)
+	ENGINEAPI static void PushResource(std::shared_ptr<UEngineResourceBase> _Res, std::string_view _Name, std::string_view _Path)
 	{
 		const type_info& Info = typeid(ResType);
-		PushRes(_Res, Info.name(), _Name, _Path);
+		PushResource(_Res, Info.name(), _Name, _Path);
 	}
 
 	// resources 관리 함수들은 전부 다 core에서만 사용
-	ENGINEAPI static void PushRes(std::shared_ptr<UEngineResourceBase> _Res, const std::string_view _Info, std::string_view _Name, std::string_view _Path);
+	ENGINEAPI static void PushResource(std::shared_ptr<UEngineResourceBase> _Res, const std::string_view _Info, std::string_view _Name, std::string_view _Path);
 
 	ENGINEAPI UEnginePath GetPath()
 	{

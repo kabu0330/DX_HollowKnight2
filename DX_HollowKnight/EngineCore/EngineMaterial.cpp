@@ -71,16 +71,16 @@ std::shared_ptr<UEngineMaterial> UEngineMaterial::Create(std::string_view _Name)
 
 	if (true == Contains(UpperName))
 	{
-		MSGASSERT("이미 같은 이름의 머티리얼이 존재합니다. " + UpperName);
+		MSGASSERT("이미 등록된 머티리얼입니다. \n " + UpperName);
 		return nullptr;
 	}
 
 	std::shared_ptr<UEngineMaterial> NewRes = std::make_shared<UEngineMaterial>();
-	PushRes<UEngineMaterial>(NewRes, _Name, ""); // 텍스처 데이터 저장
+	PushResource<UEngineMaterial>(NewRes, _Name, ""); // 텍스처 데이터 저장
 	return NewRes; 
 }
 
-void UEngineMaterial::PrimitiveTopologySetting()
+void UEngineMaterial::IASetPrimitiveTopology()
 {
 	UEngineCore::GetDevice().GetContext()->IASetPrimitiveTopology(TOPOLOGY);
 }

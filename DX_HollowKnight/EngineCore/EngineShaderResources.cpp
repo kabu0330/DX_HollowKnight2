@@ -10,142 +10,142 @@ UEngineShaderResources::~UEngineShaderResources()
 {
 }
 
-void UEngineShaderResources::CreateSamplerRes(std::string_view _Name, UEngineSamplerRes _Res)
-{
-	std::string UpperString = UEngineString::ToUpper(_Name);
-
-	if (true == SamplerRes.contains(UpperString))
-	{
-		MSGASSERT("같은 이름 상수버퍼가 한 쉐이더에 2개가 존재합니다");
-		return;
-	}
-
-	SamplerRes[UpperString] = _Res;
-}
-
-void UEngineShaderResources::CreateTextureRes(std::string_view _Name, UEngineTextureRes _Res)
-{
-	std::string UpperString = UEngineString::ToUpper(_Name);
-
-	if (true == TextureRes.contains(UpperString))
-	{
-		MSGASSERT("같은 이름 상수버퍼가 한 쉐이더에 2개가 존재합니다");
-		return;
-	}
-
-	TextureRes[UpperString] = _Res;
-}
-
-void UEngineShaderResources::CreateConstantBufferRes(std::string_view _Name, UEngineConstantBufferRes _Res)
-{
-	std::string UpperString = UEngineString::ToUpper(_Name);
-
-	if (true == ConstantBufferRes.contains(UpperString))
-	{
-		MSGASSERT("같은 이름 상수버퍼가 한 쉐이더에 2개가 존재합니다");
-		return;
-	}
-
-	ConstantBufferRes[UpperString] = _Res;
-}
-
-void UEngineShaderResources::Setting()
-{
-	for (std::pair<const std::string, UEngineConstantBufferRes>& Res : ConstantBufferRes)
-	{
-		Res.second.Setting();
-	}
-
-	for (std::pair<const std::string, UEngineTextureRes>& Res : TextureRes)
-	{
-		Res.second.Setting();
-	}
-
-	for (std::pair<const std::string, UEngineSamplerRes>& Res : SamplerRes)
-	{
-		Res.second.Setting();
-	}
-}
-
-bool UEngineShaderResources::IsSampler(std::string_view _Name)
-{
-	std::string UpperName = UEngineString::ToUpper(_Name);
-	return SamplerRes.contains(UpperName);
-}
-
-bool UEngineShaderResources::IsTexture(std::string_view _Name)
-{
-	std::string UpperName = UEngineString::ToUpper(_Name);
-	return TextureRes.contains(UpperName);
-}
-bool UEngineShaderResources::IsConstantBuffer(std::string_view _Name)
-{
-	std::string UpperName = UEngineString::ToUpper(_Name);
-	return ConstantBufferRes.contains(UpperName);
-}
-
-void UEngineShaderResources::ConstantBufferLinkData(std::string_view _Name, void* _Data)
+void UEngineShaderResources::PushSamplerResource(std::string_view _Name, UEngineSamplerResource _Res)
 {
 	std::string UpperName = UEngineString::ToUpper(_Name);
 
-	if (false == ConstantBufferRes.contains(UpperName))
+	if (true == AllSamplerResources.contains(UpperName))
 	{
-		UEngineDebug::OutPutString("ConstantBufferRes.contains " + UpperName);
+		MSGASSERT("셰이더에 이미 등록된 샘플러입니다. \n" + UpperName);
 		return;
 	}
 
-	ConstantBufferRes[UpperName].Data = _Data;
+	AllSamplerResources[UpperName] = _Res;
 }
 
-void UEngineShaderResources::SamplerSetting(std::string_view _Name, std::string_view _ResName)
+void UEngineShaderResources::PushTextureResource(std::string_view _Name, UEngineTextureResource _Res)
 {
 	std::string UpperName = UEngineString::ToUpper(_Name);
 
-	if (false == SamplerRes.contains(UpperName))
+	if (true == AllTextureResources.contains(UpperName))
 	{
-		UEngineDebug::OutPutString("ConstantBufferRes.contains " + UpperName);
+		MSGASSERT("셰이더에 이미 등록된 텍스처입니다. \n" + UpperName);
 		return;
 	}
 
-	SamplerRes[UpperName].Res = UEngineSampler::Find<UEngineSampler>(_ResName);
-
+	AllTextureResources[UpperName] = _Res;
 }
 
-void UEngineShaderResources::TextureSetting(std::string_view _Name, std::string_view _ResName)
+void UEngineShaderResources::PushConstantBufferResource(std::string_view _Name, UEngineConstantBufferResource _Res)
 {
 	std::string UpperName = UEngineString::ToUpper(_Name);
 
-	if (false == TextureRes.contains(UpperName))
+	if (true == AllConstantBufferResources.contains(UpperName))
 	{
-		UEngineDebug::OutPutString("ConstantBufferRes.contains " + UpperName);
+		MSGASSERT("셰이더에 이미 등록된 상수 버퍼입니다. \n" + UpperName);
 		return;
 	}
 
-	TextureRes[UpperName].Res = UEngineTexture::Find<UEngineTexture>(_ResName);
+	AllConstantBufferResources[UpperName] = _Res;
 }
 
-void UEngineShaderResources::TextureSetting(std::string_view _Name, std::shared_ptr<UEngineTexture> _Texture)
+void UEngineShaderResources::BindToShaderSlot()
+{
+	for (std::pair<const std::string, UEngineConstantBufferResource>& Res : AllConstantBufferResources)
+	{
+		Res.second.BindToShaderSlot();
+	}
+
+	for (std::pair<const std::string, UEngineTextureResource>& Res : AllTextureResources)
+	{
+		Res.second.BindToShaderResources();
+	}
+
+	for (std::pair<const std::string, UEngineSamplerResource>& Res : AllSamplerResources)
+	{
+		Res.second.BindToSamplerSlot();
+	}
+}
+
+bool UEngineShaderResources::HasSampler(std::string_view _Name)
+{
+	std::string UpperName = UEngineString::ToUpper(_Name);
+	return AllSamplerResources.contains(UpperName);
+}
+
+bool UEngineShaderResources::HasTexture(std::string_view _Name)
+{
+	std::string UpperName = UEngineString::ToUpper(_Name);
+	return AllTextureResources.contains(UpperName);
+}
+bool UEngineShaderResources::HasConstantBuffer(std::string_view _Name)
+{
+	std::string UpperName = UEngineString::ToUpper(_Name);
+	return AllConstantBufferResources.contains(UpperName);
+}
+
+void UEngineShaderResources::LinkConstantBufferData(std::string_view _Name, void* _Data)
 {
 	std::string UpperName = UEngineString::ToUpper(_Name);
 
-	if (false == TextureRes.contains(UpperName))
+	if (false == AllConstantBufferResources.contains(UpperName))
 	{
-		UEngineDebug::OutPutString("TextureRes.contains " + UpperName);
+		UEngineDebug::OutputString("상수 버퍼를 먼저 생성해주세요. PushConstantBufferResource()" + UpperName);
 		return;
 	}
 
-	TextureRes[UpperName].Res = _Texture;
+	AllConstantBufferResources[UpperName].Data = _Data;
 }
 
-void UEngineShaderResources::Reset()
+void UEngineShaderResources::PushSampler(std::string_view _Name, std::string_view _ResName)
 {
-	for (std::pair<const std::string, UEngineTextureRes>& Res : TextureRes)
+	std::string UpperName = UEngineString::ToUpper(_Name);
+
+	if (false == AllSamplerResources.contains(UpperName))
 	{
-		Res.second.Reset();
+		UEngineDebug::OutputString("AllConstantBufferResources.contains " + UpperName);
+		return;
 	}
 
-	for (std::pair<const std::string, UEngineSamplerRes>& Res : SamplerRes)
+	AllSamplerResources[UpperName].Sampler = UEngineSampler::Find<UEngineSampler>(_ResName);
+
+}
+
+void UEngineShaderResources::PushTexture(std::string_view _Name, std::string_view _ResName)
+{
+	std::string UpperName = UEngineString::ToUpper(_Name);
+
+	if (false == AllTextureResources.contains(UpperName))
 	{
-		Res.second.Reset();
+		UEngineDebug::OutputString("AllConstantBufferResources.contains " + UpperName);
+		return;
+	}
+
+	AllTextureResources[UpperName].Texture = UEngineTexture::Find<UEngineTexture>(_ResName);
+}
+
+void UEngineShaderResources::PushTexture(std::string_view _Name, std::shared_ptr<UEngineTexture> _Texture)
+{
+	std::string UpperName = UEngineString::ToUpper(_Name);
+
+	if (false == AllTextureResources.contains(UpperName))
+	{
+		UEngineDebug::OutputString("AllTextureResources.contains " + UpperName);
+		return;
+	}
+
+	AllTextureResources[UpperName].Texture = _Texture;
+}
+
+void UEngineShaderResources::UnbindFromShaderSlot()
+{
+	for (std::pair<const std::string, UEngineTextureResource>& Res : AllTextureResources)
+	{
+		Res.second.UnbindFromShaderResources();
+	}
+
+	for (std::pair<const std::string, UEngineSamplerResource>& Res : AllSamplerResources)
+	{
+		Res.second.UnbindFromSamplerSlot();
 	}
 }

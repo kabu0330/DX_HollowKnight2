@@ -10,13 +10,13 @@ public:
 
 	static std::shared_ptr<UEngineBlend> Create(std::string_view _Name, const D3D11_BLEND_DESC& _Value);
 
-	void Setting();
+	void OMSetBlendState();
 
 protected:
-	void ResCreate(const D3D11_BLEND_DESC& _Value);
+	void CreateBlendState(const D3D11_BLEND_DESC& _Value);
 
 private:
-	Microsoft::WRL::ComPtr<ID3D11BlendState> State = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11BlendState> BlendState = nullptr;
 	FVector BlendFactor = FVector(0.0f, 0.0f, 0.0f, 0.0f);
 	// 비트가 1인 부분만 
 	UINT Mask = 0xFFFFFFFF;
