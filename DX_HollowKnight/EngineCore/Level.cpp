@@ -190,7 +190,7 @@ void ULevel::Render(float _DeltaTime)
 	}
 
 	// IMGUI ·£´õ¸µ
-	if (true == UEngineWindow::IsApplicationOn())
+	if (true == UEngineWindow::IsLoopActivate())
 	{
 		UEngineGUI::GUIRender(this);
 	}

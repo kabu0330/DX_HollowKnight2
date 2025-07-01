@@ -2,6 +2,7 @@
 #include "EngineSound.h"
 #include <EngineBase/EngineString.h>
 #include <EngineBase/EngineDebug.h>
+#include <mutex>
 
 std::map<std::string, UEngineSound*> UEngineSound::Sounds;
 std::list<USoundPlayer> UEngineSound::Players;
@@ -94,18 +95,18 @@ void UEngineSound::Init()
 {
 	if (FMOD_RESULT::FMOD_OK != FMOD::System_Create(&SoundSystem))
 	{
-		MSGASSERT("FMOD 시스템 이닛에 실패했습니다.");
+		MSGASSERT("FMOD 시스템 초기화에 실패했습니다.");
 		return;
 	}
 
 	if (FMOD_RESULT::FMOD_OK != SoundSystem->init(32, FMOD_DEFAULT, nullptr))
 	{
-		MSGASSERT("FMOD 시스템 이닛에 실패했습니다.");
+		MSGASSERT("FMOD 시스템 초기화에 실패했습니다.");
 		return;
 	}
 }
 
-void UEngineSound::AllSoundStop()
+void UEngineSound::StopAllSounds()
 {
 	std::list<USoundPlayer>::iterator StartIter = Players.begin();
 	std::list<USoundPlayer>::iterator EndIter = Players.end();
@@ -117,7 +118,7 @@ void UEngineSound::AllSoundStop()
 	}
 }
 
-void UEngineSound::AllSoundOn()
+void UEngineSound::TurnOnAllSound()
 {
 	std::list<USoundPlayer>::iterator StartIter = Players.begin();
 	std::list<USoundPlayer>::iterator EndIter = Players.end();
@@ -129,7 +130,7 @@ void UEngineSound::AllSoundOn()
 	}
 }
 
-void UEngineSound::AllSoundOff()
+void UEngineSound::TurnOffAllSounds()
 {
 	std::list<USoundPlayer>::iterator StartIter = Players.begin();
 	std::list<USoundPlayer>::iterator EndIter = Players.end();
@@ -167,7 +168,7 @@ void UEngineSound::Update()
 
 	if (FMOD_RESULT::FMOD_OK != SoundSystem->update())
 	{
-		MSGASSERT("FMOD 시스템 업데이트에 이상이 감지되었습니다.");
+		MSGASSERT("FMOD 시스템 업데이트에 실패했습니다.");
 	}
 }
 
@@ -209,15 +210,15 @@ UEngineSound::~UEngineSound()
 	}
 }
 
-void UEngineSound::Load(std::string_view _Path)
+void UEngineSound::LoadSound(std::string_view _Path)
 {
 	UEnginePath EnginePath = UEnginePath(_Path);
 	std::string FileName = EnginePath.GetFileNameToString();
 
-	UEngineSound::Load(FileName.data(), _Path);
+	UEngineSound::LoadSound(FileName.data(), _Path);
 }
 
-void UEngineSound::Load(std::string_view _Name, std::string_view _Path)
+void UEngineSound::LoadSound(std::string_view _Name, std::string_view _Path)
 {
 	{
 		std::lock_guard<std::mutex> Lock(SoundCriticalSection);
@@ -229,14 +230,14 @@ void UEngineSound::Load(std::string_view _Name, std::string_view _Path)
 		if (false != UEngineSound::Sounds.contains(UpperString))
 		{
 			delete NewSound;
-			MSGASSERT("이미 로드한 사운드를 또 로드하려고 했습니다." + UpperString);
+			MSGASSERT("이미 로드한 사운드입니다. " + UpperString);
 			return;
 		}
 
 		if (false == NewSound->LoadResource(_Path))
 		{
 			delete NewSound;
-			MSGASSERT("사운드 로드에 실패했습니다" + UpperString);
+			MSGASSERT("사운드 로드에 실패했습니다. 경로를 확인해주세요. " + UpperString);
 			return;
 		}
 
@@ -244,7 +245,7 @@ void UEngineSound::Load(std::string_view _Name, std::string_view _Path)
 	}
 }
 
-UEngineSound* UEngineSound::Find(std::string_view _Name)
+UEngineSound* UEngineSound::FindSound(std::string_view _Name)
 {
 	std::string UpperString = UEngineString::ToUpper(_Name);
 
@@ -260,23 +261,23 @@ USoundPlayer UEngineSound::Play(std::string_view _Name)
 {
 	std::string UpperString = UEngineString::ToUpper(_Name);
 
-	UEngineSound* FindSound = Find(_Name);
+	UEngineSound* Sound = FindSound(_Name);
 
-	if (nullptr == FindSound)
+	if (nullptr == Sound)
 	{
-		MSGASSERT("로드하지 않은 사운드를 재생하려고 했습니다" + UpperString);
+		MSGASSERT("사운드 목록에 대상이 없습니다. 사운드를 추가해 주세요. " + UpperString);
 	}
 
 	FMOD::Channel* Ch = nullptr;
 
-	SoundSystem->playSound(FindSound->SoundHandle, nullptr, false, &Ch);
+	SoundSystem->playSound(Sound->SoundHandle, nullptr, false, &Ch);
 
 	Ch->setLoopCount(0);
 	Ch->setVolume(1.0f);
 
 	USoundPlayer NewPlayer;
 	NewPlayer.Control = Ch;
-	NewPlayer.SoundHandle = FindSound->SoundHandle;
+	NewPlayer.SoundHandle = Sound->SoundHandle;
 
 	Players.push_back(NewPlayer);
 
@@ -290,7 +291,7 @@ bool UEngineSound::LoadResource(std::string_view _Path)
 
 	if (nullptr == SoundHandle)
 	{
-		MSGASSERT("사운드 로딩에 실패했습니다" + std::string(_Path));
+		MSGASSERT("사운드 로딩에 실패했습니다. 경로를 확인해 주세요." + std::string(_Path));
 		return false;
 	}
 

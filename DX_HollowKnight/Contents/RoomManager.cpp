@@ -213,7 +213,7 @@ void URoomManager::LoadPixelCollisionTexture(ARoom* _Room, UEngineWinImage* _Bmp
 	Dir.Append("MapData");
 	UEngineFile ImageFiles = Dir.GetFile(_FileName);
 
-	_BmpTexture->Load(nullptr, ImageFiles.GetPathToString()); // 픽셀 충돌 파일 설정
+	_BmpTexture->LoadWinImage(nullptr, ImageFiles.GetPathToString()); // 픽셀 충돌 파일 설정
 
 }
 

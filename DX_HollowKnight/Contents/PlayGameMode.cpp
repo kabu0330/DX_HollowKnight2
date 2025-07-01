@@ -167,7 +167,7 @@ void APlayGameMode::CreateRoomAndSound()
 
 		Rooms.CreateRoom(this);
 
-		UEngineSound::AllSoundOff();
+		UEngineSound::TurnOffAllSounds();
 		Sound = UEngineSound::Play("Dirtmouth 1.wav");
 
 		APlayHUD* HUD = dynamic_cast<APlayHUD*>(GetWorld()->GetHUD());

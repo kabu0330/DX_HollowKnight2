@@ -110,7 +110,7 @@ void AKnight::ResetLevel()
 	TimeEventer->AddEndEvent(0.5f, [this]()
 		{
 			UEngineCore::ResetLevel<APlayGameMode, AKnight, APlayHUD>("Play");
-			UEngineSound::AllSoundOff();
+			UEngineSound::TurnOffAllSounds();
 			
 		});
 

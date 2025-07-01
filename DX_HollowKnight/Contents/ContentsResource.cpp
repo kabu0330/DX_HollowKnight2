@@ -259,7 +259,7 @@ void UContentsResource::LoadSoundDirectory(std::string_view _DirectoryName, bool
 	for (size_t i = 0; i < SoundFile.size(); i++)
 	{
 		std::string FilePath = SoundFile[i].GetPathToString();
-		UEngineSound::Load(FilePath);
+		UEngineSound::LoadSound(FilePath);
 	}
 }
 
@@ -304,7 +304,7 @@ void UContentsResource::LoadSoundDirectoryByThread(std::string_view _DirectoryNa
 		std::string FileName = SoundFile[i].GetFileNameToString();
 		UEngineCore::GetThreadPool().WorkQueue([FilePath, FileName]()
 			{
-				UEngineSound::Load(FilePath);
+				UEngineSound::LoadSound(FilePath);
 				std::cout << FileName + " Work!" << std::endl;
 			});
 

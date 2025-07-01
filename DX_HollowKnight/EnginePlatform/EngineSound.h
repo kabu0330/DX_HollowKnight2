@@ -4,7 +4,6 @@
 #include <EnginePlatform/ThirdParty/FMOD/inc/fmod.hpp>
 
 #include "math.h"
-#include <mutex>
 
 class USoundPlayer 
 {
@@ -39,17 +38,17 @@ public:
 	ENGINEAPI UEngineSound();
 	ENGINEAPI ~UEngineSound();
 
-	ENGINEAPI static void Load(std::string_view _Path);
-	ENGINEAPI static void Load(std::string_view _Name, std::string_view _Path);
+	ENGINEAPI static void LoadSound(std::string_view _Path);
+	ENGINEAPI static void LoadSound(std::string_view _Name, std::string_view _Path);
 	ENGINEAPI static USoundPlayer Play(std::string_view _Name);
-	ENGINEAPI static UEngineSound* Find(std::string_view _Name);
+	ENGINEAPI static UEngineSound* FindSound(std::string_view _Name);
 	ENGINEAPI static void Release();
 
 	ENGINEAPI static void Update();
 
-	ENGINEAPI static void AllSoundStop();
-	ENGINEAPI static void AllSoundOff();
-	ENGINEAPI static void AllSoundOn();
+	ENGINEAPI static void StopAllSounds();
+	ENGINEAPI static void TurnOffAllSounds();
+	ENGINEAPI static void TurnOnAllSound();
 	ENGINEAPI static void Init();
 
 protected:

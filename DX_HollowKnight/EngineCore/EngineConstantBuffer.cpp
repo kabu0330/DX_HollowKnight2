@@ -62,20 +62,17 @@ void UEngineConstantBuffer::ChangeData(void* _Data, UINT _Size)
 {
 	if (_Size != BufferInfo.ByteWidth)
 	{
-		MSGASSERT("바이트 크기가 다르게 세팅되었습니다" + GetName());
+		MSGASSERT("버퍼 크기가 달라 상수 버퍼를 수정할 수 없습니다." + GetName());
 		return;
 	}
 
 	// FTransform& RendererTrans = GetTransformRef();
 	D3D11_MAPPED_SUBRESOURCE Data = {};
-	// 이 데이터를 사용하는 랜더링 랜더링 잠깐 정지
-	// 잠깐 그래픽카드야 멈 그래픽카드에 있는 상수버퍼 수정해야 해.
 	UEngineCore::GetDevice().GetContext()->Map(Buffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &Data);
 
-	// Data.pData 그래픽카드와 연결된 주소값.
 	if (nullptr == Data.pData)
 	{
-		MSGASSERT("그래픽카드가 수정을 거부했습니다.");
+		MSGASSERT("상수 버퍼 데이터 수정에 실패했습니다.");
 	}
 	memcpy_s(Data.pData, BufferInfo.ByteWidth, _Data, BufferInfo.ByteWidth);
 	UEngineCore::GetDevice().GetContext()->Unmap(Buffer.Get(), 0);

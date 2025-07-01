@@ -36,7 +36,7 @@ UEngineWinImage::~UEngineWinImage()
 	}
 }
 
-void UEngineWinImage::Create(UEngineWinImage* _TargetImage,  FVector _Scale)
+void UEngineWinImage::CreateWinImage(UEngineWinImage* _TargetImage,  FVector _Scale)
 {
 	if (nullptr == _TargetImage)
 	{
@@ -136,7 +136,7 @@ void UEngineWinImage::CopyToAlpha(UEngineWinImage* _TargetImage,
 	);
 }
 
-void UEngineWinImage::Load(UEngineWinImage* _TargetImage, std::string_view _Path)
+void UEngineWinImage::LoadWinImage(UEngineWinImage* _TargetImage, std::string_view _Path)
 {
 	UEnginePath Path = _Path;
 

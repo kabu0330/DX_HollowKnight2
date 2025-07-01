@@ -130,7 +130,7 @@ void ATitleGameMode::SetupPlayGameMode()
 		});
 	TimeEventer->AddEndEvent(2.5f, [this]()
 		{
-			UEngineSound::AllSoundStop();
+			UEngineSound::StopAllSounds();
 			PlayWorld = UEngineCore::CreateLevel<APlayGameMode, AKnight, APlayHUD>("Play").get();
 			UEngineCore::OpenLevel("Play");
 		});

@@ -1169,7 +1169,7 @@ void AFalseKnight::SetDeathLand(float _DeltaTime)
 	}
 	if (true == bIsDeath) // 딱 한번만 호출
 	{
-		UEngineSound::AllSoundOff();
+		UEngineSound::TurnOffAllSounds();
 		Sound = UEngineSound::Play("boss_explode_clean.wav");
 		Sound = UEngineSound::Play("boss_explode.wav");
 		TimeEventer->AddEndEvent(3.5f, [this]()

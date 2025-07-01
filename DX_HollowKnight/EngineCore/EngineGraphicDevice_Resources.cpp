@@ -212,15 +212,8 @@ void UEngineGraphicDevice::MaterialInit()
 		std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("CollisionDebugMaterial");
 		Mat->SetVertexShader("EngineDebugCollisionShader.fx");
 		Mat->SetPixelShader("EngineDebugCollisionShader.fx");
-		Mat->SetDepthStencilState("CollisionDebugDepth"); // 언제나 화면에 나오는 누구도 이녀석의 앞을 가릴수 없어.
+		Mat->SetDepthStencilState("CollisionDebugDepth");
 		Mat->SetRasterizerState("CollisionDebugRas");
-	}
-
-	{
-		std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("TargetMerge");
-		Mat->SetVertexShader("EngineTargetMergeShader.fx");
-		Mat->SetPixelShader("EngineTargetMergeShader.fx");
-		Mat->SetDepthStencilState("TargetMerge"); 
 	}
 
 	{
@@ -228,5 +221,12 @@ void UEngineGraphicDevice::MaterialInit()
 		Mat->SetVertexShader("EngineSpriteShader.fx");
 		Mat->SetPixelShader("EngineSpriteShader.fx");
 		Mat->SetDepthStencilState("UIDepth");
+	}
+
+	{
+		std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("TargetMerge");
+		Mat->SetVertexShader("EngineTargetMergeShader.fx");
+		Mat->SetPixelShader("EngineTargetMergeShader.fx");
+		Mat->SetDepthStencilState("TargetMerge"); 
 	}
 }

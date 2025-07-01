@@ -450,7 +450,7 @@ void AKnight::SetDeathDamage(float _DeltaTime)
 	if (false == bIsDeathSound)
 	{
 		bIsDeathSound = true;
-		UEngineSound::AllSoundOff();
+		UEngineSound::TurnOffAllSounds();
 		Sound = UEngineSound::Play("hero_death_extra_details.wav");
 		TimeEventer->AddEndEvent(5.0f, [this]()
 			{

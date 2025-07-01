@@ -277,7 +277,7 @@ void ARoom::SoundPlay()
 	}
 	if (CurSoundName != SoundName)
 	{
-		UEngineSound::AllSoundStop();
+		UEngineSound::StopAllSounds();
 
 		if ("Dirtmouth" == GetName())
 		{

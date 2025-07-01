@@ -22,7 +22,6 @@ public:
 
 	ENGINEAPI bool IsIdle() const;
 
-
 protected:
 
 private:

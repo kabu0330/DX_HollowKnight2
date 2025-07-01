@@ -14,12 +14,12 @@ public:
 		return ImageDC;
 	}
 	
-	ENGINEAPI void Create(HDC _DC)
+	ENGINEAPI void CreateWinImageHDC(HDC _DC)
 	{
 		ImageDC = _DC;
 	}
 
-	ENGINEAPI void Create(UEngineWinImage* _TargetImage, FVector _Scale);
+	ENGINEAPI void CreateWinImage(UEngineWinImage* _TargetImage, FVector _Scale);
 
 	ENGINEAPI void CopyToBit(UEngineWinImage* _TargetImage, const FTransform& _Trans);
 
@@ -34,7 +34,7 @@ public:
 		unsigned char _Alpha);
 
 
-	ENGINEAPI void Load(UEngineWinImage* _TargetImage, std::string_view _Path);
+	ENGINEAPI void LoadWinImage(UEngineWinImage* _TargetImage, std::string_view _Path);
 
 	ENGINEAPI FVector GetImageScale() const
 	{

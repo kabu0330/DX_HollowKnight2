@@ -68,7 +68,7 @@ UEngineCore::~UEngineCore()
 void UEngineCore::CreateAndShowWindow(HINSTANCE _Instance)
 {
 	UEngineWindow::InitEngineWindow(_Instance);
-	GEngine->MainWindow.Open("MainWindow");
+	GEngine->MainWindow.OpenWindow("MainWindow");
 }
 
 void UEngineCore::LoadContents(std::string_view _DllName)

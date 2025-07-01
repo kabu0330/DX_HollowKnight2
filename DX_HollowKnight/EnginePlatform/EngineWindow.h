@@ -18,8 +18,8 @@ public:
 	ENGINEAPI UEngineWindow();
 	ENGINEAPI ~UEngineWindow();
 
-	ENGINEAPI void Create(std::string_view _TitleName, std::string_view _ClassName = "Default");
-	ENGINEAPI void Open(std::string_view _TitleName = "Window");
+	ENGINEAPI void CreateEngineWindow(std::string_view _TitleName, std::string_view _ClassName = "Default");
+	ENGINEAPI void OpenWindow(std::string_view _TitleName = "Window");
 
 	ENGINEAPI inline FVector GetWindowSize() const
 	{
@@ -35,14 +35,14 @@ public:
 
 	ENGINEAPI FVector GetMousePos();
 
-	ENGINEAPI static void ApplicationOff()
+	ENGINEAPI static void EndLoopActivate()
 	{
-		LoopActive = false;
+		IsLoopActive = false;
 	}
 
-	ENGINEAPI static bool IsApplicationOn()
+	ENGINEAPI static bool IsLoopActivate()
 	{
-		return LoopActive;
+		return IsLoopActive;
 	}
 
 	ENGINEAPI static int GetWheelDir();
@@ -53,7 +53,7 @@ public:
 		return WindowHandle;
 	}
 
-	ENGINEAPI static  void SetCustomProc(std::function<bool(HWND, UINT, WPARAM, LPARAM)> _CustomProc);
+	ENGINEAPI static void SetCustomProc(std::function<bool(HWND, UINT, WPARAM, LPARAM)> _CustomProc);
 
 	ENGINEAPI bool IsFocus()
 	{
@@ -68,8 +68,7 @@ private:
 
 	ENGINEAPI static HINSTANCE hInstance;
 
-	// 헤더쪽에서 초기화하는 방법
-	inline static bool LoopActive = true;
+	inline static bool IsLoopActive = true;
 
 	ENGINEAPI static std::map<std::string, WNDCLASSEXA> WindowClasses;
 

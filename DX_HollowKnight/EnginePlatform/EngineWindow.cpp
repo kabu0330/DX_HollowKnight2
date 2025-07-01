@@ -68,7 +68,7 @@ LRESULT CALLBACK UEngineWindow::WndProc(HWND hWnd, UINT message, WPARAM wParam, 
         --WindowCount;
         if (0 >= WindowCount)
         {
-            UEngineWindow::LoopActive = false;
+            UEngineWindow::IsLoopActive = false;
         }
         break;
     default:
@@ -112,7 +112,7 @@ int UEngineWindow::WindowMessageLoop(std::function<void()> _StartFunction, std::
         return 0;
     }
 
-    while (true == LoopActive)
+    while (true == IsLoopActive)
     {
         if(0 != PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
@@ -120,7 +120,7 @@ int UEngineWindow::WindowMessageLoop(std::function<void()> _StartFunction, std::
             DispatchMessage(&msg);
         }
 
-        if (false == LoopActive)
+        if (false == IsLoopActive)
         {
             break;
         }
@@ -168,7 +168,7 @@ UEngineWindow::~UEngineWindow()
     }
 }
 
-void UEngineWindow::Create(std::string_view _TitleName, std::string_view _ClassName)
+void UEngineWindow::CreateEngineWindow(std::string_view _TitleName, std::string_view _ClassName)
 {
     if (nullptr != WindowHandle)
     {
@@ -195,12 +195,12 @@ void UEngineWindow::Create(std::string_view _TitleName, std::string_view _ClassN
     AllWindows.insert({ WindowHandle, this });
 }
 
-void UEngineWindow::Open(std::string_view _TitleName /*= "Window"*/)
+void UEngineWindow::OpenWindow(std::string_view _TitleName /*= "Window"*/)
 {
     if (0 == WindowHandle)
     {
         // ¸¸µé¾î
-        Create(_TitleName);
+        CreateEngineWindow(_TitleName);
     }
 
     if (0 == WindowHandle)
