@@ -62,7 +62,7 @@ void AKnight::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
 
-	ActivePixelCollsion();
+	ActivatePixelCollsion();
 
 	SetCameraPos();
 	//CheckCameraPos();
@@ -121,7 +121,7 @@ void AKnight::UpdateFSM(float _DeltaTime)
 	FSM.Update(_DeltaTime);
 }
 
-void AKnight::ActiveGravity()
+void AKnight::ActivateGravity()
  {
 	if (true == NoneGravity)
 	{
@@ -135,7 +135,7 @@ void AKnight::ActiveGravity()
 	}
 }
 
-void AKnight::ActivePixelCollsion()
+void AKnight::ActivatePixelCollsion()
 {
 	if (true == NoneGravity)
 	{

@@ -102,7 +102,7 @@ void AMonster::SetIdle(float _DeltaTime)
 
 	ResetRendererOffset();
 
-	ActiveGravity();
+	ActivateGravity();
 	CheckDeath();
 
 	Stat.SetBeingHit(false);
@@ -137,7 +137,7 @@ void AMonster::SetWalk(float _DeltaTime)
 	//UEngineDebug::OutputString("Monster FSM : Walk");
 	SetWalkRendererOffset();
 	CheckDeath();
-	ActiveGravity();
+	ActivateGravity();
 
 	PlayStaticSound(StaticSound);
 
@@ -181,7 +181,7 @@ void AMonster::SetAttackAnticipate(float _DeltaTime)
 {
 	//SetAttackRendererOffset();
 	CheckDeath();
-	ActiveGravity();
+	ActivateGravity();
 
 	if (true == bCanFly)
 	{
@@ -214,7 +214,7 @@ void AMonster::SetAttack(float _DeltaTime)
 	//UEngineDebug::OutputString("Monster FSM : Attack");
 	SetAttackRendererOffset();
 	CheckDeath();
-	ActiveGravity();
+	ActivateGravity();
 
 	Dash();
 	SoundPlay(AttackSound);
@@ -260,7 +260,7 @@ void AMonster::SetAttackRecovery(float _DeltaTime)
 	}
 
 	CheckDeath();
-	ActiveGravity();
+	ActivateGravity();
 
 
 	bIsFirstIdle = true; // Idle로 돌아갈때 반드시 넣어주기
@@ -271,7 +271,7 @@ void AMonster::SetAttackRecovery(float _DeltaTime)
 void AMonster::SetHit(float _DeltaTime)
 {
 	CheckDeath();
-	ActiveGravity();
+	ActivateGravity();
 }
 
 void AMonster::SetDeathAir(float _DeltaTime)
@@ -284,7 +284,7 @@ void AMonster::SetDeathAir(float _DeltaTime)
 	Stat.SetKnockbackDir(FVector::ZERO);
 
 	bCanFly = false; // 하늘을 나는 애도 중력 적용 받도록
-	ActiveGravity();
+	ActivateGravity();
 
 	CheckDirectionToPlayer();
 	CheckDirection(); // 좌우 반전 적용
@@ -318,7 +318,7 @@ void AMonster::SetDeathLand(float _DeltaTime)
 
 	//UEngineDebug::OutputString("Monster FSM : Death");
 	bCanFly = false; // 하늘을 나는 애도 중력 적용 받도록
-	ActiveGravity();
+	ActivateGravity();
 
 	CheckDirection(); // 좌우 반전 적용
 

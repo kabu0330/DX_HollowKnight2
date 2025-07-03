@@ -306,7 +306,7 @@ void AFalseKnight::SetIdle(float _DeltaTime)
 	ChangeStunAnimation();
 
 
-	ActiveGravity();
+	ActivateGravity();
 
 	Stat.SetBeingHit(false);
 	Stat.SetAttacking(false);
@@ -364,7 +364,7 @@ void AFalseKnight::SetIdle(float _DeltaTime)
 
 void AFalseKnight::SetJumpAnticipate(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 
 	ChangeStunAnimation();
 
@@ -394,7 +394,7 @@ void AFalseKnight::SetJumpAnticipate(float _DeltaTime)
 void AFalseKnight::SetJump(float _DeltaTime)
 {
 	SoundPlay("false_knight_jump.wav");
-	ActiveGravity();
+	ActivateGravity();
 
 	ChangeStunAnimation();
 
@@ -432,7 +432,7 @@ void AFalseKnight::SetLand(float _DeltaTime)
 		BossVoice.SetVolume(0.8f);
 		bIsLandSound = true;
 	}
-	ActiveGravity();
+	ActivateGravity();
 
 	ChangeStunAnimation();
 
@@ -465,7 +465,7 @@ void AFalseKnight::SetLand(float _DeltaTime)
 void AFalseKnight::SetJumpAttackAnticipate(float _DeltaTime)
 {
 	SoundPlay("false_knight_jump.wav");
-	ActiveGravity();
+	ActivateGravity();
 
 	ChangeStunAnimation();
 
@@ -488,7 +488,7 @@ void AFalseKnight::SetJumpAttackAnticipate(float _DeltaTime)
 
 void AFalseKnight::SetJumpAttack(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 
 	ChangeStunAnimation();
 
@@ -547,7 +547,7 @@ void AFalseKnight::CreateJumpAttackLogicAndEffect()
 
 void AFalseKnight::SetJumpAttackRecovery(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 
 	bIsAttackEffect = false;
 	ChangeStunAnimation();
@@ -562,7 +562,7 @@ void AFalseKnight::SetJumpAttackLand(float _DeltaTime)
 {
 	BossPatternSound("false_knight_land.wav", 0.8f);
 
-	ActiveGravity();
+	ActivateGravity();
 
 	ChangeStunAnimation();
 
@@ -575,7 +575,7 @@ void AFalseKnight::SetJumpAttackLand(float _DeltaTime)
 
 void AFalseKnight::SetAttackAnticipate(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 
 	ChangeStunAnimation();
 
@@ -600,7 +600,7 @@ void AFalseKnight::SetAttackAnticipate(float _DeltaTime)
 
 void AFalseKnight::SetAttack(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 
 	ChangeStunAnimation();
 
@@ -747,7 +747,7 @@ void AFalseKnight::CreateDropObject()
 
 void AFalseKnight::SetAttackRecovery(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 
 	ChangeStunAnimation();
 
@@ -764,7 +764,7 @@ void AFalseKnight::SetAttackRecovery(float _DeltaTime)
 
 void AFalseKnight::SetAttackRecovery2(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 
 	ChangeStunAnimation();
 
@@ -785,7 +785,7 @@ void AFalseKnight::SetAttackRecovery2(float _DeltaTime)
 
 void AFalseKnight::SetBerserkAttackAnticipate(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 
 	ChangeStunAnimation();
 
@@ -810,7 +810,7 @@ void AFalseKnight::SetBerserkAttack(float _DeltaTime)
 		bIsBerserkVoice = true;
 	}
 
-	ActiveGravity();
+	ActivateGravity();
 
 	ChangeStunAnimation();
 	// 렌더러 위치 조정
@@ -854,7 +854,7 @@ void AFalseKnight::SetBerserkAttack(float _DeltaTime)
 
 void AFalseKnight::SetBerserkAttack2(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 
 	ChangeStunAnimation();
 
@@ -897,7 +897,7 @@ void AFalseKnight::SetBerserkAttack2(float _DeltaTime)
 
 void AFalseKnight::SetBerserkAttackRecovery(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 
 	ChangeStunAnimation();
 
@@ -930,7 +930,7 @@ void AFalseKnight::SetBerserkAttackRecovery(float _DeltaTime)
 
 void AFalseKnight::SetBerserkAttackRecovery2(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 
 	ChangeStunAnimation();
 
@@ -958,7 +958,7 @@ void AFalseKnight::SetStun(float _DeltaTime)
 		Jump(_DeltaTime);
 	}
 
-	ActiveGravity();
+	ActivateGravity();
 
 	ResetRendererOffset();
 	BodyCollision->SetActive(false); // 본체는 무적
@@ -996,7 +996,7 @@ void AFalseKnight::CreateStunEffect()
 
 void AFalseKnight::SetStunOpen(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 	bIsStunEffect = false;
 
 	if (false == bIsStunGroundSound && true == bIsOnGround)
@@ -1028,7 +1028,7 @@ void AFalseKnight::SetStunOpen(float _DeltaTime)
 
 void AFalseKnight::SetStunHit(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 	UEngineDebug::OutputString("스턴 히트" + std::to_string(HeadHp));
 
 	Head->GetRenderer()->ChangeAnimation("StunHit");
@@ -1070,7 +1070,7 @@ void AFalseKnight::SetStunHit(float _DeltaTime)
 
 void AFalseKnight::SetStunRecovery(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 
 	bIsStunVoice = false;
 	bIsStunGroundSound = false;
@@ -1099,7 +1099,7 @@ void AFalseKnight::SetStunRecovery(float _DeltaTime)
 
 void AFalseKnight::SetDeathAir(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 	BodyCollision->SetActive(false);
 	Head->SetActive(false);
 	bIsDeath = true;
@@ -1161,7 +1161,7 @@ void AFalseKnight::CreateDeathOrangeParticleEffect()
 
 void AFalseKnight::SetDeathLand(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 	if (false == bIsStunGroundSound && true == bIsOnGround)
 	{
 		BossVoice = UEngineSound::Play("false_knight_land_1st_time.wav");

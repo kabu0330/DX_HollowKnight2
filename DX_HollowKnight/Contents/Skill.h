@@ -37,7 +37,7 @@ protected:
 
 private:
 	bool IsCurRoom();
-	void ActivePixelCollision();
+	void ActivatePixelCollision();
 	bool IsPixelCollision(FVector _CollisionPoint);
 	
 	void ChangeNextAnimation();

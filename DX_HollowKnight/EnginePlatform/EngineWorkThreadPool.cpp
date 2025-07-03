@@ -92,7 +92,11 @@ void UEngineWorkThreadPool::WorkQueue(std::function<void()> _Work)
 	UWork* NewWork = new UWork();
 	NewWork->Function = _Work;
 
-	PostQueuedCompletionStatus(IOCPHandle, static_cast<DWORD>(EThreadStatus::WORK), reinterpret_cast<ULONG_PTR>(NewWork), nullptr);
+	PostQueuedCompletionStatus(
+		IOCPHandle, 
+		static_cast<DWORD>(EThreadStatus::WORK), 
+		reinterpret_cast<ULONG_PTR>(NewWork), 
+		nullptr);
 }
 
 bool UEngineWorkThreadPool::IsIdle() const

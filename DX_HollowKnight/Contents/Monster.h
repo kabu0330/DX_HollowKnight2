@@ -384,8 +384,8 @@ protected:
 	FVector CeilPointOffset = FVector::ZERO;	
 
 	void CheckCurRoom();
-	void ActivePixelCollision();
-	void ActiveGravity();
+	void ActivatePixelCollision();
+	void ActivateGravity();
 
 protected:
 	USoundPlayer Sound;

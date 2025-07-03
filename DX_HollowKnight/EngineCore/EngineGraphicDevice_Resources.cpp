@@ -124,16 +124,16 @@ void UEngineGraphicDevice::InitMesh()
 		UEngineVertexBuffer::CreateVertexBuffer("Rect", Vertexs);
 	}
 	{
-		std::vector<unsigned int> Indexs;
+		std::vector<unsigned int> Indices;
 
-		Indexs.push_back(0);
-		Indexs.push_back(1);
-		Indexs.push_back(2);
+		Indices.push_back(0);
+		Indices.push_back(1);
+		Indices.push_back(2);
 
-		Indexs.push_back(1);
-		Indexs.push_back(3);
-		Indexs.push_back(2);
-		UEngineIndexBuffer::CreateIndexBuffer("Rect", Indexs);
+		Indices.push_back(1);
+		Indices.push_back(3);
+		Indices.push_back(2);
+		UEngineIndexBuffer::CreateIndexBuffer("Rect", Indices);
 	}
 	// 포지션을 1로 하면 화면 전체를 가리는 메시를 만들 수 있다.
 	{

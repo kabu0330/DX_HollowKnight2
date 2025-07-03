@@ -107,7 +107,7 @@ void ALeapingHusk::SetAttack(float _DeltaTime)
 {
 	//UEngineDebug::OutputString("Monster FSM : Attack");
 	CheckDeath();
-	ActiveGravity();
+	ActivateGravity();
 
 	Dash();
 	Jump(_DeltaTime);

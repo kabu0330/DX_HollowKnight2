@@ -269,7 +269,7 @@ void AMonster::CreatePixelCollision()
 	PixelCollision->SetDebugColor({ 1.0f, 1.0f, 1.0f });
 }
 
-void AMonster::ActivePixelCollision()
+void AMonster::ActivatePixelCollision()
 {
 	if (true == IsCurRoom())
 	{
@@ -278,7 +278,7 @@ void AMonster::ActivePixelCollision()
 	}
 }
 
-void AMonster::ActiveGravity()
+void AMonster::ActivateGravity()
 {
 	if (true == IsCurRoom())
 	{

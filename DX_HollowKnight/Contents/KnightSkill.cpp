@@ -26,7 +26,7 @@ void AKnightSkill::Tick(float _DeltaTime)
 	ASkill::Tick(_DeltaTime);
 	KnightPos = AKnight::GetPawn()->GetActorLocation();
 }
-
+ 
 void AKnightSkill::SetCollisionEvent()
 {
 	Collision->SetCollisionEnter(std::bind(&AKnightSkill::Collide, this, std::placeholders::_1, std::placeholders::_2));

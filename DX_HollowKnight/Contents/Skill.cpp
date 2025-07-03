@@ -38,7 +38,7 @@ void ASkill::Tick(float _DeltaTime)
 	AEffect::Tick(_DeltaTime);
 
 	ChangeNextAnimation();
-	ActivePixelCollision();
+	ActivatePixelCollision();
 	Release();
 }
 
@@ -78,7 +78,7 @@ bool ASkill::IsCurRoom()
 	return false;
 }
 
-void ASkill::ActivePixelCollision()
+void ASkill::ActivatePixelCollision()
 {
 	if (true == IsCurRoom())
 	{

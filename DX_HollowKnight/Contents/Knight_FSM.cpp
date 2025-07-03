@@ -7,7 +7,7 @@
 
 void AKnight::SetIdle(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 	Move(_DeltaTime);
 	RecoveryIdle(); // 정상 동작 상태로 전환
 
@@ -42,7 +42,7 @@ void AKnight::SetIdle(float _DeltaTime)
 
 void AKnight::SetRun(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 	Move(_DeltaTime);
 
 	bCanRotation = true;
@@ -79,7 +79,7 @@ void AKnight::SetRun(float _DeltaTime)
 
 void AKnight::SetIdleToRun(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 	Move(_DeltaTime);
 
 	bCanRotation = true;
@@ -110,7 +110,7 @@ void AKnight::SetIdleToRun(float _DeltaTime)
 
 void AKnight::SetRunToIdle(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 	Move(_DeltaTime);
 
 	bCanRotation = true;
@@ -137,7 +137,7 @@ void AKnight::SetRunToIdle(float _DeltaTime)
 
 void AKnight::SetJump(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 	Jump(_DeltaTime);
 
 	Move(_DeltaTime);
@@ -164,7 +164,7 @@ void AKnight::SetJump(float _DeltaTime)
 
 void AKnight::SetAirborne(float _DeltaTime)
 {
- 	ActiveGravity();
+ 	ActivateGravity();
 	Move(_DeltaTime);
 
 	RecoveryIdle(); // 정상 동작 상태로 전환
@@ -190,7 +190,7 @@ void AKnight::SetLand(float _DeltaTime)
 {
 	if (true != bWasHardLanding)
 	{
-		ActiveGravity();
+		ActivateGravity();
 		Move(_DeltaTime);
 		Stat.SetBeingHit(false);
 
@@ -229,7 +229,7 @@ void AKnight::SetLand(float _DeltaTime)
 
 void AKnight::SetHardLand(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 	float InitJumpForce = 600.0f;
 	JumpForce = InitJumpForce;
 	bIsHardLand = false;
@@ -276,7 +276,7 @@ void AKnight::SetDash(float _DeltaTime)
 
 void AKnight::SetSlash(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 	Move(_DeltaTime);
 	bCanRotation = true; // 회전 허용
 	bIsShowEffect;
@@ -287,7 +287,7 @@ void AKnight::SetSlash(float _DeltaTime)
 
 void AKnight::SetUpSlash(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 	Move(_DeltaTime);
 
 	SpawnUpSlash();
@@ -296,7 +296,7 @@ void AKnight::SetUpSlash(float _DeltaTime)
 
 void AKnight::SetDownSlash(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 	Move(_DeltaTime);
 
 	SpawnDownSlash();
@@ -305,7 +305,7 @@ void AKnight::SetDownSlash(float _DeltaTime)
 
 void AKnight::SetFocus(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 	bIsFocusEffect = false;
 	bIsFocusEndEffect = false;
 
@@ -323,7 +323,7 @@ void AKnight::SetFocus(float _DeltaTime)
 
 void AKnight::SetFocusGet(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 	SpawnFocus();
 
 	if (UEngineInput::IsUp('A'))
@@ -337,7 +337,7 @@ void AKnight::SetFocusGet(float _DeltaTime)
 
 void AKnight::SetFocusEnd(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 	SpawnFocusEnd();
 	bIsFocusEndEffect = true;
 
@@ -468,7 +468,7 @@ void AKnight::SetDeath(float _DeltaTime)
 
 void AKnight::SetDeathHead(float _DeltaTime)
 {
-	ActiveGravity();
+	ActivateGravity();
 
 	AddActorRotation({ 0.0f, 0.0f, -2.0f * _DeltaTime });
 	BodyRenderer->SetRelativeLocation({ 0.0f, -25.0f, 0.0f });

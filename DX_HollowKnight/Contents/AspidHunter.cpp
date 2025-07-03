@@ -107,7 +107,7 @@ void AAspidHunter::SetAttack(float _DeltaTime)
 
 	SetAttackRendererOffset();
 	CheckDeath();
-	ActiveGravity();
+	ActivateGravity();
 
 	//Dash();
 

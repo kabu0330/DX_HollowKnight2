@@ -323,8 +323,8 @@ private:
 
 
 	// ÇÈ¼¿Ãæµ¹
-	void ActiveGravity();
-	void ActivePixelCollsion();
+	void ActivateGravity();
+	void ActivatePixelCollsion();
 
 	USoundPlayer Sound;
 	bool bIsSound = false;

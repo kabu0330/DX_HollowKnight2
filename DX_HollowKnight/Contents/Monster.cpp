@@ -84,7 +84,7 @@ void AMonster::Tick(float _DeltaTime)
 
 	CheckCurRoom(); // 현재 나이트가 속한 룸 위치를 계속 체크
 	SetPause(); // 나이트가 몬스터가 속한 룸과 일치하지 않으면 bIsPause로 정지
-	ActivePixelCollision(); // 픽셀 충돌
+	ActivatePixelCollision(); // 픽셀 충돌
 
 	Knockback(_DeltaTime);
 	ReverseForce(_DeltaTime);
