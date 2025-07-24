@@ -250,7 +250,7 @@ ___
 png파일을 처리하는 것은 DX의 RenderingPipeline과 DirectTex의 힘을 빌리는 것이고  
 bmp파일은 WindowsAPI의 HDC와 BITMAP을 이용하는 것으로 해당 프레임워크 구조에서는 bmp파일은 OS계층, png파일은 GameEngine 계층으로 구분됩니다.  </p>
 
-여기서 문제는 Engine 계층은 Transform을 가지지만, 상위 계층인 OS 계층은 Transform 클래스를 포함하는 것은 계층 구조에 위배됩니다.  </p>
+여기서 문제는 Engine 계층은 Transform을 가지지만, 상위 계층인 OS 계층이 Transform 클래스를 포함한다면 이는 계층 구조에 위배됩니다.  </p>
 이 문제를 해결하기 위한 대안으로 플레이어의 데카르트 좌표계를 스크린 좌표계로 변환하여 픽셀충돌을 검사하는 방식을 채택했습니다. </p>
 
 
@@ -338,6 +338,8 @@ void AKnight::SetCollisionEvent()
 
 이제 충돌이 발생하면 &AKnight::Colide()가 호출됩니다. 이 때 UCollision* 두 개가 인자로 넘어오고 This와 Other로 구분하여 자신과 상대를 처리할 수 있습니다.  
 원활한 충돌 처리를 위해 UCollision은 자신을 소유한 액터가 누구인지 알 수 있는 GetActor() 함수를 가지고 있습니다. 
+<img width="2019" height="505" alt="image" src="https://github.com/user-attachments/assets/caac1908-43e0-48c7-8007-a3a118fd3141" />
+
 
 
 
