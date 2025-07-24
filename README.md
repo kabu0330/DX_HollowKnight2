@@ -154,7 +154,8 @@ std::shared_ptr<UEngineSprite> UEngineSprite::CreateSpriteToMeta(std::string_vie
 	{
 		std::string Name = _Name.data();
 		std::string Ext = _DataFileExt.data();
-		MSGASSERT(Name + Ext + " 의 Unity 메타 파일을 찾지 못했습니다. 파일 이름 또는 확장자 명을 확인해주세요.");
+		MSGASSERT(Name + Ext + " 의 Unity 메타 파일을 찾지 못했습니다. \n
+                           파일 이름 또는 확장자 명을 확인해주세요.");
 		return nullptr;
 	}
 
