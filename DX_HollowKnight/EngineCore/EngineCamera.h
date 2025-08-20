@@ -5,7 +5,7 @@
 #include "SceneComponent.h"
 #include "EngineEnums.h"
 
-// 설명 : 뷰포트 설정, View / Projection 행렬 갱신, 렌더링
+// 설명 : 뷰포트 설정, View / Projection 행렬 갱신, 렌더랑
 class UEngineCamera : public USceneComponent
 {
 	friend class ULevel;
