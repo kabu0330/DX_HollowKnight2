@@ -20,7 +20,7 @@
 ### 게임 엔진 프레임워크
 
 <p align="center">
- <img alt="이미지" src="./Readme/EngineArchtecture.png">
+ <img alt="이미지" src="./readme/EngineArchtecture.png">
 </p>
 
 <p>
