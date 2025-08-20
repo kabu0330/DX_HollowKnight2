@@ -264,6 +264,8 @@ void UEngineCore::EngineFrame()
 
 </details>
 
+___
+
 #### ```ULevel``` : 게임의 무대
 게임에 등장하는 모든 오브젝트, 카메라, 충돌 시스템 등 게임 세상에 존재하는 모든 요소를 총괄하고 관리하는 클래스입니다. 언리얼 엔진의 ```UWorld```와 유사한 개념으로, 모든 게임플레이 로직이 시작되는 무대입니다. <br>
 
@@ -421,7 +423,9 @@ void ULevel::Render(float _DeltaTime)
 <br>
 </details>
 
-### ```AActor``` : 컴포넌트를 조합하여 완성하는 무대 위의 배우
+___
+
+#### ```AActor``` : 컴포넌트를 조합하여 완성하는 무대 위의 배우
 ```ULevel```이 무대라면, ```AActor```는 무대 위에서 연기할 수 있는 배우입니다. 하지만 액터는 텅 빈 껍데기와 같아서, 액터 스스로는 화면에 렌더링할 수도, 크기와 위치를 가질 수도 없습니다. 다양한 컴포넌트를 조합해야 비로소 완전한 기능을 갖춘 하나의 오브젝트가 됩니다.
 
 * ```AActor```는 크게 두 가지 핵심적인 역할을 수행합니다.
@@ -507,7 +511,9 @@ void AActor::Tick(float _DeltaTime)
 <br>
 </details>
 
-### ```Component``` : 기능 단위
+___
+
+#### ```Component``` : 기능 단위
 컴포넌트는 역할에 따라 **'논리적 기능'**과 **'물리적 실체'**를 담당하는 두 종류로 나뉩니다. 이는 모든 기능이 위치 정보를 가질 필요는 없다는 설계 철학에 기반하며, 각각 ```UActorComponent```와 ```USceneComponent```가 그 역할을 담당합니다.
 
 #### ```UActorComponent``` : 논리적 기능
@@ -538,7 +544,7 @@ void UTransformObject::SetupAttachment(UTransformObject* _Parent)
 <br>
 
 ## 2. 컨텐츠  
-### ```USpriteRenderer``` : 2D 그래픽과 애니메이션의 핵심
+#### ```USpriteRenderer``` : 2D 그래픽과 애니메이션의 핵심
 ```USpriteRenderer```는 2D 이미지를 화면에 그리고 여러 이미지를 연속으로 재생하여 애니메이션을 구현하는 **2D 렌더링의 핵심 컴포넌트**입니다. ```USceneComponent```를 상속받아 월드에 배치될 수 있는 물리적 실체를 가지며 ```AActor```에 부착되어 해당 액터의 시각적 모습을 담당합니다.
 
 * 주요 기능
@@ -648,7 +654,9 @@ void UEngineTexture::CreateRenderTargetView(Microsoft::WRL::ComPtr<ID3D11Texture
 <br>
 </details>
 
-### 픽셀 충돌 : 엔진 계층 문제를 우회한 좌표계 변환
+___
+
+#### 픽셀 충돌 : 엔진 계층 문제를 우회한 좌표계 변환
 맵과 캐릭터 간 충돌은 픽셀 단위로 정밀하게 검사하는 픽셀 충돌 방식을 사용했습니다. 이 과정에서 화면에 보이는 배경(png)과 실제 충돌 판정에 사용되는 데이터(bmp) 간의 동기화 문제를 해결하는 것이 핵심 과제였습니다.
 
 <p align="center">
@@ -704,8 +712,9 @@ bool ARoom::IsOnGround(FVector _Pos)
 <br>
 </details>
 
+___
 
-### ```UCollision``` : 프로필 기반 이벤트 방식의 충돌 시스템
+#### ```UCollision``` : 프로필 기반 이벤트 방식의 충돌 시스템
 ```UCollision```은 액터에 부착되어 물리적인 경계(Hitbox)를 정의하고, 다른 충돌체와의 상호작용을 감지하는 핵심 컴포넌트입니다. 단순히 충돌 여부만 확인하는 것을 넘어, **충돌 프로필(Collision Profile)**을 통해 충돌 그룹을 관리하고, **이벤트 기반**으로 충돌 상황에 따른 로직을 처리하도록 설계되었습니다
 
 
@@ -823,7 +832,8 @@ void UCollision::CheckCollisionEvent(std::shared_ptr<UCollision> _Other)
 </p>
 
 ___
-### ```ASkill``` : 스킬 로직
+
+#### ```ASkill``` : 스킬 로직
 단순히 캐릭터의 위치에서 이펙트만 재생하는 것이 아니라, 모든 스킬을 독립된 ```AActor```로 설계하여 역할과 책임을 명확히 분리했습니다. 캐릭터는 스킬을 ```SpawnActor```만 할 뿐, 이후의 충돌 처리, 이펙트 재생, 소멸 등 모든 로직은 스킬 액터가 스스로 책임집니다. <br>
 
 스킬 시스템은 AEffect와 ASkill이라는 두 클래스의 상속 관계를 통해 효율적으로 구현되었습니다.
@@ -878,9 +888,9 @@ void AKnight::SpawnSlash()
 
 </details>
 
+___
 
-
-### ```FSMStateManager``` : ```std::function```을 활용한 동적 상태 관리 시스템
+#### ```FSMStateManager``` : ```std::function```을 활용한 동적 상태 관리 시스템
 
 <p align="center">
  <img alt="이미지" src="./readme/fsm.png">
@@ -957,8 +967,9 @@ void AFalseKnight::InitSpawn()
 <br>
 </details>
 
+___
 
-### ```UTimeEventComponent``` : 시간 기반 이벤트 스케줄러
+#### ```UTimeEventComponent``` : 시간 기반 이벤트 스케줄러
 
 <p align="center">
  <img alt="이미지" src="./readme/timeevnetcomponent.png">
@@ -1056,8 +1067,9 @@ void UTimeEventComponent::ComponentTick(float _DeltaTime)
 <br>
 </details>
 
+___
 
-### 몬스터 인공지능(AI) : ```FSM```과 ```Time Event```의 활용
+#### 몬스터 인공지능(AI) : ```FSM```과 ```Time Event```의 활용
 몬스터 AI는 **감지(Perception) → 판단(Decision) → 행동(Action)**이라는 고전적인 3단계 구조를 기반으로 설계되었습니다. 이 모든 과정은 ```FSMStateManager```를 통해 체계적으로 관리되며, ```UTimeEventComponent```를 활용하여 시간차 공격 패턴을 손쉽게 구현하게 했습니다.
 1. 감지: 호전적인 몬스터는 ```UCollision```으로 구현된 **탐색 영역**을 가집니다. 이 영역에 플레이어가 감지되면, '판단' 단계로 넘어갑니다.
 2. 판단: 몬스터의 행동은 Idle 상태를 중심으로 결정됩니다. 스킬 쿨다운, 플레이어와의 거리 등 여러 조건을 '감지'하여, 다음에 실행할 가장 적절한 행동 패턴을 선택합니다.
@@ -1156,8 +1168,9 @@ void AFalseKnight::SetAttack(float _DeltaTime)
 </details>
 
 
+___
 
-### 멀티 스레드 로딩 및 리소스 관리
+#### 멀티 스레드 로딩 및 리소스 관리
 게임의 부드러운 실행을 위해, 가장 시간이 많이 소요되는 리소스 로딩 작업을 별도의 스레드에서 비동기로 처리하는 시스템을 구축했습니다. 이를 통해 메인 스레드는 UI 애니메이션이나 사운드 재생 등 다른 작업을 계속 수행할 수 있어, 로딩 중 화면이 멈추는 현상을 최소화하고 사용자 경험을 향상시켰습니다.
 
 <p align="center">
