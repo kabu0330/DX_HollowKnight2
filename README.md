@@ -299,7 +299,7 @@ BeginPlayList에 포함된 액터는 ```BeginPlay```가 딱 한번만 호출되�
 		char* ActorMemory = new char[sizeof(ActorType)];
 
 		AActor* ActorPtr = reinterpret_cast<ActorType*>(ActorMemory);
-		ActorPtr->World = this; // GetWorld() != nullptr가 아니게 되는 순간
+		ActorPtr->World = this; // GetWorld() != nullptr가 되는 순간
 
 		ActorType* NewPtr = reinterpret_cast<ActorType*>(ActorMemory);
 
