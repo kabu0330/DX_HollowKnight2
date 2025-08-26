@@ -8,68 +8,8 @@
 영상 링크 : https://youtu.be/vi6KnUeedrs?si=0_Tf7Nd8dymysKVo
 <br>
 
-## 기술스택
-* 언어 : C++ 20
-* API : DirectX11, WindowsAPI
-* 라이브러리 : DirectXTex, FOMD, ImGui, FW1FontWrapper
-* 개발환경 : Visual Studio 2022
-* 형상관리 : Git
-<p>
-
 ## 작업
-### 게임 엔진 프레임워크
 
-<p align="center">
- <img alt="이미지" src="./readme/EngineArchtecture.png">
-</p>
-
-<p>
-<details>
-<summary> 자세히 보기 (클릭) </summary><p>
-
-
-1. Base 계층 (C++)
-* UObject : 객체 이름 설정, Tick 및 렌더링 활성화 여부, 디스트로이 트리거, 특정 객체 디버깅 타겟 설정
-* UEngineTimer : 델타 타임 계산
-* UEngineRandom : 메르센 트위스터 기반 랜덤 기능 지원
-* UEnginePath / UEngineFile / UEngineDirectory : std::filesystem 기반 함수 지원
-* UEngineMath : 물리 기반 함수 지원
-* EngineSerializer : 직렬화/역직렬화 기능 지원
-* FSMStateManager : 상태 기반 콜백 함수 호출 기능 지원
-<p>
-
-2. Platform 계층 (Windows API)
-* EngineWindow : 윈도우 창 생성 및 윈도우 메시지 루프
-* EngineInput : 키보드 입력 관련 기능 지원
-* EngineSound : FMOD 라이브러리 래핑 객체, 사운드 관련 기능 지원
-* EngineWinImage : bmp 파일 관련 이미지 기능 지원
-* EngineWorkThreadPool : IOCP 기반 스레드 풀 기능 지원
-<p>
-
-3. Engine Core 계층 (게임 엔진 프레임워크)
-* EngineCore : 모든 계층의 기능을 총괄하고 게임의 메인 루프를 구동하는 관리자
-* Level : 게임의 월드, 액터를 관리하고 최종 렌더 타겟을 백버퍼로 전송하여 화면에 출력
-* Actor : 레벨에 생성 가능한 객체, 컴포넌트 관리 주체
-* UActorComponent : 컴포넌트 기반 클래스. 액터에 종속되어 생명주기를 따라감
-* USceneComponent : 크기, 위치, 회전(Transform)을 부여하는 클래스, 씬 컴포넌트를 상속한 클래스는 서로 부착(Attach)하여 종속 관계 설정 가능
-* GameMode : 게임의 규칙을 정의
-* HUD : 위젯의 관리 주체
-* EngineGrapicDevice : 렌더링 파이프라인 설정 주체
-* RenderUnit : 렌더링에 필요한 모든 데이터의 최소 단위
-* Renderer : USceneComponent로 액터에 부착하여 렌더링하는 기능을 생산할 수 있는 주체
-* ACameraActor : 독립된 시점을 가지며 렌더러를 관리하는 주체
-* EngineResourceBase : 모든 리소스를 저장하고 관리하며 재사용할 수 있는 기능을 지원
-* EngineGUI : ImGui를 래핑한 객체
-<p>
-
-4. 컨텐츠 계층
-* 게임 프로젝트 구현 계층
-<p>
-
-5. App 계층
-* 진입점(main)
-
-</details><p>
 
 ### 컨텐츠
 - 플레이어 (나이트)
