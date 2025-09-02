@@ -16,7 +16,7 @@ std::shared_ptr<UEngineBlend> UEngineBlend::Create(std::string_view _Name, const
 
 	if (true == Contains(UpperName))
 	{
-		MSGASSERT("이미 로드한 텍스처를 또 로드하려고 했습니다." + UpperName);
+		MSGASSERT("이미 등록된 블렌드입니다." + UpperName);
 		return nullptr;
 	}
 

@@ -31,7 +31,7 @@ void UEngineSampler::CreateSamplerState(const D3D11_SAMPLER_DESC& _Value)
 {
 	if (UEngineCore::GetDevice().GetDevice()->CreateSamplerState(&_Value, &SamplerState))
 	{
-		MSGASSERT("블랜드 스테이트 생성에 실패했습니다");
+		MSGASSERT("샘플러 생성에 실패했습니다");
 		return;
 	}
 	
