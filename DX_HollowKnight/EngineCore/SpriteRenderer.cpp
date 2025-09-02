@@ -227,25 +227,25 @@ void USpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::stri
 	CreateAnimation(_AnimationName, _SpriteName, Indexs, Times, _Loop);
 }
 
-void USpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, std::vector<int> _Indexs, float _Frame, bool _Loop /*= true*/)
+void USpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, std::vector<int> _Indices, float _Frame, bool _Loop /*= true*/)
 {
 	std::vector<float> Times;
 
-	for (size_t i = 0; i < _Indexs.size(); i++)
+	for (size_t i = 0; i < _Indices.size(); i++)
 	{
 		Times.push_back(_Frame);
 	}
 
-	CreateAnimation(_AnimationName, _SpriteName, _Indexs, Times, _Loop);
+	CreateAnimation(_AnimationName, _SpriteName, _Indices, Times, _Loop);
 }
 
-void USpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, std::vector<int> _Indexs, std::vector<float> _Frame, bool _Loop /*= true*/)
+void USpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, std::vector<int> _Indices, std::vector<float> _Frame, bool _Loop /*= true*/)
 {
 	std::string UpperName = UEngineString::ToUpper(_AnimationName);
 
-	if (_Frame.size() != _Indexs.size())
+	if (_Frame.size() != _Indices.size())
 	{
-		MSGASSERT(UpperName + "을 만들다 에러가 났습니다 프레임과 타임의 카운트가 서로 다릅니다");
+		MSGASSERT(UpperName + "의 스프라이트와 프레임 개수가 일치하지 않습니다.");
 		return;
 	}
 
@@ -258,13 +258,13 @@ void USpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::stri
 
 	if (nullptr == FindSprite)
 	{
-		MSGASSERT("로드하지 않은 스프라이트를 애니메이션 생성에 사용하려고 했습니다" + std::string(UpperName));
+		MSGASSERT("로드하지 않은 스프라이트가 존재합니다." + std::string(UpperName));
 		return;
 	}
 
 	FrameAnimation NewAnimation;
 	NewAnimation.Sprite = FindSprite.get();
-	NewAnimation.FrameIndex = _Indexs;
+	NewAnimation.FrameIndex = _Indices;
 	NewAnimation.FrameTime = _Frame;
 	NewAnimation.Loop = _Loop;
 	NewAnimation.Reset();
@@ -278,7 +278,7 @@ void USpriteRenderer::ChangeAnimation(std::string_view _AnimationName, bool _For
 
 	if (false == FrameAnimations.contains(UpperName))
 	{
-		MSGASSERT("존재하지 않은 애니메이션으로 변경하려고 했습니다. = " + UpperName);
+		MSGASSERT("등록되지 않은 애니메이션 이름입니다. = " + UpperName);
 		return;
 	}
 

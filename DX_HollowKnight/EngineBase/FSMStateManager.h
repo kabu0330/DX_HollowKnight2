@@ -28,7 +28,7 @@ public:
 	{
 		if (true == States.contains(_Key))
 		{
-			MSGASSERT("이미 존재하는 스테이트를 또 만들려고 했습니다.");
+			MSGASSERT("이미 등록된 상태입니다.");
 			return;
 		}
 
@@ -57,7 +57,7 @@ public:
 	{
 		if (false == States.contains(_Key))
 		{
-			MSGASSERT("만든적이 없는 스테이트로 체인지 하려고 했습니다.");
+			MSGASSERT("등록되지 않은 상태입니다.");
 			return;
 		}
 		PrevState = CurState;
