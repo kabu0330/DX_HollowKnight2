@@ -835,6 +835,7 @@ ___
 <p align="center">
  <img alt="이미지" src="./readme/fsm.png">
 </p>
+
 ```UFSMStateManager```는 캐릭터나 몬스터의 복잡한 행동 패턴을 체계적으로 관리하기 위해 구현된 상태 관리 기계(FSM) 클래스입니다. ```enum```과 ```std::function```을 조합하여, 각 상태에 진입(Start), 갱신(Update), 종료(End) 로직을 함수 포인터처럼 동적으로 등록하고 간편하게 상태를 전환할 수 있도록 설계되었습니다.
 
 각 상태는 Start(진입), Update(갱신), End(종료) 세 가지 이벤트에 해당하는 ```std::function``` 멤버를 가집니다. ```CreateState``` 함수를 호출하여 ```enum``` 값과 실제 실행될 멤버 함수 또는 람다(```Lambda```)를 짝지어 등록하면, ```FSMStateManager```가 상태 전환 시점에 맞춰 자동으로 해당 함수를 호출해 줍니다.
