@@ -65,6 +65,11 @@
 </details>
 </details></p>
 
+#### 보다 상세한 내용은 [메인 페이지](https://github.com/kabu0330)를 참고해주세요.
+<p align="center">
+ <img alt="이미지" src=https://github.com/user-attachments/assets/8e390c26-67da-4310-8d4b-720ab377dcda>
+</p>
+
 ___
 
 ## 주요 기능 상세 구현
